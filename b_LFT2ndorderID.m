@@ -15,17 +15,17 @@ expname='2907';
 filename=sprintf('LFT_estimated_%s.mat',expname)
 if exist(fullfile('data',filename),'file')
     load(fullfile('data',filename),"Gdm","m","m0","dm_bound", ...
-        "Gdmnom","sys_est_Gdm","Gest","GLTI","sys_est_GLTI")
+        "Gdmnom","sys_est_Gdm","Gest","GLTI","sys_est_GLTI","GFRF_dm")
 end
     % n=find(cellfun(@isempty,sys_est_GLTI))
-for n=1:15
-    fprintf('order of GLTI: %d\n',n)
-    [Gest{n},GLTI{n},sys_est_GLTI{n}] = utils.GLTI_greyestid(GFRF,n,Gdm);
-    sys_est_GLTI{n}
-end
+% for n=1:15
+%     fprintf('order of GLTI: %d\n',n)
+%     [Gest{n},GLTI{n},sys_est_GLTI{n}] = utils.GLTI_greyestid(GFRF,n,Gdm);
+%     sys_est_GLTI{n}
+% end
 
 save(fullfile('data',filename),"Gdm","m","m0","dm_bound", ...
-    "Gdmnom","sys_est_Gdm","Gest","GLTI","sys_est_GLTI")
+    "Gdmnom","sys_est_Gdm","Gest","GLTI","sys_est_GLTI","GFRF_dm")
 %% Recovering the fit percent in function of the ord of GLTI
 for n=find(~cellfun(@isempty,sys_est_GLTI))
     fitpercent(n,:)=sys_est_GLTI{n}.Report.Fit.FitPercent;
@@ -77,7 +77,6 @@ showConfidence(h, 2);
 
 % Residual analysis (not significant due to the low fit of the model and
 % the fact that it is an infinite order system
-load(fullfile('data','full_est_sys_data.mat'),'Gest',"GLTI","sys_est_GLTI")
 G_est_current=Gest{7};
 
 for i=1:4
@@ -133,7 +132,8 @@ GLFT= [  -Gdmnom, Gdmnom*GLTI_selected;...
 
 G=Gest{ord};
 
-save(fullfile('data',sprintf('LFT_GFRF_param_n%d_%s.mat',ord,expname)),"GLFT","dm_bound","m0","m","GFRF","G")
+save(fullfile('data',sprintf('LFT_GFRF_param_n%d_%s.mat',ord,expname)), ...
+    "GLFT","dm_bound","m0","m","GFRF","G","GFRF_dm")
 %% Table for the obtained parameter and their std 
 function T = param_table(sys_est, names)
 % Parameter estimates and standard deviations of a greyest model.

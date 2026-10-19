@@ -7,14 +7,14 @@ Ts       = 0.001;
 
 %% Load data
 load(fullfile('Data','LFT_GFRF_param_n7_2907.mat'))
-% % For windows
-% addpath(genpath("C:\Users\pgr\Mosek"))
-% addpath(genpath("C:\Program Files\Mosek\11.2"))
-% addpath(genpath("C:\Users\pgr\OneDrive - CSEM S.A\Documents\MATLAB\tbxmanager"))
+% For windows
+addpath(genpath("C:\Users\admin\mosek"))
+addpath(genpath("C:\Program Files\Mosek\10.1"))
+addpath(genpath("C:\Users\admin\Documents\MATLAB\tbxmanager"))
 
-% For mac
-addpath(genpath("/Users/pierre/mosek"))
-addpath(genpath("/Users/pierre/Documents/MATLAB/tbxmanager"))
+% % For mac
+% addpath(genpath("/Users/pierre/mosek"))
+% addpath(genpath("/Users/pierre/Documents/MATLAB/tbxmanager"))
 
 W_lft=GLFT.Frequency;
 G_hat=GLFT(2,2);
@@ -40,6 +40,7 @@ legend('Location','best');
 omega_d    = 81.7*2*pi;
 omega_n    = 1000;
 floor_gain = 0.5;
+
 zeta_d     = 0.001;
 zeta_n     = 0.0001;
 peak_extra = 500;
@@ -115,18 +116,24 @@ max_iter     = 1000;
 prev_obj     = Inf;
 STAGE        = 1;gamma=10;
 has_slack    = false;
+loss_tol = 0.10;
+eta_max = 2*dm_bound;
+
 nextstage=0;
 D_val=[];
 E_val=[];
 
 expname='2907';
-diaryname=sprintf('diary%s_order%d_%.0fhz_%.0fdb.mat',expname, ...
+diaryname=sprintf('diary%s_order%d_%.0fhz_%.0fdb.txt',expname, ...
     orderK,omega_d/2/pi,mag2db(min(abs(inv(W1_frd).ResponseData))))
 
 if ~exist(fullfile('data','diaries'),'dir')
     mkdir(fullfile('data','diaries'))
 end
-diary(fullfile('data','diaries',sprintf('%s.txt',diaryname)))
+if exist(fullfile('data','diaries',diaryname),'file')
+    delete(fullfile('data','diaries',diaryname)) % clear the diary
+end
+diary(fullfile('data','diaries',diaryname))
 diary on
 
 
@@ -152,7 +159,7 @@ for iter = 1:max_iter
                 "addSlack", true, "epsNormalisation", 1e-6,"pinorm",true);
             slack_val = OBJ;   % OBJ is the slack her
             has_slack = true;
-                nextstage=1;
+                % nextstage=1;
 
         case 2
             % STAGE=3;
@@ -168,8 +175,8 @@ for iter = 1:max_iter
             OBJ       = OBJ_perf;
             slack_val = slack;
             has_slack = false;     
-                nextstage=1;
-
+                % nextstage=1;
+            obj_ref = obj_val; 
             if iter==11
                 nextstage=1;
             end
@@ -195,6 +202,10 @@ for iter = 1:max_iter
             OBJ       = OBJ_perf;
             slack_val = slack;
             has_slack = false;
+         
+            if obj_val > (1+loss_tol)*obj_ref || eta >= eta_max
+                nextstage=1;
+            end
     end
 
     % Tolerances
@@ -287,6 +298,14 @@ if isempty(K_final)
     error("No valid controller found in any stage.");
 end
 
+%% debug checking the value of D and E in f of the freq
+for i=1:length(D_val)
+    D_array(i)=D_val{i};
+    E_array(i)=E_val{i};
+end
+figure
+plot(1:length(D_val),D_array,1:length(D_val),imag(E_array))
+
 %% load saved controller !!!!! remove the saving part
 % load(fullfile('Selected controller/','controller_sus_7nm_order10_72hz_-8db_nomperfrobperf.mat'))
 
@@ -363,7 +382,6 @@ figure; pzplot(K_final);
 %% plots of the various FRF sensitivities
 
 figure; hold on
-load('/Users/pierre/Documents/PDM/pdmordicsem/idtestxdm_ordilabo/idm_suspended_2907_stft.mat');
 for i=1:length(GFRF_dm)
     utils.magplot(inv(1+K_stage{4}*GFRF(i)),'Color',[colors(i,:) .3],'LineStyle','--','DisplayName','dmreal='+string(GFRF_dm{i}.dmreal))
     utils.magplot(inv(1+K_stage{4}*G(i)),'Color',colors(i,:),'DisplayName','G'+string(i))

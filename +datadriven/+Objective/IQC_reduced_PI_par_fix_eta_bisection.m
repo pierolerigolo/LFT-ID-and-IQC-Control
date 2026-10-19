@@ -1,63 +1,32 @@
 function [eta, D_val, E_val, PI_matrix, diagnostics] = IQC_reduced_PI_par_fix_eta_bisection(plant, controller, alpha, beta, omegas, opts)
-    %IQC_REDUCED_PI_ETA_BISECTION Find the largest eta for which
-    %IQC_reduced_PI (D, E free, complex/skew-Hermitian E) is feasible, for
-    %a FIXED controller, by bisecting eta.
+    %IQC_REDUCED_PI_PAR_FIX_ETA_BISECTION Find the largest eta for which a
+    %multiplier D(w), E(w) exists, for a FIXED controller, by bisecting eta.
     %
-    %   ------------------------------------------------------------------------
-    %   WHY BISECTION (and why via the SLACK, not raw solver status)
-    %   ------------------------------------------------------------------------
-    %   eta only enters IQC_reduced_PI's LMI through eta^2*D; with D also
-    %   free this is bilinear, so eta cannot be jointly optimised with D, E
-    %   in a single SDP (see IQC_reduced_PI's own docstring). Instead this
-    %   fixes eta at each candidate and re-solves the D,E-feasibility
-    %   problem, exactly like your manual attempt - the difference here is
-    %   twofold:
-    %     1) The bracket is actually GROWN (doubled) until a genuinely
-    %        infeasible eta is found, rather than bisecting inside a fixed
-    %        [etaLower, etaUpperInit] window that might not contain the
-    %        true boundary at all (this was the bug in your manual loop -
-    %        eta1/eta2 were never updated, so it wasn't bisecting at all).
-    %     2) Feasibility is judged by calling IQC_reduced_PI with
-    %        "addSlack" true and MINIMISING the slack, then checking
-    %        slack <= slackTol - not by trusting optimize()'s raw
-    %        sol.problem code. Right at the feasibility boundary (exactly
-    %        where bisection spends most of its time), problem-status codes
-    %        can be noisy; the slack's sign is a continuous, more robust
-    %        signal (this mirrors the paper's own Sec 3.4 "Iterative
-    %        procedure": minimise a slack nu, feasible iff nu <= 0).
-    %
-    %   D, E are warm-started from the previous accepted bisection point at
-    %   each new candidate eta, both for solver speed and because
-    %   IQC_reduced_PI's own SVD-based conditioning step uses double(D),
-    %   double(E) at their currently assigned values.
-    %
-    %   ------------------------------------------------------------------------
-    %   [eta, D, E, PI, diagnostics] = IQC_reduced_PI_eta_bisection(plant,
-    %   controller, alpha, beta, omegas) returns the largest feasible eta
-    %   found, the corresponding numeric D (n x n, real), E (n x n,
-    %   complex), the numeric PI = [eta^2*D, E; E', -D] (frequency-
-    %   invariant), and a diagnostics struct with the bracket/bisection
-    %   history.
-    %
-    %   controller MUST be fixed (e.g. datadriven.Controller.Fixed(K)) -
-    %   IQC_reduced_PI itself will warn if it is not.
+    %   At every candidate eta the multiplier problem is solved with a SLACK
+    %   that is allowed to be negative and is MINIMISED (D <= DMax*I keeps it
+    %   bounded):
+    %       min slack   s.t.   M(w) + slack*I >= 0   for all w
+    %   - slack <= slackTol  -> a multiplier exists at this eta (feasible)
+    %   - slack <  0         -> it exists with room to spare
+    %   - slack >  slackTol  -> infeasible
+    %   The D, E returned for the accepted eta are therefore the ones with
+    %   the most room, not an arbitrary point on the boundary of the feasible
+    %   set (which is what a pure feasibility solve returns).
     %
     %   Name-value options:
     %     "etaLower"      - initial lower (assumed feasible) bound. Default 1e-5.
     %     "etaUpperInit"  - initial upper-bound guess to test/expand from. Default 1.
-    %     "etaHardCap"    - physical ceiling on eta (e.g. your dm_max) - the
-    %                       bracket is never expanded past this value even
-    %                       if still feasible there. Default Inf.
+    %     "etaHardCap"    - ceiling on eta. Default Inf.
     %     "relTol"        - stop when (etaUpper-etaLower)/etaLower < relTol. Default 1e-2.
     %     "slackTol"      - feasible iff minimised slack <= slackTol. Default 1e-6.
-    %     "maxExpansions" - cap on bracket-doubling steps. Default 20.
-    %     "maxBisections" - cap on bisection iterations. Default 60.
-    %     "solver"        - YALMIP solver name. Default "mosek".
-    %     "verbose"       - print progress. Default true.
-    %     "epsD", "epsPIplus", "epsNormalisation", "epsSVD" - passed through
-    %                       to IQC_reduced_PI (see its own docstring).
+    %     "slackLower"    - lower bound on the slack. Default -1.
+    %     "DMax"          - D <= DMax*I. Default 1.
+    %     "maxExpansions", "maxBisections", "solver", "verbose" - as before.
+    %     "epsD", "epsPIplus", "epsNormalisation", "epsSVD" - passed through.
+    %     "D0", "E0"      - warm starts for the first solve (numeric or cell).
     %
-    %   Adapted 2026: eta-bisection wrapper around IQC_reduced_PI (complex E).
+    %   Outputs D_val, E_val are cell arrays (nomegas x 1); PI_matrix is
+    %   (2n x 2n x nomegas).
     %
 
     arguments
@@ -66,11 +35,15 @@ function [eta, D_val, E_val, PI_matrix, diagnostics] = IQC_reduced_PI_par_fix_et
         alpha (1, 1) double
         beta (1, 1) double
         omegas (:, 1) double
-        opts.etaLower (1, 1) double = 1e-5;
+        % NB: PI_plus >= epsPIplus*I needs eta^2*D >= epsPIplus, and D <= DMax,
+        % so etaLower must satisfy etaLower^2*DMax >= epsPIplus (1e-2 is safe).
+        opts.etaLower (1, 1) double = 1e-2;
         opts.etaUpperInit (1, 1) double = 1;
         opts.etaHardCap (1, 1) double = Inf;
         opts.relTol (1, 1) double = 1e-2;
         opts.slackTol (1, 1) double = 1e-6;
+        opts.slackLower (1, 1) double = -1;
+        opts.DMax (1, 1) double = 1;
         opts.maxExpansions (1, 1) double = 20;
         opts.maxBisections (1, 1) double = 60;
         opts.solver (1, 1) string = "mosek";
@@ -79,36 +52,21 @@ function [eta, D_val, E_val, PI_matrix, diagnostics] = IQC_reduced_PI_par_fix_et
         opts.epsPIplus (1, 1) double = 1e-6;
         opts.epsNormalisation (1, 1) double = 1e-6;
         opts.epsSVD (1, 1) double = 1e-6;
-        opts.D0 double = [];   % starting D for the very first solve. Default:
-                                % eye(n) (i.e. D=1 for n=1), filled in below
-                                % once n is known.
-        opts.E0 double = [];   % starting E for the very first solve. Default:
-                                % zeros(n) (i.e. E=0 - or pass e.g. 1e-6i for
-                                % a small nonzero start).
+        opts.D0 = [];
+        opts.E0 = [];
     end
 
     solverOpts = sdpsettings('verbose', 0, 'debug', 0, 'solver', char(opts.solver));
 
-    % n must match IQC_reduced_PI's own convention (np==nq required there).
     n = length(plant.OutputGroup.Y1);
     nomegas = length(omegas);
-    
+
     D0 = opts.D0;
     E0 = opts.E0;
-    if isempty(D0)
-        D0 = cell(nomegas, 1);
-        for i=1:nomegas
-            D0{i} = eye(n);
-        end
-    end
-    if isempty(E0)
-        E0 = cell(nomegas, 1);
-        for i=1:nomegas
-            E0{i} = 1e-6*eye(n);
-        end
-    end
+    if isempty(D0), D0 = repmat({eye(n)}, nomegas, 1); end
+    if isempty(E0), E0 = repmat({1e-6*eye(n)}, nomegas, 1); end
 
-    % ----- Inner feasibility solve for D, E at a FIXED eta -----
+    % ----- Inner solve for D, E at a FIXED eta: minimise the slack -----
     function [feasible, D_val, E_val, slackVal] = check_feasibility(eta_try, D_ws, E_ws)
         if nargin < 2, D_ws = []; end
         if nargin < 3, E_ws = []; end
@@ -119,33 +77,35 @@ function [eta, D_val, E_val, PI_matrix, diagnostics] = IQC_reduced_PI_par_fix_et
 
         [LMIs, slack, D_var, E_var] = datadriven.Objective.IQC_reduced_PI_par_fix( ...
             plant, controller, eta_try, alpha, beta, omegas, ...
-            "addSlack", false, ...
+            "addSlack", true, "slackLower", opts.slackLower, "DMax", opts.DMax, ...
             "epsD", opts.epsD, "epsPIplus", opts.epsPIplus, ...
             "epsNormalisation", opts.epsNormalisation, "epsSVD", opts.epsSVD, ...
             warmArgs{:});
 
-        sol = optimize(LMIs, [], solverOpts);
-        slackVal = double(slack);
-        feasible = (sol.problem == 0); %&& (slackVal <= opts.slackTol);
+        sol = optimize(LMIs, slack, solverOpts);
+        slackVal = value(slack);
+        feasible = (sol.problem == 0) && isfinite(slackVal) && (slackVal <= opts.slackTol);
         D_val = cellfun(@double, D_var, 'UniformOutput', false);
         E_val = cellfun(@double, E_var, 'UniformOutput', false);
     end
 
+    function PI = build_PI(eta_, D_, E_)
+        PI = zeros(2*n, 2*n, nomegas);
+        for i = 1:nomegas
+            PI(:,:,i) = [eta_^2*D_{i}, E_{i}; E_{i}', -D_{i}];
+        end
+    end
+
     % ----- Sanity check: etaLower must be feasible -----
-    % Explicitly start from D0, E0 (default D=1, E=0 for n=1) rather than
-    % relying on IQC_reduced_PI's own internal fallback default.
     [feasible0, D_best, E_best, slack0] = check_feasibility(opts.etaLower, D0, E0);
     if ~feasible0
         error("IQC_reduced_PI_eta_bisection:infeasibleAtEtaLower", ...
-            ["No valid multiplier exists even at eta = etaLower = %.3g " ...
-             "(minimised slack = %.4g). No robust design is certifiable for " ...
-             "this controller with this IQC structure - check the controller, " ...
-             "plant, or lower etaLower further."], opts.etaLower, slack0);
+            "No valid multiplier at eta = etaLower = %.3g (minimised slack = %.4g). " + ...
+            "Check that etaLower^2*DMax >= epsPIplus, then the controller / plant.", ...
+            opts.etaLower, slack0);
     end
     if opts.verbose
         fprintf('  [etaLower] eta = %.4g -> true (slack = %.4g)\n', opts.etaLower, slack0);
-        % fprintf('    D = %s\n', mat2str(D_best, 4));
-        % fprintf('    E = %s\n', mat2str(E_best, 4));
     end
     etaLower = opts.etaLower;
     eta_best = etaLower;
@@ -157,10 +117,6 @@ function [eta, D_val, E_val, PI_matrix, diagnostics] = IQC_reduced_PI_par_fix_et
     [feasibleUpper, D_at_upper, E_at_upper, slackUpper] = check_feasibility(etaUpper, D_best, E_best);
     if opts.verbose
         fprintf('  [expand] eta = %.4g -> %s (slack = %.4g)\n', etaUpper, string(feasibleUpper), slackUpper);
-        if feasibleUpper
-            % fprintf('    D = %s\n', mat2str(D_at_upper, 4));
-            % fprintf('    E = %s\n', mat2str(E_at_upper, 4));
-        end
     end
     while feasibleUpper && nExpansions < opts.maxExpansions
         eta_best = etaUpper;
@@ -179,26 +135,18 @@ function [eta, D_val, E_val, PI_matrix, diagnostics] = IQC_reduced_PI_par_fix_et
         [feasibleUpper, D_at_upper, E_at_upper, slackUpper] = check_feasibility(etaUpper, D_best, E_best);
         if opts.verbose
             fprintf('  [expand] eta = %.4g -> %s (slack = %.4g)\n', etaUpper, string(feasibleUpper), slackUpper);
-            % if feasibleUpper
-            %     fprintf('    D = %s\n', mat2str(D_at_upper, 4));
-            %     fprintf('    E = %s\n', mat2str(E_at_upper, 4));
-            % end
         end
     end
     if feasibleUpper
         eta = etaUpper;
         D_val = D_at_upper;
         E_val = E_at_upper;
-        PI_matrix=zeros(2*n,2*n,nomegas);
-        for i=1:nomegas
-            PI_matrix(:,:,i) = [eta^2*D_val{i}, E_val{i}; E_val{i}', -D_val{i}];
-        end
+        PI_matrix = build_PI(eta, D_val, E_val);
         diagnostics = struct('expansionHistory', expansionHistory, ...
             'bisectionHistory', [], 'hitCeiling', true);
         warning("IQC_reduced_PI_eta_bisection:noInfeasibleUpperBoundFound", ...
-            ["Still feasible at eta = %.4g (etaHardCap/maxExpansions reached) - " ...
-             "the returned eta is a lower bound on the true maximum, not the " ...
-             "maximum itself. Raise etaHardCap or maxExpansions to search further."], eta);
+            "Still feasible at eta = %.4g (etaHardCap/maxExpansions reached): " + ...
+            "returned eta is a lower bound on the true maximum.", eta);
         return
     end
 
@@ -212,10 +160,6 @@ function [eta, D_val, E_val, PI_matrix, diagnostics] = IQC_reduced_PI_par_fix_et
         bisectionHistory(end+1, :) = [etaMid, feasibleMid, slackMid]; %#ok<AGROW>
         if opts.verbose
             fprintf('  [bisect %2d] eta = %.6g -> %s (slack = %.4g)\n', iter, etaMid, string(feasibleMid), slackMid);
-            if feasibleMid
-                % fprintf('    D = %s\n', mat2str(D_mid, 4));
-                % fprintf('    E = %s\n', mat2str(E_mid, 4));
-            end
         end
         if feasibleMid
             etaLower = etaMid;
@@ -230,10 +174,7 @@ function [eta, D_val, E_val, PI_matrix, diagnostics] = IQC_reduced_PI_par_fix_et
     eta = eta_best;
     D_val = D_best;
     E_val = E_best;
-    PI_matrix=zeros(2*n,2*n,nomegas);
-    for i=1:nomegas
-        PI_matrix(:,:,i) = [eta^2*D_val{i}, E_val{i}; E_val{i}', -D_val{i}];
-    end
+    PI_matrix = build_PI(eta, D_val, E_val);
     diagnostics = struct('expansionHistory', expansionHistory, ...
         'bisectionHistory', bisectionHistory, 'hitCeiling', false, ...
         'iterations', iter);
