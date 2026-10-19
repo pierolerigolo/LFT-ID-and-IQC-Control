@@ -17,7 +17,7 @@ GFRF4_2907=utils.expdata2frf_stft(fullfile(idfolder,'260729_rdm_7.6kg_x_sswp.mat
 [u{4}, y{4}]=utils.openIOtemp(fullfile(idfolder,'260729_rdm_7.6kg_x_sswp.mat'));
 
 %%
-data=cell(4,1);
+data=cell(1,4);
 for i=1:4
     data{i}=iddata(y{i}',u{i}',0.001);
 end
@@ -33,7 +33,7 @@ GFRF_dm{4}.dmreal=7.6;
 
 % Multimodel as a MIMO of 1Xn
 freq=GFRF_dm{1}.FRF.Frequency;
-for i=length(GFRF_dm)
-    GFRF(i)=interp(GFRF_dm{i}.FRF,freq);
+for i=1:length(GFRF_dm)
+    GFRF(1,i)=interp(GFRF_dm{i}.FRF,freq);
 end
 save(fullfile('Data','GFRF_iddata_2907_stft.mat'),'GFRF','GFRF_dm','data')
