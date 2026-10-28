@@ -4,28 +4,28 @@ if ~exist('plots', 'dir')
    mkdir('plots')
 end
 %% Multimodel non-parametric
-load(fullfile('data','GFRF_iddata_2907_stft.mat'));
+expname='1028';
+load(fullfile('data',sprintf('GFRF_iddata_%s_stft.mat',expname)));
 bodemag(GFRF)
 
 %% Identification of Gd(m) on a freq range of the FRF
 [Gdm,Gdmnom,sys_est_Gdm,dm_bound,m0,m]=utils.Gdm_greyestid(GFRF,25,75);
 exportgraphics(gcf,fullfile('plots','gdmcompare.jpg'),'Resolution',300)
 %% Identification of GLTI on the whole range
-expname='2907';
 filename=sprintf('LFT_estimated_%s.mat',expname)
 if exist(fullfile('data',filename),'file')
     load(fullfile('data',filename),"Gdm","m","m0","dm_bound", ...
         "Gdmnom","sys_est_Gdm","Gest","GLTI","sys_est_GLTI","GFRF_dm")
 end
-    % n=find(cellfun(@isempty,sys_est_GLTI))
-% for n=1:15
-%     fprintf('order of GLTI: %d\n',n)
-%     [Gest{n},GLTI{n},sys_est_GLTI{n}] = utils.GLTI_greyestid(GFRF,n,Gdm);
-%     sys_est_GLTI{n}
-% end
+% n=find(cellfun(@isempty,sys_est_GLTI))
+for n=1:15
+    fprintf('order of GLTI: %d\n',n)
+    [Gest{n},GLTI{n},sys_est_GLTI{n}] = utils.GLTI_greyestid(GFRF,n,Gdm);
+    sys_est_GLTI{n}
+end
 
-% save(fullfile('data',filename),"Gdm","m","m0","dm_bound", ...
-%    "Gdmnom","sys_est_Gdm","Gest","GLTI","sys_est_GLTI","GFRF_dm")
+save(fullfile('data',filename),"Gdm","m","m0","dm_bound", ...
+   "Gdmnom","sys_est_Gdm","Gest","GLTI","sys_est_GLTI","GFRF_dm")
 %% Recovering the fit percent in function of the ord of GLTI
 for n=find(~cellfun(@isempty,sys_est_GLTI))
     fitpercent(n,:)=sys_est_GLTI{n}.Report.Fit.FitPercent;
@@ -59,7 +59,8 @@ ylabel('fit%')
 % 
 %% Comparaison and validation of the chosen model order
 % compare with NRMSE fit %
-compare(Gest{10},GFRF)
+figure
+compare(Gest{6},GFRF)
 
 %% compare the db difference in function of the frequency
 for i=1:4
@@ -74,7 +75,7 @@ exportgraphics(gcf,fullfile('plots','dberr.jpg'),'Resolution',300)
 figure
 h = iopzplot(sys_est_GLTI{7});
 showConfidence(h, 2);
-
+%%
 % Residual analysis (not significant due to the low fit of the model and
 % the fact that it is an infinite order system
 G_est_current=Gest{7};
@@ -161,8 +162,8 @@ GLFT= [  -Gdmnom, Gdmnom*GLTI_selected;...
 
 G=Gest{ord};
 
-% save(fullfile('data',sprintf('LFT_GFRF_param_n%d_%s.mat',ord,expname)), ...
-%     "GLFT","dm_bound","m0","m","GFRF","G","GFRF_dm")
+save(fullfile('data',sprintf('LFT_GFRF_param_n%d_%s.mat',ord,expname)), ...
+    "GLFT","dm_bound","m0","m","GFRF","G","GFRF_dm")
 %% Table for the obtained parameter and their std 
 function T = param_table(sys_est, names)
 % Parameter estimates and standard deviations of a greyest model.

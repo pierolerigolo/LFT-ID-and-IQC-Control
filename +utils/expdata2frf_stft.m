@@ -33,11 +33,13 @@ addParameter(p,'Hop',64);
 addParameter(p,'FreqRange',[10 500]);
 addParameter(p,'ActiveThreshold',0.01);
 addParameter(p,'Plot',false);
+addParameter(p,'itmax',[]);
+addParameter(p,'itmin',1);
 parse(p,varargin{:});
 o = p.Results;
 
 %% Load data
-[u,y]=utils.openIOtemp(matfile);
+[u,y]=utils.openIOtemp(matfile,o.itmin,o.itmax);
 if isvector(y), y = y(:); end
 if size(y,1) ~= numel(u) && size(y,2) == numel(u), y = y.'; end
 assert(size(y,1) == numel(u), 'Input and output have different lengths.');
