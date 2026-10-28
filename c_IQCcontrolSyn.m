@@ -6,17 +6,22 @@ orderK   = 18 ;
 Ts       = 0.001;
 
 %% Load data
-load(fullfile('Data','LFT_GFRF_param_n7_2907.mat'))
-% For windows
-addpath(genpath("C:\Users\admin\mosek"))
-addpath(genpath("C:\Program Files\Mosek\10.1"))
-addpath(genpath("C:\Users\admin\Documents\MATLAB\tbxmanager"))
+idname='LFT_GFRF_param_n7_2907';
+load(fullfile('Data',sprintf('%s.mat',idname)))
+% load(fullfile('data','Old id method/','idm_suspended_2907.mat'))
+% load(fullfile('data','Old id method/','sus_data_2907_lft_full.mat'))
+% dm_bound=dm_max;
+% % For windows
+% addpath(genpath("C:\Users\admin\mosek"))
+% addpath(genpath("C:\Program Files\Mosek\10.1"))
+% addpath(genpath("C:\Users\admin\Documents\MATLAB\tbxmanager"))
 
-% % For mac
-% addpath(genpath("/Users/pierre/mosek"))
-% addpath(genpath("/Users/pierre/Documents/MATLAB/tbxmanager"))
+% For mac
+addpath(genpath("/Users/pierre/mosek"))
+addpath(genpath("/Users/pierre/Documents/MATLAB/tbxmanager"))
 
 W_lft=GLFT.Frequency;
+nomegas=length(W_lft);
 G_hat=GLFT(2,2);
 ny=1;nu=1;np=1;nq=1;nw=1;nz=1;
 
@@ -116,24 +121,21 @@ max_iter     = 1000;
 prev_obj     = Inf;
 STAGE        = 1;gamma=10;
 has_slack    = false;
-loss_tol = 0.10;
-eta_max = 2*dm_bound;
-
+loss_tol = Inf;
+eta_max = Inf;%2*dm_bound;
+mutli_type='frequency';
 nextstage=0;
-D_val=[];
-E_val=[];
-
-expname='2907';
-diaryname=sprintf('diary%s_order%d_%.0fhz_%.0fdb.txt',expname, ...
-    orderK,omega_d/2/pi,mag2db(min(abs(inv(W1_frd).ResponseData))))
+last_hinfstb_itr=Inf;
+D_val=repmat({eye(1)}, nomegas, 1);
+E_val=repmat({zeros(1)}, nomegas, 1);
 
 if ~exist(fullfile('data','diaries'),'dir')
     mkdir(fullfile('data','diaries'))
 end
-if exist(fullfile('data','diaries',diaryname),'file')
-    delete(fullfile('data','diaries',diaryname)) % clear the diary
+if exist(fullfile('data','diaries','diary_temp.txt'),'file')
+    delete(fullfile('data','diaries','diary_temp.txt')) % clear the diary
 end
-diary(fullfile('data','diaries',diaryname))
+diary(fullfile('data','diaries','diary_temp.txt'))
 diary on
 
 
@@ -159,7 +161,7 @@ for iter = 1:max_iter
                 "addSlack", true, "epsNormalisation", 1e-6,"pinorm",true);
             slack_val = OBJ;   % OBJ is the slack her
             has_slack = true;
-                % nextstage=1;
+            % nextstage=1;
 
         case 2
             % STAGE=3;
@@ -175,9 +177,8 @@ for iter = 1:max_iter
             OBJ       = OBJ_perf;
             slack_val = slack;
             has_slack = false;     
-                % nextstage=1;
-            obj_ref = obj_val; 
-            if iter==11
+            % nextstage=1;
+            if iter==last_hinfstb_itr
                 nextstage=1;
             end
         case 3
@@ -190,7 +191,8 @@ for iter = 1:max_iter
             K_fixed = datadriven.Controller.Fixed(K);
             [eta, D_val, E_val, PI_matrix, diagEta] = datadriven.Objective.IQC_reduced_PI_par_fix_eta_bisection( ...
                 G_robustness, K_fixed, alpha_PI_soft, beta_PI_soft, W_lft, ...
-                "etaUpperInit", eta, "etaHardCap", 100*dm_bound, "verbose", true);
+                "etaUpperInit", eta, "etaHardCap", 100*dm_bound, "verbose", true, ...
+                "multiplier",mutli_type,"epsD",1e-4,"dropNullRows",false);%,"D0",D_val,"E0",E_val);
             
             % PI_data = repmat(PI_matrix, [1, 1, length(W_lft)]);
             PI = frd(PI_matrix, W_lft, G_hat.Ts); 
@@ -228,6 +230,10 @@ for iter = 1:max_iter
     JOB = optimize(LMIs, OBJ, opts_sdp);
 
     K_itr{iter}=ss(K);
+    D_itr{iter}=D_val;
+    E_itr{iter}=E_val;
+    eta_itr{iter}=eta;
+
 
     elapsed = toc;
 
@@ -253,9 +259,8 @@ for iter = 1:max_iter
         nextstage=0;
         % Save intermediate controller at end of each stage
         K_stage{STAGE+1} = ss(K);
-        save(fullfile('Data','lastcontroller.mat'),"K_stage")
         fprintf('  --> Saved K_stage{%d}\n', STAGE+1);
-
+        obj_ref = obj_val; 
         if STAGE < 3
             STAGE    = STAGE + 1;
             prev_obj = Inf;
@@ -304,8 +309,8 @@ for i=1:length(D_val)
     E_array(i)=E_val{i};
 end
 figure
-plot(1:length(D_val),D_array,1:length(D_val),imag(E_array))
-
+semilogx(W_lft/2/pi,D_array,W_lft/2/pi,imag(E_array))
+legend('real(D)','imag(E)')
 %% load saved controller !!!!! remove the saving part
 % load(fullfile('Selected controller/','controller_sus_7nm_order10_72hz_-8db_nomperfrobperf.mat'))
 
@@ -330,13 +335,16 @@ if ~exist(fullfile('data','controller'),'dir')
     mkdir(fullfile('data','controller'))
 end
 
-controlllername=sprintf('controller_order%d_%.0fhz_%.0fdb_%s_eta%d.mat', ...
-    orderK,omega_d/2/pi,mag2db(min(abs(inv(W1_frd).ResponseData))),strcat(stage_names_red{stagefin}),eta)
-save(fullfile('data','controller',controlllername), ...
-    'stage_names','K_stage','W1_frd',"K_itr")
 
 
+expname=sprintf('%s_controller_order%d_%.0fhz_%.0fdb_%s_lasthinfstabitr%d_eta%.2f_multi_%s', ...
+    idname,orderK,omega_d/2/pi,mag2db(min(abs(inv(W1_frd).ResponseData))), ...
+    strcat(stage_names_red{stagefin}),last_hinfstb_itr,eta,mutli_type(1:4))
+
+save(fullfile('data','controller',sprintf('%s.mat',expname)))
 diary off
+movefile(fullfile('data','diaries','diary_temp.txt'),fullfile('data','diaries',sprintf('%s.txt',expname)))
+
 
 colors      = lines(4);
 colors = colors([1,2,4,3],:);

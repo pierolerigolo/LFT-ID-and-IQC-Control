@@ -1,11 +1,15 @@
-function fitpercent = NRMSE(ymodel,ymeas,options)
-arguments
+function [fitpercent,nonnanid] = NRMSE(ymodel,ymeas,options)
+arguments(Input)
     ymodel 
     ymeas 
     options.inFofFreq = false
     options.absDB = false
     options.freqrange=[]
     options.magnitudeonly=false
+end
+arguments(Output)
+    fitpercent
+    nonnanid
 end
 % Normalized Root Mean Squared Error (NRMSE)
 %compare(ymeas,ymodel)
@@ -36,7 +40,7 @@ ymodel=ymodel(nonnanid);
     ymeas=temp;
 if options.inFofFreq
     if options.absDB
-        fitpercent=mag2db(abs(ymeas)) - mag2db(abs(ymodel));
+        fitpercent=abs(mag2db(abs(ymeas)) - mag2db(abs(ymodel)));
     else
         fitpercent=100*(1-abs(ymeas-ymodel))./(abs(ymeas-mean(ymeas)));
     end

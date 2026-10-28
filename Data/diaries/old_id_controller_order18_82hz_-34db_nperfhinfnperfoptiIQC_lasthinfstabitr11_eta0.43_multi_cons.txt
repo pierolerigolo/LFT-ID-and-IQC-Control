@@ -1,0 +1,136 @@
+Iter   1 | Stage 1
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 0.000000 | gamma = 10.000000 | slack = 0.000000 | time = 2.83 s
+Controller is OL stable
+  --> Saved K_stage{2}
+  --> Advancing to Stage 2
+Iter   2 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 162.971516 | time = 3.51 s
+
+Controller is OL unstable
+  --> Saved K_stage{3}
+  --> Advancing to Stage 3
+Iter   3 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 0.01 -> true (slack = 0)
+D warm-start:
+    1.1301
+
+E warm-start:
+  -6.0944e-17 - 4.3379e-06i
+
+  [expand] eta = 0.3447 -> true (slack = 0)
+D warm-start:
+    1.1947
+
+E warm-start:
+   0.0000 - 0.0075i
+
+  [expand] eta = 0.6894 -> false (slack = 0)
+D warm-start:
+    1.1947
+
+E warm-start:
+   0.0000 - 0.0075i
+
+  [bisect  1] eta = 0.517034 -> false (slack = 0)
+D warm-start:
+    1.1947
+
+E warm-start:
+   0.0000 - 0.0075i
+
+  [bisect  2] eta = 0.430861 -> true (slack = 0)
+D warm-start:
+    1.1868
+
+E warm-start:
+  -0.0000 - 0.0727i
+
+  [bisect  3] eta = 0.473947 -> false (slack = 0)
+D warm-start:
+    1.1868
+
+E warm-start:
+  -0.0000 - 0.0727i
+
+  [bisect  4] eta = 0.452404 -> false (slack = 0)
+D warm-start:
+    1.1868
+
+E warm-start:
+  -0.0000 - 0.0727i
+
+  [bisect  5] eta = 0.441633 -> false (slack = 0)
+D warm-start:
+    1.1868
+
+E warm-start:
+  -0.0000 - 0.0727i
+
+  [bisect  6] eta = 0.436247 -> false (slack = 0)
+D warm-start:
+    1.1868
+
+E warm-start:
+  -0.0000 - 0.0727i
+
+  [bisect  7] eta = 0.433554 -> true (slack = 0)
+IQC_reduced_PI_eta_bisection: converged, eta = 0.433554
+Pi scaler: 5.212e-01 used
+range of Pi plus
+min:  -0.0000 - 0.1531i
+
+max:    0.9594
+
+range of Pi minus
+min:   -3.2053
+
+max:   -3.2053
+
+  obj = 1.755757 | time = 18.62 s
+
+Controller is OL unstable
+  --> Saved K_stage{4}
+  --> Converged.
+
+norminf_W1S =
+
+    1.3208
+
+
+norminf_T =
+
+    2.2290
+
+
+expname =
+
+    'old_id_controller_order18_82hz_-34db_nperfhinfnperfoptiIQC_lasthinfstabitr11_eta0.43_multi_cons'
+

@@ -1,0 +1,296 @@
+Iter   1 | Stage 1
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 0.000000 | gamma = 10.000000 | slack = 0.000000 | time = 6.02 s
+Controller is OL stable
+Iter   2 | Stage 1
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 0.000000 | gamma = 10.000000 | slack = 0.000000 | time = 2.77 s
+Controller is OL stable
+  --> Saved K_stage{2}
+  --> Advancing to Stage 2
+Iter   3 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 0.231367 | time = 4.71 s
+
+Controller is OL unstable
+Iter   4 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 0.165473 | time = 3.63 s
+
+Controller is OL stable
+Iter   5 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 0.159213 | time = 3.14 s
+
+Controller is OL unstable
+Iter   6 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 0.156412 | time = 3.21 s
+
+Controller is OL unstable
+Iter   7 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 0.154541 | time = 2.90 s
+
+Controller is OL stable
+Iter   8 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 0.151673 | time = 3.23 s
+
+Controller is OL unstable
+Iter   9 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 0.149276 | time = 3.02 s
+
+Controller is OL stable
+Iter  10 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 0.146798 | time = 2.93 s
+
+Controller is OL stable
+Iter  11 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 0.143521 | time = 2.98 s
+
+Controller is OL stable
+Iter  12 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 0.140199 | time = 3.02 s
+
+Controller is OL stable
+Iter  13 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 0.131396 | time = 2.91 s
+
+Controller is OL stable
+Iter  14 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 0.123746 | time = 2.88 s
+
+Controller is OL unstable
+Iter  15 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 0.118311 | time = 3.14 s
+
+Controller is OL stable
+  --> Saved K_stage{3}
+  --> Advancing to Stage 3
+Iter  16 | Stage 3
+  [etaLower] eta = 0.01 -> true (slack = 0)
+  [expand] eta = 0.3718 -> true (slack = 0)
+  [expand] eta = 0.7435 -> false (slack = 0)
+  [bisect  1] eta = 0.557629 -> false (slack = 0)
+  [bisect  2] eta = 0.464691 -> false (slack = 0)
+  [bisect  3] eta = 0.418222 -> true (slack = 0)
+  [bisect  4] eta = 0.441457 -> false (slack = 0)
+  [bisect  5] eta = 0.429839 -> false (slack = 0)
+  [bisect  6] eta = 0.424031 -> false (slack = 0)
+  [bisect  7] eta = 0.421126 -> true (slack = 0)
+IQC_reduced_PI_eta_bisection: converged, eta = 0.421126
+Pi scaler: 5.447e-01 used
+range of Pi plus
+min:   8.8767e-17 - 1.2089e-13i
+
+max:    0.9180
+
+range of Pi minus
+min:   -2.3639
+
+max:   -1.8088
+
+  obj = 0.117857 | time = 22.78 s
+
+Controller is OL unstable
+Iter  17 | Stage 3
+  [etaLower] eta = 0.01 -> true (slack = 0)
+  [expand] eta = 0.4211 -> true (slack = 0)
+  [expand] eta = 0.8423 -> false (slack = 0)
+  [bisect  1] eta = 0.63169 -> false (slack = 0)
+  [bisect  2] eta = 0.526408 -> false (slack = 0)
+  [bisect  3] eta = 0.473767 -> false (slack = 0)
+  [bisect  4] eta = 0.447447 -> false (slack = 0)
+  [bisect  5] eta = 0.434287 -> false (slack = 0)
+  [bisect  6] eta = 0.427706 -> false (slack = 0)
+  [bisect  7] eta = 0.424416 -> false (slack = 0)
+IQC_reduced_PI_eta_bisection: converged, eta = 0.421126
+Pi scaler: 5.371e-01 used
+range of Pi plus
+min:   2.0913e-13 - 3.4151e-14i
+
+max:    0.9309
+
+range of Pi minus
+min:   -2.1926
+
+max:   -1.6543
+
+  obj = 0.117298 | time = 21.09 s
+
+Controller is OL unstable
+  --> Saved K_stage{4}
+  --> Converged.
+
+norminf_W1S =
+
+    0.3425
+
+
+norminf_T =
+
+    1.6460
+
+
+expname =
+
+    'controller_order18_82hz_-34db_nperfhinfnperfoptiIQC_lasthinfstabitr15_eta0.42_multi_freq.mat'
+

@@ -8,6 +8,10 @@ function [constraints, slack, D, E, PI] = IQC_reduced_PI_par_fix(plant, controll
     %   with D = D' >= 0, E = -E', and 'eta' a FIXED scalar bound on the
     %   uncertainty. D and E are YALMIP decision variables, one (n x n)
     %   matrix per frequency, returned as CELL ARRAYS (nomegas x 1).
+    %   With "multiplier","constant" a single D, E is shared by all
+    %   frequencies (cells then hold the same sdpvar) and the multiplier
+    %   constraints (D >= epsD, PI_plus >= epsPIplus, E = -E', D <= DMax)
+    %   are added ONCE, exactly like the original constant IQC_reduced_PI.
     %
     %   The controller MUST be fixed (numeric) for this call: the congruence
     %   transformed LMI
@@ -15,31 +19,33 @@ function [constraints, slack, D, E, PI] = IQC_reduced_PI_par_fix(plant, controll
     %   is affine in (D,E) only if L and frakL's controller parts are numeric.
     %
     %   ------------------------------------------------------------------------
-    %   HOW TO USE THE SLACK TO GET THE "BEST" MULTIPLIER
+    %   PURE FEASIBILITY (addSlack = false) vs SLACK
     %   ------------------------------------------------------------------------
+    %   For a square/SISO delta-channel Psi = 0 and the last rows/cols of M
+    %   are identically zero. With "dropNullRows" true (default) they are
+    %   removed so that M >= 0 has an interior. NOTE: without an objective the
+    %   multiplier returned by the solver is NOT unique, and which point you
+    %   get depends on the formulation (number of constraints, size of M,
+    %   epsD, ...). Set "dropNullRows" false to reproduce the original
+    %   4x4 formulation exactly.
+    %
     %   With "addSlack" true the LMI is  M + slack*I >= 0.
-    %     - "slackLower" = 0 (default): slack >= 0, so minimising slack only
-    %       tells you HOW MUCH the constraint is violated (0 = feasible).
-    %     - "slackLower" < 0 (e.g. -1): slack may become NEGATIVE; minimising
-    %       it returns the multiplier that satisfies the constraint with the
-    %       most room to spare (slack* < 0 = room, slack* > 0 = infeasible).
-    %   Because the feasible set is a cone in (D,E), "DMax" bounds D <= DMax*I
-    %   so the minimisation cannot go to -infinity by just scaling D, E up.
+    %     - "slackLower" = 0 (default): slack >= 0 (violation measure).
+    %     - "slackLower" < 0: slack may be negative -> margin.
     %
     %   Name-value options:
     %     "epsNormalisation", "epsSVD", "addSlack" - as before.
-    %     "epsD"       - D >= epsD*I. Default 1e-4.
-    %     "DMax"       - D <= DMax*I. Default Inf (no bound). Use 1 together
-    %                    with slackLower < 0 (D = 1, E = 0 is then the fixed
-    %                    scalar multiplier, which is inside the feasible set).
-    %     "slackLower" - slack >= slackLower. Default 0.
-    %     "epsPIplus"  - PI_plus >= epsPIplus*I. Default 1e-6.
+    %     "multiplier"   - "frequency" (default) or "constant".
+    %     "dropNullRows" - drop structurally zero rows/cols of M. Default true.
+    %     "epsD"         - D >= epsD*I. Default 1e-4.
+    %     "DMax"         - D <= DMax*I. Default Inf (no bound).
+    %     "slackLower"   - slack >= slackLower. Default 0.
+    %     "epsPIplus"    - PI_plus >= epsPIplus*I. Default 1e-6.
     %     "warmstartD", "warmstartE" - numeric n x n, or cell {nomegas x 1}.
     %
     %   Note: the "stability" LMI of IQC_reduced is NOT added here - with a
     %   fixed controller it does not depend on D, E (it is a numeric constant).
     %
-    %   ------------------------------------------------------------------------
     %   References
     %     [1] V. Gupta, E. Klauser, and A. Karimi, "Non-parametric IQC
     %     multipliers in data-driven robust controller synthesis," 2024.
@@ -58,10 +64,12 @@ function [constraints, slack, D, E, PI] = IQC_reduced_PI_par_fix(plant, controll
         opts.epsNormalisation (1, 1) double = 1e-6;
         opts.epsSVD (1, 1) double = 1e-6;
         opts.addSlack (1, 1) logical = true;
-        opts.epsD (1, 1) double = 1e-2;
+        opts.epsD (1, 1) double = 1e-4;
         opts.DMax (1, 1) double = Inf;
         opts.slackLower (1, 1) double = 0;
-        opts.epsPIplus (1, 1) double = 1e-4;
+        opts.epsPIplus (1, 1) double = 1e-6;
+        opts.multiplier (1, 1) string {mustBeMember(opts.multiplier, ["frequency", "constant"])} = "frequency";
+        opts.dropNullRows (1, 1) logical = true;
         opts.warmstartD = []
         opts.warmstartE = []
         opts.warmstartPI double = [];   % previous full PI (numeric, 2n x 2n)
@@ -115,7 +123,7 @@ function [constraints, slack, D, E, PI] = IQC_reduced_PI_par_fix(plant, controll
         D_ws = repmat({D_ws}, nomegas, 1);
     end
     if isempty(E_ws)
-        E_ws = repmat({1e-6*eye(n)}, nomegas, 1);
+        E_ws = repmat({zeros(n)}, nomegas, 1);
     elseif ~iscell(E_ws)
         E_ws = repmat({E_ws}, nomegas, 1);
     end
@@ -124,6 +132,12 @@ function [constraints, slack, D, E, PI] = IQC_reduced_PI_par_fix(plant, controll
     D = cell(nomegas, 1);
     E = cell(nomegas, 1);
     for i = 1:nomegas
+        if opts.multiplier == "constant" && i > 1
+            % one D, E shared by all frequencies (the original fixed version)
+            D{i} = D{1};
+            E{i} = E{1};
+            continue
+        end
         D{i} = sdpvar(n, n, 'hermitian', 'complex');
         E{i} = sdpvar(n, n, 'full', 'complex');
 
@@ -155,16 +169,24 @@ function [constraints, slack, D, E, PI] = IQC_reduced_PI_par_fix(plant, controll
             ];
         PI_minus_22{i_W} = PI_22 - beta * eye(nq);
 
-        multiplierConstraints{i_W} = [ ...
-            Dk >= opts.epsD * eye(n) ; ...
-            PI_plus{i_W} >= opts.epsPIplus * eye(np + nq) ; ...
-            Ek + Ek' == zeros(n) ; ...   % enforces Ek = -Ek'
-            ];
-        if isfinite(opts.DMax)
-            multiplierConstraints{i_W} = [multiplierConstraints{i_W}; ...
-                Dk <= opts.DMax * eye(n)];
+        if opts.multiplier == "constant" && i_W > 1
+            % Same variables as frequency 1 -> same constraints. Adding them
+            % nomegas times would only re-weight the barrier of the solver
+            % (and change which multiplier it returns), so add them once.
+            multiplierConstraints{i_W} = [];
+        else
+            multiplierConstraints{i_W} = [ ...
+                Dk >= opts.epsD * eye(n) ; ...
+                PI_plus{i_W} >= opts.epsPIplus * eye(np + nq) ; ...
+                Ek + Ek' == zeros(n) ; ...   % enforces Ek = -Ek'
+                ];
+            if isfinite(opts.DMax)
+                multiplierConstraints{i_W} = [multiplierConstraints{i_W}; ...
+                    Dk <= opts.DMax * eye(n)];
+            end
         end
     end
+    multiplierConstraints = multiplierConstraints(~cellfun(@isempty, multiplierConstraints));
 
     % ----- SDPVAR definitions -----
     if opts.addSlack
@@ -225,6 +247,15 @@ function [constraints, slack, D, E, PI] = IQC_reduced_PI_par_fix(plant, controll
             % Congruence-transformed LMI (equivalent to M >= 0 given PI_plus > 0)
             PI_plus_iw = PI_plus{i_W};
             M = [PI_plus_iw, PI_plus_iw*L; L'*PI_plus_iw, -frakL];
+
+            % Square/SISO case: Psi = I - pinv(G21)*G21 = 0, so the last
+            % size(Psi,2) rows/cols of M are identically zero. M then has no
+            % strictly feasible point. Drop those rows/cols (M >= 0 is
+            % mathematically unchanged, but the solver sees a different problem).
+            if opts.dropNullRows && norm(Psi, 'fro') < 1e-9
+                keep = 1:(size(M,1) - size(Psi,2));
+                M = M(keep, keep);
+            end
 
         elseif controller.factorisation == "Left"
             error("IQC not defined for Left factorisation! Yet!");

@@ -1,0 +1,318 @@
+Iter   1 | Stage 1
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 0.000000 | gamma = 10.000000 | slack = 0.000000 | time = 2.71 s
+Controller is OL stable
+Iter   2 | Stage 1
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 0.000000 | gamma = 10.000000 | slack = 0.000000 | time = 1.75 s
+Controller is OL stable
+  --> Saved K_stage{2}
+  --> Advancing to Stage 2
+Iter   3 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 0.559044 | time = 3.94 s
+
+Controller is OL stable
+Iter   4 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 0.463377 | time = 4.25 s
+
+Controller is OL stable
+Iter   5 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 0.342834 | time = 3.55 s
+
+Controller is OL stable
+Iter   6 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 0.296779 | time = 3.32 s
+
+Controller is OL stable
+Iter   7 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 0.276867 | time = 3.33 s
+
+Controller is OL stable
+Iter   8 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 0.264852 | time = 3.47 s
+
+Controller is OL stable
+Iter   9 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 0.262192 | time = 3.10 s
+
+Controller is OL stable
+Iter  10 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 0.274775 | time = 3.18 s
+
+Controller is OL stable
+Iter  11 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 0.257964 | time = 3.21 s
+
+Controller is OL stable
+Iter  12 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 0.264616 | time = 3.21 s
+
+Controller is OL stable
+Iter  13 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 0.257781 | time = 3.33 s
+
+Controller is OL stable
+  --> Saved K_stage{3}
+  --> Advancing to Stage 3
+Iter  14 | Stage 3
+  [etaLower] eta = 0.01 -> true (slack = 0)
+  [expand] eta = 0.3718 -> true (slack = 0)
+  [expand] eta = 0.7435 -> false (slack = 0)
+  [bisect  1] eta = 0.557629 -> false (slack = 0)
+  [bisect  2] eta = 0.464691 -> false (slack = 0)
+  [bisect  3] eta = 0.418222 -> false (slack = 0)
+  [bisect  4] eta = 0.394987 -> false (slack = 0)
+  [bisect  5] eta = 0.38337 -> true (slack = 0)
+  [bisect  6] eta = 0.389179 -> true (slack = 0)
+  [bisect  7] eta = 0.392083 -> false (slack = 0)
+IQC_reduced_PI_eta_bisection: converged, eta = 0.389179
+Pi scaler: 5.533e-01 used
+range of Pi plus
+min:   1.4357e-16
+
+max:    0.9036
+
+range of Pi minus
+min:   -2.4345
+
+max:   -0.9240
+
+  obj = 0.255239 | time = 22.49 s
+
+Controller is OL stable
+Iter  15 | Stage 3
+  [etaLower] eta = 0.01 -> true (slack = 0)
+  [expand] eta = 0.3892 -> true (slack = 0)
+  [expand] eta = 0.7784 -> false (slack = 0)
+  [bisect  1] eta = 0.583768 -> false (slack = 0)
+  [bisect  2] eta = 0.486474 -> false (slack = 0)
+  [bisect  3] eta = 0.437826 -> false (slack = 0)
+  [bisect  4] eta = 0.413503 -> false (slack = 0)
+  [bisect  5] eta = 0.401341 -> true (slack = 0)
+  [bisect  6] eta = 0.407422 -> true (slack = 0)
+  [bisect  7] eta = 0.410462 -> true (slack = 0)
+IQC_reduced_PI_eta_bisection: converged, eta = 0.410462
+Pi scaler: 5.661e-01 used
+range of Pi plus
+min:  -1.7793e-18
+
+max:    0.8832
+
+range of Pi minus
+min:   -2.3802
+
+max:   -0.9026
+
+  obj = 0.284024 | time = 20.96 s
+
+Controller is OL stable
+Iter  16 | Stage 3
+  [etaLower] eta = 0.01 -> true (slack = 0)
+  [expand] eta = 0.4105 -> true (slack = 0)
+  [expand] eta = 0.8209 -> false (slack = 0)
+  [bisect  1] eta = 0.615693 -> false (slack = 0)
+  [bisect  2] eta = 0.513078 -> false (slack = 0)
+  [bisect  3] eta = 0.46177 -> false (slack = 0)
+  [bisect  4] eta = 0.436116 -> true (slack = 0)
+  [bisect  5] eta = 0.448943 -> false (slack = 0)
+  [bisect  6] eta = 0.442529 -> true (slack = 0)
+  [bisect  7] eta = 0.445736 -> false (slack = 0)
+IQC_reduced_PI_eta_bisection: converged, eta = 0.442529
+Pi scaler: 5.865e-01 used
+range of Pi plus
+min:  -6.5245e-19
+
+max:    0.8525
+
+range of Pi minus
+min:   -2.3313
+
+max:   -0.8698
+
+  obj = 0.260268 | time = 21.83 s
+
+Controller is OL unstable
+Iter  17 | Stage 3
+  [etaLower] eta = 0.01 -> true (slack = 0)
+  [expand] eta = 0.4425 -> true (slack = 0)
+  [expand] eta = 0.8851 -> false (slack = 0)
+  [bisect  1] eta = 0.663794 -> false (slack = 0)
+  [bisect  2] eta = 0.553162 -> false (slack = 0)
+  [bisect  3] eta = 0.497846 -> false (slack = 0)
+  [bisect  4] eta = 0.470187 -> false (slack = 0)
+  [bisect  5] eta = 0.456358 -> false (slack = 0)
+  [bisect  6] eta = 0.449444 -> true (slack = 0)
+  [bisect  7] eta = 0.452901 -> false (slack = 0)
+IQC_reduced_PI_eta_bisection: converged, eta = 0.449444
+Pi scaler: 5.803e-01 used
+range of Pi plus
+min:  -6.0756e-16
+
+max:    0.8617
+
+range of Pi minus
+min:   -2.3095
+
+max:   -0.8791
+
+  obj = 0.259692 | time = 22.15 s
+
+Controller is OL unstable
+  --> Saved K_stage{4}
+  --> Converged.
+
+norminf_W1S =
+
+    0.5064
+
+
+norminf_T =
+
+    1.5666
+
+
+expname =
+
+    'controller_W2hpfT_order18_82hz_-34db_nperfhinfnperfoptiIQC_lasthinfstabitr13_eta0.45_multi_freq.mat'
+

@@ -24,8 +24,8 @@ end
 %     sys_est_GLTI{n}
 % end
 
-save(fullfile('data',filename),"Gdm","m","m0","dm_bound", ...
-    "Gdmnom","sys_est_Gdm","Gest","GLTI","sys_est_GLTI","GFRF_dm")
+% save(fullfile('data',filename),"Gdm","m","m0","dm_bound", ...
+%    "Gdmnom","sys_est_Gdm","Gest","GLTI","sys_est_GLTI","GFRF_dm")
 %% Recovering the fit percent in function of the ord of GLTI
 for n=find(~cellfun(@isempty,sys_est_GLTI))
     fitpercent(n,:)=sys_est_GLTI{n}.Report.Fit.FitPercent;
@@ -112,6 +112,35 @@ for i=7:12
 end
 compare(GFRF(1),Gest{7}(1),Gest{8}(1),Gest{9}(1),Gest{10}(1),Gest{11}(1),Gest{12}(1))
 
+%% Coherance plot 
+G_est_chosen=Gest{7};
+[ymod,fit,ic]=compare(data{1},G_est_chosen(1));
+figure
+ymeas=data{1}.OutputData;
+ymodel=ymod.OutputData;
+mscohere(ymeas,ymodel)
+figure
+plot(ymeas)
+hold on
+plot(ymodel)
+%-> oke jcrois ca sert à rien la coherance
+
+%% Abs diff in f of freq of bt the model and the measurements
+figure
+title('dB absolute error between model vs measurements')
+hold on
+for i=1:length(GFRF)
+    [absdbfit,nonnanid]=utils.NRMSE(G_est_chosen(i),GFRF(i), ...
+        'inFofFreq',true,'absDB',true);
+    plot(GFRF.Frequency(nonnanid)/2/pi,absdbfit,'DisplayName',sprintf('OP %d',i))
+end
+xscale('log')
+xline(25,'Label','Freq. min.','HandleVisibility','off')
+xline(75,'Label','Freq. max.','HandleVisibility','off')
+xlabel('Frequency (Hz)')
+ylabel('Error (dB)')
+legend('Location','best')
+xlim([10 500])
 %% Prepare the LFT for the control synthesis
 
 % Frequency grid
@@ -132,8 +161,8 @@ GLFT= [  -Gdmnom, Gdmnom*GLTI_selected;...
 
 G=Gest{ord};
 
-save(fullfile('data',sprintf('LFT_GFRF_param_n%d_%s.mat',ord,expname)), ...
-    "GLFT","dm_bound","m0","m","GFRF","G","GFRF_dm")
+% save(fullfile('data',sprintf('LFT_GFRF_param_n%d_%s.mat',ord,expname)), ...
+%     "GLFT","dm_bound","m0","m","GFRF","G","GFRF_dm")
 %% Table for the obtained parameter and their std 
 function T = param_table(sys_est, names)
 % Parameter estimates and standard deviations of a greyest model.
