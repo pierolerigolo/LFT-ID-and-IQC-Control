@@ -6,19 +6,24 @@ orderK   = 18 ;
 Ts       = 0.001;
 
 %% Load data
-idname='LFT_GFRF_param_n7_2907';
+idname='LFT_GFRF_param_n7_1028';
 load(fullfile('Data',sprintf('%s.mat',idname)))
 % load(fullfile('data','Old id method/','idm_suspended_2907.mat'))
 % load(fullfile('data','Old id method/','sus_data_2907_lft_full.mat'))
 % dm_bound=dm_max;
-% % For windows
+% % For windows ordi vaibhav
 % addpath(genpath("C:\Users\admin\mosek"))
 % addpath(genpath("C:\Program Files\Mosek\10.1"))
 % addpath(genpath("C:\Users\admin\Documents\MATLAB\tbxmanager"))
 
-% For mac
-addpath(genpath("/Users/pierre/mosek"))
-addpath(genpath("/Users/pierre/Documents/MATLAB/tbxmanager"))
+% for windows ordi csem
+addpath(genpath("C:\Users\orx\mosek"))
+addpath(genpath("..\YALMIP-master"))
+addpath(genpath("C:\Program Files\Mosek\11.2"))
+
+% % For mac
+% addpath(genpath("/Users/pierre/mosek"))
+% addpath(genpath("/Users/pierre/Documents/MATLAB/tbxmanager"))
 
 W_lft=GLFT.Frequency;
 nomegas=length(W_lft);
@@ -93,7 +98,8 @@ disp(G_combined.InputGroup)
 disp(G_combined.OutputGroup)
 
 %% IQC multiplier PI  (bouded real scalar)
-eta      = dm_bound*1;   % bound on delta = dm/m0
+etainit=dm_bound*1.2;
+eta      = etainit;   % bound on delta = dm/m0
 % eta=0.2;
 PI_data  = repmat([eta^2, 0; 0, -1], [1, 1, length(W_lft)]);
 PI       = frd(PI_data, W_lft, G_hat.Ts);
@@ -125,7 +131,7 @@ loss_tol = Inf;
 eta_max = Inf;%2*dm_bound;
 mutli_type='frequency';
 nextstage=0;
-last_hinfstb_itr=Inf;
+last_hinfstb_itr=10;
 D_val=repmat({eye(1)}, nomegas, 1);
 E_val=repmat({zeros(1)}, nomegas, 1);
 
@@ -337,10 +343,10 @@ end
 
 
 
-expname=sprintf('%s_controller_order%d_%.0fhz_%.0fdb_%s_lasthinfstabitr%d_eta%.2f_multi_%s', ...
+expname=sprintf('%s_controller_order%d_%.0fhz_%.0fdb_%s_lasthinfstabitr%d_dminit%.2f_etaf%.2f_multi_%s', ...
     idname,orderK,omega_d/2/pi,mag2db(min(abs(inv(W1_frd).ResponseData))), ...
-    strcat(stage_names_red{stagefin}),last_hinfstb_itr,eta,mutli_type(1:4))
-
+    strcat(stage_names_red{stagefin}),last_hinfstb_itr,etainit,eta,mutli_type(1:4))
+clear OBJ OBJ_perf gamma LMIs_rob LMIs 
 save(fullfile('data','controller',sprintf('%s.mat',expname)))
 diary off
 movefile(fullfile('data','diaries','diary_temp.txt'),fullfile('data','diaries',sprintf('%s.txt',expname)))
@@ -414,12 +420,11 @@ xlim([10 1000*pi])
  ylim([-40 10])
 K_itr_current=K_itr;
 
-%%
-% load(fullfile('Data/','controller_sus_7nm_order18_82hz_-34db_nperfhinfnperfoptiIQC_eta9.139390e-01.mat'),'K_itr')
-iteration=17
-K_chosen=K_stage{3};
-%load(fullfile('Data/','controller_sus_7nm_order18_82hz_-25db_nperfhinfnperfoptiIQC_eta4.681766e-01.mat'))
-K_old=K_itr_current{17};
+%% Analyse de resutlat nouveau id vs old id
+load(fullfile('Data','controller','LFT_GFRF_param_n7_1028_controller_order10_82hz_-34db_nperfhinfnperfoptiIQC_lasthinfstabitr10_eta0.82_multi_freq.mat'))
+K_chosen=K_itr{end};
+load(fullfile('Data','finalrepportcont/','controller_sus_7nm_order18_82hz_-34db_nperfhinfnperfoptiIQC_eta9.139390e-01.mat'),'K_itr')
+K_old=K_itr{26}; %eta=0.627
 
 
 % load(fullfile('data','controller_sus_7nm_order20_81hz_-9db_nomperf_eta0.1.mat'),'K_itr')
@@ -428,7 +433,7 @@ K_old=K_itr_current{17};
 norminf_W1S = norm(interp(W1_frd, W_lft) * frd(feedback(K_chosen*GLFT(2,2),1), W_lft), inf)
 norminf_W1S_old = norm(interp(W1_frd, W_lft) * frd(feedback(K_old*GLFT(2,2),1), W_lft), inf)
 
-figure;pzplot(K_chosen)
+% figure;pzplot(K_chosen)
 figure;utils.magplot(frd(K_chosen,logspace(log10(10),log10(pi/Ts),1000)),'DisplayName','K chosen')
 utils.magplot(frd(K_old,logspace(log10(10),log10(pi/Ts),1000)),'Displayname','K old')
 % K_chosen=K_stage{1};
@@ -445,24 +450,39 @@ end
 colors=lines(4);
 % S
 figure; hold on
-% load("C:\Users\pgr\Github_local\pdm-pierre-gretillat\IQC LPV identification\idm_suspended.mat")
-% for i=1:length(GFRF_dm)
-    % utils.magplot(inv(1+K_chosen*G(i)),'Color',colors(i,:),'DisplayName','G'+string(i))
-% end
- utils.magplot(inv(1+K_chosen*GFRF(2)),'Color',[colors(2,:) .3],'LineStyle','--','DisplayName','FRF chosen dmreal='+string(GFRF_dm{2}.dmreal))
-utils.magplot(inv(1+K_chosen*GLFT(2,2)),'Color',colors(2,:),'DisplayName','nominal (G22) chosen')
-utils.magplot(inv(1+K_old*GFRF(2)),'Color',[colors(3,:) .3],'LineStyle','--','DisplayName','FRF old dmreal='+string(GFRF_dm{2}.dmreal))
-utils.magplot(inv(1+K_old*GLFT(2,2)),'Color',colors(3,:),'DisplayName','nominal (G22) old')
+for i=1:length(GFRF_dm)
+    utils.magplot(inv(1+K_chosen*G(i)),'Color',colors(i,:),'DisplayName','S new '+string(i))
+    utils.magplot(inv(1+K_old*G(i)),'Color',[colors(i,:) .3],'LineStyle','--','DisplayName','S old '+string(i))
+end
+ % utils.magplot(inv(1+K_chosen*GFRF(2)),'Color',[colors(2,:) .3],'LineStyle','--','DisplayName','FRF chosen dmreal='+string(GFRF_dm{2}.dmreal))
+% utils.magplot(inv(1+K_chosen*GLFT(2,2)),'Color',colors(2,:),'DisplayName','nominal (G22) chosen')
+% utils.magplot(inv(1+K_old*GFRF(2)),'Color',[colors(3,:) .3],'LineStyle','--','DisplayName','FRF old dmreal='+string(GFRF_dm{2}.dmreal))
+% utils.magplot(inv(1+K_old*GLFT(2,2)),'Color',colors(3,:),'DisplayName','nominal (G22) old')
 utils.magplot(inv(W1_frd))
-title(sprintf('K_itr %d',iteration))
-xlim([10 1000*pi])
+% xlim([10 500])
 % xlim([400 500])
- ylim([-40 10])
+ % ylim([-40 30])
 
  figure; hold on
 for i=1:length(GFRF_dm)
-    utils.magplot(inv(1+K_chosen*GFRF(i)),'Color',colors(i,:),'DisplayName','chosen G'+string(i))
-    utils.magplot(inv(1+K_old*GFRF(i)),'Color',colors(i,:),'DisplayName','old G'+string(i),'Linestyle','--')
+    utils.magplot(inv(1+K_chosen*GFRF(i)),'Color',colors(i,:),'DisplayName','Sjw new '+string(i))
+    utils.magplot(inv(1+K_old*GFRF(i)),'Color',[colors(i,:) .3],'DisplayName','Sjw old '+string(i),'Linestyle','--')
+end
+utils.magplot(inv(W1_frd))
+
+%% new id vs with W2
+load(fullfile('Data','controller','controller_order18_82hz_-34db_nperfhinfnperfoptiIQC_eta0.52_multi_freq.mat.mat'))
+K_old=K_stage{4};
+load(fullfile('data','controller','controller_W2hpfT_order18_82hz_-34db_nperfhinfnperfoptiIQC_lasthinfstabitr13_eta0.51_multi_freq.mat.mat'))
+K_chosen=K_stage{4};
+
+figure;utils.magplot(frd(K_chosen,logspace(log10(10),log10(pi/Ts),1000)),'DisplayName','K chosen')
+utils.magplot(frd(K_old,logspace(log10(10),log10(pi/Ts),1000)),'Displayname','K old')
+
+ figure; hold on
+for i=1:length(GFRF_dm)
+    utils.magplot(inv(1+K_chosen*GFRF(i)),'Color',colors(i,:),'DisplayName','Sjw new '+string(i))
+    utils.magplot(inv(1+K_old*GFRF(i)),'Color',[colors(i,:) .3],'DisplayName','Sjw old '+string(i),'Linestyle','--')
 end
 utils.magplot(inv(W1_frd))
 

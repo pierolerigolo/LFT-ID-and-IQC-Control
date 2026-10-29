@@ -1,0 +1,455 @@
+Iter   1 | Stage 1
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = -0.000000 | gamma = 10.000000 | slack = -0.000000 | time = 1.49 s
+Controller is OL stable
+Iter   2 | Stage 1
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 0.000000 | gamma = 10.000000 | slack = 0.000000 | time = 1.05 s
+Controller is OL stable
+  --> Saved K_stage{2}
+  --> Advancing to Stage 2
+Iter   3 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 0.191838 | time = 2.64 s
+
+Controller is OL stable
+Iter   4 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 0.170195 | time = 2.52 s
+
+Controller is OL unstable
+Iter   5 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 0.168581 | time = 2.45 s
+
+Controller is OL unstable
+Iter   6 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 0.166649 | time = 2.49 s
+
+Controller is OL unstable
+Iter   7 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 0.165474 | time = 2.54 s
+
+Controller is OL unstable
+Iter   8 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 0.164302 | time = 2.55 s
+
+Controller is OL unstable
+Iter   9 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 0.162409 | time = 2.45 s
+
+Controller is OL unstable
+Iter  10 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 0.160955 | time = 2.45 s
+
+Controller is OL unstable
+  --> Saved K_stage{3}
+  --> Advancing to Stage 3
+Iter  11 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 1e-05 -> true (slack = 0)
+    D = 6.078e+04
+    E = 1.695e-23+2.257e-12i
+D warm-start:
+   6.0785e+04
+
+E warm-start:
+   1.6953e-23 + 2.2565e-12i
+
+  [expand] eta = 0.4066 -> true (slack = 0)
+    D = 3.904
+    E = 1.007e-21-0.0002037i
+D warm-start:
+    3.9039
+
+E warm-start:
+   1.0067e-21 - 2.0374e-04i
+
+  [expand] eta = 0.8131 -> false (slack = 0)
+D warm-start:
+    3.9039
+
+E warm-start:
+   1.0067e-21 - 2.0374e-04i
+
+  [bisect  1] eta = 0.609838 -> true (slack = 0)
+    D = 1.686
+    E = 3.57e-24-0.0002237i
+D warm-start:
+    1.6863
+
+E warm-start:
+   3.5697e-24 - 2.2374e-04i
+
+  [bisect  2] eta = 0.711478 -> false (slack = 0)
+D warm-start:
+    1.6863
+
+E warm-start:
+   3.5697e-24 - 2.2374e-04i
+
+  [bisect  3] eta = 0.660658 -> false (slack = 0)
+D warm-start:
+    1.6863
+
+E warm-start:
+   3.5697e-24 - 2.2374e-04i
+
+  [bisect  4] eta = 0.635248 -> false (slack = 0)
+D warm-start:
+    1.6863
+
+E warm-start:
+   3.5697e-24 - 2.2374e-04i
+
+  [bisect  5] eta = 0.622543 -> true (slack = 0)
+    D = 1.324
+    E = 2.388e-21-0.0001037i
+D warm-start:
+    1.3238
+
+E warm-start:
+   2.3879e-21 - 1.0372e-04i
+
+  [bisect  6] eta = 0.628896 -> false (slack = 0)
+D warm-start:
+    1.3238
+
+E warm-start:
+   2.3879e-21 - 1.0372e-04i
+
+  [bisect  7] eta = 0.62572 -> false (slack = 0)
+IQC_reduced_PI_eta_bisection: converged, eta = 0.622543
+Pi scaler: 6.887e-01 used
+range of Pi plus
+min:   5.4758e-17 - 3.8355e-20i
+
+max:    0.7449
+
+range of Pi minus
+min:   -2.6481
+
+max:   -0.7267
+
+  obj = 0.160169 | time = 14.97 s
+
+Controller is OL unstable
+Iter  12 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 1e-05 -> true (slack = 0)
+    D = 6.078e+04
+    E = 2.19e-23-5.023e-12i
+D warm-start:
+   6.0785e+04
+
+E warm-start:
+   2.1899e-23 - 5.0230e-12i
+
+  [expand] eta = 0.6225 -> true (slack = 0)
+    D = 2.6
+    E = 9.809e-20-0.0005241i
+D warm-start:
+    2.5996
+
+E warm-start:
+   9.8093e-20 - 5.2415e-04i
+
+  [expand] eta = 1.245 -> false (slack = 0)
+D warm-start:
+    2.5996
+
+E warm-start:
+   9.8093e-20 - 5.2415e-04i
+
+  [bisect  1] eta = 0.933815 -> false (slack = 0)
+D warm-start:
+    2.5996
+
+E warm-start:
+   9.8093e-20 - 5.2415e-04i
+
+  [bisect  2] eta = 0.778179 -> false (slack = 0)
+D warm-start:
+    2.5996
+
+E warm-start:
+   9.8093e-20 - 5.2415e-04i
+
+  [bisect  3] eta = 0.700361 -> false (slack = 0)
+D warm-start:
+    2.5996
+
+E warm-start:
+   9.8093e-20 - 5.2415e-04i
+
+  [bisect  4] eta = 0.661452 -> false (slack = 0)
+D warm-start:
+    2.5996
+
+E warm-start:
+   9.8093e-20 - 5.2415e-04i
+
+  [bisect  5] eta = 0.641998 -> false (slack = 0)
+D warm-start:
+    2.5996
+
+E warm-start:
+   9.8093e-20 - 5.2415e-04i
+
+  [bisect  6] eta = 0.632271 -> false (slack = 0)
+D warm-start:
+    2.5996
+
+E warm-start:
+   9.8093e-20 - 5.2415e-04i
+
+  [bisect  7] eta = 0.627407 -> false (slack = 0)
+IQC_reduced_PI_eta_bisection: converged, eta = 0.622543
+Pi scaler: 1.039e+00 used
+range of Pi plus
+min:   3.5462e-15
+
+max:    0.9699
+
+range of Pi minus
+min:   -2.9839
+
+max:   -0.4893
+
+  obj = 0.159031 | time = 16.15 s
+
+Controller is OL unstable
+Iter  13 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 1e-05 -> true (slack = 0)
+    D = 6.078e+04
+    E = 2.43e-23-3.907e-12i
+D warm-start:
+   6.0785e+04
+
+E warm-start:
+   2.4295e-23 - 3.9072e-12i
+
+  [expand] eta = 0.6225 -> true (slack = 0)
+    D = 2.572
+    E = 1.938e-23-0.0003751i
+D warm-start:
+    2.5715
+
+E warm-start:
+   1.9379e-23 - 3.7509e-04i
+
+  [expand] eta = 1.245 -> false (slack = 0)
+D warm-start:
+    2.5715
+
+E warm-start:
+   1.9379e-23 - 3.7509e-04i
+
+  [bisect  1] eta = 0.933815 -> false (slack = 0)
+D warm-start:
+    2.5715
+
+E warm-start:
+   1.9379e-23 - 3.7509e-04i
+
+  [bisect  2] eta = 0.778179 -> false (slack = 0)
+D warm-start:
+    2.5715
+
+E warm-start:
+   1.9379e-23 - 3.7509e-04i
+
+  [bisect  3] eta = 0.700361 -> false (slack = 0)
+D warm-start:
+    2.5715
+
+E warm-start:
+   1.9379e-23 - 3.7509e-04i
+
+  [bisect  4] eta = 0.661452 -> false (slack = 0)
+D warm-start:
+    2.5715
+
+E warm-start:
+   1.9379e-23 - 3.7509e-04i
+
+  [bisect  5] eta = 0.641998 -> false (slack = 0)
+D warm-start:
+    2.5715
+
+E warm-start:
+   1.9379e-23 - 3.7509e-04i
+
+  [bisect  6] eta = 0.632271 -> false (slack = 0)
+D warm-start:
+    2.5715
+
+E warm-start:
+   1.9379e-23 - 3.7509e-04i
+
+  [bisect  7] eta = 0.627407 -> false (slack = 0)
+IQC_reduced_PI_eta_bisection: converged, eta = 0.622543
+Pi scaler: 1.026e+00 used
+range of Pi plus
+min:   1.7446e-18
+
+max:    0.9718
+
+range of Pi minus
+min:   -2.9951
+
+max:   -0.4959
+
+  obj = 0.158186 | time = 16.43 s
+
+Controller is OL unstable
+  --> Saved K_stage{4}
+  --> Converged.
+
+norminf_W1S =
+
+    0.3977
+
+
+norminf_T =
+
+    1.7694
+
+
+expname =
+
+    'LFT_GFRF_param_n7_1028_controller_order18_82hz_-34db_nperfhinfnperfoptiIQC_lasthinfstabitr10_dminit0.41_etaf0.62_multi_freq'
+
+[Warning: YALMIP objects cannot be saved in binary format. You will run into troubles if you try to load this file later. You should clear all YALMIP objects first, or avoid having any YALMIP objects in the list of variables which you save.] 
+[> In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('sdpvar/saveobj', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\@sdpvar\saveobj.m', 3)" style="font-weight:bold">sdpvar/saveobj</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\@sdpvar\saveobj.m',3,0)">line 3</a>)
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('c_IQCcontrolSyn', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\LFT-ID-and-IQC-Control\c_IQCcontrolSyn.m', 350)" style="font-weight:bold">c_IQCcontrolSyn</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\LFT-ID-and-IQC-Control\c_IQCcontrolSyn.m',350,0)">line 350</a>)] 
+[Warning: YALMIP objects cannot be saved in binary format. You will run into troubles if you try to load this file later. You should clear all YALMIP objects first, or avoid having any YALMIP objects in the list of variables which you save.] 
+[> In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('sdpvar/saveobj', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\@sdpvar\saveobj.m', 3)" style="font-weight:bold">sdpvar/saveobj</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\@sdpvar\saveobj.m',3,0)">line 3</a>)
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('c_IQCcontrolSyn', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\LFT-ID-and-IQC-Control\c_IQCcontrolSyn.m', 350)" style="font-weight:bold">c_IQCcontrolSyn</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\LFT-ID-and-IQC-Control\c_IQCcontrolSyn.m',350,0)">line 350</a>)] 
+[Warning: YALMIP objects cannot be saved in binary format. You will run into troubles if you try to load this file later. You should clear all YALMIP objects first, or avoid having any YALMIP objects in the list of variables which you save.] 
+[> In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('sdpvar/saveobj', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\@sdpvar\saveobj.m', 3)" style="font-weight:bold">sdpvar/saveobj</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\@sdpvar\saveobj.m',3,0)">line 3</a>)
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('c_IQCcontrolSyn', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\LFT-ID-and-IQC-Control\c_IQCcontrolSyn.m', 350)" style="font-weight:bold">c_IQCcontrolSyn</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\LFT-ID-and-IQC-Control\c_IQCcontrolSyn.m',350,0)">line 350</a>)] 
+[Warning: YALMIP objects cannot be saved in binary format. You will run into troubles if you try to load this file later. You should clear all YALMIP objects first, or avoid having any YALMIP objects in the list of variables which you save.] 
+[> In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('sdpvar/saveobj', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\@sdpvar\saveobj.m', 3)" style="font-weight:bold">sdpvar/saveobj</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\@sdpvar\saveobj.m',3,0)">line 3</a>)
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('c_IQCcontrolSyn', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\LFT-ID-and-IQC-Control\c_IQCcontrolSyn.m', 350)" style="font-weight:bold">c_IQCcontrolSyn</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\LFT-ID-and-IQC-Control\c_IQCcontrolSyn.m',350,0)">line 350</a>)] 

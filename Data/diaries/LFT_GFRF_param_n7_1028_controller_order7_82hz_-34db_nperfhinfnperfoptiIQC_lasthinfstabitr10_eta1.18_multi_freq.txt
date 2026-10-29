@@ -1,0 +1,2614 @@
+Iter   1 | Stage 1
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 0.000000 | gamma = 10.000000 | slack = 0.000000 | time = 1.58 s
+Controller is OL unstable
+Iter   2 | Stage 1
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = -0.000000 | gamma = 10.000000 | slack = -0.000000 | time = 1.09 s
+Controller is OL stable
+  --> Saved K_stage{2}
+  --> Advancing to Stage 2
+Iter   3 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 909.510900 | time = 2.86 s
+
+Controller is OL unstable
+Iter   4 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 6.301907 | time = 2.74 s
+
+Controller is OL unstable
+Iter   5 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 1.284490 | time = 2.93 s
+
+Controller is OL unstable
+Iter   6 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 0.847582 | time = 2.56 s
+
+Controller is OL unstable
+Iter   7 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 0.430917 | time = 2.79 s
+
+Controller is OL unstable
+Iter   8 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 0.258349 | time = 2.79 s
+
+Controller is OL unstable
+Iter   9 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 0.255904 | time = 2.64 s
+
+Controller is OL unstable
+Iter  10 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 0.258227 | time = 2.75 s
+
+Controller is OL unstable
+Iter  11 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 0.256413 | time = 2.62 s
+
+Controller is OL unstable
+Iter  12 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 0.260172 | time = 2.56 s
+
+Controller is OL unstable
+Iter  13 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 0.253953 | time = 2.56 s
+
+Controller is OL unstable
+Iter  14 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 0.276953 | time = 2.61 s
+
+Controller is OL unstable
+Iter  15 | Stage 2
+{Operation terminated by user during <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 12)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',12,0)">line 12</a>)
+
+
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('ndsdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m', 7)" style="font-weight:bold">ndsdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@ndsdpvar\cat.m',7,0)">line 7</a>)
+    y = cat(along,varargin{3:end});
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('sdpvar/cat', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\@sdpvar\cat.m', 15)" style="font-weight:bold">sdpvar/cat</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\@sdpvar\cat.m',15,0)">line 15</a>)
+        y = cat(varargin{:});
+            ^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('datadriven.Controller.SS/freqresp', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\LFT-ID-and-IQC-Control\+datadriven\+Controller\SS.m', 109)" style="font-weight:bold">datadriven.Controller.SS/freqresp</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\LFT-ID-and-IQC-Control\+datadriven\+Controller\SS.m',109,0)">line 109</a>)
+                Y = cat(3, Y{:});
+                    ^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('datadriven.Objective.Hinf', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\LFT-ID-and-IQC-Control\+datadriven\+Objective\Hinf.m', 59)" style="font-weight:bold">datadriven.Objective.Hinf</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\LFT-ID-and-IQC-Control\+datadriven\+Objective\Hinf.m',59,0)">line 59</a>)
+[Xf, Yf] = freqresp(controller, omegas);
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('c_IQCcontrolSyn', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\LFT-ID-and-IQC-Control\c_IQCcontrolSyn.m', 174)" style="font-weight:bold">c_IQCcontrolSyn</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\LFT-ID-and-IQC-Control\c_IQCcontrolSyn.m',174,0)">line 174</a>)
+            [LMIs, OBJ_perf,gamma] = datadriven.Objective.Hinf( ...
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+} 
+c_IQCcontrolSyn
+    U1: 1
+    U2: 2
+    U3: 3
+
+    Y1: 1
+    Y2: 2
+    Y3: 3
+
+[Warning: The resource 'data\diaries\diary_temp.txt' is currently in use.] 
+[> In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('c_IQCcontrolSyn', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\LFT-ID-and-IQC-Control\c_IQCcontrolSyn.m', 141)" style="font-weight:bold">c_IQCcontrolSyn</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\LFT-ID-and-IQC-Control\c_IQCcontrolSyn.m',141,0)">line 141</a>)] 
+Iter   1 | Stage 1
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 0.000000 | gamma = 10.000000 | slack = 0.000000 | time = 1.37 s
+Controller is OL unstable
+Iter   2 | Stage 1
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = -0.000000 | gamma = 10.000000 | slack = -0.000000 | time = 1.08 s
+Controller is OL stable
+  --> Saved K_stage{2}
+  --> Advancing to Stage 2
+Iter   3 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 909.510900 | time = 2.69 s
+
+Controller is OL unstable
+Iter   4 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 6.301907 | time = 3.01 s
+
+Controller is OL unstable
+Iter   5 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 1.284490 | time = 3.10 s
+
+Controller is OL unstable
+  --> Saved K_stage{3}
+  --> Advancing to Stage 3
+Iter   6 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 1e-05 -> true (slack = 0)
+    D = 6.078e+04
+    E = -1.606e-23+2.686e-12i
+D warm-start:
+   6.0785e+04
+
+E warm-start:
+  -1.6061e-23 + 2.6857e-12i
+
+  [expand] eta = 0.3388 -> true (slack = 0)
+    D = 4.222
+    E = -1.611e-23-0.0001691i
+D warm-start:
+    4.2219
+
+E warm-start:
+  -1.6107e-23 - 1.6915e-04i
+
+  [expand] eta = 0.6776 -> false (slack = 0)
+D warm-start:
+    4.2219
+
+E warm-start:
+  -1.6107e-23 - 1.6915e-04i
+
+  [bisect  1] eta = 0.508199 -> true (slack = 0)
+    D = 1.947
+    E = 3.981e-21-0.0001742i
+D warm-start:
+    1.9469
+
+E warm-start:
+   3.9809e-21 - 1.7419e-04i
+
+  [bisect  2] eta = 0.592898 -> true (slack = 0)
+    D = 1.216
+    E = -1.059e-18-9.568e-05i
+D warm-start:
+    1.2159
+
+E warm-start:
+  -1.0589e-18 - 9.5677e-05i
+
+  [bisect  3] eta = 0.635248 -> true (slack = 0)
+    D = 1.039
+    E = -6.943e-22+2.522e-05i
+D warm-start:
+    1.0393
+
+E warm-start:
+  -6.9432e-22 + 2.5221e-05i
+
+  [bisect  4] eta = 0.656423 -> false (slack = 0)
+D warm-start:
+    1.0393
+
+E warm-start:
+  -6.9432e-22 + 2.5221e-05i
+
+  [bisect  5] eta = 0.645836 -> true (slack = 0)
+    D = 0.9691
+    E = 3.248e-24+0.0001292i
+D warm-start:
+    0.9691
+
+E warm-start:
+   3.2482e-24 + 1.2918e-04i
+
+  [bisect  6] eta = 0.65113 -> true (slack = 0)
+    D = 0.755
+    E = -3.966e-21+9.393e-05i
+IQC_reduced_PI_eta_bisection: converged, eta = 0.65113
+Pi scaler: 5.708e-01 used
+range of Pi plus
+min:  -2.4704e-19
+
+max:    0.8760
+
+range of Pi minus
+min:   -2.6487
+
+max:   -0.8762
+
+  obj = 261.109378 | time = 13.30 s
+
+Controller is OL unstable
+Iter   7 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 1e-05 -> true (slack = 0)
+    D = 6.078e+04
+    E = -1.629e-23+2.685e-12i
+D warm-start:
+   6.0785e+04
+
+E warm-start:
+  -1.6286e-23 + 2.6852e-12i
+
+  [expand] eta = 0.6511 -> true (slack = 0)
+    D = 2.088
+    E = -1.604e-24-0.0005823i
+D warm-start:
+    2.0879
+
+E warm-start:
+  -1.6038e-24 - 5.8228e-04i
+
+  [expand] eta = 1.302 -> false (slack = 0)
+D warm-start:
+    2.0879
+
+E warm-start:
+  -1.6038e-24 - 5.8228e-04i
+
+  [bisect  1] eta = 0.976694 -> true (slack = 0)
+    D = 0.772
+    E = -2.349e-20-0.00058i
+D warm-start:
+    0.7720
+
+E warm-start:
+  -2.3489e-20 - 5.7998e-04i
+
+  [bisect  2] eta = 1.13948 -> true (slack = 0)
+    D = 0.52
+    E = -2.994e-20-0.0003791i
+D warm-start:
+    0.5200
+
+E warm-start:
+  -2.9938e-20 - 3.7905e-04i
+
+  [bisect  3] eta = 1.22087 -> true (slack = 0)
+    D = 0.4479
+    E = -2.231e-21-6.617e-05i
+D warm-start:
+    0.4479
+
+E warm-start:
+  -2.2313e-21 - 6.6167e-05i
+
+  [bisect  4] eta = 1.26156 -> false (slack = 0)
+D warm-start:
+    0.4479
+
+E warm-start:
+  -2.2313e-21 - 6.6167e-05i
+
+  [bisect  5] eta = 1.24122 -> true (slack = 0)
+    D = 0.3261
+    E = 1.449e-24-6.237e-05i
+D warm-start:
+    0.3261
+
+E warm-start:
+   1.4494e-24 - 6.2371e-05i
+
+  [bisect  6] eta = 1.25139 -> false (slack = 0)
+IQC_reduced_PI_eta_bisection: converged, eta = 1.24122
+Pi scaler: 6.135e-01 used
+range of Pi plus
+min:   3.8057e-22
+
+max:    0.9874
+
+range of Pi minus
+min:   -1.4560
+
+max:   -0.8152
+
+  obj = 346.808796 | time = 13.66 s
+
+Controller is OL unstable
+Iter   8 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 1e-05 -> true (slack = 0)
+    D = 6.078e+04
+    E = -1.635e-23+2.685e-12i
+D warm-start:
+   6.0785e+04
+
+E warm-start:
+  -1.6353e-23 + 2.6849e-12i
+
+  [expand] eta = 1.241 -> true (slack = 0)
+    D = 0.5851
+    E = -2.891e-19-0.002229i
+D warm-start:
+    0.5851
+
+E warm-start:
+  -0.0000 - 0.0022i
+
+  [expand] eta = 2.482 -> false (slack = 0)
+D warm-start:
+    0.5851
+
+E warm-start:
+  -0.0000 - 0.0022i
+
+  [bisect  1] eta = 1.86182 -> false (slack = 0)
+D warm-start:
+    0.5851
+
+E warm-start:
+  -0.0000 - 0.0022i
+
+  [bisect  2] eta = 1.55152 -> false (slack = 0)
+D warm-start:
+    0.5851
+
+E warm-start:
+  -0.0000 - 0.0022i
+
+  [bisect  3] eta = 1.39637 -> false (slack = 0)
+D warm-start:
+    0.5851
+
+E warm-start:
+  -0.0000 - 0.0022i
+
+  [bisect  4] eta = 1.31879 -> false (slack = 0)
+{Operation terminated by user during <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('sdpvar/reshape', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\@sdpvar\reshape.m', 18)" style="font-weight:bold">sdpvar/reshape</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\@sdpvar\reshape.m',18,0)">line 18</a>)
+
+
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('sdpvar/warmstart', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\@sdpvar\warmstart.m', 41)" style="font-weight:bold">sdpvar/warmstart</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\@sdpvar\warmstart.m',41,0)">line 41</a>)
+    X = reshape(X,[],1);
+        ^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('datadriven.Objective.IQC_reduced_PI_par_fix', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\LFT-ID-and-IQC-Control\+datadriven\+Objective\IQC_reduced_PI_par_fix.m', 145)" style="font-weight:bold">datadriven.Objective.IQC_reduced_PI_par_fix</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\LFT-ID-and-IQC-Control\+datadriven\+Objective\IQC_reduced_PI_par_fix.m',145,0)">line 145</a>)
+        warmstart(E{i}, E_ws{i});
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('datadriven.Objective.IQC_reduced_PI_par_fix_eta_bisection/check_feasibility', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\LFT-ID-and-IQC-Control\+datadriven\+Objective\IQC_reduced_PI_par_fix_eta_bisection.m', 85)" style="font-weight:bold">datadriven.Objective.IQC_reduced_PI_par_fix_eta_bisection/check_feasibility</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\LFT-ID-and-IQC-Control\+datadriven\+Objective\IQC_reduced_PI_par_fix_eta_bisection.m',85,0)">line 85</a>)
+        [LMIs, slack, D_var, E_var] = datadriven.Objective.IQC_reduced_PI_par_fix( ...
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('datadriven.Objective.IQC_reduced_PI_par_fix_eta_bisection', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\LFT-ID-and-IQC-Control\+datadriven\+Objective\IQC_reduced_PI_par_fix_eta_bisection.m', 186)" style="font-weight:bold">datadriven.Objective.IQC_reduced_PI_par_fix_eta_bisection</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\LFT-ID-and-IQC-Control\+datadriven\+Objective\IQC_reduced_PI_par_fix_eta_bisection.m',186,0)">line 186</a>)
+        [feasibleMid, D_mid, E_mid, slackMid] = check_feasibility(etaMid, D_best, E_best);
+                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('c_IQCcontrolSyn', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\LFT-ID-and-IQC-Control\c_IQCcontrolSyn.m', 197)" style="font-weight:bold">c_IQCcontrolSyn</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\LFT-ID-and-IQC-Control\c_IQCcontrolSyn.m',197,0)">line 197</a>)
+            [eta, D_val, E_val, PI_matrix, diagEta] = datadriven.Objective.IQC_reduced_PI_par_fix_eta_bisection( ...
+                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+} 
+c_IQCcontrolSyn
+    U1: 1
+    U2: 2
+    U3: 3
+
+    Y1: 1
+    Y2: 2
+    Y3: 3
+
+[Warning: The resource 'data\diaries\diary_temp.txt' is currently in use.] 
+[> In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('c_IQCcontrolSyn', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\LFT-ID-and-IQC-Control\c_IQCcontrolSyn.m', 141)" style="font-weight:bold">c_IQCcontrolSyn</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\LFT-ID-and-IQC-Control\c_IQCcontrolSyn.m',141,0)">line 141</a>)] 
+Iter   1 | Stage 1
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 0.286408 | gamma = 10.000000 | slack = 0.286408 | time = 1.50 s
+Controller is OL unstable
+Iter   2 | Stage 1
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = -0.000000 | gamma = 10.000000 | slack = -0.000000 | time = 1.02 s
+Controller is OL unstable
+Iter   3 | Stage 1
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 0.000000 | gamma = 10.000000 | slack = 0.000000 | time = 0.98 s
+Controller is OL unstable
+  --> Saved K_stage{2}
+  --> Advancing to Stage 2
+Iter   4 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 1026.841651 | time = 2.49 s
+
+Controller is OL unstable
+Iter   5 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 884.299827 | time = 2.86 s
+
+Controller is OL unstable
+Iter   6 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 841.066700 | time = 2.53 s
+
+Controller is OL unstable
+Iter   7 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 768.760148 | time = 2.60 s
+
+Controller is OL unstable
+Iter   8 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 678.749132 | time = 2.44 s
+
+Controller is OL unstable
+Iter   9 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 666.380323 | time = 2.77 s
+
+Controller is OL unstable
+Iter  10 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 630.792293 | time = 2.19 s
+
+Controller is OL unstable
+  --> Saved K_stage{3}
+  --> Advancing to Stage 3
+Iter  11 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 1e-05 -> true (slack = 0)
+    D = 6.078e+04
+    E = -1.474e-23+2.697e-12i
+D warm-start:
+   6.0785e+04
+
+E warm-start:
+  -1.4743e-23 + 2.6973e-12i
+
+  [expand] eta = 0.3388 -> true (slack = 0)
+    D = 4.119
+    E = -7.432e-21-0.0001752i
+D warm-start:
+    4.1191
+
+E warm-start:
+  -7.4323e-21 - 1.7520e-04i
+
+{Operation terminated by user during <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('sdpvar/clean', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\@sdpvar\clean.m', 6)" style="font-weight:bold">sdpvar/clean</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\@sdpvar\clean.m',6,0)">line 6</a>)
+
+
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('sdpvar/imag', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\@sdpvar\imag.m', 5)" style="font-weight:bold">sdpvar/imag</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\@sdpvar\imag.m',5,0)">line 5</a>)
+X = clean(X);
+    ^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('lmi/imag2reallmi', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@lmi\imag2reallmi.m', 15)" style="font-weight:bold">lmi/imag2reallmi</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\@lmi\imag2reallmi.m',15,0)">line 15</a>)
+                imF=imag(F.clauses{j}.data);
+                    ^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('compileinterfacedata', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\compileinterfacedata.m', 721)" style="font-weight:bold">compileinterfacedata</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\compileinterfacedata.m',721,0)">line 721</a>)
+    F = imag2reallmi(F);
+        ^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('solvesdp', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\solvesdp.m', 301)" style="font-weight:bold">solvesdp</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\solvesdp.m',301,0)">line 301</a>)
+[interfacedata,recoverdata,solver,diagnostic,F,Fremoved,ForiginalQuadratics] = compileinterfacedata(F,[],logdetStruct,h,options,0,solving_parametric,solvers);
+                                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('optimize', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\optimize.m', 31)" style="font-weight:bold">optimize</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\extras\optimize.m',31,0)">line 31</a>)
+[varargout{1:nargout}] = solvesdp(varargin{:});
+                         ^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('datadriven.Objective.IQC_reduced_PI_par_fix_eta_bisection/check_feasibility', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\LFT-ID-and-IQC-Control\+datadriven\+Objective\IQC_reduced_PI_par_fix_eta_bisection.m', 101)" style="font-weight:bold">datadriven.Objective.IQC_reduced_PI_par_fix_eta_bisection/check_feasibility</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\LFT-ID-and-IQC-Control\+datadriven\+Objective\IQC_reduced_PI_par_fix_eta_bisection.m',101,0)">line 101</a>)
+            sol = optimize(LMIs, [], solverOpts);
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('datadriven.Objective.IQC_reduced_PI_par_fix_eta_bisection', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\LFT-ID-and-IQC-Control\+datadriven\+Objective\IQC_reduced_PI_par_fix_eta_bisection.m', 158)" style="font-weight:bold">datadriven.Objective.IQC_reduced_PI_par_fix_eta_bisection</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\LFT-ID-and-IQC-Control\+datadriven\+Objective\IQC_reduced_PI_par_fix_eta_bisection.m',158,0)">line 158</a>)
+        [feasibleUpper, D_at_upper, E_at_upper, slackUpper] = check_feasibility(etaUpper, D_best, E_best);
+                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('c_IQCcontrolSyn', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\LFT-ID-and-IQC-Control\c_IQCcontrolSyn.m', 197)" style="font-weight:bold">c_IQCcontrolSyn</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\LFT-ID-and-IQC-Control\c_IQCcontrolSyn.m',197,0)">line 197</a>)
+            [eta, D_val, E_val, PI_matrix, diagEta] = datadriven.Objective.IQC_reduced_PI_par_fix_eta_bisection( ...
+                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+} 
+c_IQCcontrolSyn
+    U1: 1
+    U2: 2
+    U3: 3
+
+    Y1: 1
+    Y2: 2
+    Y3: 3
+
+[Warning: The resource 'data\diaries\diary_temp.txt' is currently in use.] 
+[> In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('c_IQCcontrolSyn', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\LFT-ID-and-IQC-Control\c_IQCcontrolSyn.m', 141)" style="font-weight:bold">c_IQCcontrolSyn</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\LFT-ID-and-IQC-Control\c_IQCcontrolSyn.m',141,0)">line 141</a>)] 
+Iter   1 | Stage 1
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 0.000000 | gamma = 10.000000 | slack = 0.000000 | time = 1.17 s
+Controller is OL stable
+Iter   2 | Stage 1
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = -0.000000 | gamma = 10.000000 | slack = -0.000000 | time = 0.88 s
+Controller is OL stable
+  --> Saved K_stage{2}
+  --> Advancing to Stage 2
+Iter   3 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 1059.037737 | time = 1.80 s
+
+Controller is OL stable
+Iter   4 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 840.124252 | time = 1.75 s
+
+Controller is OL unstable
+Iter   5 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 191.190917 | time = 1.72 s
+
+Controller is OL stable
+Iter   6 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 0.689673 | time = 1.83 s
+
+Controller is OL stable
+Iter   7 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 0.416536 | time = 1.71 s
+
+Controller is OL unstable
+Iter   8 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 0.356205 | time = 1.77 s
+
+Controller is OL unstable
+Iter   9 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 0.335424 | time = 1.68 s
+
+Controller is OL unstable
+Iter  10 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.0000
+
+max:   -3.0000
+
+  obj = 0.361755 | time = 1.73 s
+
+Controller is OL unstable
+  --> Saved K_stage{3}
+  --> Advancing to Stage 3
+Iter  11 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 1e-05 -> true (slack = 0)
+    D = 6.078e+04
+    E = -2.341e-23+2.625e-12i
+D warm-start:
+   6.0785e+04
+
+E warm-start:
+  -2.3405e-23 + 2.6251e-12i
+
+  [expand] eta = 0.3388 -> true (slack = 0)
+    D = 4.243
+    E = -8.414e-19-0.000157i
+D warm-start:
+    4.2434
+
+E warm-start:
+  -8.4141e-19 - 1.5703e-04i
+
+  [expand] eta = 0.6776 -> true (slack = 0)
+    D = 1.623
+    E = 2.106e-22-0.000324i
+D warm-start:
+    1.6225
+
+E warm-start:
+   2.1056e-22 - 3.2396e-04i
+
+  [expand] eta = 1.355 -> false (slack = 0)
+D warm-start:
+    1.6225
+
+E warm-start:
+   2.1056e-22 - 3.2396e-04i
+
+  [bisect  1] eta = 1.0164 -> true (slack = 0)
+    D = 0.6911
+    E = 1.916e-23-0.0005945i
+D warm-start:
+    0.6911
+
+E warm-start:
+   1.9157e-23 - 5.9449e-04i
+
+  [bisect  2] eta = 1.1858 -> false (slack = 0)
+D warm-start:
+    0.6911
+
+E warm-start:
+   1.9157e-23 - 5.9449e-04i
+
+  [bisect  3] eta = 1.1011 -> false (slack = 0)
+D warm-start:
+    0.6911
+
+E warm-start:
+   1.9157e-23 - 5.9449e-04i
+
+  [bisect  4] eta = 1.05875 -> true (slack = 0)
+    D = 0.5662
+    E = -2.771e-23-0.0002759i
+D warm-start:
+    0.5662
+
+E warm-start:
+  -2.7706e-23 - 2.7593e-04i
+
+  [bisect  5] eta = 1.07992 -> false (slack = 0)
+D warm-start:
+    0.5662
+
+E warm-start:
+  -2.7706e-23 - 2.7593e-04i
+
+  [bisect  6] eta = 1.06933 -> true (slack = 0)
+    D = 0.4626
+    E = 3.116e-22-2.014e-06i
+IQC_reduced_PI_eta_bisection: converged, eta = 1.06933
+Pi scaler: 5.592e-01 used
+range of Pi plus
+min:  -4.3249e-20
+
+max:    0.9707
+
+range of Pi minus
+min:   -1.7430
+
+max:   -0.8943
+
+  obj = 0.358018 | time = 13.32 s
+
+Controller is OL unstable
+Iter  12 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 1e-05 -> true (slack = 0)
+    D = 6.078e+04
+    E = -2.364e-23+2.624e-12i
+D warm-start:
+   6.0785e+04
+
+E warm-start:
+  -2.3645e-23 + 2.6239e-12i
+
+  [expand] eta = 1.069 -> true (slack = 0)
+    D = 0.9245
+    E = 6.665e-20-0.001514i
+D warm-start:
+    0.9245
+
+E warm-start:
+   0.0000 - 0.0015i
+
+  [expand] eta = 2.139 -> false (slack = 0)
+D warm-start:
+    0.9245
+
+E warm-start:
+   0.0000 - 0.0015i
+
+  [bisect  1] eta = 1.604 -> false (slack = 0)
+D warm-start:
+    0.9245
+
+E warm-start:
+   0.0000 - 0.0015i
+
+  [bisect  2] eta = 1.33667 -> false (slack = 0)
+D warm-start:
+    0.9245
+
+E warm-start:
+   0.0000 - 0.0015i
+
+  [bisect  3] eta = 1.203 -> false (slack = 0)
+D warm-start:
+    0.9245
+
+E warm-start:
+   0.0000 - 0.0015i
+
+  [bisect  4] eta = 1.13617 -> false (slack = 0)
+D warm-start:
+    0.9245
+
+E warm-start:
+   0.0000 - 0.0015i
+
+  [bisect  5] eta = 1.10275 -> false (slack = 0)
+D warm-start:
+    0.9245
+
+E warm-start:
+   0.0000 - 0.0015i
+
+  [bisect  6] eta = 1.08604 -> false (slack = 0)
+D warm-start:
+    0.9245
+
+E warm-start:
+   0.0000 - 0.0015i
+
+  [bisect  7] eta = 1.07769 -> false (slack = 0)
+IQC_reduced_PI_eta_bisection: converged, eta = 1.06933
+Pi scaler: 1.078e+00 used
+range of Pi plus
+min:  -8.0852e-18
+
+max:    0.9807
+
+range of Pi minus
+min:   -1.3215
+
+max:   -0.4639
+
+  obj = 0.350044 | time = 14.59 s
+
+Controller is OL unstable
+Iter  13 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 1e-05 -> true (slack = 0)
+    D = 6.078e+04
+    E = -2.228e-23+2.639e-12i
+D warm-start:
+   6.0785e+04
+
+E warm-start:
+  -2.2277e-23 + 2.6386e-12i
+
+  [expand] eta = 1.069 -> true (slack = 0)
+    D = 0.9102
+    E = -4.67e-20-0.00152i
+D warm-start:
+    0.9102
+
+E warm-start:
+  -0.0000 - 0.0015i
+
+  [expand] eta = 2.139 -> false (slack = 0)
+D warm-start:
+    0.9102
+
+E warm-start:
+  -0.0000 - 0.0015i
+
+  [bisect  1] eta = 1.604 -> false (slack = 0)
+D warm-start:
+    0.9102
+
+E warm-start:
+  -0.0000 - 0.0015i
+
+  [bisect  2] eta = 1.33667 -> false (slack = 0)
+D warm-start:
+    0.9102
+
+E warm-start:
+  -0.0000 - 0.0015i
+
+  [bisect  3] eta = 1.203 -> false (slack = 0)
+D warm-start:
+    0.9102
+
+E warm-start:
+  -0.0000 - 0.0015i
+
+  [bisect  4] eta = 1.13617 -> true (slack = 0)
+    D = 0.6256
+    E = 2.061e-23-0.0009029i
+D warm-start:
+    0.6256
+
+E warm-start:
+   2.0605e-23 - 9.0292e-04i
+
+  [bisect  5] eta = 1.16958 -> false (slack = 0)
+D warm-start:
+    0.6256
+
+E warm-start:
+   2.0605e-23 - 9.0292e-04i
+
+  [bisect  6] eta = 1.15288 -> true (slack = 0)
+    D = 0.4764
+    E = -2.631e-22-0.0004271i
+D warm-start:
+    0.4764
+
+E warm-start:
+  -2.6308e-22 - 4.2712e-04i
+
+  [bisect  7] eta = 1.16123 -> false (slack = 0)
+IQC_reduced_PI_eta_bisection: converged, eta = 1.15288
+Pi scaler: 7.263e-01 used
+range of Pi plus
+min:   2.7193e-20
+
+max:    0.8763
+
+range of Pi minus
+min:   -1.3478
+
+max:   -0.6886
+
+  obj = 0.346492 | time = 14.82 s
+
+Controller is OL unstable
+Iter  14 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 1e-05 -> true (slack = 0)
+    D = 6.078e+04
+    E = -2.215e-23+2.641e-12i
+D warm-start:
+   6.0785e+04
+
+E warm-start:
+  -2.2151e-23 + 2.6407e-12i
+
+  [expand] eta = 1.153 -> true (slack = 0)
+    D = 0.8093
+    E = 8.19e-20-0.001774i
+D warm-start:
+    0.8093
+
+E warm-start:
+   0.0000 - 0.0018i
+
+  [expand] eta = 2.306 -> false (slack = 0)
+D warm-start:
+    0.8093
+
+E warm-start:
+   0.0000 - 0.0018i
+
+  [bisect  1] eta = 1.72931 -> false (slack = 0)
+D warm-start:
+    0.8093
+
+E warm-start:
+   0.0000 - 0.0018i
+
+  [bisect  2] eta = 1.4411 -> false (slack = 0)
+D warm-start:
+    0.8093
+
+E warm-start:
+   0.0000 - 0.0018i
+
+  [bisect  3] eta = 1.29699 -> false (slack = 0)
+D warm-start:
+    0.8093
+
+E warm-start:
+   0.0000 - 0.0018i
+
+  [bisect  4] eta = 1.22493 -> false (slack = 0)
+D warm-start:
+    0.8093
+
+E warm-start:
+   0.0000 - 0.0018i
+
+  [bisect  5] eta = 1.1889 -> false (slack = 0)
+D warm-start:
+    0.8093
+
+E warm-start:
+   0.0000 - 0.0018i
+
+  [bisect  6] eta = 1.17089 -> false (slack = 0)
+D warm-start:
+    0.8093
+
+E warm-start:
+   0.0000 - 0.0018i
+
+  [bisect  7] eta = 1.16188 -> true (slack = 0)
+    D = 0.5786
+    E = 1.491e-23-0.0009811i
+IQC_reduced_PI_eta_bisection: converged, eta = 1.16188
+Pi scaler: 8.489e-01 used
+range of Pi plus
+min:  -1.2483e-21
+
+max:    0.9200
+
+range of Pi minus
+min:   -1.2705
+
+max:   -0.5891
+
+  obj = 0.341403 | time = 15.68 s
+
+Controller is OL unstable
+Iter  15 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 1e-05 -> true (slack = 0)
+    D = 6.078e+04
+    E = -2.196e-23+2.648e-12i
+D warm-start:
+   6.0785e+04
+
+E warm-start:
+  -2.1964e-23 + 2.6482e-12i
+
+  [expand] eta = 1.162 -> true (slack = 0)
+    D = 0.7863
+    E = -8.716e-20-0.001783i
+D warm-start:
+    0.7863
+
+E warm-start:
+  -0.0000 - 0.0018i
+
+  [expand] eta = 2.324 -> false (slack = 0)
+D warm-start:
+    0.7863
+
+E warm-start:
+  -0.0000 - 0.0018i
+
+  [bisect  1] eta = 1.74282 -> false (slack = 0)
+D warm-start:
+    0.7863
+
+E warm-start:
+  -0.0000 - 0.0018i
+
+  [bisect  2] eta = 1.45235 -> false (slack = 0)
+D warm-start:
+    0.7863
+
+E warm-start:
+  -0.0000 - 0.0018i
+
+  [bisect  3] eta = 1.30712 -> false (slack = 0)
+D warm-start:
+    0.7863
+
+E warm-start:
+  -0.0000 - 0.0018i
+
+  [bisect  4] eta = 1.2345 -> false (slack = 0)
+D warm-start:
+    0.7863
+
+E warm-start:
+  -0.0000 - 0.0018i
+
+  [bisect  5] eta = 1.19819 -> false (slack = 0)
+D warm-start:
+    0.7863
+
+E warm-start:
+  -0.0000 - 0.0018i
+
+  [bisect  6] eta = 1.18004 -> false (slack = 0)
+D warm-start:
+    0.7863
+
+E warm-start:
+  -0.0000 - 0.0018i
+
+  [bisect  7] eta = 1.17096 -> false (slack = 0)
+IQC_reduced_PI_eta_bisection: converged, eta = 1.16188
+Pi scaler: 1.085e+00 used
+range of Pi plus
+min:   9.6988e-18
+
+max:    0.9781
+
+range of Pi minus
+min:   -1.1852
+
+max:   -0.4608
+
+  obj = 0.337769 | time = 16.40 s
+
+Controller is OL unstable
+Iter  16 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 1e-05 -> true (slack = 0)
+    D = 6.078e+04
+    E = -2.172e-23+2.653e-12i
+D warm-start:
+   6.0785e+04
+
+E warm-start:
+  -2.1723e-23 + 2.6527e-12i
+
+  [expand] eta = 1.162 -> true (slack = 0)
+    D = 0.7734
+    E = -3.169e-21-0.001746i
+D warm-start:
+    0.7734
+
+E warm-start:
+  -0.0000 - 0.0017i
+
+  [expand] eta = 2.324 -> false (slack = 0)
+D warm-start:
+    0.7734
+
+E warm-start:
+  -0.0000 - 0.0017i
+
+  [bisect  1] eta = 1.74282 -> false (slack = 0)
+D warm-start:
+    0.7734
+
+E warm-start:
+  -0.0000 - 0.0017i
+
+  [bisect  2] eta = 1.45235 -> false (slack = 0)
+D warm-start:
+    0.7734
+
+E warm-start:
+  -0.0000 - 0.0017i
+
+  [bisect  3] eta = 1.30712 -> false (slack = 0)
+D warm-start:
+    0.7734
+
+E warm-start:
+  -0.0000 - 0.0017i
+
+  [bisect  4] eta = 1.2345 -> false (slack = 0)
+D warm-start:
+    0.7734
+
+E warm-start:
+  -0.0000 - 0.0017i
+
+  [bisect  5] eta = 1.19819 -> false (slack = 0)
+D warm-start:
+    0.7734
+
+E warm-start:
+  -0.0000 - 0.0017i
+
+  [bisect  6] eta = 1.18004 -> false (slack = 0)
+D warm-start:
+    0.7734
+
+E warm-start:
+  -0.0000 - 0.0017i
+
+  [bisect  7] eta = 1.17096 -> true (slack = 0)
+    D = 0.5645
+    E = 6.275e-23-0.0009544i
+IQC_reduced_PI_eta_bisection: converged, eta = 1.17096
+Pi scaler: 8.446e-01 used
+range of Pi plus
+min:  -7.5801e-21
+
+max:    0.9165
+
+range of Pi minus
+min:   -1.2604
+
+max:   -0.5921
+
+  obj = 0.334331 | time = 16.78 s
+
+Controller is OL unstable
+Iter  17 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 1e-05 -> true (slack = 0)
+    D = 6.078e+04
+    E = -2.194e-23+2.654e-12i
+D warm-start:
+   6.0785e+04
+
+E warm-start:
+  -2.1937e-23 + 2.6542e-12i
+
+  [expand] eta = 1.171 -> true (slack = 0)
+    D = 0.7613
+    E = 1.965e-20-0.001954i
+D warm-start:
+    0.7613
+
+E warm-start:
+   0.0000 - 0.0020i
+
+  [expand] eta = 2.342 -> false (slack = 0)
+D warm-start:
+    0.7613
+
+E warm-start:
+   0.0000 - 0.0020i
+
+  [bisect  1] eta = 1.75644 -> false (slack = 0)
+D warm-start:
+    0.7613
+
+E warm-start:
+   0.0000 - 0.0020i
+
+  [bisect  2] eta = 1.4637 -> false (slack = 0)
+D warm-start:
+    0.7613
+
+E warm-start:
+   0.0000 - 0.0020i
+
+  [bisect  3] eta = 1.31733 -> false (slack = 0)
+D warm-start:
+    0.7613
+
+E warm-start:
+   0.0000 - 0.0020i
+
+  [bisect  4] eta = 1.24415 -> false (slack = 0)
+D warm-start:
+    0.7613
+
+E warm-start:
+   0.0000 - 0.0020i
+
+  [bisect  5] eta = 1.20755 -> false (slack = 0)
+D warm-start:
+    0.7613
+
+E warm-start:
+   0.0000 - 0.0020i
+
+  [bisect  6] eta = 1.18926 -> false (slack = 0)
+D warm-start:
+    0.7613
+
+E warm-start:
+   0.0000 - 0.0020i
+
+  [bisect  7] eta = 1.18011 -> false (slack = 0)
+IQC_reduced_PI_eta_bisection: converged, eta = 1.17096
+Pi scaler: 1.066e+00 used
+range of Pi plus
+min:  -2.5227e-18
+
+max:    0.9792
+
+range of Pi minus
+min:   -1.1832
+
+max:   -0.4691
+
+  obj = 0.332667 | time = 16.96 s
+
+Controller is OL unstable
+Iter  18 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 1e-05 -> true (slack = 0)
+    D = 6.078e+04
+    E = -2.196e-23+2.654e-12i
+D warm-start:
+   6.0785e+04
+
+E warm-start:
+  -2.1956e-23 + 2.6544e-12i
+
+  [expand] eta = 1.171 -> true (slack = 0)
+    D = 0.7583
+    E = 2.7e-20-0.001903i
+D warm-start:
+    0.7583
+
+E warm-start:
+   0.0000 - 0.0019i
+
+  [expand] eta = 2.342 -> false (slack = 0)
+D warm-start:
+    0.7583
+
+E warm-start:
+   0.0000 - 0.0019i
+
+  [bisect  1] eta = 1.75644 -> false (slack = 0)
+D warm-start:
+    0.7583
+
+E warm-start:
+   0.0000 - 0.0019i
+
+  [bisect  2] eta = 1.4637 -> false (slack = 0)
+D warm-start:
+    0.7583
+
+E warm-start:
+   0.0000 - 0.0019i
+
+  [bisect  3] eta = 1.31733 -> false (slack = 0)
+D warm-start:
+    0.7583
+
+E warm-start:
+   0.0000 - 0.0019i
+
+  [bisect  4] eta = 1.24415 -> false (slack = 0)
+D warm-start:
+    0.7583
+
+E warm-start:
+   0.0000 - 0.0019i
+
+  [bisect  5] eta = 1.20755 -> false (slack = 0)
+D warm-start:
+    0.7583
+
+E warm-start:
+   0.0000 - 0.0019i
+
+  [bisect  6] eta = 1.18926 -> false (slack = 0)
+D warm-start:
+    0.7583
+
+E warm-start:
+   0.0000 - 0.0019i
+
+  [bisect  7] eta = 1.18011 -> false (slack = 0)
+IQC_reduced_PI_eta_bisection: converged, eta = 1.17096
+Pi scaler: 1.061e+00 used
+range of Pi plus
+min:  -3.5539e-18
+
+max:    0.9796
+
+range of Pi minus
+min:   -1.1856
+
+max:   -0.4712
+
+  obj = 0.330335 | time = 18.79 s
+
+Controller is OL unstable
+Iter  19 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 1e-05 -> true (slack = 0)
+    D = 6.078e+04
+    E = -2.186e-23+2.657e-12i
+D warm-start:
+   6.0785e+04
+
+E warm-start:
+  -2.1859e-23 + 2.6569e-12i
+
+  [expand] eta = 1.171 -> true (slack = 0)
+    D = 0.7531
+    E = 4.061e-20-0.001954i
+D warm-start:
+    0.7531
+
+E warm-start:
+   0.0000 - 0.0020i
+
+  [expand] eta = 2.342 -> false (slack = 0)
+D warm-start:
+    0.7531
+
+E warm-start:
+   0.0000 - 0.0020i
+
+  [bisect  1] eta = 1.75644 -> false (slack = 0)
+D warm-start:
+    0.7531
+
+E warm-start:
+   0.0000 - 0.0020i
+
+  [bisect  2] eta = 1.4637 -> false (slack = 0)
+D warm-start:
+    0.7531
+
+E warm-start:
+   0.0000 - 0.0020i
+
+  [bisect  3] eta = 1.31733 -> false (slack = 0)
+D warm-start:
+    0.7531
+
+E warm-start:
+   0.0000 - 0.0020i
+
+  [bisect  4] eta = 1.24415 -> false (slack = 0)
+D warm-start:
+    0.7531
+
+E warm-start:
+   0.0000 - 0.0020i
+
+  [bisect  5] eta = 1.20755 -> false (slack = 0)
+D warm-start:
+    0.7531
+
+E warm-start:
+   0.0000 - 0.0020i
+
+  [bisect  6] eta = 1.18926 -> false (slack = 0)
+D warm-start:
+    0.7531
+
+E warm-start:
+   0.0000 - 0.0020i
+
+  [bisect  7] eta = 1.18011 -> true (slack = 0)
+    D = 0.5639
+    E = -5.587e-24-0.001044i
+IQC_reduced_PI_eta_bisection: converged, eta = 1.18011
+Pi scaler: 8.536e-01 used
+range of Pi plus
+min:   7.0684e-22
+
+max:    0.9201
+
+range of Pi minus
+min:   -1.2464
+
+max:   -0.5859
+
+  obj = 0.329253 | time = 19.73 s
+
+Controller is OL unstable
+Iter  20 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 1e-05 -> true (slack = 0)
+    D = 6.078e+04
+    E = -2.191e-23+2.656e-12i
+D warm-start:
+   6.0785e+04
+
+E warm-start:
+  -2.1912e-23 + 2.6558e-12i
+
+  [expand] eta = 1.18 -> true (slack = 0)
+    D = 0.7435
+    E = -9.871e-22-0.001823i
+D warm-start:
+    0.7435
+
+E warm-start:
+  -0.0000 - 0.0018i
+
+  [expand] eta = 2.36 -> false (slack = 0)
+D warm-start:
+    0.7435
+
+E warm-start:
+  -0.0000 - 0.0018i
+
+  [bisect  1] eta = 1.77016 -> false (slack = 0)
+D warm-start:
+    0.7435
+
+E warm-start:
+  -0.0000 - 0.0018i
+
+  [bisect  2] eta = 1.47514 -> false (slack = 0)
+D warm-start:
+    0.7435
+
+E warm-start:
+  -0.0000 - 0.0018i
+
+  [bisect  3] eta = 1.32762 -> false (slack = 0)
+D warm-start:
+    0.7435
+
+E warm-start:
+  -0.0000 - 0.0018i
+
+  [bisect  4] eta = 1.25387 -> false (slack = 0)
+D warm-start:
+    0.7435
+
+E warm-start:
+  -0.0000 - 0.0018i
+
+  [bisect  5] eta = 1.21699 -> false (slack = 0)
+D warm-start:
+    0.7435
+
+E warm-start:
+  -0.0000 - 0.0018i
+
+  [bisect  6] eta = 1.19855 -> false (slack = 0)
+D warm-start:
+    0.7435
+
+E warm-start:
+  -0.0000 - 0.0018i
+
+  [bisect  7] eta = 1.18933 -> false (slack = 0)
+IQC_reduced_PI_eta_bisection: converged, eta = 1.18011
+Pi scaler: 1.055e+00 used
+range of Pi plus
+min:   1.3619e-19
+
+max:    0.9818
+
+range of Pi minus
+min:   -1.1791
+
+max:   -0.4742
+
+  obj = 0.327266 | time = 20.20 s
+
+Controller is OL unstable
+Iter  21 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 1e-05 -> true (slack = 0)
+    D = 6.078e+04
+    E = -2.186e-23+2.657e-12i
+D warm-start:
+   6.0785e+04
+
+E warm-start:
+  -2.1856e-23 + 2.6571e-12i
+
+  [expand] eta = 1.18 -> true (slack = 0)
+    D = 0.7429
+    E = 3.989e-20-0.001983i
+D warm-start:
+    0.7429
+
+E warm-start:
+   0.0000 - 0.0020i
+
+  [expand] eta = 2.36 -> false (slack = 0)
+D warm-start:
+    0.7429
+
+E warm-start:
+   0.0000 - 0.0020i
+
+  [bisect  1] eta = 1.77016 -> false (slack = 0)
+D warm-start:
+    0.7429
+
+E warm-start:
+   0.0000 - 0.0020i
+
+  [bisect  2] eta = 1.47514 -> false (slack = 0)
+D warm-start:
+    0.7429
+
+E warm-start:
+   0.0000 - 0.0020i
+
+  [bisect  3] eta = 1.32762 -> false (slack = 0)
+D warm-start:
+    0.7429
+
+E warm-start:
+   0.0000 - 0.0020i
+
+  [bisect  4] eta = 1.25387 -> false (slack = 0)
+D warm-start:
+    0.7429
+
+E warm-start:
+   0.0000 - 0.0020i
+
+  [bisect  5] eta = 1.21699 -> false (slack = 0)
+D warm-start:
+    0.7429
+
+E warm-start:
+   0.0000 - 0.0020i
+
+  [bisect  6] eta = 1.19855 -> false (slack = 0)
+D warm-start:
+    0.7429
+
+E warm-start:
+   0.0000 - 0.0020i
+
+  [bisect  7] eta = 1.18933 -> false (slack = 0)
+IQC_reduced_PI_eta_bisection: converged, eta = 1.18011
+Pi scaler: 1.056e+00 used
+range of Pi plus
+min:  -5.4920e-18
+
+max:    0.9793
+
+range of Pi minus
+min:   -1.1765
+
+max:   -0.4734
+
+  obj = 0.326439 | time = 21.06 s
+
+Controller is OL unstable
+  --> Saved K_stage{4}
+  --> Converged.
+
+norminf_W1S =
+
+    0.5713
+
+
+norminf_T =
+
+    1.9133
+
+
+expname =
+
+    'LFT_GFRF_param_n7_1028_controller_order7_82hz_-34db_nperfhinfnperfoptiIQC_lasthinfstabitr10_eta1.18_multi_freq'
+
+[Warning: YALMIP objects cannot be saved in binary format. You will run into troubles if you try to load this file later. You should clear all YALMIP objects first, or avoid having any YALMIP objects in the list of variables which you save.] 
+[> In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('sdpvar/saveobj', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\@sdpvar\saveobj.m', 3)" style="font-weight:bold">sdpvar/saveobj</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\@sdpvar\saveobj.m',3,0)">line 3</a>)
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('c_IQCcontrolSyn', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\LFT-ID-and-IQC-Control\c_IQCcontrolSyn.m', 349)" style="font-weight:bold">c_IQCcontrolSyn</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\LFT-ID-and-IQC-Control\c_IQCcontrolSyn.m',349,0)">line 349</a>)] 
+[Warning: YALMIP objects cannot be saved in binary format. You will run into troubles if you try to load this file later. You should clear all YALMIP objects first, or avoid having any YALMIP objects in the list of variables which you save.] 
+[> In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('sdpvar/saveobj', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\@sdpvar\saveobj.m', 3)" style="font-weight:bold">sdpvar/saveobj</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\@sdpvar\saveobj.m',3,0)">line 3</a>)
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('c_IQCcontrolSyn', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\LFT-ID-and-IQC-Control\c_IQCcontrolSyn.m', 349)" style="font-weight:bold">c_IQCcontrolSyn</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\LFT-ID-and-IQC-Control\c_IQCcontrolSyn.m',349,0)">line 349</a>)] 
+[Warning: YALMIP objects cannot be saved in binary format. You will run into troubles if you try to load this file later. You should clear all YALMIP objects first, or avoid having any YALMIP objects in the list of variables which you save.] 
+[> In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('sdpvar/saveobj', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\@sdpvar\saveobj.m', 3)" style="font-weight:bold">sdpvar/saveobj</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\@sdpvar\saveobj.m',3,0)">line 3</a>)
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('c_IQCcontrolSyn', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\LFT-ID-and-IQC-Control\c_IQCcontrolSyn.m', 349)" style="font-weight:bold">c_IQCcontrolSyn</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\LFT-ID-and-IQC-Control\c_IQCcontrolSyn.m',349,0)">line 349</a>)] 
+[Warning: YALMIP objects cannot be saved in binary format. You will run into troubles if you try to load this file later. You should clear all YALMIP objects first, or avoid having any YALMIP objects in the list of variables which you save.] 
+[> In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('sdpvar/saveobj', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\@sdpvar\saveobj.m', 3)" style="font-weight:bold">sdpvar/saveobj</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\YALMIP-master\@sdpvar\saveobj.m',3,0)">line 3</a>)
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('c_IQCcontrolSyn', 'C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\LFT-ID-and-IQC-Control\c_IQCcontrolSyn.m', 349)" style="font-weight:bold">c_IQCcontrolSyn</a> (<a href="matlab: opentoline('C:\Projects\OSIP-VIB\Simulink\Pierre_Controller_LTI\LFT-ID-and-IQC-Control\c_IQCcontrolSyn.m',349,0)">line 349</a>)] 
