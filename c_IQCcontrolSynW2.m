@@ -2,11 +2,15 @@ close all; clc; clear; clear("yalmip");
 % warning('off')
 %% Config
 rng(22);
-orderK   = 18 ;
+orderK   = 16 ;
 Ts       = 0.001;
 
 %% Load data
-load(fullfile('Data','LFT_GFRF_param_n7_2907.mat'))
+idname='idm_suspended_2907';
+load(fullfile('Data',sprintf('%s.mat',idname)))
+figure
+
+nyquistplot(GFRF_dm{1}.FRF,GFRF_dm{2}.FRF,GFRF_dm{3}.FRF,GFRF_dm{4}.FRF, linspace(250*2*pi, 300*2*pi, 1000))
 % % For windows
 % addpath(genpath("C:\Users\admin\mosek"))
 % addpath(genpath("C:\Program Files\Mosek\10.1"))
@@ -81,7 +85,7 @@ bodemag(W2hpf,bo)
 xlim([10 500])
 ylim([-30 30])
 legend
-save(fullfile('Data','LFT_GFRF_param_n7_2907.mat'),"W2hpf",'relerr','Hpf','W2',...
+save(fullfile('Data',sprintf('%s.mat',idname)),"W2hpf",'relerr','Hpf','W2',...
     "GLFT","dm_bound","m0","m","GFRF","G","GFRF_dm")
 
 %% Two-port performance plant  (Stage 0)
@@ -147,7 +151,7 @@ loss_tol = 0.10;
 eta_max = 2*dm_bound;
 mutli_type='frequency';
 nextstage=0;
-last_hinfstb_itr=13;
+last_hinfstb_itr=Inf;
 D_val=[];
 E_val=[];
 

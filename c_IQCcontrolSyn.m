@@ -2,7 +2,7 @@ close all; clc; clear; clear("yalmip");
 % warning('off')
 %% Config
 rng(22);
-orderK   = 18 ;
+orderK   = 16 ;
 Ts       = 0.001;
 
 %% Load data
@@ -16,14 +16,14 @@ load(fullfile('Data',sprintf('%s.mat',idname)))
 % addpath(genpath("C:\Program Files\Mosek\10.1"))
 % addpath(genpath("C:\Users\admin\Documents\MATLAB\tbxmanager"))
 
-% for windows ordi csem
-addpath(genpath("C:\Users\orx\mosek"))
-addpath(genpath("..\YALMIP-master"))
-addpath(genpath("C:\Program Files\Mosek\11.2"))
+% % for windows ordi csem
+% addpath(genpath("C:\Users\orx\mosek"))
+% addpath(genpath("..\YALMIP-master"))
+% addpath(genpath("C:\Program Files\Mosek\11.2"))
 
-% % For mac
-% addpath(genpath("/Users/pierre/mosek"))
-% addpath(genpath("/Users/pierre/Documents/MATLAB/tbxmanager"))
+% For mac
+addpath(genpath("/Users/pierre/mosek"))
+addpath(genpath("/Users/pierre/Documents/MATLAB/tbxmanager"))
 
 W_lft=GLFT.Frequency;
 nomegas=length(W_lft);
@@ -131,7 +131,7 @@ loss_tol = Inf;
 eta_max = Inf;%2*dm_bound;
 mutli_type='frequency';
 nextstage=0;
-last_hinfstb_itr=10;
+last_hinfstb_itr=Inf;
 D_val=repmat({eye(1)}, nomegas, 1);
 E_val=repmat({zeros(1)}, nomegas, 1);
 
@@ -420,8 +420,14 @@ xlim([10 1000*pi])
  ylim([-40 10])
 K_itr_current=K_itr;
 
+%% plots all the controller
+for i = 1:length(K_itr)
+    utils.magplot()
+end
+
+
 %% Analyse de resutlat nouveau id vs old id
-load(fullfile('Data','controller','LFT_GFRF_param_n7_1028_controller_order10_82hz_-34db_nperfhinfnperfoptiIQC_lasthinfstabitr10_eta0.82_multi_freq.mat'))
+load(fullfile('Data','controller','totry_LFT_GFRF_param_n7_1028_controller_order16_82hz_-34db_nperfhinfnperfoptiIQC_lasthinfstabitrInf_eta0.64_multi_freq.mat'))
 K_chosen=K_itr{end};
 load(fullfile('Data','finalrepportcont/','controller_sus_7nm_order18_82hz_-34db_nperfhinfnperfoptiIQC_eta9.139390e-01.mat'),'K_itr')
 K_old=K_itr{26}; %eta=0.627
