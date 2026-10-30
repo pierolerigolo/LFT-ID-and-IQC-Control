@@ -24,65 +24,117 @@ exportgraphics(gcf,fullfile('plots','gdmcompare.jpg'),'Resolution',300)
 % bode(test,test2)
 %%
 figure;hold on
-% for i=1:length(Gdm)
-%     bode(Gdm(i))
-% end
-
+for i=4%:length(Gdm)
+    bode(Gdm(i))
+    bode(GFRF(i))
+end
+s=tf('s');
 % figure;hold on
 for i=1:length(Gdm)
-    Gresid(1,i)=GFRF(i)-Gdm(i);
-    bode(GFRF(i)-Gdm(i))
+    GLTI(1,i)=GFRF(i)/Gdm(i);
+    bode(GFRF(i)/Gdm(i))
 end
 %%
-Gresidmeandata=mean(Gresid.ResponseData,2);
-Gresidmean=frd(Gresidmeandata,Gresid.Frequency,Gresid.Ts)
+GLTImeandata=mean(GLTI.ResponseData,2);
+GLTImean=frd(GLTImeandata,GLTI.Frequency,GLTI.Ts)
 hold on
-bode(Gresidmean)
+bode(GLTImean)
 
 %%
+Parray=stack(1,GLTI(1,1),GLTI(1,2),GLTI(1,3),GLTI(1,4));
+Pnom=GLTImean;
+a  = 1e3;
+fs = Pnom.Frequency/a;
 
-Parray=stack(1,Gresid(1,1),Gresid(1,2),Gresid(1,3),Gresid(1,4));
-Pnom=Gresidmean;
-[usys, info]=ucover(Parray,Pnom,7);
-relerr = Pnom\(Pnom-Parray);
-W=info.W1;
-bo.FreqUnits='Hz';
-figure
-bodemag(relerr,'b--',W,'r',bo);
+Pn = squeeze(Pnom.ResponseData);         % 500x1
+Pa = squeeze(Parray.ResponseData);       % 500x4
+
+Pn_s = frd(reshape(Pn,1,1,[]), fs);
+Parray_s = stack(1, ...
+    frd(reshape(Pa(:,1),1,1,[]), fs), ...
+    frd(reshape(Pa(:,2),1,1,[]), fs), ...
+    frd(reshape(Pa(:,3),1,1,[]), fs), ...
+    frd(reshape(Pa(:,4),1,1,[]), fs));
+
+n = 20;
+[~, info_s] = ucover(Parray_s, Pn_s, n);
+
+Ws = ss(info_s.W1);
+W2  = ss(a*Ws.A, a*Ws.B, Ws.C, Ws.D);
+
+relerr = Pnom\(Pnom - Parray);
+bo = bodeoptions; bo.FreqUnits = 'Hz';
+figure; bodemag(relerr,'b--',W2,'r',bo);
 
 
 
 
-%% Identification of GLTI on the whole range
-filename=sprintf('LFT_estimated_%s.mat',expname)
-if exist(fullfile('data',filename),'file')
-    load(fullfile('data',filename),"Gdm","m","m0","dm_bound", ...
-        "Gdmnom","sys_est_Gdm","Gest","GLTI","sys_est_GLTI","GFRF_dm")
-end
-% n=find(cellfun(@isempty,sys_est_GLTI))
-for n=1:15
-    fprintf('order of GLTI: %d\n',n)
-    [Gest{n},GLTI{n},sys_est_GLTI{n}] = utils.GLTI_greyestid(GFRF,n,Gdm);
-    sys_est_GLTI{n}
-end
+%% Multiplicative filter on the multimodel
+% GFRFmeandata=mean(GFRF.ResponseData,2);
+% GFRFmean=frd(GFRFmeandata,GFRF.Frequency,GFRF.Ts)
+% hold on
+% bode(GFRFmean)
+% 
+% %%
+% Parray=stack(1,GFRF(1,1),GFRF(1,2),GFRF(1,3),GFRF(1,4));
+% Pnom=GFRFmean;
+% a  = 1e3;
+% fs = Pnom.Frequency/a;
+% 
+% Pn = squeeze(Pnom.ResponseData);         % 500x1
+% Pa = squeeze(Parray.ResponseData);       % 500x4
+% 
+% Pn_s = frd(reshape(Pn,1,1,[]), fs);
+% Parray_s = stack(1, ...
+%     frd(reshape(Pa(:,1),1,1,[]), fs), ...
+%     frd(reshape(Pa(:,2),1,1,[]), fs), ...
+%     frd(reshape(Pa(:,3),1,1,[]), fs), ...
+%     frd(reshape(Pa(:,4),1,1,[]), fs));
+% 
+% n = 25;
+% [~, info_s] = ucover(Parray_s, Pn_s, n);
+% 
+% Ws = ss(info_s.W1);
+% W2  = ss(a*Ws.A, a*Ws.B, Ws.C, Ws.D);
+% 
+% relerr = Pnom\(Pnom - Parray);
+% bo = bodeoptions; bo.FreqUnits = 'Hz';
+% % figure;
+% hold on
+% bodemag(relerr,'c--',W2,'g',bo);
+% 
 
-save(fullfile('data',filename),"Gdm","m","m0","dm_bound", ...
-   "Gdmnom","sys_est_Gdm","Gest","GLTI","sys_est_GLTI","GFRF_dm")
-%% Recovering the fit percent in function of the ord of GLTI
-for n=find(~cellfun(@isempty,sys_est_GLTI))
-    fitpercent(n,:)=sys_est_GLTI{n}.Report.Fit.FitPercent;
-end
-fitpercent
-mean(fitpercent,2)
-% Ploting the fit percent in f of the order of GLTI
-figure
-plot(fitpercent,'o-')
-hold on
-plot(mean(fitpercent,2),'x-','Linewidth',2)
-xlim([1 length(sys_est_GLTI)])
-legend('OP 1','OP 2','OP 3','OP 4','Mean')
-xlabel('n')
-ylabel('fit%')
+
+% %% Identification of GLTI on the whole range
+% filename=sprintf('LFT_estimated_%s.mat',expname)
+% if exist(fullfile('data',filename),'file')
+%     load(fullfile('data',filename),"Gdm","m","m0","dm_bound", ...
+%         "Gdmnom","sys_est_Gdm","Gest","GLTI","sys_est_GLTI","GFRF_dm")
+% end
+% % n=find(cellfun(@isempty,sys_est_GLTI))
+% for n=1:15
+%     fprintf('order of GLTI: %d\n',n)
+%     [Gest{n},GLTI{n},sys_est_GLTI{n}] = utils.GLTI_greyestid(GFRF,n,Gdm);
+%     sys_est_GLTI{n}
+% end
+% 
+% save(fullfile('data',filename),"Gdm","m","m0","dm_bound", ...
+%    "Gdmnom","sys_est_Gdm","Gest","GLTI","sys_est_GLTI","GFRF_dm")
+% %% Recovering the fit percent in function of the ord of GLTI
+% for n=find(~cellfun(@isempty,sys_est_GLTI))
+%     fitpercent(n,:)=sys_est_GLTI{n}.Report.Fit.FitPercent;
+% end
+% fitpercent
+% mean(fitpercent,2)
+% % Ploting the fit percent in f of the order of GLTI
+% figure
+% plot(fitpercent,'o-')
+% hold on
+% plot(mean(fitpercent,2),'x-','Linewidth',2)
+% xlim([1 length(sys_est_GLTI)])
+% legend('OP 1','OP 2','OP 3','OP 4','Mean')
+% xlabel('n')
+% ylabel('fit%')
 
 %% Comparing with another setting
 % load(fullfile('data','full_est_sys_data_stbenf_fullfrf.mat'))
@@ -194,18 +246,30 @@ omega_peak_dense = logspace(log10(25*2*pi), log10(100*2*pi), 150);
 % omega_peak_dense=[];
 w_lft = unique([omega_global(:); omega_peak_dense(:)]);
 
-% Selected order of GLTI
-ord=7;
 
-GLTI_selected=frd(GLTI{ord},w_lft);
+deltaw2=ultidyn('d',1);
 
-GLFT= [  -Gdmnom, Gdmnom*GLTI_selected;...
-         -Gdmnom, Gdmnom*GLTI_selected];
 
-G=Gest{ord};
+GLTI_selected=interp(GLTImean,w_lft);
+W2frd = frd(W2, w_lft);     % rad/s, continuous
+W2frd.Ts = GFRF.Ts;         % match GLTI_selected
+GLTI_H=[  0, W2frd;...
+         GLTI_selected, GLTI_selected];
 
-save(fullfile('data',sprintf('LFT_GFRF_param_n%d_%s.mat',ord,expname)), ...
-    "GLFT","dm_bound","m0","m","GFRF","G","GFRF_dm")
+deltam=ureal('dm',0,'PlusMinus',dm_bound);
+Gdmnom=frd(Gdmnom,w_lft);
+Gdm_H= [  -Gdmnom, Gdmnom;...
+         -Gdmnom, Gdmnom];
+
+GdmLFT=lft(deltam,Gdm_H)
+GLTILFT=lft(deltaw2,GLTI_H)
+
+GLFT_full=GdmLFT*GLTILFT;
+
+[GLFT,Delta] = lftdata(GLFT_full)
+
+save(fullfile('data',sprintf('LFT_GFRF_GdmGLTIW2_%s.mat',expname)), ...
+    "GLFT","Delta","dm_bound","m0","m","GFRF","GFRF_cell","realmass")
 %% Table for the obtained parameter and their std 
 function T = param_table(sys_est, names)
 % Parameter estimates and standard deviations of a greyest model.
@@ -257,20 +321,20 @@ Parray=stack(1,P(1),P(2),P(3),P(4));
 Pnom=GLTI{7};
 [usys, info]=ucover(Parray,GLTI{7},7);
 relerr = Pnom\(Pnom-Parray);
-W=info.W1;
+W2=info.W1;
 bo.FreqUnits='Hz';
 figure
-bodemag(relerr,'b--',W,'r',bo);
+bodemag(relerr,'b--',W2,'r',bo);
 %%
 % only G=Gw2
 Parray=stack(1,GFRF(1),GFRF(2),GFRF(3),GFRF(4));
 Pnom=Gdmnom%*GLTI{7};
 [usys, info]=ucover(Parray,Pnom,7);
 relerr = Pnom\(Pnom-Parray);
-W=info.W1;
+W2=info.W1;
 bo.FreqUnits='Hz';
 figure
-bodemag(relerr,'b--',W,'r',bo);
+bodemag(relerr,'b--',W2,'r',bo);
 %%
 % high pass filter
 wbd=2*pi*100;
@@ -278,4 +342,4 @@ hpf=tf([1 0 0],[1 2*wbd wbd^2]);
 hpf=c2d(hpf,0.001);
 figure;bode(hpf)
 figure
-bodemag(relerr,'b--',hpf*W,'r',bo);
+bodemag(relerr,'b--',hpf*W2,'r',bo);

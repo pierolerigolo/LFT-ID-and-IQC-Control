@@ -6,23 +6,23 @@ orderK   = 16 ;
 Ts       = 0.001;
 
 %% Load data
-idname='idm_suspended_2907';
+idname='LFT_GFRF_GdmGLTIW2_1028_spa';
 load(fullfile('Data',sprintf('%s.mat',idname)))
 figure
 
-nyquistplot(GFRF_dm{1}.FRF,GFRF_dm{2}.FRF,GFRF_dm{3}.FRF,GFRF_dm{4}.FRF, linspace(250*2*pi, 300*2*pi, 1000))
-% % For windows
-% addpath(genpath("C:\Users\admin\mosek"))
-% addpath(genpath("C:\Program Files\Mosek\10.1"))
-% addpath(genpath("C:\Users\admin\Documents\MATLAB\tbxmanager"))
+% nyquistplot(GFRF_dm{1}.FRF,GFRF_dm{2}.FRF,GFRF_dm{3}.FRF,GFRF_dm{4}.FRF, linspace(250*2*pi, 300*2*pi, 1000))
+% For windows
+addpath(genpath("C:\Users\admin\mosek"))
+addpath(genpath("C:\Program Files\Mosek\10.1"))
+addpath(genpath("C:\Users\admin\Documents\MATLAB\tbxmanager"))
 
-% For mac
-addpath(genpath("/Users/pierre/mosek"))
-addpath(genpath("/Users/pierre/Documents/MATLAB/tbxmanager"))
+% % For mac
+% addpath(genpath("/Users/pierre/mosek"))
+% addpath(genpath("/Users/pierre/Documents/MATLAB/tbxmanager"))
 
 W_lft=GLFT.Frequency;
 G_hat=GLFT(2,2);
-ny=1;nu=1;np=1;nq=1;nw=1;nz=1;
+ny=1;nu=1;np=2;nq=2;nw=1;nz=1;
 
 %% plot the plant
 figure; hold on; grid on;
@@ -63,35 +63,34 @@ W1_frd         = frd(c2d(W1_ct, G_hat.Ts, 'tustin'),W_lft);
 utils.magplot(inv(W1_frd),'DisplayName','1/W1');
 % exportgraphics(gcf,'plot/rp_input.svg')
 
-%% Muliplicative uncertainty weightning filter W2
-Garray=stack(1,GFRF(1),GFRF(2),GFRF(3),GFRF(4));
-Gnom=interp(G_hat,Garray.Frequency);
-[usys, info]=ucover(Garray,Gnom,10);
-relerr = Gnom\(Gnom-Garray);
-W2=info.W1;
-%%
-bo=bodeoptions;
-bo.FreqUnits='Hz';
-figure
-bodemag(relerr,'b--',W2,'r',bo);
-fc = 100;
-fs = 1000;
-[b,a]=butter(6,fc/(fs/2),'high');
-Hpf= frd(tf(b,a,Ts),G_hat.Frequency);
-hold on
-bodemag(Hpf,bo)
-W2hpf=Hpf*W2;
-bodemag(W2hpf,bo)
-xlim([10 500])
-ylim([-30 30])
-legend
-save(fullfile('Data',sprintf('%s.mat',idname)),"W2hpf",'relerr','Hpf','W2',...
-    "GLFT","dm_bound","m0","m","GFRF","G","GFRF_dm")
+% %% Muliplicative uncertainty weightning filter W2
+% Garray=stack(1,GFRF(1),GFRF(2),GFRF(3),GFRF(4));
+% Gnom=interp(G_hat,Garray.Frequency);
+% [usys, info]=ucover(Garray,Gnom,10);
+% relerr = Gnom\(Gnom-Garray);
+% W2=info.W1;
+% %%
+% bo=bodeoptions;
+% bo.FreqUnits='Hz';
+% figure
+% bodemag(relerr,'b--',W2,'r',bo);
+% fc = 100;
+% fs = 1000;
+% [b,a]=butter(6,fc/(fs/2),'high');
+% Hpf= frd(tf(b,a,Ts),G_hat.Frequency);
+% hold on
+% bodemag(Hpf,bo)
+% W2hpf=Hpf*W2;
+% bodemag(W2hpf,bo)
+% xlim([10 500])
+% ylim([-30 30])
+% legend
+% save(fullfile('Data',sprintf('%s.mat',idname)),"W2hpf",'relerr','Hpf','W2',...
+%     "GLFT","dm_bound","m0","m","GFRF","G","GFRF_dm")
 
 %% Two-port performance plant  (Stage 0)
 G_performance = mktito([ ...
     W1_frd      , -W1_frd*G_hat ; ...
-    0           , W2hpf*G_hat
     eye(ny)     , -G_hat        ; ...
     ], ny, nu);
 
@@ -119,10 +118,11 @@ disp(G_combined.InputGroup)
 disp(G_combined.OutputGroup)
 
 %% IQC multiplier PI  (bouded real scalar)
-eta      = dm_bound*1;   % bound on delta = dm/m0
-% eta=0.2;
-PI_data  = repmat([eta^2, 0; 0, -1], [1, 1, length(W_lft)]);
-PI       = frd(PI_data, W_lft, G_hat.Ts);
+eta = dm_bound;                 % bound on delta_m (use eta = 1 if delta is normalized to [-1,1])
+N   = length(w_lft);
+Pi0 = diag([eta^2, 1, -1, -1]); % ordering (q1,q2,p1,p2)
+PI_data = repmat(Pi0, [1 1 N]);
+PI = frd(PI_data, w_lft, G_hat.Ts);
 
 alpha_PI_soft = 0;
 beta_PI_soft  = 0.5;
@@ -209,6 +209,7 @@ for iter = 1:max_iter
                 nextstage=1;
             end
         case 3
+            nextstage=1;
             % STAGE=3;
             % ── Stage 2: Robust nominal (H∞ + IQC_reduced, joint obj) ────
             [LMIs, OBJ_perf,gamma] = datadriven.Objective.Hinf( ...
