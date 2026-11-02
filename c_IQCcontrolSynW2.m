@@ -11,14 +11,14 @@ load(fullfile('Data',sprintf('%s.mat',idname)))
 figure
 
 % nyquistplot(GFRF_dm{1}.FRF,GFRF_dm{2}.FRF,GFRF_dm{3}.FRF,GFRF_dm{4}.FRF, linspace(250*2*pi, 300*2*pi, 1000))
-% % For windows
-% addpath(genpath("C:\Users\admin\mosek"))
-% addpath(genpath("C:\Program Files\Mosek\10.1"))
-% addpath(genpath("C:\Users\admin\Documents\MATLAB\tbxmanager"))
+% For windows
+addpath(genpath("C:\Users\admin\mosek"))
+addpath(genpath("C:\Program Files\Mosek\10.1"))
+addpath(genpath("C:\Users\admin\Documents\MATLAB\tbxmanager"))
 
-% For mac
-addpath(genpath("/Users/pierre/mosek"))
-addpath(genpath("/Users/pierre/Documents/MATLAB/tbxmanager"))
+% % For mac
+% addpath(genpath("/Users/pierre/mosek"))
+% addpath(genpath("/Users/pierre/Documents/MATLAB/tbxmanager"))
 
 W_lft=GLFT.Frequency;
 [nin, nout]=size(GLFT);
@@ -414,7 +414,7 @@ title('Controllers — intermediate controllers');
 xlabel('Frequency (rad/s)');
 % exportgraphics(gcf,'plot/rpall_S.svg')
 %% plot the controller and sensitivtiy ate various iteration
-iterange= 4:15;
+iterange= 15:19;
 % sens
 figure; hold on; grid on;
 for s = iterange

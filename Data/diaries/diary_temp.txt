@@ -10,29 +10,3 @@ min:   -1.5000
 
 max:     0
 
-  obj = 0.000000 | gamma = 10.000000 | slack = 0.000000 | time = 3.70 s
-Controller is OL stable
-Iter   2 | Stage 1
-Pi scaler: 1.000e+00 used
-range of Pi plus
-min:     0
-
-max:     1
-
-range of Pi minus
-min:   -1.5000
-
-max:     0
-
-  obj = -0.000000 | gamma = 10.000000 | slack = -0.000000 | time = 2.10 s
-Controller is OL stable
-  --> Saved K_stage{2}
-  --> Advancing to Stage 2
-Iter   3 | Stage 2
-{Operation terminated by user during <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('datadriven.Objective.Hinf', '/Users/pierre/GitHub_local/LFT-ID-and-IQC-Control/+datadriven/+Objective/Hinf.m', 136)" style="font-weight:bold">datadriven.Objective.Hinf</a> (<a href="matlab: opentoline('/Users/pierre/GitHub_local/LFT-ID-and-IQC-Control/+datadriven/+Objective/Hinf.m',136,0)">line 136</a>)
-
-
-In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('c_IQCcontrolSynW2', '/Users/pierre/GitHub_local/LFT-ID-and-IQC-Control/c_IQCcontrolSynW2.m', 202)" style="font-weight:bold">c_IQCcontrolSynW2</a> (<a href="matlab: opentoline('/Users/pierre/GitHub_local/LFT-ID-and-IQC-Control/c_IQCcontrolSynW2.m',202,0)">line 202</a>)
-            [LMIs, OBJ_perf,gamma] = datadriven.Objective.Hinf( ...
-                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-} 
