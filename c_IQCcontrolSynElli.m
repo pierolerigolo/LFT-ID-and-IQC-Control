@@ -124,12 +124,44 @@ G_robustness = mktito(GLFT,ny, nu);
 % disp(G_combined.OutputGroup)
 
 %% Generate IQC multiplier PI  (channels ordered [p_d; p_dm; q_d; q_dm])
+
+A = model_elliptical.UncertaintySet.A;
+
+% easier to check for wierd values
+A_1=A{1};
+for i =1:length(A{1})
+    A_array(:,:,i)=A_1{i};
+end
+
+% % % % manually correct the wierd value
+% % % A{1}{300}=A{1}{299};
+% ---- Regularise A_array before building PI ----
+% Compute per-frequency scale = max singular value of A{k}
+A_set = model_elliptical.UncertaintySet.A{1};  % cell of length(W_lft) 2x2 matrices
+nW    = length(A_set);
+A_set{300}=A_set{299};
+
+% Find a robust scale: use the median of singular values, not the max
+sv_max = zeros(nW,1);
+for k = 1:nW
+    sv_max(k) = max(svd(A_set{k}));
+end
+
+% Clamp outliers: cap at e.g. 5x the median
+sv_threshold = 1e-2;
+for k = 1:nW
+    if sv_max(k) < sv_threshold
+        A_set{k} = A_set{k} * (sv_threshold / sv_max(k));
+    end
+end
+A{1}=A_set;
+
 nw = length(W_lft);
 J  = [1, 0; 0, 1i];
 eta = dm_bound;                          % |dm| <= eta
 
 % Block d (elliptical set)
-tmp   = model_elliptical.UncertaintySet.A';
+tmp   = A';
 tmp   = [tmp{:}];
 tmp   = cellfun(@(x) x*J', tmp, "UniformOutput", 0);
 A_bar = splitapply(@(x) {blkdiag(x{:})}, tmp, (1:nw)');
