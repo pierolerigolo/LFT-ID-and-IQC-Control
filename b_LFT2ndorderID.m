@@ -30,11 +30,12 @@ for i=4%:length(Gdm)
 end
 s=tf('s');
 % figure;hold on
+clear GLTI
 for i=1:length(Gdm)
     GLTI(1,i)=GFRF(i)/Gdm(i);
     bode(GFRF(i)/Gdm(i))
 end
-%%
+%%  W2 multiplicative filter
 GLTImeandata=mean(GLTI.ResponseData,2);
 GLTImean=frd(GLTImeandata,GLTI.Frequency,GLTI.Ts)
 hold on
@@ -66,7 +67,71 @@ relerr = Pnom\(Pnom - Parray);
 bo = bodeoptions; bo.FreqUnits = 'Hz';
 figure; bodemag(relerr,'b--',W2,'r',bo);
 
+%% Elliptical IQC uncertain model
+yalmip('clear')
+% Frequency grid
+% Main coarse grid
+omega_global = logspace(log10(2*pi*10), log10(pi/GFRF.Ts), 150);
+% Tiny dense patch: ±30 Hz around the peak (25–100 Hz)
+omega_peak_dense = logspace(log10(25*2*pi), log10(100*2*pi), 150);
+% omega_peak_dense=[];
+w_lft = unique([omega_global(:); omega_peak_dense(:)]);
 
+% For mac
+addpath(genpath("/Users/pierre/mosek"))
+addpath(genpath("/Users/pierre/Documents/MATLAB/tbxmanager"))
+% for i=1:length(GLTI)
+%     frdmodels(1,1,i)=GLTI(i);
+% end
+model_elliptical = datadriven.find_elliptical_uncertainty(GLTI, w_lft,'verbosity',2);
+
+% Plant & frequency grid
+G_hat  = model_elliptical.NominalModel;
+G_hat.ResponseData(300)=G_hat.ResponseData(299);
+W_lft  = G_hat.Frequency;
+A = model_elliptical.UncertaintySet.A;
+
+% plot the plant
+
+figure; hold on; grid on;
+A_set = A{1};
+
+figure; hold on; grid on;
+
+% Plot raw FRFs
+utils.magplot(GLTI(1), 'Color', [0.7 0.7 0.7], 'LineWidth', 0.5, 'DisplayName','Gresid(e^{j\omega})')
+for i = 1:size(GLTI,2)
+    utils.magplot(GLTI(i), 'Color', [0.7 0.7 0.7], 'LineWidth', 0.5,'HandleVisibility','off');
+end
+
+% Plot nominal model
+utils.magplot(G_hat, 'Color', 'b', 'LineWidth', 2, 'DisplayName', 'P');
+
+% Plot elliptical bounds: at each freq, bound = G_hat +/- 1/|A(jw)|
+% The ellipse semi-axis in complex plane is 1/sigma_min(A)
+G_resp = squeeze(freqresp(G_hat, W_lft)).';  % 1 x N complex
+
+upper_dB = zeros(length(W_lft), 1);
+lower_dB = NaN(length(W_lft), 1);  % NaN so wrapped-zero freqs are not plotted
+
+for k = 1:length(W_lft)
+    G_val = G_resp(k);
+    A_val = A_set{k};
+    r(k) = 1 / min(svd(double(A_val)));
+    
+    upper_dB(k) = 20*log10(abs(G_val) + r(k));
+    
+    lin_lower = abs(G_val) - r(k);
+    if lin_lower > 0
+        lower_dB(k) = 20*log10(lin_lower);
+    else
+        lower_dB(k) = -60;
+    end
+    % else: ellipse wraps zero → lower bound is -inf, leave as NaN
+end
+
+plot(W_lft/2/pi, upper_dB, 'r--', 'LineWidth', 1.5, 'DisplayName', 'Elliptical bound');
+plot(W_lft/2/pi, lower_dB, 'r--', 'LineWidth', 1.5, 'HandleVisibility', 'off');
 
 
 %% Multiplicative filter on the multimodel
@@ -240,7 +305,7 @@ xlim([10 500])
 
 % Frequency grid
 % Main coarse grid
-omega_global = logspace(log10(10), log10(pi/GFRF.Ts), 150);
+omega_global = logspace(log10(2*pi*10), log10(pi/GFRF.Ts), 150);
 % Tiny dense patch: ±30 Hz around the peak (25–100 Hz)
 omega_peak_dense = logspace(log10(25*2*pi), log10(100*2*pi), 150);
 % omega_peak_dense=[];
