@@ -32,7 +32,7 @@ s=tf('s');
 % figure;hold on
 clear GLTI
 for i=1:length(Gdm)
-    GLTI(1,i)=GFRF(i)/Gdm(i);
+    GLTI(1,1,i)=GFRF(i)/Gdm(i);
     bode(GFRF(i)/Gdm(i))
 end
 %%  W2 multiplicative filter
@@ -301,7 +301,7 @@ xlabel('Frequency (Hz)')
 ylabel('Error (dB)')
 legend('Location','best')
 xlim([10 500])
-%% Prepare the LFT for the control synthesis
+%% Prepare the LFT for the control synthesis w2 framework
 
 % Frequency grid
 % Main coarse grid
@@ -335,6 +335,39 @@ GLFT_delta=GdmLFT*GLTILFT;
 
 save(fullfile('data',sprintf('LFT_GFRF_GdmGLTIW2_%s.mat',expname)), ...
    "GLFT_delta", "GLFT","Delta","dm_bound","m0","m","GFRF","GFRF_cell","realmass")
+
+%% Prepare LFT for the elliptical uncertainty on Gresid
+ny=1;nu=1;
+% LFR for robustness
+L = [ ...
+    kron( kron( eye(ny), ones(1, nu) ), [1, 0] );
+    kron( kron( eye(ny), ones(1, nu) ), [0, 1] );
+    ];
+R = kron( ones(ny, 1), eye(nu) );
+sum_block = kron(ones(1, 2), eye(ny));
+
+GLTI_H = [...
+    zeros(ny*nu, ny*nu*2)   , R     ;
+    -sum_block * L          , -G_hat;
+    ];
+
+deltaw2=ultidyn('d',1);
+
+deltam=ureal('dm',0,'PlusMinus',dm_bound);
+Gdmnom=frd(Gdmnom,w_lft);
+Gdm_H= [  -Gdmnom, Gdmnom;...
+         -Gdmnom, Gdmnom];
+
+GdmLFT=lft(deltam,Gdm_H)
+GLTILFT=lft(deltaw2,GLTI_H)
+
+GLFT_delta=GdmLFT*GLTILFT;
+
+[GLFT,Delta] = lftdata(GLFT_delta)
+
+save(fullfile('data',sprintf('LFT_GFRF_GdmGLTIellipses_%s.mat',expname)), ...
+   "GLFT_delta","model_elliptical", "GLFT","Delta","dm_bound","m0","m","GFRF","GFRF_cell","realmass")
+
 %% Table for the obtained parameter and their std 
 function T = param_table(sys_est, names)
 % Parameter estimates and standard deviations of a greyest model.
