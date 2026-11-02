@@ -11,18 +11,18 @@ load(fullfile('Data',sprintf('%s.mat',idname)))
 figure
 
 % nyquistplot(GFRF_dm{1}.FRF,GFRF_dm{2}.FRF,GFRF_dm{3}.FRF,GFRF_dm{4}.FRF, linspace(250*2*pi, 300*2*pi, 1000))
-% % For windows
-% addpath(genpath("C:\Users\admin\mosek"))
-% addpath(genpath("C:\Program Files\Mosek\10.1"))
-% addpath(genpath("C:\Users\admin\Documents\MATLAB\tbxmanager"))
+% For windows
+addpath(genpath("C:\Users\admin\mosek"))
+addpath(genpath("C:\Program Files\Mosek\10.1"))
+addpath(genpath("C:\Users\admin\Documents\MATLAB\tbxmanager"))
 
-% For mac
-addpath(genpath("/Users/pierre/mosek"))
-addpath(genpath("/Users/pierre/Documents/MATLAB/tbxmanager"))
+% % For mac
+% addpath(genpath("/Users/pierre/mosek"))
+% addpath(genpath("/Users/pierre/Documents/MATLAB/tbxmanager"))
 
 W_lft=GLFT.Frequency;
 [nin, nout]=size(GLFT);
-[nq, np] = size(Delta);
+[np, nq] = size(Delta);
 G_hat=GLFT((nq+1):end,(np+1):end);
 
 ny=nin-nq;
@@ -103,25 +103,25 @@ G_performance = mktito([ ...
 %% Two-port robustness plant  (Stage 1)
 G_robustness = mktito(GLFT,ny, nu);
 
-%% Three-port combined plant  (Stage 3 — IQC_performance)
-G11 = G_robustness(G_robustness.OutputGroup.Y1, G_robustness.InputGroup.U1);
-G12 = G_robustness(G_robustness.OutputGroup.Y1, G_robustness.InputGroup.U2);
-G21 = G_robustness(G_robustness.OutputGroup.Y2, G_robustness.InputGroup.U1);
-G22 = G_robustness(G_robustness.OutputGroup.Y2, G_robustness.InputGroup.U2);
-
-O_pw = frd(zeros(np, nw, length(W_lft)), W_lft);
-I_y  = frd(repmat(eye(ny), [1,1,length(W_lft)]), W_lft);
-
-G_mat = [  G11          ,  O_pw    ,  G12          ; ...  % p row
-          -W1_frd*G21   ,  W1_frd  , -W1_frd*G22   ; ...  % z row
-          -G21          ,  I_y     , -G22           ];     % y row
-
-G_combined = frd(G_mat, W_lft);
-G_combined.InputGroup  = struct('U1', 1:nq,        'U2', nq+(1:nw),    'U3', nq+nw+(1:nu));
-G_combined.OutputGroup = struct('Y1', 1:np,        'Y2', np+(1:nz),    'Y3', np+nz+(1:ny));
-
-disp(G_combined.InputGroup)
-disp(G_combined.OutputGroup)
+% %% Three-port combined plant  (Stage 3 — IQC_performance)
+% G11 = G_robustness(G_robustness.OutputGroup.Y1, G_robustness.InputGroup.U1);
+% G12 = G_robustness(G_robustness.OutputGroup.Y1, G_robustness.InputGroup.U2);
+% G21 = G_robustness(G_robustness.OutputGroup.Y2, G_robustness.InputGroup.U1);
+% G22 = G_robustness(G_robustness.OutputGroup.Y2, G_robustness.InputGroup.U2);
+% 
+% O_pw = frd(zeros(np, nw, length(W_lft)), W_lft);
+% I_y  = frd(repmat(eye(ny), [1,1,length(W_lft)]), W_lft);
+% 
+% G_mat = [  G11          ,  O_pw    ,  G12          ; ...  % p row
+%           -W1_frd*G21   ,  W1_frd  , -W1_frd*G22   ; ...  % z row
+%           -G21          ,  I_y     , -G22           ];     % y row
+% 
+% G_combined = frd(G_mat, W_lft);
+% G_combined.InputGroup  = struct('U1', 1:nq,        'U2', nq+(1:nw),    'U3', nq+nw+(1:nu));
+% G_combined.OutputGroup = struct('Y1', 1:np,        'Y2', np+(1:nz),    'Y3', np+nz+(1:ny));
+% 
+% disp(G_combined.InputGroup)
+% disp(G_combined.OutputGroup)
 
 %% Generate IQC multiplier PI  (channels ordered [p_d; p_dm; q_d; q_dm])
 nw = length(W_lft);
