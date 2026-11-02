@@ -351,7 +351,7 @@ GLTI_H = [...
     -sum_block * L          , -G_hat;
     ];
 
-deltaw2=ultidyn('d',1);
+deltaelli = ultidyn('d', [2*ny*nu, ny*nu]);   % 2 outputs, 1 input for SISO
 
 deltam=ureal('dm',0,'PlusMinus',dm_bound);
 Gdmnom=frd(Gdmnom,w_lft);
@@ -359,7 +359,7 @@ Gdm_H= [  -Gdmnom, Gdmnom;...
          -Gdmnom, Gdmnom];
 
 GdmLFT=lft(deltam,Gdm_H)
-GLTILFT=lft(deltaw2,GLTI_H)
+GLTILFT=lft(deltaelli,GLTI_H)
 
 GLFT_delta=GdmLFT*GLTILFT;
 
