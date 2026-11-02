@@ -264,12 +264,12 @@ Gdm_H= [  -Gdmnom, Gdmnom;...
 GdmLFT=lft(deltam,Gdm_H)
 GLTILFT=lft(deltaw2,GLTI_H)
 
-GLFT_full=GdmLFT*GLTILFT;
+GLFT_delta=GdmLFT*GLTILFT;
 
-[GLFT,Delta] = lftdata(GLFT_full)
+[GLFT,Delta] = lftdata(GLFT_delta)
 
 save(fullfile('data',sprintf('LFT_GFRF_GdmGLTIW2_%s.mat',expname)), ...
-    "GLFT","Delta","dm_bound","m0","m","GFRF","GFRF_cell","realmass")
+   "GLFT_delta", "GLFT","Delta","dm_bound","m0","m","GFRF","GFRF_cell","realmass")
 %% Table for the obtained parameter and their std 
 function T = param_table(sys_est, names)
 % Parameter estimates and standard deviations of a greyest model.

@@ -2,7 +2,7 @@ close all; clc; clear; clear("yalmip");
 % warning('off')
 %% Config
 rng(22);
-orderK   = 16 ;
+orderK   = 20 ;
 Ts       = 0.001;
 
 %% Load data
@@ -21,8 +21,14 @@ addpath(genpath("C:\Users\admin\Documents\MATLAB\tbxmanager"))
 % addpath(genpath("/Users/pierre/Documents/MATLAB/tbxmanager"))
 
 W_lft=GLFT.Frequency;
-G_hat=GLFT(2,2);
-ny=1;nu=1;np=2;nq=2;nw=1;nz=1;
+[nin, nout]=size(GLFT);
+[nq, np] = size(Delta);
+G_hat=GLFT((nq+1):end,(np+1):end);
+
+ny=nin-nq;
+nu=nout-np;
+
+nw=1;nz=1;
 
 %% plot the plant
 figure; hold on; grid on;
@@ -35,7 +41,7 @@ for i = 1:length(GFRF)
 end
 
 % Plot nominal model
-utils.magplot(GLFT(2,2), 'Color', 'b', 'LineWidth', 2, 'DisplayName', 'Nominal G\_hat');
+utils.magplot(G_hat, 'Color', 'b', 'LineWidth', 2, 'DisplayName', 'Nominal G\_hat');
 
 legend('Location','best');
 %%
@@ -47,7 +53,7 @@ floor_gain = 0.5;
 
 zeta_d     = 0.001;
 zeta_n     = 0.0001;
-peak_extra = 500;
+peak_extra = 200;
 
 num_bp     = peak_extra * [2*zeta_n*omega_d, 0];
 den_bp     = [1, 2*zeta_d*omega_d, omega_d^2];
@@ -119,10 +125,10 @@ disp(G_combined.OutputGroup)
 
 %% IQC multiplier PI  (bouded real scalar)
 eta = dm_bound;                 % bound on delta_m (use eta = 1 if delta is normalized to [-1,1])
-N   = length(w_lft);
-Pi0 = diag([eta^2, 1, -1, -1]); % ordering (q1,q2,p1,p2)
+N   = length(W_lft);
+Pi0 = diag([1, eta^2, -1, -1]); % ordering (q1,q2,p1,p2)
 PI_data = repmat(Pi0, [1 1 N]);
-PI = frd(PI_data, w_lft, G_hat.Ts);
+PI = frd(PI_data, W_lft, G_hat.Ts);
 
 alpha_PI_soft = 0;
 beta_PI_soft  = 0.5;
@@ -143,8 +149,9 @@ K_stage = cell(4, 1);   % one per stage 0..3
 %  Stage 3 — Robust performance      (IQC_performance)
 %
 solver       = 'mosek';
-max_iter     = 1000;
+max_iter     = 200;
 prev_obj     = Inf;
+obj_ref     = Inf;
 STAGE        = 1;gamma=10;
 has_slack    = false;
 loss_tol = 0.10;
@@ -203,13 +210,13 @@ for iter = 1:max_iter
             OBJ       = OBJ_perf;
             slack_val = slack;
             has_slack = false;     
-                % nextstage=1;
-            obj_ref = obj_val; 
+            % nextstage=1;
+
             if iter==last_hinfstb_itr
                 nextstage=1;
             end
         case 3
-            nextstage=1;
+            break
             % STAGE=3;
             % ── Stage 2: Robust nominal (H∞ + IQC_reduced, joint obj) ────
             [LMIs, OBJ_perf,gamma] = datadriven.Objective.Hinf( ...
@@ -271,6 +278,12 @@ for iter = 1:max_iter
     end
 
     obj_val = value(OBJ);
+    if STAGE==2
+        if obj_val > (1+loss_tol)*obj_ref
+            nextstage=1;
+        end
+        obj_ref = obj_val; 
+    end 
     if has_slack
         fprintf('  obj = %.6f | gamma = %.6f | slack = %.6f | time = %.2f s\n', ...
             obj_val,value(gamma), value(slack_val), elapsed);
@@ -371,7 +384,7 @@ save(fullfile('data','controller',sprintf('%s.mat',expname)), ...
     'stage_names','K_stage','W1_frd',"K_itr","D_itr","E_itr","eta_itr")
 diary off
 movefile(fullfile('data','diaries','diary_temp.txt'),fullfile('data','diaries',sprintf('%s.txt',expname)))
-
+%% pots the stages
 
 colors      = lines(4);
 colors = colors([1,2,4,3],:);
@@ -388,7 +401,49 @@ utils.magplot(inv(W1_frd),'Color',[0 0 1 .3]);   % performance bound
 legend([stage_names(~cellfun(@isempty, K_stage)),'1/W1'], 'Location', 'best');
 title('Sensitivity — intermediate controllers');
 xlabel('Frequency (rad/s)');
+figure; hold on; grid on;
+for s = 1:4
+    if ~isempty(K_stage{s})
+        K_s = ss(K_stage{s});
+        utils.magplot(frd(K_s, W_lft), 'Color', colors(s,:));
+    end
+end
+
+legend([stage_names(~cellfun(@isempty, K_stage)),'1/W1'], 'Location', 'best');
+title('Controllers — intermediate controllers');
+xlabel('Frequency (rad/s)');
 % exportgraphics(gcf,'plot/rpall_S.svg')
+%% plot the controller and sensitivtiy ate various iteration
+iterange= 4:15;
+% sens
+figure; hold on; grid on;
+for s = iterange
+    if ~isempty(K_itr{s})
+        K_s = ss(K_itr{s});
+        S_s = feedback(1, G_hat * K_s);
+        utils.magplot(frd(S_s, W_lft),'DisplayName','itr '+string(s));
+    end
+end
+utils.magplot(inv(W1_frd),'Color',[0 0 1 .3],'DisplayName','W_1^{-1}');   % performance bound
+legend
+title('Sensitivity — intermediate controllers');
+xlabel('Frequency (rad/s)');
+% cont
+figure; hold on; grid on;
+for s = iterange
+    if ~isempty(K_itr{s})
+        K_s = ss(K_itr{s});
+        utils.magplot(frd(K_s, W_lft),'DisplayName','itr '+string(s));
+    end
+end
+
+legend();
+title('Controllers — intermediate controllers');
+xlabel('Frequency (rad/s)'); 
+
+
+%% Pzplot
+figure;pzplot(K_itr{end})
 %% Final plots
 % figure;
 % bodemag(inv(W1_frd), frd(S_nom, W_lft));

@@ -1,0 +1,164 @@
+Iter   1 | Stage 1
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 0.000000 | gamma = 10.000000 | slack = 0.000000 | time = 2.70 s
+Controller is OL stable
+Iter   2 | Stage 1
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 0.000000 | gamma = 10.000000 | slack = 0.000000 | time = 2.24 s
+Controller is OL stable
+  --> Saved K_stage{2}
+  --> Advancing to Stage 2
+Iter   3 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 220.344271 | time = 6.75 s
+
+Controller is OL stable
+Iter   4 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 203.520705 | time = 6.08 s
+
+Controller is OL stable
+Iter   5 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 188.743994 | time = 5.30 s
+
+Controller is OL stable
+Iter   6 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 184.184880 | time = 6.94 s
+
+Controller is OL stable
+Iter   7 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 182.901354 | time = 4.98 s
+
+Controller is OL stable
+Iter   8 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 179.414222 | time = 6.38 s
+
+Controller is OL unstable
+Iter   9 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 175.704521 | time = 5.22 s
+
+Controller is OL unstable
+Iter  10 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 522.133233 | time = 7.22 s
+
+Controller is OL unstable
+  --> Saved K_stage{3}
+  --> Advancing to Stage 3
+Iter  11 | Stage 3
+{Unrecognized function or variable 'D_array'.
+
+Error in <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('c_IQCcontrolSynW2', 'C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\c_IQCcontrolSynW2.m', 355)" style="font-weight:bold">c_IQCcontrolSynW2</a> (<a href="matlab: opentoline('C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\c_IQCcontrolSynW2.m',355,0)">line 355</a>)
+semilogx(W_lft/2/pi,D_array,W_lft/2/pi,imag(E_array))
+                    ^^^^^^^
+} 
+
+expname =
+
+    'controller_W2hpfT_order20_82hz_-26db_nperfhinf_lasthinfstabitrInf_eta0.35_multi_freq'
+

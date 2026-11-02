@@ -1,0 +1,3863 @@
+Iter   1 | Stage 1
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 0.000000 | gamma = 10.000000 | slack = 0.000000 | time = 5.69 s
+Controller is OL stable
+Iter   2 | Stage 1
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 0.000000 | gamma = 10.000000 | slack = 0.000000 | time = 2.39 s
+Controller is OL stable
+  --> Saved K_stage{2}
+  --> Advancing to Stage 2
+Iter   3 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 1299.822869 | time = 4.77 s
+
+Controller is OL stable
+Iter   4 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 1188.447647 | time = 4.13 s
+
+Controller is OL unstable
+Iter   5 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 1127.202241 | time = 4.19 s
+
+Controller is OL unstable
+Iter   6 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 1107.938558 | time = 3.95 s
+
+Controller is OL unstable
+Iter   7 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 1081.720182 | time = 3.97 s
+
+Controller is OL unstable
+Iter   8 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 1056.629984 | time = 3.90 s
+
+Controller is OL unstable
+Iter   9 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 1030.156160 | time = 4.03 s
+
+Controller is OL unstable
+Iter  10 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 998.692510 | time = 4.07 s
+
+Controller is OL unstable
+Iter  11 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 960.467450 | time = 4.02 s
+
+Controller is OL unstable
+Iter  12 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 902.568519 | time = 3.93 s
+
+Controller is OL unstable
+Iter  13 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 800.743746 | time = 4.34 s
+
+Controller is OL unstable
+Iter  14 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 629.927700 | time = 4.35 s
+
+Controller is OL unstable
+Iter  15 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 494.521992 | time = 4.10 s
+
+Controller is OL unstable
+Iter  16 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 424.886852 | time = 4.34 s
+
+Controller is OL unstable
+Iter  17 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 380.498019 | time = 4.55 s
+
+Controller is OL unstable
+Iter  18 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 356.077023 | time = 4.56 s
+
+Controller is OL unstable
+Iter  19 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 345.576450 | time = 4.54 s
+
+Controller is OL unstable
+Iter  20 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 336.490212 | time = 4.63 s
+
+Controller is OL unstable
+Iter  21 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 327.141446 | time = 4.50 s
+
+Controller is OL unstable
+Iter  22 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 322.310114 | time = 4.63 s
+
+Controller is OL unstable
+Iter  23 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 318.050872 | time = 4.42 s
+
+Controller is OL unstable
+Iter  24 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 312.450324 | time = 3.99 s
+
+Controller is OL unstable
+Iter  25 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 303.639853 | time = 3.89 s
+
+Controller is OL unstable
+Iter  26 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 290.680592 | time = 3.94 s
+
+Controller is OL unstable
+Iter  27 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 273.650725 | time = 3.93 s
+
+Controller is OL unstable
+Iter  28 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 253.023469 | time = 3.93 s
+
+Controller is OL unstable
+Iter  29 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 240.481539 | time = 4.26 s
+
+Controller is OL unstable
+Iter  30 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 238.664232 | time = 4.42 s
+
+Controller is OL unstable
+Iter  31 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 237.584404 | time = 4.18 s
+
+Controller is OL unstable
+Iter  32 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 236.843924 | time = 4.43 s
+
+Controller is OL unstable
+Iter  33 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 236.277662 | time = 4.39 s
+
+Controller is OL unstable
+Iter  34 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 235.784849 | time = 4.50 s
+
+Controller is OL unstable
+Iter  35 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 235.347750 | time = 4.65 s
+
+Controller is OL unstable
+Iter  36 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 234.961387 | time = 4.70 s
+
+Controller is OL unstable
+Iter  37 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 234.610035 | time = 4.47 s
+
+Controller is OL unstable
+Iter  38 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 234.298339 | time = 4.57 s
+
+Controller is OL unstable
+Iter  39 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 234.030793 | time = 4.47 s
+
+Controller is OL unstable
+Iter  40 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 233.754922 | time = 4.58 s
+
+Controller is OL unstable
+Iter  41 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 233.582260 | time = 4.68 s
+
+Controller is OL unstable
+Iter  42 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 233.679186 | time = 4.84 s
+
+Controller is OL unstable
+Iter  43 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 281.380004 | time = 6.20 s
+
+Controller is OL unstable
+Iter  44 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 241.108391 | time = 4.44 s
+
+Controller is OL unstable
+Iter  45 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 233.649507 | time = 4.23 s
+
+Controller is OL unstable
+Iter  46 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 231.796433 | time = 4.26 s
+
+Controller is OL unstable
+Iter  47 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 229.336754 | time = 4.47 s
+
+Controller is OL unstable
+Iter  48 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 224.395152 | time = 4.57 s
+
+Controller is OL unstable
+Iter  49 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 221.819575 | time = 4.65 s
+
+Controller is OL unstable
+Iter  50 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 221.134477 | time = 4.84 s
+
+Controller is OL unstable
+Iter  51 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 221.023601 | time = 4.95 s
+
+Controller is OL unstable
+Iter  52 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 632.292695 | time = 5.02 s
+
+Controller is OL unstable
+Iter  53 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 301.745136 | time = 5.39 s
+
+Controller is OL unstable
+Iter  54 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 230.828232 | time = 4.58 s
+
+Controller is OL unstable
+Iter  55 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 222.251344 | time = 4.56 s
+
+Controller is OL unstable
+Iter  56 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 221.081424 | time = 5.06 s
+
+Controller is OL unstable
+Iter  57 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 220.572796 | time = 5.32 s
+
+Controller is OL unstable
+Iter  58 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 220.246634 | time = 4.95 s
+
+Controller is OL unstable
+Iter  59 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 219.986837 | time = 4.81 s
+
+Controller is OL unstable
+Iter  60 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 219.774807 | time = 4.88 s
+
+Controller is OL unstable
+Iter  61 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 219.829048 | time = 5.02 s
+
+Controller is OL unstable
+Iter  62 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 219.850388 | time = 4.91 s
+
+Controller is OL unstable
+Iter  63 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 219.690002 | time = 4.66 s
+
+Controller is OL unstable
+Iter  64 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 221.360471 | time = 4.99 s
+
+Controller is OL unstable
+Iter  65 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 219.742828 | time = 5.08 s
+
+Controller is OL unstable
+Iter  66 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 233.463774 | time = 6.93 s
+
+Controller is OL unstable
+Iter  67 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 222.762160 | time = 5.48 s
+
+Controller is OL unstable
+Iter  68 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 220.728243 | time = 4.55 s
+
+Controller is OL unstable
+Iter  69 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 220.261739 | time = 4.80 s
+
+Controller is OL unstable
+Iter  70 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 220.032699 | time = 4.90 s
+
+Controller is OL unstable
+Iter  71 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 219.909231 | time = 4.78 s
+
+Controller is OL unstable
+Iter  72 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 219.936348 | time = 4.70 s
+
+Controller is OL unstable
+Iter  73 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 221.516594 | time = 4.76 s
+
+Controller is OL unstable
+Iter  74 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 220.180309 | time = 4.40 s
+
+Controller is OL unstable
+Iter  75 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 221.552949 | time = 4.72 s
+
+Controller is OL unstable
+Iter  76 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 220.320260 | time = 5.10 s
+
+Controller is OL unstable
+Iter  77 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 220.070550 | time = 4.98 s
+
+Controller is OL unstable
+Iter  78 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 219.938745 | time = 5.09 s
+
+Controller is OL unstable
+Iter  79 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 325.679995 | time = 6.44 s
+
+Controller is OL unstable
+Iter  80 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 232.985162 | time = 5.27 s
+
+Controller is OL unstable
+Iter  81 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 224.220757 | time = 5.56 s
+
+Controller is OL unstable
+Iter  82 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 221.607095 | time = 5.40 s
+
+Controller is OL unstable
+Iter  83 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 220.909361 | time = 5.44 s
+
+Controller is OL unstable
+Iter  84 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 221.084477 | time = 5.10 s
+
+Controller is OL unstable
+Iter  85 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 221.032707 | time = 5.11 s
+
+Controller is OL unstable
+Iter  86 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 220.926484 | time = 5.14 s
+
+Controller is OL unstable
+Iter  87 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 222.043225 | time = 5.13 s
+
+Controller is OL unstable
+Iter  88 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 220.956685 | time = 5.13 s
+
+Controller is OL unstable
+Iter  89 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 221.045344 | time = 5.15 s
+
+Controller is OL unstable
+Iter  90 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 221.021983 | time = 5.08 s
+
+Controller is OL unstable
+Iter  91 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 220.811671 | time = 5.35 s
+
+Controller is OL unstable
+Iter  92 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 446.208847 | time = 5.00 s
+
+Controller is OL unstable
+Iter  93 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 262.632424 | time = 5.58 s
+
+Controller is OL unstable
+Iter  94 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 224.332314 | time = 4.92 s
+
+Controller is OL unstable
+Iter  95 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 217.893726 | time = 5.41 s
+
+Controller is OL unstable
+Iter  96 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 201.406278 | time = 5.11 s
+
+Controller is OL unstable
+Iter  97 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 189.372924 | time = 4.17 s
+
+Controller is OL unstable
+Iter  98 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 177.674173 | time = 5.32 s
+
+Controller is OL unstable
+Iter  99 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 166.457929 | time = 4.93 s
+
+Controller is OL unstable
+Iter 100 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 154.093802 | time = 4.53 s
+
+Controller is OL unstable
+Iter 101 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 141.538512 | time = 4.55 s
+
+Controller is OL unstable
+Iter 102 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 131.719796 | time = 4.63 s
+
+Controller is OL unstable
+Iter 103 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 118.700129 | time = 4.76 s
+
+Controller is OL unstable
+Iter 104 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 95.664868 | time = 5.18 s
+
+Controller is OL unstable
+Iter 105 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 84.478245 | time = 4.76 s
+
+Controller is OL unstable
+Iter 106 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 75.586494 | time = 5.25 s
+
+Controller is OL unstable
+Iter 107 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 70.012308 | time = 4.48 s
+
+Controller is OL unstable
+Iter 108 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 63.907561 | time = 4.60 s
+
+Controller is OL unstable
+Iter 109 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 59.125235 | time = 4.45 s
+
+Controller is OL unstable
+Iter 110 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 53.885897 | time = 4.89 s
+
+Controller is OL unstable
+Iter 111 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 51.421196 | time = 4.99 s
+
+Controller is OL unstable
+Iter 112 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 47.726655 | time = 5.76 s
+
+Controller is OL unstable
+Iter 113 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 41.212177 | time = 10.30 s
+
+Controller is OL unstable
+Iter 114 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 39.780622 | time = 5.28 s
+
+Controller is OL unstable
+Iter 115 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 39.003730 | time = 5.46 s
+
+Controller is OL unstable
+Iter 116 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 38.582023 | time = 5.30 s
+
+Controller is OL unstable
+Iter 117 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 36.953658 | time = 5.41 s
+
+Controller is OL unstable
+Iter 118 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 36.328495 | time = 4.88 s
+
+Controller is OL unstable
+Iter 119 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 43.166739 | time = 5.02 s
+
+Controller is OL unstable
+Iter 120 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 37.759963 | time = 5.27 s
+
+Controller is OL unstable
+Iter 121 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 36.423246 | time = 5.20 s
+
+Controller is OL unstable
+Iter 122 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 37.553881 | time = 5.35 s
+
+Controller is OL unstable
+Iter 123 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 36.499872 | time = 5.14 s
+
+Controller is OL unstable
+Iter 124 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 36.219383 | time = 5.35 s
+
+Controller is OL unstable
+Iter 125 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 43.891205 | time = 5.20 s
+
+Controller is OL unstable
+Iter 126 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 38.222450 | time = 5.37 s
+
+Controller is OL unstable
+Iter 127 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 36.729600 | time = 5.49 s
+
+Controller is OL unstable
+Iter 128 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 36.397317 | time = 5.33 s
+
+Controller is OL unstable
+Iter 129 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 38.899136 | time = 5.66 s
+
+Controller is OL unstable
+Iter 130 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 36.574383 | time = 4.93 s
+
+Controller is OL unstable
+Iter 131 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 36.383478 | time = 5.34 s
+
+Controller is OL unstable
+Iter 132 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 36.373461 | time = 5.37 s
+
+Controller is OL unstable
+Iter 133 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 36.105622 | time = 5.44 s
+
+Controller is OL unstable
+Iter 134 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 38.007500 | time = 8.51 s
+
+Controller is OL unstable
+Iter 135 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 36.378840 | time = 5.63 s
+
+Controller is OL unstable
+Iter 136 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 35.793829 | time = 5.57 s
+
+Controller is OL unstable
+Iter 137 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 39.443708 | time = 5.98 s
+
+Controller is OL unstable
+Iter 138 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 36.329024 | time = 5.92 s
+
+Controller is OL unstable
+Iter 139 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 36.351672 | time = 5.73 s
+
+Controller is OL unstable
+Iter 140 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 35.960801 | time = 5.54 s
+
+Controller is OL unstable
+Iter 141 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 36.542319 | time = 5.46 s
+
+Controller is OL unstable
+Iter 142 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 35.756467 | time = 5.70 s
+
+Controller is OL unstable
+Iter 143 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 35.712830 | time = 5.65 s
+
+Controller is OL unstable
+Iter 144 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 35.933583 | time = 5.21 s
+
+Controller is OL unstable
+Iter 145 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 35.414914 | time = 5.70 s
+
+Controller is OL unstable
+Iter 146 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 35.535125 | time = 5.70 s
+
+Controller is OL unstable
+Iter 147 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 35.111843 | time = 5.53 s
+
+Controller is OL unstable
+Iter 148 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 35.119407 | time = 5.96 s
+
+Controller is OL unstable
+Iter 149 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 34.763681 | time = 5.44 s
+
+Controller is OL unstable
+Iter 150 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 34.465019 | time = 5.54 s
+
+Controller is OL unstable
+Iter 151 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 34.164973 | time = 5.60 s
+
+Controller is OL unstable
+Iter 152 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 33.883684 | time = 5.55 s
+
+Controller is OL unstable
+Iter 153 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 33.650883 | time = 5.59 s
+
+Controller is OL unstable
+Iter 154 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 33.464904 | time = 5.59 s
+
+Controller is OL unstable
+Iter 155 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 33.217746 | time = 5.55 s
+
+Controller is OL unstable
+Iter 156 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 34.581726 | time = 5.92 s
+
+Controller is OL unstable
+Iter 157 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 33.307647 | time = 5.65 s
+
+Controller is OL unstable
+Iter 158 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 34.228043 | time = 5.71 s
+
+Controller is OL unstable
+Iter 159 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 33.102521 | time = 5.39 s
+
+Controller is OL unstable
+Iter 160 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 32.857173 | time = 5.64 s
+
+Controller is OL unstable
+Iter 161 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 33.745428 | time = 5.47 s
+
+Controller is OL unstable
+Iter 162 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 32.725543 | time = 5.70 s
+
+Controller is OL unstable
+Iter 163 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 32.610017 | time = 5.59 s
+
+Controller is OL unstable
+Iter 164 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 32.714472 | time = 5.57 s
+
+Controller is OL unstable
+Iter 165 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 32.741784 | time = 5.64 s
+
+Controller is OL unstable
+Iter 166 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 32.558806 | time = 5.53 s
+
+Controller is OL unstable
+Iter 167 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 32.598108 | time = 5.44 s
+
+Controller is OL unstable
+Iter 168 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 32.273467 | time = 5.96 s
+
+Controller is OL unstable
+Iter 169 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 32.457497 | time = 5.46 s
+
+Controller is OL unstable
+Iter 170 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 31.960813 | time = 5.75 s
+
+Controller is OL unstable
+Iter 171 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 31.485315 | time = 5.84 s
+
+Controller is OL unstable
+Iter 172 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 31.132821 | time = 5.47 s
+
+Controller is OL unstable
+Iter 173 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 30.782688 | time = 5.41 s
+
+Controller is OL unstable
+Iter 174 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 30.460163 | time = 5.84 s
+
+Controller is OL unstable
+Iter 175 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 30.108229 | time = 5.67 s
+
+Controller is OL unstable
+Iter 176 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 29.819521 | time = 5.57 s
+
+Controller is OL unstable
+Iter 177 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 29.586556 | time = 5.41 s
+
+Controller is OL unstable
+Iter 178 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 32.216378 | time = 6.85 s
+
+Controller is OL unstable
+Iter 179 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 32.471468 | time = 5.44 s
+
+Controller is OL unstable
+Iter 180 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 32.339985 | time = 5.60 s
+
+Controller is OL unstable
+Iter 181 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 30.235075 | time = 5.59 s
+
+Controller is OL unstable
+Iter 182 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 28.635203 | time = 5.73 s
+
+Controller is OL unstable
+Iter 183 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 28.130362 | time = 5.42 s
+
+Controller is OL unstable
+Iter 184 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 28.581820 | time = 5.86 s
+
+Controller is OL unstable
+Iter 185 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 26.988981 | time = 5.57 s
+
+Controller is OL unstable
+Iter 186 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 26.603567 | time = 5.40 s
+
+Controller is OL unstable
+Iter 187 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 25.251363 | time = 5.47 s
+
+Controller is OL unstable
+Iter 188 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 23.967425 | time = 5.66 s
+
+Controller is OL unstable
+Iter 189 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 21.905717 | time = 5.30 s
+
+Controller is OL unstable
+Iter 190 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 19.618956 | time = 5.17 s
+
+Controller is OL unstable
+Iter 191 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 16.586446 | time = 6.20 s
+
+Controller is OL unstable
+Iter 192 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 14.478120 | time = 5.48 s
+
+Controller is OL unstable
+Iter 193 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 12.891751 | time = 5.14 s
+
+Controller is OL unstable
+Iter 194 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 22.157942 | time = 5.65 s
+
+Controller is OL unstable
+Iter 195 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 17.678298 | time = 5.42 s
+
+Controller is OL unstable
+Iter 196 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 15.983172 | time = 5.54 s
+
+Controller is OL unstable
+Iter 197 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 14.513006 | time = 7.34 s
+
+Controller is OL unstable
+Iter 198 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 14.294983 | time = 5.70 s
+
+Controller is OL unstable
+Iter 199 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 12.968081 | time = 5.45 s
+
+Controller is OL unstable
+Iter 200 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 11.858044 | time = 5.46 s
+
+Controller is OL unstable
+Iter 201 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 12.303680 | time = 5.80 s
+
+Controller is OL unstable
+Iter 202 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 10.854176 | time = 7.51 s
+
+Controller is OL unstable
+Iter 203 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 10.279355 | time = 5.34 s
+
+Controller is OL unstable
+Iter 204 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 9.445403 | time = 5.77 s
+
+Controller is OL unstable
+Iter 205 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 8.857489 | time = 5.24 s
+
+Controller is OL unstable
+Iter 206 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 7.535962 | time = 4.92 s
+
+Controller is OL unstable
+Iter 207 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 8.689095 | time = 4.80 s
+
+Controller is OL unstable
+Iter 208 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 7.514302 | time = 5.03 s
+
+Controller is OL unstable
+Iter 209 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 8.301950 | time = 4.76 s
+
+Controller is OL unstable
+Iter 210 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 8.457997 | time = 4.53 s
+
+Controller is OL unstable
+Iter 211 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 8.142421 | time = 4.78 s
+
+Controller is OL unstable
+Iter 212 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 7.787280 | time = 4.94 s
+
+Controller is OL unstable
+Iter 213 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 8.221928 | time = 4.74 s
+
+Controller is OL unstable
+Iter 214 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 7.700647 | time = 5.94 s
+
+Controller is OL unstable
+Iter 215 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 7.403966 | time = 5.14 s
+
+Controller is OL unstable
+Iter 216 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 7.203442 | time = 4.89 s
+
+Controller is OL unstable
+Iter 217 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 7.166441 | time = 5.42 s
+
+Controller is OL unstable
+Iter 218 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 10.023984 | time = 4.56 s
+
+Controller is OL unstable
+Iter 219 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 7.884262 | time = 5.28 s
+
+Controller is OL unstable
+Iter 220 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 7.646064 | time = 5.05 s
+
+Controller is OL unstable
+Iter 221 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 7.601004 | time = 5.11 s
+
+Controller is OL unstable
+Iter 222 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 9.575756 | time = 4.56 s
+
+Controller is OL unstable
+Iter 223 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 8.069598 | time = 4.94 s
+
+Controller is OL unstable
+Iter 224 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 7.921478 | time = 4.99 s
+
+Controller is OL unstable
+Iter 225 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 7.842103 | time = 7.48 s
+
+Controller is OL unstable
+Iter 226 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 7.724895 | time = 4.72 s
+
+Controller is OL unstable
+Iter 227 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 8.411403 | time = 6.03 s
+
+Controller is OL unstable
+Iter 228 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 7.870645 | time = 4.61 s
+
+Controller is OL unstable
+Iter 229 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 7.928598 | time = 4.83 s
+
+Controller is OL unstable
+Iter 230 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 7.782907 | time = 4.82 s
+
+Controller is OL unstable
+Iter 231 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 7.760737 | time = 4.85 s
+
+Controller is OL unstable
+Iter 232 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 7.860517 | time = 4.88 s
+
+Controller is OL unstable
+Iter 233 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 7.763457 | time = 4.57 s
+
+Controller is OL unstable
+Iter 234 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 7.758488 | time = 4.87 s
+
+Controller is OL unstable
+Iter 235 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 7.675582 | time = 4.79 s
+
+Controller is OL unstable
+Iter 236 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 7.584437 | time = 4.77 s
+
+Controller is OL unstable
+Iter 237 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 7.992143 | time = 4.64 s
+
+Controller is OL unstable
+Iter 238 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 7.867608 | time = 6.61 s
+
+Controller is OL unstable
+Iter 239 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 7.922669 | time = 4.64 s
+
+Controller is OL unstable
+Iter 240 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 7.981506 | time = 4.73 s
+
+Controller is OL unstable
+Iter 241 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 7.988607 | time = 4.85 s
+
+Controller is OL unstable
+Iter 242 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 8.088033 | time = 4.94 s
+
+Controller is OL unstable
+Iter 243 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 8.122251 | time = 4.63 s
+
+Controller is OL unstable
+Iter 244 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 8.413988 | time = 4.74 s
+
+Controller is OL unstable
+Iter 245 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 8.366369 | time = 4.53 s
+
+Controller is OL unstable
+Iter 246 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 8.219954 | time = 5.01 s
+
+Controller is OL unstable
+Iter 247 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 8.384349 | time = 4.53 s
+
+Controller is OL unstable
+Iter 248 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 8.575448 | time = 4.75 s
+
+Controller is OL unstable
+Iter 249 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 8.195278 | time = 4.97 s
+
+Controller is OL unstable
+Iter 250 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 8.258562 | time = 4.88 s
+
+Controller is OL unstable
+Iter 251 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 8.304020 | time = 4.68 s
+
+Controller is OL unstable
+Iter 252 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 8.456466 | time = 4.49 s
+
+Controller is OL unstable
+Iter 253 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 8.497171 | time = 4.73 s
+
+Controller is OL unstable
+Iter 254 | Stage 2
+{Operation terminated by user during <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('sdpvar/ishermitian', 'C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\@sdpvar\ishermitian.m', 29)" style="font-weight:bold">sdpvar/ishermitian</a> (<a href="matlab: opentoline('C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\@sdpvar\ishermitian.m',29,0)">line 29</a>)
+
+
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('lmi', 'C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\extras\@lmi\lmi.m', 195)" style="font-weight:bold">lmi</a> (<a href="matlab: opentoline('C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\extras\@lmi\lmi.m',195,0)">line 195</a>)
+            if (n~=m) || ((TypeofConstraint(i) == 1) && (n*m==1)) || ~ishermitian(thisFi)
+                                                                      ^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('constraint/horzcat', 'C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\extras\@constraint\horzcat.m', 17)" style="font-weight:bold">constraint/horzcat</a> (<a href="matlab: opentoline('C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\extras\@constraint\horzcat.m',17,0)">line 17</a>)
+        H = lmi(varargin{i});
+            ^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('datadriven.Objective.Hinf', 'C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\+datadriven\+Objective\Hinf.m', 130)" style="font-weight:bold">datadriven.Objective.Hinf</a> (<a href="matlab: opentoline('C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\+datadriven\+Objective\Hinf.m',130,0)">line 130</a>)
+constraints = [constraints_tmp{:}, gamma >= 0];
+               ^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('c_IQCcontrolSynW2', 'C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\c_IQCcontrolSynW2.m', 201)" style="font-weight:bold">c_IQCcontrolSynW2</a> (<a href="matlab: opentoline('C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\c_IQCcontrolSynW2.m',201,0)">line 201</a>)
+            [LMIs, OBJ_perf,gamma] = datadriven.Objective.Hinf( ...
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+} 
+{Operation terminated by user during <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('usejava', 'C:\Program Files\MATLAB\R2026b\toolbox\matlab\general\usejava.m', 7)" style="font-weight:bold">usejava</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2026b\toolbox\matlab\general\usejava.m',7,0)">line 7</a>)
+
+
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('internal.matlab.datatoolsservices.FormatDataUtils.formatSize', 'C:\Program Files\MATLAB\R2026b\toolbox\matlab\datatools\datatoolsservices\matlab\+internal\+matlab\+datatoolsservices\@FormatDataUtils\formatSize.m', 22)" style="font-weight:bold">internal.matlab.datatoolsservices.FormatDataUtils.formatSize</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2026b\toolbox\matlab\datatools\datatoolsservices\matlab\+internal\+matlab\+datatoolsservices\@FormatDataUtils\formatSize.m',22,0)">line 22</a>)
+            elseif usejava('jvm') && isjava(data)
+                   ^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('internal.matlab.datatoolsservices.WSBUtil.getDisplayStruct', 'C:\Program Files\MATLAB\R2026b\toolbox\matlab\datatools\datatoolsservices\matlab\+internal\+matlab\+datatoolsservices\WSBUtil.m', 252)" style="font-weight:bold">internal.matlab.datatoolsservices.WSBUtil.getDisplayStruct</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2026b\toolbox\matlab\datatools\datatoolsservices\matlab\+internal\+matlab\+datatoolsservices\WSBUtil.m',252,0)">line 252</a>)
+                                t(idx).Size = FormatDataUtils.formatSize(var);
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('internal.matlab.datatoolsservices.WSBUtil.getWorkspaceDisplay', 'C:\Program Files\MATLAB\R2026b\toolbox\matlab\datatools\datatoolsservices\matlab\+internal\+matlab\+datatoolsservices\WSBUtil.m', 56)" style="font-weight:bold">internal.matlab.datatoolsservices.WSBUtil.getWorkspaceDisplay</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2026b\toolbox\matlab\datatools\datatoolsservices\matlab\+internal\+matlab\+datatoolsservices\WSBUtil.m',56,0)">line 56</a>)
+                info = internal.matlab.datatoolsservices.WSBUtil.getDisplayStruct( ...
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+} 
+        K_stage{STAGE+1} = ss(K);
+[Warning: The resource 'data\diaries\diary_temp.txt' is currently in use.] 
+Iter   1 | Stage 1
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 0.000000 | gamma = 10.000000 | slack = 0.000000 | time = 2.94 s
+Controller is OL unstable
+Iter   2 | Stage 1
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 0.000000 | gamma = 10.000000 | slack = 0.000000 | time = 2.78 s
+Controller is OL unstable
+  --> Saved K_stage{2}
+  --> Advancing to Stage 2
+Iter   3 | Stage 2
+
+expname =
+
+    'controller_W2hpfT_order16_82hz_-34db_nperfhinf_lasthinfstabitrInf_eta0.35_multi_freq'
+
