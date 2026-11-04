@@ -71,6 +71,42 @@ classdef SS < datadriven.Controller.Controller
             end
             obj.setinitial(balreal(ss(obj)));
         end
+
+        function state = getstate(obj)
+            %GETSTATE Numeric snapshot of the current controller parameters
+            %   state = K.getstate() stores double() of A, B, C, D. Use
+            %   K.setstate(state) to roll back after a rejected iteration
+            %   (same factorisation, same A/B, no random re-initialisation).
+            %
+            state = struct('A', double(obj.A), 'B', double(obj.B), ...
+                'C', double(obj.C), 'D', double(obj.D));
+        end
+
+        function setstate(obj, state)
+            %SETSTATE Restore parameters saved with GETSTATE
+            %   The fixed matrices are overwritten, the decision variables
+            %   (C, D for "Right"; B, D for "Left") are re-assigned so that
+            %   double()/value() and the next linearisation point use them.
+            %
+            arguments
+                obj
+                state struct
+            end
+            switch (obj.factorisation)
+                case {"Right"}
+                    obj.A = state.A;
+                    obj.B = state.B;
+                    assign(obj.C, state.C);
+                case {"Left"}
+                    obj.A = state.A;
+                    obj.C = state.C;
+                    assign(obj.B, state.B);
+                otherwise
+                    error("datadriven:Controller:InvalidFactorisation", ...
+                        "Factorisation type is invalid!")
+            end
+            assign(obj.D, state.D);
+        end
     end
 
     %% Overloaded methods 

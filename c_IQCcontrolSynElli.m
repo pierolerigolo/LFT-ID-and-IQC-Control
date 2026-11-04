@@ -64,7 +64,7 @@ W1_peak_ct = tf(num_bp, den_bp);
 W1_ct      = floor_gain + W1_peak_ct;
 % W1_ct      = floor_gain + W1_sin_ct;
 
-W1_frd         = frd(c2d(W1_ct, G_hat.Ts, 'tustin'),W_lft);
+W1_frd         = frd(c2d(W1_ct, G_hat.Ts, c2dOptions('Method','tustin','PrewarpFrequency',omega_d)),W_lft);
 % W1_frd     = frd((W1(1,1)+1)/4, W_lft);
 
 utils.magplot(inv(W1_frd),'DisplayName','1/W1');

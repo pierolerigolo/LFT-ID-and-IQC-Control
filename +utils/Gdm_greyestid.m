@@ -45,10 +45,17 @@ end
         Gdm(i)=s^2/((m_est(i))*s^2+c_est*s+k_est);
     end
 
-    m0=mean(m_est);
-    dm_bound=max(m_est)-m0;
-    Gdm=-options.phasesgn*c2d(Gdm,Ts);
+    % Centre of the identified interval (NOT the mean): with the mean, the
+    % symmetric interval m0 +/- dm_bound misses the lightest model whenever
+    % the masses are not symmetric about their mean.
+    m0=(max(m_est)+min(m_est))/2;
+    dm_bound=(max(m_est)-min(m_est))/2;
+    % Tustin (bilinear) discretisation: s -> z is itself a linear fractional
+    % map, so Gdmnom/(1+Gdmnom*dm) built in b_LFT2ndorderID is EXACTLY the
+    % discretisation of the model with mass m0-dm (with ZOH it is not).
+    % Must match the discretisation used in Gdm.m (grey-box model).
+    Gdm=-options.phasesgn*c2d(Gdm,Ts,'tustin');
     Gdmnom=s^2/(m0*s^2+c_est*s+k_est);
-    Gdmnom=-options.phasesgn*c2d(Gdmnom,Ts);
+    Gdmnom=-options.phasesgn*c2d(Gdmnom,Ts,'tustin');
     compare(Gdm,GFRF_crop)
 end

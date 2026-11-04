@@ -6,7 +6,9 @@ function [A,B,C,D] = Gdm(dm,c,k,Ts,ps)
     end
     G = horzcat(Gi{:});                      % n x 1, 2n states, no reduction
     if Ts ~= 0
-        G = c2d(G,Ts);                       % c2d on ss keeps the order
+        G = c2d(G,Ts,'tustin');              % Tustin: keeps the order AND makes the
+                                             % mass LFT exact in discrete time
+                                             % (must match utils.Gdm_greyestid)
     end
     [A,B,C,D] = ssdata(G);
 

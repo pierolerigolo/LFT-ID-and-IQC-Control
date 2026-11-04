@@ -69,7 +69,7 @@ for orderK=16:2:20
         W1_ct      = floor_gain + W1_peak_ct;
         % W1_ct      = floor_gain + W1_sin_ct;
         
-        W1_frd         = frd(c2d(W1_ct, G_hat.Ts, 'tustin'),W_lft);
+        W1_frd         = frd(c2d(W1_ct, G_hat.Ts, c2dOptions('Method','tustin','PrewarpFrequency',omega_d)),W_lft);
         % W1_frd     = frd((W1(1,1)+1)/4, W_lft);
         
         utils.magplot(inv(W1_frd),'DisplayName','1/W1');
@@ -130,10 +130,11 @@ for orderK=16:2:20
         disp(G_combined.OutputGroup)
         
         %% IQC multiplier PI  (bouded real scalar)
-        % eta = dm_bound/2;                 % bound on delta_m (use eta = 1 if delta is normalized to [-1,1])
+        % Delta from lftdata is centred but NOT normalised: eta is in the same
+        % units as dm, so eta = dm_bound covers the whole identified mass range.
         eta = 0.05
         N   = length(W_lft);
-        Pi0 = diag([1, eta^2, -1, -1]); % ordering (q1,q2,p1,p2)
+        Pi0 = diag([1, eta^2, -1, -1]); % ordering (p1,p2,q1,q2): p into Delta, q out; block 1 = d (W2), block 2 = dm
         PI_data = repmat(Pi0, [1 1 N]);
         PI = frd(PI_data, W_lft, G_hat.Ts);
 
@@ -163,7 +164,8 @@ for orderK=16:2:20
         obj_ref     = Inf;
         STAGE        = 1;gamma=10;
         has_slack    = false;
-        loss_tol = 0.10;
+        obj_rise_tol   = 1e-3;   % relative objective increase that rejects a step
+        mosek_near_rel = 1e3;    % MOSEK default; 1e6 accepted very inaccurate solutions
         eta_max = 2*dm_bound;
         mutli_type='frequency';
         nextstage=0;
@@ -171,6 +173,10 @@ for orderK=16:2:20
         D_val=[];
         E_val=[];
         clear K_itr
+        accepted_itr = false(max_iter, 1);
+        K_good_state = K.getstate();   % last accepted controller (rollback point)
+        obj_good     = Inf;            % objective of the last accepted controller
+                                       % (stages 2 and 3 share the H-inf objective)
         if ~exist(fullfile('data','diaries'),'dir')
             mkdir(fullfile('data','diaries'))
         end
@@ -264,14 +270,14 @@ for orderK=16:2:20
             end
         
             opts_sdp = sdpsettings('solver', solver, 'verbose', verbose, ...
-                'MSK_DPAR_INTPNT_CO_TOL_NEAR_REL', 1e6);    %, ...
+                'mosek.MSK_DPAR_INTPNT_CO_TOL_NEAR_REL', mosek_near_rel);    %, ...
                 % 'mosek.MSK_DPAR_INTPNT_CO_TOL_PFEAS',   tol, ...
                 % 'mosek.MSK_DPAR_INTPNT_CO_TOL_DFEAS',   tol, ...
                 % 'mosek.MSK_DPAR_INTPNT_CO_TOL_REL_GAP', tol, ...
                 % 'mosek.MSK_DPAR_INTPNT_CO_TOL_MU_RED',  tol);
             JOB = optimize(LMIs, OBJ, opts_sdp);
         
-            K_itr{iter}=ss(K);
+            K_itr{iter}=ss(K);      % raw solver output (also kept when rejected)
             D_itr{iter}=D_val;
             E_itr{iter}=E_val;
             eta_itr{iter}=eta;
@@ -280,17 +286,29 @@ for orderK=16:2:20
             elapsed = toc;
         
             if JOB.problem ~= 0
-                fprintf('  !! Solver failed (code %d)\n', JOB.problem);
+                fprintf('  !! Solver failed (code %d: %s) -> rolled back to last accepted controller\n', ...
+                    JOB.problem, JOB.info);
+                K.setstate(K_good_state);
                 break
             end
         
             obj_val = value(OBJ);
-            if STAGE==2
-                if obj_val > (1+loss_tol)*obj_ref
-                    nextstage=1;
-                end
-                obj_ref = obj_val; 
-            end 
+            % The previous controller is always feasible for the convexified
+            % problem of this iteration (in stage 3 the multiplier was just
+            % certified for it), so the objective cannot increase in exact
+            % arithmetic. An increase means an inaccurate solve: reject the
+            % step, roll back, and end the stage with the last good controller.
+            if isfinite(obj_good) && obj_val > obj_good*(1+obj_rise_tol) + 1e-9
+                fprintf('  !! Objective increased (%.6f -> %.6f): step rejected, rolled back\n', ...
+                    obj_good, obj_val);
+                K.setstate(K_good_state);
+                obj_val   = obj_good;
+                nextstage = 1;
+            else
+                K_good_state = K.getstate();
+                obj_good     = obj_val;
+                accepted_itr(iter) = true;
+            end
             if has_slack
                 fprintf('  obj = %.6f | gamma = %.6f | slack = %.6f | time = %.2f s\n', ...
                     obj_val,value(gamma), value(slack_val), elapsed);
@@ -312,6 +330,9 @@ for orderK=16:2:20
                 if STAGE < 3
                     STAGE    = STAGE + 1;
                     prev_obj = Inf;
+                    if STAGE <= 2
+                        obj_good = Inf;   % objective changes (slack -> H-inf)
+                    end
                     fprintf('  --> Advancing to Stage %d\n', STAGE);
                 else
                     fprintf('  --> Converged.\n');

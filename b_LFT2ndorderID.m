@@ -81,7 +81,8 @@ omega_global = logspace(log10(2*pi*10), log10(pi/GFRF.Ts), 150);
 % Tiny dense patch: ±30 Hz around the peak (25–100 Hz)
 omega_peak_dense = logspace(log10(25*2*pi), log10(100*2*pi), 150);
 % omega_peak_dense=[];
-w_lft = unique([omega_global(:); omega_peak_dense(:)]);
+f_dist = 81.7;                 % disturbance frequency (Hz) targeted by W1: keep it ON the grid
+w_lft = unique([omega_global(:); omega_peak_dense(:); 2*pi*f_dist]);
 
 % For mac
 addpath(genpath("/Users/pierre/mosek"))
@@ -93,7 +94,7 @@ model_elliptical = datadriven.find_elliptical_uncertainty(GLTI, w_lft,'verbosity
 
 %% Plant & frequency grid
 G_hat  = model_elliptical.NominalModel;
-G_hat.ResponseData(300)=G_hat.ResponseData(299);
+G_hat.ResponseData(end)=G_hat.ResponseData(end-1);   % patch the Nyquist point
 W_lft  = G_hat.Frequency;
 A = model_elliptical.UncertaintySet.A;
 
@@ -146,7 +147,7 @@ end
 model_elliptical_full = datadriven.find_elliptical_uncertainty(frdmodels, w_lft,'verbosity',2);
 
 G_hat  = model_elliptical_full.NominalModel;
-G_hat.ResponseData(300)=G_hat.ResponseData(299);
+G_hat.ResponseData(end)=G_hat.ResponseData(end-1);   % patch the Nyquist point
 W_lft  = G_hat.Frequency;
 A = model_elliptical_full.UncertaintySet.A;
 
@@ -368,7 +369,8 @@ omega_global = logspace(log10(2*pi*10), log10(pi/GFRF.Ts), 150);
 % Tiny dense patch: ±30 Hz around the peak (25–100 Hz)
 omega_peak_dense = logspace(log10(25*2*pi), log10(100*2*pi), 150);
 % omega_peak_dense=[];
-w_lft = unique([omega_global(:); omega_peak_dense(:)]);
+f_dist = 81.7;                 % disturbance frequency (Hz) targeted by W1: keep it ON the grid
+w_lft = unique([omega_global(:); omega_peak_dense(:); 2*pi*f_dist]);
 
 
 deltaw2=ultidyn('d',1);
