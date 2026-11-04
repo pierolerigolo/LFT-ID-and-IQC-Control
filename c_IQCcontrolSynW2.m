@@ -13,6 +13,9 @@
 %     3  per iteration: (a) largest eta and optimised multiplier D(w), E(w) for
 %        the current controller (bisection), (b) as stage 2 with that multiplier.
 %   A step that increases the objective is rejected (rollback) and ends the stage.
+%   Stage 2 keeps iterating through open-loop unstable controllers, but stage 3
+%   starts from the last open-loop stable controller of stage 2. In stage 3 the
+%   bisection is warm-started from the previous D(w), E(w).
 %
 %   Output: Data/controller/<idname>_controller_... .mat and the run diary.
 %
@@ -108,7 +111,9 @@ for orderK = orderK_list
     nextstage = false;
     prev_obj  = Inf;          % for the convergence test
     obj_good  = Inf;          % objective of the last accepted controller
-    K_good_state = K.getstate();
+    K_good_state   = K.getstate();
+    K_stable_state = [];      % last accepted open-loop stable controller (stage 2)
+    obj_stable     = Inf;     % its objective
 
     diaryfile = fullfile('Data', 'diaries', 'diary_temp.txt');
     if exist(diaryfile, 'file'), delete(diaryfile); end
@@ -130,12 +135,15 @@ for orderK = orderK_list
                 LMIs = [LMIs, LMIs_rob];
             case 3
                 [LMIs, OBJ] = datadriven.Objective.Hinf(G_performance, K, W_lft);
-                % (a) multiplier for the current (frozen) controller
+                % (a) multiplier for the current (frozen) controller,
+                %     warm-started from the previous D(w), E(w)
+                warm = {};
+                if ~isempty(D_val), warm = {"D0", D_val, "E0", E_val}; end
                 [eta, D_val, E_val, PI_matrix] = ...
                     datadriven.Objective.IQC_reduced_combinedPI_par_fix_eta_bisection( ...
                     G_robustness, PILTI, datadriven.Controller.Fixed(K), alpha_PI, beta_PI, W_lft, ...
                     "etaUpperInit", eta, "etaLower", 1e-2, "etaHardCap", 100*dm_bound, ...
-                    "multiplier", multiplier_type);
+                    "multiplier", multiplier_type, warm{:});
                 PI = frd(PI_matrix, W_lft, Ts);
                 % (b) controller step with that multiplier
                 LMIs_rob = datadriven.Objective.IQC_reduced( ...
@@ -154,42 +162,69 @@ for orderK = orderK_list
         E_itr{iter}   = E_val;
         eta_itr{iter} = eta;
 
-        if JOB.problem ~= 0
+        solver_failed = JOB.problem ~= 0;
+        if solver_failed
             fprintf('  !! Solver failed (code %d: %s) -> rolled back to last accepted controller\n', ...
                 JOB.problem, JOB.info);
             K.setstate(K_good_state);
-            break
+            if STAGE ~= 2, break, end   % in stage 2: end the stage, go on with stage 3
         end
 
         % The previous controller is feasible for the convexified problem of
         % this iteration (in stage 3 the multiplier was just certified for it),
         % so the objective cannot increase in exact arithmetic: an increase is
         % an inaccurate solve -> reject, roll back and end the stage.
-        obj_val = value(OBJ);
-        if isfinite(obj_good) && obj_val > obj_good*(1 + obj_rise_tol) + 1e-9
+        if solver_failed
+            obj_val   = obj_good;
+            nextstage = true;
+        elseif isfinite(obj_good) && value(OBJ) > obj_good*(1 + obj_rise_tol) + 1e-9
+            obj_val = value(OBJ);
             fprintf('  !! Objective increased (%.6f -> %.6f): step rejected, rolled back\n', ...
                 obj_good, obj_val);
             K.setstate(K_good_state);
             obj_val   = obj_good;
             nextstage = true;
         else
+            obj_val      = value(OBJ);
             K_good_state = K.getstate();
             obj_good     = obj_val;
             accepted_itr(iter) = true;
         end
 
-        if isstable(ss(K)), stab = 'stable'; else, stab = 'unstable'; end
+        K_is_stable = isstable(ss(K));
+        if K_is_stable, stab = 'stable'; else, stab = 'unstable'; end
+        if STAGE == 2 && K_is_stable && accepted_itr(iter)
+            K_stable_state = K.getstate();
+            obj_stable     = obj_val;
+        end
         fprintf('  obj = %.6f | eta = %.4g | K OL %s | time = %.2f s\n\n', obj_val, eta, stab, elapsed);
 
         err = abs(prev_obj - obj_val);
         if err < obj_err(STAGE) || err/prev_obj < obj_err(STAGE) || nextstage
             nextstage = false;
+            % Stage 2 -> 3: continue from the last open-loop stable controller
+            if STAGE == 2 && ~K_is_stable
+                if ~isempty(K_stable_state)
+                    K.setstate(K_stable_state);
+                    K_good_state = K_stable_state;   % rollback point for stage 3
+                    obj_good     = obj_stable;
+                    fprintf('  --> Stage 2 ended on an OL unstable controller: back to the last OL stable one (obj = %.6f)\n', obj_stable);
+                else
+                    warning('No open-loop stable controller found in stage 2: stage 3 starts from an unstable one.');
+                end
+            end
             K_stage{STAGE} = ss(K);
             fprintf('  --> Saved K_stage{%d}\n', STAGE);
             if STAGE < 3
                 STAGE    = STAGE + 1;
                 prev_obj = Inf;
-                if STAGE == 2, obj_good = Inf; end   % objective changes (slack -> H-inf)
+                if STAGE == 2   % objective changes (slack -> H-inf)
+                    obj_good = Inf;
+                    if K_is_stable    % stage-1 controller as fallback (H-inf objective unknown)
+                        K_stable_state = K.getstate();
+                        obj_stable     = Inf;
+                    end
+                end
                 fprintf('  --> Advancing to Stage %d\n', STAGE);
             else
                 converged = true;
