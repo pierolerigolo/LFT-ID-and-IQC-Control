@@ -1,14 +1,18 @@
 function [A,B,C,D] = Gdm(dm,c,k,Ts,ps)
+%GDM Grey-box model for utils.Gdm_greyestid (idgrey ODE function)
+%
+%   1 x n system, channel i = s^2/(dm(i) s^2 + c s + k), Tustin-discretised
+%   (must match utils.Gdm_greyestid). Each channel keeps 2 states, with a
+%   fixed sign convention per channel and the phase sign ps applied.
+%
     n  = numel(dm);
     Gi = cell(n,1);
     for i = 1:n
         Gi{i} = ss(tf([1 0 0],[dm(i) c k]));    % always 2 states
     end
-    G = horzcat(Gi{:});                      % n x 1, 2n states, no reduction
+    G = horzcat(Gi{:});                      % 1 x n, 2n states, no reduction
     if Ts ~= 0
-        G = c2d(G,Ts,'tustin');              % Tustin: keeps the order AND makes the
-                                             % mass LFT exact in discrete time
-                                             % (must match utils.Gdm_greyestid)
+        G = c2d(G,Ts,'tustin');              % keeps the order; makes the mass LFT exact
     end
     [A,B,C,D] = ssdata(G);
 

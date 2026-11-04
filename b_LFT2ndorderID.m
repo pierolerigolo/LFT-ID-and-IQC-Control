@@ -1,504 +1,114 @@
-clear;close all;clc
+%% b_LFT2ndorderID  -  Step 2: uncertain LFT model  G = G_dm(dm) * G_LTI * (1 + W2*Delta)
+%
+%   1. Grey-box fit of the mass-dependent part G_dm on 25-75 Hz
+%      (one mass per operating point, common c and k).
+%   2. Residual LTI part of each operating point  G_LTI,i = G_i / G_dm,i
+%      and nominal G_LTI = mean of the residuals.
+%   3. Multiplicative uncertainty weight W2 covering
+%      |(G_LTI,i - G_LTI)/G_LTI| (ucover).
+%   4. LFT:  dm in [-dm_bound, dm_bound] (ureal, centred, not normalised)
+%            Delta: 1x1 LTI, ||Delta||_inf <= 1 (ultidyn)
+%
+%   Input : Data/GFRF_iddata_<expname>.mat              (from a_MultimodelFRFID)
+%   Output: Data/LFT_GFRF_GdmGLTIW2n<nW2>_<expname>.mat (for c_IQCcontrolSynW2)
+%
+clear; close all; clc
 
-if ~exist('plots', 'dir')
-   mkdir('plots')
-end
-%% Multimodel non-parametric
-expname='1028_spa';
-load(fullfile('data',sprintf('GFRF_iddata_%s.mat',expname)));
-figure;bode(GFRF_cell{:})
-exportgraphics(gcf,fullfile('plots','GFRFbode.jpg'),'Resolution',300)
-% figure
-% nyquistplot(GFRF_cell{:},linspace(250*2*pi, 300*2*pi, 1000))
-% legend
+%% Config
+expname = '1028_spa';
+fmin_dm = 25;          % band (Hz) used to fit G_dm
+fmax_dm = 75;
+nW2     = 40;          % order of the W2 fit (ucover)
+f_dist  = 81.7;        % disturbance frequency (Hz) targeted by W1: kept ON the grid
 
-%% Identification of Gd(m) on a freq range of the FRF
-[Gdm,Gdmnom,sys_est_Gdm,dm_bound,m0,m]=utils.Gdm_greyestid(GFRF,25,75);
-exportgraphics(gcf,fullfile('plots','gdmcompare.jpg'),'Resolution',300)
+if ~exist('plots', 'dir'), mkdir('plots'); end
+load(fullfile('Data', sprintf('GFRF_iddata_%s.mat', expname)), 'GFRF', 'GFRF_cell', 'realmass');
+nOP = numel(GFRF_cell);
 
-%%
-% s=tf('s');
-% m0=0.1;
-% c_est=1;
-% k_est=50000;
-% test=(1*s^2+2*491*s+k_est)/(m0*s^2+c_est*s+k_est);
-% test2=(1*s^2)/(m0*s^2+c_est*s+k_est);
-% figure
-% bode(test,test2)
-%%
-figure;hold on
-for i=4%:length(Gdm)
-    bode(Gdm(i))
-    bode(GFRF(i))
-end
-s=tf('s');
-figure;hold on
+figure; bode(GFRF_cell{:})
+exportgraphics(gcf, fullfile('plots', 'GFRFbode.jpg'), 'Resolution', 300)
+
+%% 1. Mass-dependent part G_dm
+[Gdm, Gdmnom, sys_est_Gdm, dm_bound, m0, m] = utils.Gdm_greyestid(GFRF, fmin_dm, fmax_dm);
+exportgraphics(gcf, fullfile('plots', 'gdmcompare.jpg'), 'Resolution', 300)
+
+T_Gdm = param_table(sys_est_Gdm, [compose("m_%d", 1:nOP), "c", "k"]);
+disp(T_Gdm)
+writetable(T_Gdm, fullfile('plots', 'params_Gdm.xlsx'))
+
+%% 2. Residual LTI part and its nominal (mean)
 clear GLTI
-for i=1:length(Gdm)
-    GLTI(1,i)=GFRF(i)/Gdm(i);
-    bode(GFRF(i)/Gdm(i))
+figure; hold on
+for i = 1:nOP
+    GLTI(1, i) = GFRF(i)/Gdm(i); %#ok<SAGROW>
+    bode(GLTI(1, i))
 end
-exportgraphics(gcf,fullfile('plots','GLTIbode.jpg'),'Resolution',300)
-
-%%  W2 multiplicative filter
-GLTImeandata=mean(GLTI.ResponseData,2);
-GLTImean=frd(GLTImeandata,GLTI.Frequency,GLTI.Ts)
-hold on
+GLTImean = frd(mean(GLTI.ResponseData, 2), GLTI.Frequency, GLTI.Ts);
 bode(GLTImean)
+exportgraphics(gcf, fullfile('plots', 'GLTIbode.jpg'), 'Resolution', 300)
 
-%%
-Parray=stack(1,GLTI(1,1),GLTI(1,2),GLTI(1,3),GLTI(1,4));
-Pnom=GLTImean;
+%% 3. Multiplicative uncertainty weight W2
+% ucover is run on a frequency axis scaled by a (better conditioning) and the
+% continuous-time fit is scaled back: W2(s) = Ws(s/a).
 a  = 1e3;
-fs = Pnom.Frequency/a;
-
-Pn = squeeze(Pnom.ResponseData);         % 500x1
-Pa = squeeze(Parray.ResponseData);       % 500x4
-
-Pn_s = frd(reshape(Pn,1,1,[]), fs);
-Parray_s = stack(1, ...
-    frd(reshape(Pa(:,1),1,1,[]), fs), ...
-    frd(reshape(Pa(:,2),1,1,[]), fs), ...
-    frd(reshape(Pa(:,3),1,1,[]), fs), ...
-    frd(reshape(Pa(:,4),1,1,[]), fs));
-
-n = 20;
-[~, info_s] = ucover(Parray_s, Pn_s, n);
-
+ws = GLTImean.Frequency/a;
+Pn_s     = frd(GLTImean.ResponseData, ws);
+Parray_s = cell(1, nOP);
+Parray   = cell(1, nOP);
+for i = 1:nOP
+    Parray_s{i} = frd(GLTI(1, i).ResponseData, ws);
+    Parray{i}   = GLTI(1, i);
+end
+[~, info_s] = ucover(stack(1, Parray_s{:}), Pn_s, nW2);
 Ws = ss(info_s.W1);
-W2  = ss(a*Ws.A, a*Ws.B, Ws.C, Ws.D);
+W2 = ss(a*Ws.A, a*Ws.B, Ws.C, Ws.D);
 
-relerr = Pnom\(Pnom - Parray);
+relerr = GLTImean\(GLTImean - stack(1, Parray{:}));
 bo = bodeoptions; bo.FreqUnits = 'Hz';
-figure; bodemag(relerr,'b--',W2,'r',bo);
-exportgraphics(gcf,fullfile('plots','relerrW2bode.jpg'),'Resolution',300)
+figure; bodemag(relerr, 'b--', W2, 'r', bo);
+exportgraphics(gcf, fullfile('plots', 'relerrW2bode.jpg'), 'Resolution', 300)
 
-%% Elliptical IQC uncertain model
-yalmip('clear')
-% Frequency grid
-% Main coarse grid
-omega_global = logspace(log10(2*pi*10), log10(pi/GFRF.Ts), 150);
-% Tiny dense patch: ±30 Hz around the peak (25–100 Hz)
-omega_peak_dense = logspace(log10(25*2*pi), log10(100*2*pi), 150);
-% omega_peak_dense=[];
-f_dist = 81.7;                 % disturbance frequency (Hz) targeted by W1: keep it ON the grid
+%% 4. LFT on the synthesis frequency grid
+omega_global     = logspace(log10(2*pi*10), log10(pi/GFRF.Ts), 150);   % 10 Hz .. Nyquist
+omega_peak_dense = logspace(log10(25*2*pi), log10(100*2*pi), 150);     % dense 25-100 Hz
 w_lft = unique([omega_global(:); omega_peak_dense(:); 2*pi*f_dist]);
 
-% For mac
-addpath(genpath("/Users/pierre/mosek"))
-addpath(genpath("/Users/pierre/Documents/MATLAB/tbxmanager"))
-% for i=1:length(GLTI)
-%     frdmodels(1,1,i)=GLTI(i);
-% end
-model_elliptical = datadriven.find_elliptical_uncertainty(GLTI, w_lft,'verbosity',2);
+% G_LTI*(1 + W2*Delta) = Fu([0, W2; G_LTI, G_LTI], Delta)
+GLTI_selected = interp(GLTImean, w_lft);
+W2frd    = frd(W2, w_lft);      % continuous-time W2 sampled in rad/s
+W2frd.Ts = GFRF.Ts;             % same Ts as GLTI_selected
+GLTI_H   = [0,             W2frd;
+            GLTI_selected, GLTI_selected];
+GLTILFT  = lft(ultidyn('d', 1), GLTI_H);
 
-%% Plant & frequency grid
-G_hat  = model_elliptical.NominalModel;
-G_hat.ResponseData(end)=G_hat.ResponseData(end-1);   % patch the Nyquist point
-W_lft  = G_hat.Frequency;
-A = model_elliptical.UncertaintySet.A;
+% G_dm(m0 - dm) = Gdmnom/(1 + Gdmnom*dm) = Fu([-Gdmnom, Gdmnom; -Gdmnom, Gdmnom], dm)
+Gdmnom = frd(Gdmnom, w_lft);
+Gdm_H  = [-Gdmnom, Gdmnom;
+          -Gdmnom, Gdmnom];
+GdmLFT = lft(ureal('dm', 0, 'PlusMinus', dm_bound), Gdm_H);
 
-% plot the plant
+GLFT_delta    = GdmLFT*GLTILFT;
+[GLFT, Delta] = lftdata(GLFT_delta)
 
-figure; hold on; grid on;
-A_set = A{1};
+save(fullfile('Data', sprintf('LFT_GFRF_GdmGLTIW2n%d_%s.mat', nW2, expname)), ...
+    "GLFT_delta", "GLFT", "Delta", "dm_bound", "m0", "m", "GFRF", "GFRF_cell", ...
+    "realmass", "W2", "GLTImean")
 
-figure; hold on; grid on;
-
-% Plot raw FRFs
-utils.magplot(GLTI(1), 'Color', [0.7 0.7 0.7], 'LineWidth', 0.5, 'DisplayName','Gresid(e^{j\omega})')
-for i = 1:size(GLTI,2)
-    utils.magplot(GLTI(i), 'Color', [0.7 0.7 0.7], 'LineWidth', 0.5,'HandleVisibility','off');
-end
-
-% Plot nominal model
-utils.magplot(G_hat, 'Color', 'b', 'LineWidth', 2, 'DisplayName', 'P');
-
-% Plot elliptical bounds: at each freq, bound = G_hat +/- 1/|A(jw)|
-% The ellipse semi-axis in complex plane is 1/sigma_min(A)
-G_resp = squeeze(freqresp(G_hat, W_lft)).';  % 1 x N complex
-
-upper_dB = zeros(length(W_lft), 1);
-lower_dB = NaN(length(W_lft), 1);  % NaN so wrapped-zero freqs are not plotted
-
-for k = 1:length(W_lft)
-    G_val = G_resp(k);
-    A_val = A_set{k};
-    r(k) = 1 / min(svd(double(A_val)));
-    
-    upper_dB(k) = 20*log10(abs(G_val) + r(k));
-    
-    lin_lower = abs(G_val) - r(k);
-    if lin_lower > 0
-        lower_dB(k) = 20*log10(lin_lower);
-    else
-        lower_dB(k) = -60;
-    end
-    % else: ellipse wraps zero → lower bound is -inf, leave as NaN
-end
-
-plot(W_lft/2/pi, upper_dB, 'r--', 'LineWidth', 1.5, 'DisplayName', 'Elliptical bound');
-plot(W_lft/2/pi, lower_dB, 'r--', 'LineWidth', 1.5, 'HandleVisibility', 'off');
-
-%% Plant & frequency grid of the full frf
-for i =1:length(GFRF)
-    frdmodels(1,1,i)=GFRF(i);
-end
-model_elliptical_full = datadriven.find_elliptical_uncertainty(frdmodels, w_lft,'verbosity',2);
-
-G_hat  = model_elliptical_full.NominalModel;
-G_hat.ResponseData(end)=G_hat.ResponseData(end-1);   % patch the Nyquist point
-W_lft  = G_hat.Frequency;
-A = model_elliptical_full.UncertaintySet.A;
-
-% plot the plant
-
-figure; hold on; grid on;
-A_set = A{1};
-
-figure; hold on; grid on;
-
-% Plot raw FRFs
-utils.magplot(GFRF(1), 'Color', [0.7 0.7 0.7], 'LineWidth', 0.5, 'DisplayName','Gresid(e^{j\omega})')
-for i = 1:size(GFRF,2)
-    utils.magplot(GFRF(i), 'Color', [0.7 0.7 0.7], 'LineWidth', 0.5,'HandleVisibility','off');
-end
-
-% Plot nominal model
-utils.magplot(G_hat, 'Color', 'b', 'LineWidth', 2, 'DisplayName', 'P');
-
-% Plot elliptical bounds: at each freq, bound = G_hat +/- 1/|A(jw)|
-% The ellipse semi-axis in complex plane is 1/sigma_min(A)
-G_resp = squeeze(freqresp(G_hat, W_lft)).';  % 1 x N complex
-
-upper_dB = zeros(length(W_lft), 1);
-lower_dB = NaN(length(W_lft), 1);  % NaN so wrapped-zero freqs are not plotted
-
-for k = 1:length(W_lft)
-    G_val = G_resp(k);
-    A_val = A_set{k};
-    r(k) = 1 / min(svd(double(A_val)));
-    
-    upper_dB(k) = 20*log10(abs(G_val) + r(k));
-    
-    lin_lower = abs(G_val) - r(k);
-    if lin_lower > 0
-        lower_dB(k) = 20*log10(lin_lower);
-    else
-        lower_dB(k) = -60;
-    end
-    % else: ellipse wraps zero → lower bound is -inf, leave as NaN
-end
-
-plot(W_lft/2/pi, upper_dB, 'r--', 'LineWidth', 1.5, 'DisplayName', 'Elliptical bound');
-plot(W_lft/2/pi, lower_dB, 'r--', 'LineWidth', 1.5, 'HandleVisibility', 'off');
-
-
-%% Multiplicative filter on the multimodel
-% GFRFmeandata=mean(GFRF.ResponseData,2);
-% GFRFmean=frd(GFRFmeandata,GFRF.Frequency,GFRF.Ts)
-% hold on
-% bode(GFRFmean)
-% 
-% %%
-% Parray=stack(1,GFRF(1,1),GFRF(1,2),GFRF(1,3),GFRF(1,4));
-% Pnom=GFRFmean;
-% a  = 1e3;
-% fs = Pnom.Frequency/a;
-% 
-% Pn = squeeze(Pnom.ResponseData);         % 500x1
-% Pa = squeeze(Parray.ResponseData);       % 500x4
-% 
-% Pn_s = frd(reshape(Pn,1,1,[]), fs);
-% Parray_s = stack(1, ...
-%     frd(reshape(Pa(:,1),1,1,[]), fs), ...
-%     frd(reshape(Pa(:,2),1,1,[]), fs), ...
-%     frd(reshape(Pa(:,3),1,1,[]), fs), ...
-%     frd(reshape(Pa(:,4),1,1,[]), fs));
-% 
-% n = 25;
-% [~, info_s] = ucover(Parray_s, Pn_s, n);
-% 
-% Ws = ss(info_s.W1);
-% W2  = ss(a*Ws.A, a*Ws.B, Ws.C, Ws.D);
-% 
-% relerr = Pnom\(Pnom - Parray);
-% bo = bodeoptions; bo.FreqUnits = 'Hz';
-% % figure;
-% hold on
-% bodemag(relerr,'c--',W2,'g',bo);
-% 
-
-
-% %% Identification of GLTI on the whole range
-% filename=sprintf('LFT_estimated_%s.mat',expname)
-% if exist(fullfile('data',filename),'file')
-%     load(fullfile('data',filename),"Gdm","m","m0","dm_bound", ...
-%         "Gdmnom","sys_est_Gdm","Gest","GLTI","sys_est_GLTI","GFRF_dm")
-% end
-% % n=find(cellfun(@isempty,sys_est_GLTI))
-% for n=1:15
-%     fprintf('order of GLTI: %d\n',n)
-%     [Gest{n},GLTI{n},sys_est_GLTI{n}] = utils.GLTI_greyestid(GFRF,n,Gdm);
-%     sys_est_GLTI{n}
-% end
-% 
-% save(fullfile('data',filename),"Gdm","m","m0","dm_bound", ...
-%    "Gdmnom","sys_est_Gdm","Gest","GLTI","sys_est_GLTI","GFRF_dm")
-% %% Recovering the fit percent in function of the ord of GLTI
-% for n=find(~cellfun(@isempty,sys_est_GLTI))
-%     fitpercent(n,:)=sys_est_GLTI{n}.Report.Fit.FitPercent;
-% end
-% fitpercent
-% mean(fitpercent,2)
-% % Ploting the fit percent in f of the order of GLTI
-% figure
-% plot(fitpercent,'o-')
-% hold on
-% plot(mean(fitpercent,2),'x-','Linewidth',2)
-% xlim([1 length(sys_est_GLTI)])
-% legend('OP 1','OP 2','OP 3','OP 4','Mean')
-% xlabel('n')
-% ylabel('fit%')
-
-%% Comparing with another setting
-% load(fullfile('data','full_est_sys_data_stbenf_fullfrf.mat'))
-% for n=find(~cellfun(@isempty,sys_est_GLTI))
-%     fitpercent(n,:)=sys_est_GLTI{n}.Report.Fit.FitPercent;
-% end
-% fitpercent
-% mean(fitpercent,2)
-%%
-% figure
-% plot(fitpercent,'o-')
-% hold on
-% plot(mean(fitpercent,2),'x-','Linewidth',2)
-% xlim([1 15])
-% legend('OP 1','OP 2','OP 3','OP 4','Mean')
-% 
-%% Comparaison and validation of the chosen model order
-% compare with NRMSE fit %
-figure
-compare(Gest{6},GFRF)
-
-%% compare the db difference in function of the frequency
-for i=1:4
-    dberr(i)=frd(abs(freqresp(Gest{10}(1),GFRF.Frequency))./abs(GFRF(1).ResponseData),GFRF.Frequency);
-end
-bo=bodeoptions;
-bo.Grid='on';
-
-figure;bodemag(dberr,bo)
-exportgraphics(gcf,fullfile('plots','dberr.jpg'),'Resolution',300)
-%% poles zeros cancellation
-figure
-h = iopzplot(sys_est_GLTI{7});
-showConfidence(h, 2);
-%%
-% Residual analysis (not significant due to the low fit of the model and
-% the fact that it is an infinite order system
-G_est_current=Gest{7};
-
-for i=1:4
-    figure
-    resid(data{i},G_est_current(i))
-    title(sprintf('OP %d',i))
-    exportgraphics(gcf,fullfile('plots',sprintf('residop%d.jpg',i)),'Resolution',300)
-end
-
-% Temporal validation of the select model 
-for i=1:4
-    figure
-    compare(G_est_current(i),data{i})
-    title(sprintf('OP %d',i))
-    exportgraphics(gcf,fullfile('plots',sprintf('tempcompop%d.jpg',i)),'Resolution',300)
-end
-
-%% Magnitude plot of only the LTI part fitted
-bodemag(GLTI{8})
-
-
-%% Fit percent only on the magnitude for comparision with the old method
-for i=1:4
-    Gest_temp=Gest{7};
-    disp(utils.NRMSE(Gest_temp(i),GFRF(i),'magnitudeonly',true))
-end
-
-%% Various order of the system compared to the FRF in one graph (only 1 OP)
-load(fullfile('data','full_est_sys_data.mat'),'Gest',"GLTI","sys_est_GLTI")
-figure
-for i=7:12
-    Gest{i}.Name=sprintf('n=%d',i);
-end
-compare(GFRF(1),Gest{7}(1),Gest{8}(1),Gest{9}(1),Gest{10}(1),Gest{11}(1),Gest{12}(1))
-
-%% Coherance plot 
-G_est_chosen=Gest{7};
-[ymod,fit,ic]=compare(data{1},G_est_chosen(1));
-figure
-ymeas=data{1}.OutputData;
-ymodel=ymod.OutputData;
-mscohere(ymeas,ymodel)
-figure
-plot(ymeas)
-hold on
-plot(ymodel)
-%-> oke jcrois ca sert à rien la coherance
-
-%% Abs diff in f of freq of bt the model and the measurements
-figure
-title('dB absolute error between model vs measurements')
-hold on
-for i=1:length(GFRF)
-    [absdbfit,nonnanid]=utils.NRMSE(G_est_chosen(i),GFRF(i), ...
-        'inFofFreq',true,'absDB',true);
-    plot(GFRF.Frequency(nonnanid)/2/pi,absdbfit,'DisplayName',sprintf('OP %d',i))
-end
-xscale('log')
-xline(25,'Label','Freq. min.','HandleVisibility','off')
-xline(75,'Label','Freq. max.','HandleVisibility','off')
-xlabel('Frequency (Hz)')
-ylabel('Error (dB)')
-legend('Location','best')
-xlim([10 500])
-%% Prepare the LFT for the control synthesis w2 framework
-
-% Frequency grid
-% Main coarse grid
-omega_global = logspace(log10(2*pi*10), log10(pi/GFRF.Ts), 150);
-% Tiny dense patch: ±30 Hz around the peak (25–100 Hz)
-omega_peak_dense = logspace(log10(25*2*pi), log10(100*2*pi), 150);
-% omega_peak_dense=[];
-f_dist = 81.7;                 % disturbance frequency (Hz) targeted by W1: keep it ON the grid
-w_lft = unique([omega_global(:); omega_peak_dense(:); 2*pi*f_dist]);
-
-
-deltaw2=ultidyn('d',1);
-
-
-GLTI_selected=interp(GLTImean,w_lft);
-W2frd = frd(W2, w_lft);     % rad/s, continuous
-W2frd.Ts = GFRF.Ts;         % match GLTI_selected
-GLTI_H=[  0, W2frd;...
-         GLTI_selected, GLTI_selected];
-
-deltam=ureal('dm',0,'PlusMinus',dm_bound);
-Gdmnom=frd(Gdmnom,w_lft);
-Gdm_H= [  -Gdmnom, Gdmnom;...
-         -Gdmnom, Gdmnom];
-
-GdmLFT=lft(deltam,Gdm_H)
-GLTILFT=lft(deltaw2,GLTI_H)
-
-GLFT_delta=GdmLFT*GLTILFT;
-
-[GLFT,Delta] = lftdata(GLFT_delta)
-
-save(fullfile('data',sprintf('LFT_GFRF_GdmGLTIW2_%s.mat',expname)), ...
-   "GLFT_delta", "GLFT","Delta","dm_bound","m0","m","GFRF","GFRF_cell","realmass")
-
-%% Prepare LFT for the elliptical uncertainty on Gresid
-ny=1;nu=1;
-% LFR for robustness
-L = [ ...
-    kron( kron( eye(ny), ones(1, nu) ), [1, 0] );
-    kron( kron( eye(ny), ones(1, nu) ), [0, 1] );
-    ];
-R = kron( ones(ny, 1), eye(nu) );
-sum_block = kron(ones(1, 2), eye(ny));
-
-GLTI_H = [...
-    zeros(ny*nu, ny*nu*2)   , R     ;
-    -sum_block * L          , -G_hat;
-    ];
-
-deltaelli = ultidyn('d', [2*ny*nu, ny*nu]);   % 2 outputs, 1 input for SISO
-
-deltam=ureal('dm',0,'PlusMinus',dm_bound);
-Gdmnom=frd(Gdmnom,w_lft);
-Gdm_H= [  -Gdmnom, Gdmnom;...
-         -Gdmnom, Gdmnom];
-
-GdmLFT=lft(deltam,Gdm_H)
-GLTILFT=lft(deltaelli,GLTI_H)
-
-GLFT_delta=GdmLFT*GLTILFT;
-
-[GLFT,Delta] = lftdata(GLFT_delta)
-
-save(fullfile('data',sprintf('LFT_GFRF_GdmGLTIellipses_%s.mat',expname)), ...
-   "GLFT_delta","model_elliptical_full", "GLFT","Delta","dm_bound","m0","m","GFRF","GFRF_cell","realmass")
-
-%% Table for the obtained parameter and their std 
+%% Local functions
 function T = param_table(sys_est, names)
-% Parameter estimates and standard deviations of a greyest model.
-% names: string/cellstr, one entry per estimated parameter (in ParVector order)
+%PARAM_TABLE Parameter estimates and standard deviations of a greyest model.
+%   names: one entry per estimated parameter (ParVector order)
     P   = sys_est.Report.Parameters;
     val = P.ParVector(:);
     C   = P.FreeParCovariance;
-
     if isempty(C) || all(isnan(C(:)))
         sd = nan(size(val));
-        warning('param_table:noCov','No covariance available for this model.')
+        warning('param_table:noCov', 'No covariance available for this model.')
     else
         sd = sqrt(diag(C));
     end
-
     names = string(names(:));
-    assert(numel(names) == numel(val), ...
-        'Expected %d names, got %d.', numel(val), numel(names));
-
+    assert(numel(names) == numel(val), 'Expected %d names, got %d.', numel(val), numel(names));
     T = table(names, val, sd, 100*sd./abs(val), ...
-        'VariableNames',{'Parameter','Value','StdDev','RelStd_pct'});
+        'VariableNames', {'Parameter', 'Value', 'StdDev', 'RelStd_pct'});
 end
-
-% G_Delta(m): parameters are m_1..m_n, c, k
-n     = numel(GFRF);
-names = [compose("m_%d",1:n), "c", "k"];
-T_Gdm = param_table(sys_est_Gdm, names)
-
-% G_LTI (part of G_est): b_0..b_ord, a_1..a_ord
-ord    = 7;                                   % the order you keep
-names  = [compose("b_%d",0:ord), compose("a_%d",1:ord)];
-T_GLTI = param_table(sys_est_GLTI{ord}, names)
-
-% Formatted "value ± std" strings for the slides
-fmt = @(T) T.Parameter + " = " + compose("%.3g",T.Value) + " ± " + compose("%.2g",T.StdDev);
-disp(fmt(T_Gdm))
-disp(fmt(T_GLTI))
-
-% Export (paste into PowerPoint as a table)
-writetable(T_Gdm,  fullfile('plots','params_Gdm.xlsx'))
-writetable(T_GLTI, fullfile('plots','params_GLTI.xlsx'))
-
-%% using multiplicative uncertain system to replace GLTI optional needs to be reviewed
-% combine uncertain system G=Gdm*Gw2
-for i = 1:4
-    P(i)=GFRF(i)/Gdm(i);
-end
-Parray=stack(1,P(1),P(2),P(3),P(4));
-Pnom=GLTI{7};
-[usys, info]=ucover(Parray,GLTI{7},7);
-relerr = Pnom\(Pnom-Parray);
-W2=info.W1;
-bo.FreqUnits='Hz';
-figure
-bodemag(relerr,'b--',W2,'r',bo);
-%%
-% only G=Gw2
-Parray=stack(1,GFRF(1),GFRF(2),GFRF(3),GFRF(4));
-Pnom=Gdmnom%*GLTI{7};
-[usys, info]=ucover(Parray,Pnom,7);
-relerr = Pnom\(Pnom-Parray);
-W2=info.W1;
-bo.FreqUnits='Hz';
-figure
-bodemag(relerr,'b--',W2,'r',bo);
-%%
-% high pass filter
-wbd=2*pi*100;
-hpf=tf([1 0 0],[1 2*wbd wbd^2]);
-hpf=c2d(hpf,0.001);
-figure;bode(hpf)
-figure
-bodemag(relerr,'b--',hpf*W2,'r',bo);

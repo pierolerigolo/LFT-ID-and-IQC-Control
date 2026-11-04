@@ -10,7 +10,7 @@ classdef Fixed < datadriven.Controller.SS
     %
     %   Use this instead of ss(K) when you need to hold a controller fixed
     %   for a stage that optimises something else (e.g. the IQC multiplier
-    %   in IQC_reduced_PI) - ss(K) returns a plain MATLAB "ss" object,
+    %   in IQC_reduced_combinedPI_par_fix) - ss(K) returns a plain MATLAB "ss" object,
     %   which does not satisfy the datadriven.Controller.Controller type
     %   and will raise "Invalid argument ... Value must be of type
     %   datadriven.Controller.Controller".
@@ -20,11 +20,10 @@ classdef Fixed < datadriven.Controller.SS
     %   when the controller is meant to be held fixed while D, E (the IQC
     %   multiplier) are optimised.
     %
-    %   Example (alternating scheme):
-    %       [LMIs_c, slack_c] = datadriven.Objective.IQC_reduced_PI(G, K, PI_frd, alpha, beta, omegas);
-    %       optimize(LMIs_c, slack_c, opts_solver);
-    %       K_fixed = datadriven.Controller.Fixed(K);   % <-- freeze K here
-    %       [LMIs_pi, slack_pi, D, E] = datadriven.Objective.IQC_reduced_PI(G, K_fixed, eta, alpha, beta, omegas, ...);
+    %   Example (alternating scheme, see c_IQCcontrolSynW2):
+    %       [eta, D, E, PI] = datadriven.Objective.IQC_reduced_combinedPI_par_fix_eta_bisection( ...
+    %           G, PILTI, datadriven.Controller.Fixed(K), alpha, beta, omegas);   % K frozen
+    %       LMIs = datadriven.Objective.IQC_reduced(G, K, frd(PI, omegas, Ts), alpha, beta, omegas);
     %
     methods
         function obj = Fixed(K)

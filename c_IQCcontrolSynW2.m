@@ -1,618 +1,250 @@
+%% c_IQCcontrolSynW2  -  Step 3: data-driven robust controller synthesis (IQC)
+%
+%   Plant: LFT from b_LFT2ndorderID,  G = G_dm(dm) * G_LTI * (1 + W2*Delta)
+%     channel 1: Delta (W2 block, 1x1 LTI, ||Delta|| <= 1)  -> multiplier diag(1,-1)
+%     channel 2: dm    (real, centred, NOT normalised)       -> multiplier
+%                [eta^2*D, E; E', -D], eta in mass units (eta = dm_bound
+%                covers the whole identified mass range)
+%   Performance: nominal ||W1 S||_inf, W1 = floor + narrow peak at omega_d.
+%
+%   Stages (frequency-domain convex-concave iterations, fixed-order SS controller):
+%     1  robust stability only, constant multiplier at eta0 (slack minimised)
+%     2  min nominal H-inf  s.t. robust stability with the multiplier of stage 1
+%     3  per iteration: (a) largest eta and optimised multiplier D(w), E(w) for
+%        the current controller (bisection), (b) as stage 2 with that multiplier.
+%   A step that increases the objective is rejected (rollback) and ends the stage.
+%
+%   Output: Data/controller/<idname>_controller_... .mat and the run diary.
+%
 close all; clc; clear; clear("yalmip");
-% warning('off')
+
 %% Config
-rng(22);
-orderK   = 18 ;
-Ts       = 0.001;
+idname        = 'LFT_GFRF_GdmGLTIW2n40_1028_spa';   % file written by b_LFT2ndorderID
+orderK_list   = 16:2:20;     % controller orders to synthesise
+Ts            = 0.001;
+seed          = 22;
 
-%% Load data
-idname='LFT_GFRF_GdmGLTIW2n40_1028_spa';
-load(fullfile('Data',sprintf('%s.mat',idname)))
-figure
+% Performance weight W1 = floor_gain + peak_extra * band-pass at omega_d
+omega_d       = 81.7*2*pi;   % disturbance frequency (rad/s)
+floor_gain    = 0.5;
+peak_extra    = 500;
+zeta_d        = 0.001;
+zeta_n        = 0.0001;
 
-% nyquistplot(GFRF_dm{1}.FRF,GFRF_dm{2}.FRF,GFRF_dm{3}.FRF,GFRF_dm{4}.FRF, linspace(250*2*pi, 300*2*pi, 1000))
-% For windows
+% IQC
+eta0            = 0.05;      % initial bound on dm (mass units)
+alpha_PI        = 0;         % split of the multiplier (Gupta et al. 2024, Cor. 1)
+beta_PI         = 0.5;
+multiplier_type = "frequency";   % "frequency" or "constant" D, E
+
+% Optimisation
+solver          = 'mosek';
+mosek_near_rel  = 1e3;       % MOSEK default; 1e6 accepted very inaccurate solutions
+max_iter        = 50;
+obj_err         = [5e-3, 1e-3, 1e-3];   % convergence tolerance per stage
+obj_rise_tol    = 1e-3;      % relative objective increase that rejects a step
+
+% Solver paths (machine specific)
 addpath(genpath("C:\Users\admin\mosek"))
 addpath(genpath("C:\Program Files\Mosek\10.1"))
 addpath(genpath("C:\Users\admin\Documents\MATLAB\tbxmanager"))
-
-% % For mac
 % addpath(genpath("/Users/pierre/mosek"))
 % addpath(genpath("/Users/pierre/Documents/MATLAB/tbxmanager"))
 
-W_lft=GLFT.Frequency;
-[nin, nout]=size(GLFT);
-[nq, np] = size(Delta);
-G_hat=GLFT((nq+1):end,(np+1):end);
+%% Load the LFT plant
+load(fullfile('Data', sprintf('%s.mat', idname)), 'GLFT', 'Delta', 'dm_bound', 'GFRF')
+W_lft = GLFT.Frequency;
+[nout_lft, nin_lft] = size(GLFT);
+[nq, np] = size(Delta);          % Delta: p (plant outputs, np) -> q (plant inputs, nq)
+ny    = nout_lft - np;
+nu    = nin_lft - nq;
+G_hat = GLFT(np+1:end, nq+1:end);   % nominal plant (dm = 0, Delta = 0)
+nOP   = size(GFRF, 2);
 
-ny=nin-nq;
-nu=nout-np;
+figure; hold on
+for i = 1:nOP
+    utils.magplot(GFRF(i), 'Color', [0.7 0.7 0.7], 'LineWidth', 0.5, 'HandleVisibility', 'off');
+end
+utils.magplot(G_hat, 'Color', 'b', 'LineWidth', 2, 'DisplayName', 'Nominal G\_hat');
+title('Measured FRFs and nominal model')
 
-nw=1;nz=1;
+%% Performance weight W1 (prewarped at omega_d so the discrete peak stays there)
+W1_ct  = floor_gain + tf(peak_extra*[2*zeta_n*omega_d, 0], [1, 2*zeta_d*omega_d, omega_d^2]);
+W1_frd = frd(c2d(W1_ct, Ts, c2dOptions('Method', 'tustin', 'PrewarpFrequency', omega_d)), W_lft);
 
-%% plot the plant
-figure; hold on; grid on;
-xlabel('Frequency (rad/s)'); ylabel('Magnitude (dB)');
-set(gca, 'XScale', 'log');
+%% Generalised plants
+% performance: z = W1*(r - G u), y = r - G u
+G_performance = mktito([W1_frd, -W1_frd*G_hat;
+                        eye(ny), -G_hat], ny, nu);
+% robustness: [p; y] = GLFT [q; u]
+G_robustness  = mktito(GLFT, ny, nu);
 
-% Plot raw FRFs
-for i = 1:length(GFRF)
-    utils.magplot(GFRF(i), 'Color', [0.7 0.7 0.7], 'LineWidth', 0.5);
+%% IQC multipliers, ordering (p1, p2, q1, q2)
+N     = length(W_lft);
+PILTI = frd(repmat(diag([1, -1]), [1 1 N]), W_lft, Ts);          % W2 block
+PI0   = frd(repmat(diag([1, eta0^2, -1, -1]), [1 1 N]), W_lft, Ts); % W2 block + dm at eta0
+
+stage_tags = {'rob', 'nperfhinf', 'nperfoptiIQC'};
+for dir_ = {fullfile('Data', 'diaries'), fullfile('Data', 'controller')}
+    if ~exist(dir_{1}, 'dir'), mkdir(dir_{1}); end
 end
 
-% Plot nominal model
-utils.magplot(G_hat, 'Color', 'b', 'LineWidth', 2, 'DisplayName', 'Nominal G\_hat');
+%% Synthesis
+for orderK = orderK_list
+    fprintf('\n===== Controller order %d =====\n', orderK);
+    yalmip('clear');     % YALMIP numbering restarts, as in a fresh session
+    rng(seed);
 
-legend('Location','best');
-%%
-% figure;bode(GLFT(2,2),GFRF(2))
-%% Performance weight W1
-for orderK=16:2:20
-    % for peak_extra=logspace(log10(50),log10(500),4)
-        orderK
-        yalmip('clear');     % YALMIP numbering restarts, as in a fresh session
-        rng(22); 
-        % peak_extra
-        omega_d    = 81.7*2*pi;
-        omega_n    = 1000;
-        floor_gain = 0.5;
-        
-        zeta_d     = 0.001;
-        zeta_n     = 0.0001;
-        peak_extra = 500;
-        
-        num_bp     = peak_extra * [2*zeta_n*omega_d, 0];
-        den_bp     = [1, 2*zeta_d*omega_d, omega_d^2];
-        W1_peak_ct = tf(num_bp, den_bp);
-        
-        %W1_sin_ct=tf([0 2*110/1000 0],[1, 2*zeta_d*omega_d, omega_d^2]);
-        W1_ct      = floor_gain + W1_peak_ct;
-        % W1_ct      = floor_gain + W1_sin_ct;
-        
-        W1_frd         = frd(c2d(W1_ct, G_hat.Ts, c2dOptions('Method','tustin','PrewarpFrequency',omega_d)),W_lft);
-        % W1_frd     = frd((W1(1,1)+1)/4, W_lft);
-        
-        utils.magplot(inv(W1_frd),'DisplayName','1/W1');
-        % exportgraphics(gcf,'plot/rp_input.svg')
-        
-        % %% Muliplicative uncertainty weightning filter W2
-        % Garray=stack(1,GFRF(1),GFRF(2),GFRF(3),GFRF(4));
-        % Gnom=interp(G_hat,Garray.Frequency);
-        % [usys, info]=ucover(Garray,Gnom,10);
-        % relerr = Gnom\(Gnom-Garray);
-        % W2=info.W1;
-        % %%
-        % bo=bodeoptions;
-        % bo.FreqUnits='Hz';
-        % figure
-        % bodemag(relerr,'b--',W2,'r',bo);
-        % fc = 100;
-        % fs = 1000;
-        % [b,a]=butter(6,fc/(fs/2),'high');
-        % Hpf= frd(tf(b,a,Ts),G_hat.Frequency);
-        % hold on
-        % bodemag(Hpf,bo)
-        % W2hpf=Hpf*W2;
-        % bodemag(W2hpf,bo)
-        % xlim([10 500])
-        % ylim([-30 30])
-        % legend
-        % save(fullfile('Data',sprintf('%s.mat',idname)),"W2hpf",'relerr','Hpf','W2',...
-        %     "GLFT","dm_bound","m0","m","GFRF","G","GFRF_dm")
-        
-        %% Two-port performance plant  (Stage 0)
-        G_performance = mktito([ ...
-            W1_frd      , -W1_frd*G_hat ; ...
-            eye(ny)     , -G_hat        ; ...
-            ], ny, nu);
-        
-        %% Two-port robustness plant  (Stage 1)
-        G_robustness = mktito(GLFT,ny, nu);
-        
-        %% Three-port combined plant  (Stage 3 — IQC_performance)
-        G11 = G_robustness(G_robustness.OutputGroup.Y1, G_robustness.InputGroup.U1);
-        G12 = G_robustness(G_robustness.OutputGroup.Y1, G_robustness.InputGroup.U2);
-        G21 = G_robustness(G_robustness.OutputGroup.Y2, G_robustness.InputGroup.U1);
-        G22 = G_robustness(G_robustness.OutputGroup.Y2, G_robustness.InputGroup.U2);
-        
-        O_pw = frd(zeros(np, nw, length(W_lft)), W_lft);
-        I_y  = frd(repmat(eye(ny), [1,1,length(W_lft)]), W_lft);
-        
-        G_mat = [  G11          ,  O_pw    ,  G12          ; ...  % p row
-                  -W1_frd*G21   ,  W1_frd  , -W1_frd*G22   ; ...  % z row
-                  -G21          ,  I_y     , -G22           ];     % y row
-        
-        G_combined = frd(G_mat, W_lft);
-        G_combined.InputGroup  = struct('U1', 1:nq,        'U2', nq+(1:nw),    'U3', nq+nw+(1:nu));
-        G_combined.OutputGroup = struct('Y1', 1:np,        'Y2', np+(1:nz),    'Y3', np+nz+(1:ny));
-        
-        disp(G_combined.InputGroup)
-        disp(G_combined.OutputGroup)
-        
-        %% IQC multiplier PI  (bouded real scalar)
-        % Delta from lftdata is centred but NOT normalised: eta is in the same
-        % units as dm, so eta = dm_bound covers the whole identified mass range.
-        eta = 0.05
-        N   = length(W_lft);
-        Pi0 = diag([1, eta^2, -1, -1]); % ordering (p1,p2,q1,q2): p into Delta, q out; block 1 = d (W2), block 2 = dm
-        PI_data = repmat(Pi0, [1 1 N]);
-        PI = frd(PI_data, W_lft, G_hat.Ts);
+    K       = datadriven.Controller.SS(orderK, ny, nu, Ts, "right");
+    K_stage = cell(3, 1);     % controller at the end of each stage
+    K_itr = {}; D_itr = {}; E_itr = {}; eta_itr = {};
+    accepted_itr = false(max_iter, 1);
 
-        PILTI = frd(repmat(diag([1,-1]),[1 1 N]), W_lft, G_hat.Ts);
+    PI    = PI0;
+    eta   = eta0;
+    D_val = []; E_val = [];
+    STAGE = 1;
+    converged = false;
+    nextstage = false;
+    prev_obj  = Inf;          % for the convergence test
+    obj_good  = Inf;          % objective of the last accepted controller
+    K_good_state = K.getstate();
 
-        alpha_PI_soft = 0;
-        beta_PI_soft  = 0.5;
-        % alpha_PI_hard = 0;
-        % beta_PI_hard  = 1e-4;
-        
-        %% Controller parametrisation
-        K = datadriven.Controller.SS(orderK, ny, nu, Ts, "right");
-        
-        %% Storage for intermediate controllers
-        K_stage = cell(4, 1);   % one per stage 0..3
-        
-        %% Synthesis
-        %
-        %  Stage 0 — Performance only        (H∞)
-        %  Stage 1 — Robustness only         (IQC_reduced slack)
-        %  Stage 2 — Robust nominal          (H∞ + IQC_reduced slack, joint obj)
-        %  Stage 3 — Robust performance      (IQC_performance)
-        %
-        solver       = 'mosek';
-        max_iter     = 50;
-        prev_obj     = Inf;
-        obj_ref     = Inf;
-        STAGE        = 1;gamma=10;
-        has_slack    = false;
-        obj_rise_tol   = 1e-3;   % relative objective increase that rejects a step
-        mosek_near_rel = 1e3;    % MOSEK default; 1e6 accepted very inaccurate solutions
-        eta_max = 2*dm_bound;
-        mutli_type='frequency';
-        nextstage=0;
-        last_hinfstb_itr=Inf;
-        D_val=[];
-        E_val=[];
-        clear K_itr
-        accepted_itr = false(max_iter, 1);
-        K_good_state = K.getstate();   % last accepted controller (rollback point)
-        obj_good     = Inf;            % objective of the last accepted controller
-                                       % (stages 2 and 3 share the H-inf objective)
-        if ~exist(fullfile('data','diaries'),'dir')
-            mkdir(fullfile('data','diaries'))
+    diaryfile = fullfile('Data', 'diaries', 'diary_temp.txt');
+    if exist(diaryfile, 'file'), delete(diaryfile); end
+    diary(diaryfile)
+
+    for iter = 1:max_iter
+        fprintf('Iter %3d | Stage %d\n', iter, STAGE);
+        tic;
+        switch STAGE
+            case 1
+                [LMIs, OBJ] = datadriven.Objective.IQC_reduced( ...
+                    G_robustness, K, PI, alpha_PI, beta_PI, W_lft, ...
+                    "addSlack", true, "epsNormalisation", 1e-6, "pinorm", true);
+            case 2
+                [LMIs, OBJ] = datadriven.Objective.Hinf(G_performance, K, W_lft);
+                LMIs_rob = datadriven.Objective.IQC_reduced( ...
+                    G_robustness, K, PI, alpha_PI, beta_PI, W_lft, ...
+                    "addSlack", false, "pinorm", true);
+                LMIs = [LMIs, LMIs_rob];
+            case 3
+                [LMIs, OBJ] = datadriven.Objective.Hinf(G_performance, K, W_lft);
+                % (a) multiplier for the current (frozen) controller
+                [eta, D_val, E_val, PI_matrix] = ...
+                    datadriven.Objective.IQC_reduced_combinedPI_par_fix_eta_bisection( ...
+                    G_robustness, PILTI, datadriven.Controller.Fixed(K), alpha_PI, beta_PI, W_lft, ...
+                    "etaUpperInit", eta, "etaLower", 1e-2, "etaHardCap", 100*dm_bound, ...
+                    "multiplier", multiplier_type);
+                PI = frd(PI_matrix, W_lft, Ts);
+                % (b) controller step with that multiplier
+                LMIs_rob = datadriven.Objective.IQC_reduced( ...
+                    G_robustness, K, PI, alpha_PI, beta_PI, W_lft, ...
+                    "addSlack", false, "pinorm", true);
+                LMIs = [LMIs, LMIs_rob];
         end
-        if exist(fullfile('data','diaries','diary_temp.txt'),'file')
-            delete(fullfile('data','diaries','diary_temp.txt')) % clear the diary
+
+        opts_sdp = sdpsettings('solver', solver, 'verbose', 0, ...
+            'mosek.MSK_DPAR_INTPNT_CO_TOL_NEAR_REL', mosek_near_rel);
+        JOB = optimize(LMIs, OBJ, opts_sdp);
+        elapsed = toc;
+
+        K_itr{iter}   = ss(K);    % raw solver output (also kept when rejected)
+        D_itr{iter}   = D_val;
+        E_itr{iter}   = E_val;
+        eta_itr{iter} = eta;
+
+        if JOB.problem ~= 0
+            fprintf('  !! Solver failed (code %d: %s) -> rolled back to last accepted controller\n', ...
+                JOB.problem, JOB.info);
+            K.setstate(K_good_state);
+            break
         end
-        diary(fullfile('data','diaries','diary_temp.txt'))
-        diary on
-        
-        
-        for iter = 1:max_iter
-            fprintf('Iter %3d | Stage %d\n', iter, STAGE);
-            tic;
-        
-            switch STAGE
-                case 0
-                    % ── Stage 0: Performance only (H∞ warm-start) ───────────────
-                    [LMIs, OBJ,gamma] = datadriven.Objective.Hinf( ...
-                        G_performance, K, W_lft);
-                    % [LMIs_con, ~] = datadriven.Constraint.Hinf( ...
-                    %     G_performance, K, W_lft);
-                    LMIs     = [LMIs];
-                    has_slack = false; slack_val = [];
-        
-        
-                case 1
-                    % ── Stage 1: Robustness only (IQC_reduced slack) ─────────────
-                    [LMIs, OBJ] = datadriven.Objective.IQC_reduced( ...
-                        G_robustness, K, PI, alpha_PI_soft, beta_PI_soft, W_lft, ...
-                        "addSlack", true, "epsNormalisation", 1e-6,"pinorm",true);
-                    slack_val = OBJ;   % OBJ is the slack her
-                    has_slack = true;
-                        % nextstage=1;
-        
-                case 2
-                    % STAGE=3;
-                    % ── Stage 2: Robust nominal (H∞ + IQC_reduced, joint obj) ────
-                    [LMIs, OBJ_perf,gamma] = datadriven.Objective.Hinf( ...
-                        G_performance, K, W_lft);
-                    % [LMIs_con, ~] = datadriven.Constraint.Hinf( ...
-                    %     G_performance, K, W_lft);
-                    [LMIs_rob, slack] = datadriven.Objective.IQC_reduced( ...
-                        G_robustness, K, PI, alpha_PI_soft, beta_PI_soft, W_lft, ...
-                        "addSlack", false,"pinorm",true);
-                    LMIs      = [LMIs, LMIs_rob];
-                    OBJ       = OBJ_perf;
-                    slack_val = slack;
-                    has_slack = false;     
-                    % nextstage=1;
-        
-                    if iter==last_hinfstb_itr
-                        nextstage=1;
-                    end
-                case 3
-                    % break
-                    % STAGE=3;
-                    % ── Stage 2: Robust nominal (H∞ + IQC_reduced, joint obj) ────
-                    [LMIs, OBJ_perf,gamma] = datadriven.Objective.Hinf( ...
-                        G_performance, K, W_lft);
-                    % [LMIs_con, ~] = datadriven.Constraint.Hinf( ...
-                    %     G_performance, K, W_lft);
-                    K_fixed = datadriven.Controller.Fixed(K);
-                    [eta, D_val, E_val, PI_matrix] = datadriven.Objective.IQC_reduced_combinedPI_par_fix_eta_bisection( ...
-                        G_robustness, PILTI, K_fixed, alpha_PI_soft, beta_PI_soft, W_lft, ...
-                        "etaUpperInit", eta, "etaLower", 1e-2, "etaHardCap", 100*dm_bound, "multiplier", mutli_type);                    
-                    % PI_data = repmat(PI_matrix, [1, 1, length(W_lft)]);
-                    PI = frd(PI_matrix, W_lft, G_hat.Ts); 
-        
-                    [LMIs_rob, slack] = datadriven.Objective.IQC_reduced( ...
-                        G_robustness, K, PI, alpha_PI_soft, beta_PI_soft, W_lft, ...
-                        "addSlack", false,"pinorm",true);
-                    LMIs      = [LMIs, LMIs_rob];
-                    OBJ       = OBJ_perf;
-                    slack_val = slack;
-                    has_slack = false;
-                 
-                    % if obj_val > (1+loss_tol)*obj_ref || eta >= eta_max
-                    %     nextstage=1;
-                    % end
-            end
-        
-            % Tolerances
-            if STAGE >= 2
-                tol     = 1e-5;
-                verbose = 0;
-                obj_err = 1e-3;
+
+        % The previous controller is feasible for the convexified problem of
+        % this iteration (in stage 3 the multiplier was just certified for it),
+        % so the objective cannot increase in exact arithmetic: an increase is
+        % an inaccurate solve -> reject, roll back and end the stage.
+        obj_val = value(OBJ);
+        if isfinite(obj_good) && obj_val > obj_good*(1 + obj_rise_tol) + 1e-9
+            fprintf('  !! Objective increased (%.6f -> %.6f): step rejected, rolled back\n', ...
+                obj_good, obj_val);
+            K.setstate(K_good_state);
+            obj_val   = obj_good;
+            nextstage = true;
+        else
+            K_good_state = K.getstate();
+            obj_good     = obj_val;
+            accepted_itr(iter) = true;
+        end
+
+        if isstable(ss(K)), stab = 'stable'; else, stab = 'unstable'; end
+        fprintf('  obj = %.6f | eta = %.4g | K OL %s | time = %.2f s\n\n', obj_val, eta, stab, elapsed);
+
+        err = abs(prev_obj - obj_val);
+        if err < obj_err(STAGE) || err/prev_obj < obj_err(STAGE) || nextstage
+            nextstage = false;
+            K_stage{STAGE} = ss(K);
+            fprintf('  --> Saved K_stage{%d}\n', STAGE);
+            if STAGE < 3
+                STAGE    = STAGE + 1;
+                prev_obj = Inf;
+                if STAGE == 2, obj_good = Inf; end   % objective changes (slack -> H-inf)
+                fprintf('  --> Advancing to Stage %d\n', STAGE);
             else
-                tol     = 1e-5;
-                verbose = 0;
-                obj_err = 5e-3;
-            end
-        
-            opts_sdp = sdpsettings('solver', solver, 'verbose', verbose, ...
-                'mosek.MSK_DPAR_INTPNT_CO_TOL_NEAR_REL', mosek_near_rel);    %, ...
-                % 'mosek.MSK_DPAR_INTPNT_CO_TOL_PFEAS',   tol, ...
-                % 'mosek.MSK_DPAR_INTPNT_CO_TOL_DFEAS',   tol, ...
-                % 'mosek.MSK_DPAR_INTPNT_CO_TOL_REL_GAP', tol, ...
-                % 'mosek.MSK_DPAR_INTPNT_CO_TOL_MU_RED',  tol);
-            JOB = optimize(LMIs, OBJ, opts_sdp);
-        
-            K_itr{iter}=ss(K);      % raw solver output (also kept when rejected)
-            D_itr{iter}=D_val;
-            E_itr{iter}=E_val;
-            eta_itr{iter}=eta;
-        
-        
-            elapsed = toc;
-        
-            if JOB.problem ~= 0
-                fprintf('  !! Solver failed (code %d: %s) -> rolled back to last accepted controller\n', ...
-                    JOB.problem, JOB.info);
-                K.setstate(K_good_state);
+                converged = true;
+                fprintf('  --> Converged.\n');
                 break
             end
-        
-            obj_val = value(OBJ);
-            % The previous controller is always feasible for the convexified
-            % problem of this iteration (in stage 3 the multiplier was just
-            % certified for it), so the objective cannot increase in exact
-            % arithmetic. An increase means an inaccurate solve: reject the
-            % step, roll back, and end the stage with the last good controller.
-            if isfinite(obj_good) && obj_val > obj_good*(1+obj_rise_tol) + 1e-9
-                fprintf('  !! Objective increased (%.6f -> %.6f): step rejected, rolled back\n', ...
-                    obj_good, obj_val);
-                K.setstate(K_good_state);
-                obj_val   = obj_good;
-                nextstage = 1;
-            else
-                K_good_state = K.getstate();
-                obj_good     = obj_val;
-                accepted_itr(iter) = true;
-            end
-            if has_slack
-                fprintf('  obj = %.6f | gamma = %.6f | slack = %.6f | time = %.2f s\n', ...
-                    obj_val,value(gamma), value(slack_val), elapsed);
-            else
-                fprintf('  obj = %.6f | time = %.2f s\n\n', obj_val, elapsed);
-            end
-            if isstable(ss(K))
-                disp('Controller is OL stable')
-            else
-                disp('Controller is OL unstable')
-            end
-            err=abs(prev_obj - obj_val);
-            if (err < obj_err) ||nextstage  || (err/prev_obj < obj_err)
-                nextstage=0;
-                % Save intermediate controller at end of each stage
-                K_stage{STAGE+1} = ss(K);
-                fprintf('  --> Saved K_stage{%d}\n', STAGE+1);
-        
-                if STAGE < 3
-                    STAGE    = STAGE + 1;
-                    prev_obj = Inf;
-                    if STAGE <= 2
-                        obj_good = Inf;   % objective changes (slack -> H-inf)
-                    end
-                    fprintf('  --> Advancing to Stage %d\n', STAGE);
-                else
-                    fprintf('  --> Converged.\n');
-                    break
-                end
-            else
-                prev_obj = obj_val;
-            end
+        else
+            prev_obj = obj_val;
         end
-        
-        % Use last valid saved stage controller if solver left K in bad state
-        K_final = [];
-        try
-            K_candidate = ss(K);
-            [A,~,~,~]   = ssdata(K_candidate);
-            if ~any(isnan(A(:))) && ~any(isinf(A(:)))
-                K_final = K_candidate;
-            end
-        catch
-        end
-        
-        if isempty(K_final)
-            warning("K contains NaN/Inf -- falling back to last valid stage controller.");
-            for s = 4:-1:1
-                if ~isempty(K_stage{s})
-                    [At,~,~,~] = ssdata(K_stage{s});
-                    if ~any(isnan(At(:))) && ~any(isinf(At(:)))
-                        K_final = K_stage{s};
-                        fprintf("Using K_stage{%d} as K_final.\n", s);
-                        break
-                    end
-                end
-            end
-        end
-        
-        if isempty(K_final)
-            error("No valid controller found in any stage.");
-        end
-        
-        % %% debug checking the value of D and E in f of the freq
-        % D_val=D_itr{end};
-        % E_val=E_itr{end};
-        % for i=1:length(D_val)
-        %     D_array(i)=D_val{i};
-        %     E_array(i)=E_val{i};
-        % end
-        % figure
-        % semilogx(W_lft/2/pi,D_array,W_lft/2/pi,imag(E_array))
-        % legend('real(D)','imag(E)')
-        %% Analysis — nominal closed-loop
-        S_nom       = feedback(1, G_hat * K_final);
-        T_nom       = feedback(G_hat * K_final, 1);
-        norminf_W1S = norm(interp(W1_frd, W_lft) * frd(S_nom, W_lft), inf)
-        norminf_T   = norm(frd(T_nom, W_lft), inf)
-        
-        %% Plot sensitivity for each saved intermediate controller
-        stage_names = {'Stage 0 (Perf)', 'Stage 1 (Rob)', ...
-                       'Stage 2 (Rob+Nomhinf)', 'Stage 3 (Rob+Nom opti IQC)'};
-        stage_names_red={'perf','rob','nperfhinf','nperfoptiIQC',''};
-        stagefin=[];
-        for i =3:4
-            if ~isempty(K_stage{i})
-                stagefin=[stagefin, i];
-            end
-        end
-        if isempty(stagefin)
-            stagefin=5;
-        end
-        
-        if ~exist(fullfile('data','controller'),'dir')
-            mkdir(fullfile('data','controller'))
-        end
-        
-        
-        
-        expname=sprintf('%s_controller_order%d_%.0fhz_%.0fdb_%s_lasthinfstabitr%d_etai%.2f_etaf%.2f_multi_%s',idname, ...
-            orderK,omega_d/2/pi,mag2db(min(abs(inv(W1_frd).ResponseData))),strcat(stage_names_red{stagefin}),last_hinfstb_itr,eta_itr{1},eta,mutli_type(1:4))
-        
-        save(fullfile('data','controller',sprintf('%s.mat',expname)))
-            % 'stage_names','K_stage','W1_frd',"K_itr","D_itr","E_itr","eta_itr")
-        diary off
-        movefile(fullfile('data','diaries','diary_temp.txt'),fullfile('data','diaries',sprintf('%s.txt',expname)))
+    end
 
-    % end
+    % K always holds the last accepted controller (rolled back otherwise);
+    % it is certified robustly stable for |dm| <= eta.
+    K_final = ss(K);
+
+    %% Nominal closed loop and save
+    norminf_W1S = norm(W1_frd*frd(feedback(1, G_hat*K_final), W_lft), inf);
+    fprintf('Order %d: ||W1 S||_inf = %.3f, certified eta = %.4g (dm_bound = %.4g)\n', ...
+        orderK, norminf_W1S, eta, dm_bound);
+
+    tag = stage_tags{STAGE};
+    if ~converged, tag = [tag, '_notconv']; end %#ok<AGROW>
+    expname = sprintf('%s_controller_order%d_%.0fhz_%.0fdb_%s_etai%.2f_etaf%.2f_multi_%s', ...
+        idname, orderK, omega_d/2/pi, mag2db(min(abs(1./W1_frd.ResponseData))), ...
+        tag, eta0, eta, extractBefore(multiplier_type, 5));
+    save(fullfile('Data', 'controller', sprintf('%s.mat', expname)), ...
+        'K_final', 'K_stage', 'K_itr', 'accepted_itr', 'D_itr', 'E_itr', 'eta_itr', ...
+        'eta', 'eta0', 'dm_bound', 'W1_frd', 'orderK', 'idname', 'STAGE', 'converged', 'norminf_W1S')
+    diary off
+    movefile(diaryfile, fullfile('Data', 'diaries', sprintf('%s.txt', expname)))
 end
-%% pots the stages
 
-colors      = lines(4);
-colors = colors([1,2,4,3],:);
-figure; hold on; grid on;
-for s = 1:4
+%% Analysis (last synthesised order)
+colors = lines(max(3, nOP));
+
+% Sensitivity of the stage controllers on the nominal plant
+figure; hold on
+stage_names = {'Stage 1 (robust stab.)', 'Stage 2 (nom. H_\infty, \eta_0)', 'Stage 3 (nom. H_\infty, opt. IQC)'};
+for s = 1:3
     if ~isempty(K_stage{s})
-        K_s = ss(K_stage{s});
-        S_s = feedback(1, G_hat * K_s);
-        utils.magplot(frd(S_s, W_lft), 'Color', colors(s,:));
+        utils.magplot(frd(feedback(1, G_hat*K_stage{s}), W_lft), 'Color', colors(s, :), ...
+            'DisplayName', stage_names{s});
     end
 end
-utils.magplot(inv(W1_frd),'Color',[0 0 1 .3]);   % performance bound
+utils.magplot(inv(W1_frd), 'Color', [0 0 1 .3], 'DisplayName', 'W_1^{-1}');
+title(sprintf('Nominal sensitivity, order %d', orderK))
 
-legend([stage_names(~cellfun(@isempty, K_stage)),'1/W1'], 'Location', 'best');
-title('Sensitivity — intermediate controllers');
-xlabel('Frequency (rad/s)');
-figure; hold on; grid on;
-for s = 1:4
-    if ~isempty(K_stage{s})
-        K_s = ss(K_stage{s});
-        utils.magplot(frd(K_s, W_lft), 'Color', colors(s,:));
-    end
-end
-
-legend([stage_names(~cellfun(@isempty, K_stage)),'1/W1'], 'Location', 'best');
-title('Controllers — intermediate controllers');
-xlabel('Frequency (rad/s)');
-% exportgraphics(gcf,'plot/rpall_S.svg')
-%% plot the controller and sensitivtiy ate various iteration
-iterange= 5:10;
-% sens
-figure; hold on; grid on;
-for s = iterange
-    if ~isempty(K_itr{s})
-        K_s = ss(K_itr{s});
-        S_s = feedback(1, G_hat * K_s);
-        utils.magplot(frd(S_s, W_lft),'DisplayName','itr '+string(s));
-    end
-end
-utils.magplot(inv(W1_frd),'Color',[0 0 1 .3],'DisplayName','W_1^{-1}');   % performance bound
-legend
-title('Sensitivity — intermediate controllers');
-xlabel('Frequency (rad/s)');
-% cont
-figure; hold on; grid on;
-for s = iterange
-    if ~isempty(K_itr{s})
-        K_s = ss(K_itr{s});
-        utils.magplot(frd(K_s, W_lft),'DisplayName','itr '+string(s));
-    end
-end
-
-legend();
-title('Controllers — intermediate controllers');
-xlabel('Frequency (rad/s)'); 
-
-
-%% Pzplot
-figure;pzplot(K_itr{end})
-%% Final plots
-% figure;
-% bodemag(inv(W1_frd), frd(S_nom, W_lft));
-% legend('1/W1', 'S_{final}');
-% title('Sensitivity — final controller');
-% % exportgraphics(gcf,'plot/rp_S.svg')
-% figure; bodemag(frd(T_nom, W_lft));  title('Complementary Sensitivity T');
-% % exportgraphics(gcf,'plot/rp_T.svg')
-% figure; bodemag(K_final);            title('Controller');
-% % exportgraphics(gcf,'plot/rp_K.svg')
-% figure; pzplot(K_final);
-% exportgraphics(gcf,'plot/rp_pzplot.svg')
-%% nyquist plot for stability
-% figure; hold on;title('Nyquist — 1 + L(FRFinterp)')
-% for i=1:length(GFRF)
-%     GFRF_inter(i)=interp(GFRF(i),W_lft);
-%     nyquistplot(1 + K_final*GFRF_inter(i)); 
-% end
-% exportgraphics(gcf,'plot/rp_nyquist.svg')
-
-% %% compelmentary sensitivity function T
-% figure;hold on;
-% for i =1:length(GFRF)
-%     utils.magplot(feedback(GFRF_inter(i)*K_final,1))
-% end
-%% plots of the various FRF sensitivities
-
+% Final controller on every measured operating point
 figure; hold on
-for i=1:length(GFRF_dm)
-    utils.magplot(inv(1+K_stage{4}*GFRF(i)),'Color',[colors(i,:) .3],'LineStyle','--','DisplayName','dmreal='+string(GFRF_dm{i}.dmreal))
-    utils.magplot(inv(1+K_stage{4}*G(i)),'Color',colors(i,:),'DisplayName','G'+string(i))
+for i = 1:nOP
+    utils.magplot(inv(1 + K_final*GFRF(i)), 'Color', colors(i, :), 'DisplayName', 'S OP'+string(i));
 end
-utils.magplot(inv(1+K_stage{4}*GLFT(2,2)),'DisplayName','nominal (G22)')
-utils.magplot(inv(W1_frd))
-title('robust nominal perf iqc opti')
-xlim([10 500])
-ylim([-40 10])
+utils.magplot(inv(1 + K_final*G_hat), 'Color', 'k', 'DisplayName', 'S nominal');
+utils.magplot(inv(W1_frd), 'Color', 'c', 'DisplayName', 'W_1^{-1}');
+title(sprintf('Sensitivity on the measured FRFs, order %d, \\eta = %.3g', orderK, eta))
 
-figure; hold on
-for i=1:length(GFRF_dm)
-    utils.magplot(inv(1+K_stage{3}*GFRF(i)),'Color',[colors(i,:) .3],'LineStyle','--','DisplayName','dmreal='+string(GFRF_dm{i}.dmreal))
-    utils.magplot(inv(1+K_stage{3}*G(i)),'Color',colors(i,:),'DisplayName','G'+string(i))
-end
-utils.magplot(inv(1+K_stage{3}*GLFT(2,2)),'DisplayName','nominal (G22)')
-utils.magplot(inv(W1_frd))
-title('robust nominal performance hinf')
-xlim([10 500])
-ylim([-40 10])
-K_itr_current=K_itr;
-
-%% Analyse de resutlat nouveau id vs old id
-load(fullfile('Data','controller','LFT_GFRF_GdmGLTIW2n40_1028_spa_controller_order16_82hz_-34db_nperfhinf_lasthinfstabitrInf_etai0.05_etaf0.69_multi_freq.mat'))
-K_chosen=K_itr{17};
-% K_old=K_stage{3}
-% load(fullfile('Data','finalrepportcont/','controller_sus_7nm_order18_82hz_-34db_nperfhinfnperfoptiIQC_eta9.139390e-01.mat'),'K_itr')
-% K_old=K_itr{26}; %eta=0.627  lpv
-load(fullfile('Data','finalrepportcont/','controller_ellips_sus_7nm_order20_82hz_-30db_nomperf.mat'),'K_itr')
-K_old=K_itr{end};
-
-
-% load(fullfile('data','controller_sus_7nm_order20_81hz_-9db_nomperf_eta0.1.mat'),'K_itr')
-% K_chosen=K_itr{end};
-GFRF=interp(GFRF,W_lft);
-norminf_W1S = norm(interp(W1_frd, W_lft) * frd(feedback(K_chosen*GLFT(3,3),1), W_lft), inf)
-norminf_W1S_old = norm(interp(W1_frd, W_lft) * frd(feedback(K_old*GLFT(3,3),1), W_lft), inf)
-
-% figure;pzplot(K_chosen)
-figure;utils.magplot(frd(K_chosen,logspace(log10(10),log10(pi/Ts),1000)),'DisplayName','K chosen')
-utils.magplot(frd(K_old,logspace(log10(10),log10(pi/Ts),1000)),'Displayname','K old')
-% K_chosen=K_stage{1};
-if isstable(K_chosen)
-    disp('Controller is OL stable')
-else
-    disp('Controller is OL unstable')
-end
-if isstable(K_old)
-    disp('Controller is OL stable')
-else
-    disp('Controller is OL unstable')
-end
-colors=lines(4);
-% S
-figure; hold on
-for i=1:length(GFRF_cell)
-    utils.magplot(inv(1+K_chosen*GFRF(i)),'Color',colors(i,:),'DisplayName','S new '+string(i))
-    utils.magplot(inv(1+K_old*GFRF(i)),'Color',[colors(i,:) .3],'LineStyle','--','DisplayName','S old '+string(i))
-end
- % utils.magplot(inv(1+K_chosen*GFRF(2)),'Color',[colors(2,:) .3],'LineStyle','--','DisplayName','FRF chosen dmreal='+string(GFRF_dm{2}.dmreal))
-% utils.magplot(inv(1+K_chosen*GLFT(2,2)),'Color',colors(2,:),'DisplayName','nominal (G22) chosen')
-% utils.magplot(inv(1+K_old*GFRF(2)),'Color',[colors(3,:) .3],'LineStyle','--','DisplayName','FRF old dmreal='+string(GFRF_dm{2}.dmreal))
-% utils.magplot(inv(1+K_old*GLFT(2,2)),'Color',colors(3,:),'DisplayName','nominal (G22) old')
-utils.magplot(inv(W1_frd),'color','c')
-% xlim([10 500])
-% xlim([400 500])
- % ylim([-40 30])
-
-%  figure; hold on
-% for i=1:length(GFRF_cell)
-%     utils.magplot(inv(1+K_chosen*GFRF(i)),'Color',colors(i,:),'DisplayName','Sjw new '+string(i))
-%     utils.magplot(inv(1+K_old*GFRF(i)),'Color',[colors(i,:) .3],'DisplayName','Sjw old '+string(i),'Linestyle','--')
-% end
-% utils.magplot(inv(W1_frd))
-exportgraphics(gcf,fullfile('plots','results.jpg'),'Resolution',300)
-%% new id vs with W2
-load(fullfile('Data','controller','controller_order18_82hz_-34db_nperfhinfnperfoptiIQC_eta0.52_multi_freq.mat.mat'))
-K_old=K_stage{4};
-load(fullfile('data','controller','controller_W2hpfT_order18_82hz_-34db_nperfhinfnperfoptiIQC_lasthinfstabitr13_eta0.51_multi_freq.mat.mat'))
-K_chosen=K_stage{4};
-
-figure;utils.magplot(frd(K_chosen,logspace(log10(10),log10(pi/Ts),1000)),'DisplayName','K chosen')
-utils.magplot(frd(K_old,logspace(log10(10),log10(pi/Ts),1000)),'Displayname','K old')
-
- figure; hold on
-for i=1:length(GFRF_dm)
-    utils.magplot(inv(1+K_chosen*GFRF(i)),'Color',colors(i,:),'DisplayName','Sjw new '+string(i))
-    utils.magplot(inv(1+K_old*GFRF(i)),'Color',[colors(i,:) .3],'DisplayName','Sjw old '+string(i),'Linestyle','--')
-end
-utils.magplot(inv(W1_frd))
-
-% 
-%  % T
-%  figure; hold on
-% for i=1:length(GFRF_dm)
-%     % utils.magplot(feedback(K_chosen*GFRF(i),1),'Color',[colors(i,:) .3],'LineStyle','--','DisplayName','dmreal='+string(GFRF_dm{i}.dmreal))
-%     utils.magplot(feedback(K_chosen*G(i),1),'Color',colors(i,:),'DisplayName','G'+string(i))
-% end
-% utils.magplot(feedback(K_chosen*GLFT(2,2),1),'DisplayName','nominal (G22)')
-% title(sprintf('K_itr %d',iteration))
-% xlim([10 1000*pi])
-% % xlim([400 500])
-%  ylim([-40 10])
-% 
-% 
-%   figure; hold on
-% for i=1:length(GFRF_dm)
-%     % utils.magplot(feedback(K_chosen*GFRF(i),1),'Color',[colors(i,:) .3],'LineStyle','--','DisplayName','dmreal='+string(GFRF_dm{i}.dmreal))
-%     utils.magplot(G(i),'Color',colors(i,:),'DisplayName','G'+string(i))
-% end
+figure; utils.magplot(K_final, 'DisplayName', 'K final'); title('Controller')
+figure; pzplot(K_final); title('Controller poles/zeros')
