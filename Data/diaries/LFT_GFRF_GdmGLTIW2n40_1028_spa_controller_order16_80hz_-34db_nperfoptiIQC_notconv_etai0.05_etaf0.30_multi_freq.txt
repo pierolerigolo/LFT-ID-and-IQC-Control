@@ -1,0 +1,702 @@
+Iter   1 | Stage 1
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 0.000000 | eta = 0.05 | K OL stable | time = 2.07 s
+
+Iter   2 | Stage 1
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 0.000000 | eta = 0.05 | K OL stable | time = 2.16 s
+
+  --> Saved K_stage{1}
+  --> Advancing to Stage 2
+Iter   3 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 1382.560967 | eta = 0.05 | K OL stable | time = 5.00 s
+
+Iter   4 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+{Operation terminated by user during <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('sdpvar/subsref', 'C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\@sdpvar\subsref.m', 45)" style="font-weight:bold">indexing</a> (<a href="matlab: opentoline('C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\@sdpvar\subsref.m',45,0)">line 45</a>)
+
+
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('datadriven.Controller.SS/evalfr', 'C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\+datadriven\+Controller\SS.m', 179)" style="font-weight:bold">datadriven.Controller.SS/evalfr</a> (<a href="matlab: opentoline('C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\+datadriven\+Controller\SS.m',179,0)">line 179</a>)
+                    Y = XY(1:obj.ny, :);
+                        ^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('datadriven.Controller.SS/freqresp', 'C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\+datadriven\+Controller\SS.m', 137)" style="font-weight:bold">datadriven.Controller.SS/freqresp</a> (<a href="matlab: opentoline('C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\+datadriven\+Controller\SS.m',137,0)">line 137</a>)
+                [X, Y] = evalfr(obj, omegas);
+                         ^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('datadriven.Objective.IQC_reduced', 'C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\+datadriven\+Objective\IQC_reduced.m', 119)" style="font-weight:bold">datadriven.Objective.IQC_reduced</a> (<a href="matlab: opentoline('C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\+datadriven\+Objective\IQC_reduced.m',119,0)">line 119</a>)
+        [X, Y] = freqresp(controller, omegas(i_W));
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('c_IQCcontrolSynW2', 'C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\c_IQCcontrolSynW2.m', 127)" style="font-weight:bold">c_IQCcontrolSynW2</a> (<a href="matlab: opentoline('C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\c_IQCcontrolSynW2.m',127,0)">line 127</a>)
+                LMIs_rob = datadriven.Objective.IQC_reduced( ...
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+} 
+{Operation terminated by user during <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('usejava', 'C:\Program Files\MATLAB\R2026b\toolbox\matlab\general\usejava.m', 7)" style="font-weight:bold">usejava</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2026b\toolbox\matlab\general\usejava.m',7,0)">line 7</a>)
+
+
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('internal.matlab.datatoolsservices.FormatDataUtils.formatSize', 'C:\Program Files\MATLAB\R2026b\toolbox\matlab\datatools\datatoolsservices\matlab\+internal\+matlab\+datatoolsservices\@FormatDataUtils\formatSize.m', 22)" style="font-weight:bold">internal.matlab.datatoolsservices.FormatDataUtils.formatSize</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2026b\toolbox\matlab\datatools\datatoolsservices\matlab\+internal\+matlab\+datatoolsservices\@FormatDataUtils\formatSize.m',22,0)">line 22</a>)
+            elseif usejava('jvm') && isjava(data)
+                   ^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('internal.matlab.datatoolsservices.WSBUtil.getDisplayStruct', 'C:\Program Files\MATLAB\R2026b\toolbox\matlab\datatools\datatoolsservices\matlab\+internal\+matlab\+datatoolsservices\WSBUtil.m', 252)" style="font-weight:bold">internal.matlab.datatoolsservices.WSBUtil.getDisplayStruct</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2026b\toolbox\matlab\datatools\datatoolsservices\matlab\+internal\+matlab\+datatoolsservices\WSBUtil.m',252,0)">line 252</a>)
+                                t(idx).Size = FormatDataUtils.formatSize(var);
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('internal.matlab.datatoolsservices.WSBUtil.getWorkspaceDisplay', 'C:\Program Files\MATLAB\R2026b\toolbox\matlab\datatools\datatoolsservices\matlab\+internal\+matlab\+datatoolsservices\WSBUtil.m', 56)" style="font-weight:bold">internal.matlab.datatoolsservices.WSBUtil.getWorkspaceDisplay</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2026b\toolbox\matlab\datatools\datatoolsservices\matlab\+internal\+matlab\+datatoolsservices\WSBUtil.m',56,0)">line 56</a>)
+                info = internal.matlab.datatoolsservices.WSBUtil.getDisplayStruct( ...
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+} 
+{Operation terminated by user during <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('usejava', 'C:\Program Files\MATLAB\R2026b\toolbox\matlab\general\usejava.m', 7)" style="font-weight:bold">usejava</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2026b\toolbox\matlab\general\usejava.m',7,0)">line 7</a>)
+
+
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('internal.matlab.datatoolsservices.FormatDataUtils.formatSize', 'C:\Program Files\MATLAB\R2026b\toolbox\matlab\datatools\datatoolsservices\matlab\+internal\+matlab\+datatoolsservices\@FormatDataUtils\formatSize.m', 22)" style="font-weight:bold">internal.matlab.datatoolsservices.FormatDataUtils.formatSize</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2026b\toolbox\matlab\datatools\datatoolsservices\matlab\+internal\+matlab\+datatoolsservices\@FormatDataUtils\formatSize.m',22,0)">line 22</a>)
+            elseif usejava('jvm') && isjava(data)
+                   ^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('internal.matlab.datatoolsservices.WSBUtil.getDisplayStruct', 'C:\Program Files\MATLAB\R2026b\toolbox\matlab\datatools\datatoolsservices\matlab\+internal\+matlab\+datatoolsservices\WSBUtil.m', 252)" style="font-weight:bold">internal.matlab.datatoolsservices.WSBUtil.getDisplayStruct</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2026b\toolbox\matlab\datatools\datatoolsservices\matlab\+internal\+matlab\+datatoolsservices\WSBUtil.m',252,0)">line 252</a>)
+                                t(idx).Size = FormatDataUtils.formatSize(var);
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('internal.matlab.datatoolsservices.WSBUtil.getWorkspaceDisplay', 'C:\Program Files\MATLAB\R2026b\toolbox\matlab\datatools\datatoolsservices\matlab\+internal\+matlab\+datatoolsservices\WSBUtil.m', 56)" style="font-weight:bold">internal.matlab.datatoolsservices.WSBUtil.getWorkspaceDisplay</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2026b\toolbox\matlab\datatools\datatoolsservices\matlab\+internal\+matlab\+datatoolsservices\WSBUtil.m',56,0)">line 56</a>)
+                info = internal.matlab.datatoolsservices.WSBUtil.getDisplayStruct( ...
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+} 
+{Operation terminated by user during <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('usejava', 'C:\Program Files\MATLAB\R2026b\toolbox\matlab\general\usejava.m', 7)" style="font-weight:bold">usejava</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2026b\toolbox\matlab\general\usejava.m',7,0)">line 7</a>)
+
+
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('internal.matlab.datatoolsservices.FormatDataUtils.formatSize', 'C:\Program Files\MATLAB\R2026b\toolbox\matlab\datatools\datatoolsservices\matlab\+internal\+matlab\+datatoolsservices\@FormatDataUtils\formatSize.m', 22)" style="font-weight:bold">internal.matlab.datatoolsservices.FormatDataUtils.formatSize</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2026b\toolbox\matlab\datatools\datatoolsservices\matlab\+internal\+matlab\+datatoolsservices\@FormatDataUtils\formatSize.m',22,0)">line 22</a>)
+            elseif usejava('jvm') && isjava(data)
+                   ^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('internal.matlab.datatoolsservices.WSBUtil.getDisplayStruct', 'C:\Program Files\MATLAB\R2026b\toolbox\matlab\datatools\datatoolsservices\matlab\+internal\+matlab\+datatoolsservices\WSBUtil.m', 252)" style="font-weight:bold">internal.matlab.datatoolsservices.WSBUtil.getDisplayStruct</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2026b\toolbox\matlab\datatools\datatoolsservices\matlab\+internal\+matlab\+datatoolsservices\WSBUtil.m',252,0)">line 252</a>)
+                                t(idx).Size = FormatDataUtils.formatSize(var);
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('internal.matlab.datatoolsservices.WSBUtil.getWorkspaceDisplay', 'C:\Program Files\MATLAB\R2026b\toolbox\matlab\datatools\datatoolsservices\matlab\+internal\+matlab\+datatoolsservices\WSBUtil.m', 56)" style="font-weight:bold">internal.matlab.datatoolsservices.WSBUtil.getWorkspaceDisplay</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2026b\toolbox\matlab\datatools\datatoolsservices\matlab\+internal\+matlab\+datatoolsservices\WSBUtil.m',56,0)">line 56</a>)
+                info = internal.matlab.datatoolsservices.WSBUtil.getDisplayStruct( ...
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+} 
+c_IQCcontrolSynW2
+
+===== Controller order 16 =====
+[Warning: The resource 'Data\diaries\diary_temp.txt' is currently in use.] 
+[> In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('c_IQCcontrolSynW2', 'C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\c_IQCcontrolSynW2.m', 119)" style="font-weight:bold">c_IQCcontrolSynW2</a> (<a href="matlab: opentoline('C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\c_IQCcontrolSynW2.m',119,0)">line 119</a>)] 
+Iter   1 | Stage 1
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 0.000000 | eta = 0.05 | K OL stable | time = 2.40 s
+
+Iter   2 | Stage 1
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 0.000000 | eta = 0.05 | K OL stable | time = 2.01 s
+
+  --> Saved K_stage{1}
+  --> Advancing to Stage 2
+Iter   3 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 1381.558593 | eta = 0.05 | K OL stable | time = 6.07 s
+
+Iter   4 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 1043.381678 | eta = 0.05 | K OL unstable | time = 3.86 s
+
+Iter   5 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 999.370805 | eta = 0.05 | K OL stable | time = 3.44 s
+
+Iter   6 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 982.735022 | eta = 0.05 | K OL stable | time = 3.73 s
+
+Iter   7 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 918.569117 | eta = 0.05 | K OL stable | time = 3.74 s
+
+Iter   8 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 641.644220 | eta = 0.05 | K OL stable | time = 5.19 s
+
+Iter   9 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 192.031889 | eta = 0.05 | K OL unstable | time = 5.41 s
+
+Iter  10 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 40.592949 | eta = 0.05 | K OL stable | time = 5.74 s
+
+Iter  11 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 23.820901 | eta = 0.05 | K OL unstable | time = 6.99 s
+
+Iter  12 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 14.307209 | eta = 0.05 | K OL unstable | time = 4.83 s
+
+Iter  13 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 8.651472 | eta = 0.05 | K OL unstable | time = 4.65 s
+
+Iter  14 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 8.497037 | eta = 0.05 | K OL unstable | time = 4.87 s
+
+Iter  15 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  !! Objective increased (8.497037 -> 9.319730): step rejected, rolled back
+  obj = 8.497037 | eta = 0.05 | K OL unstable | time = 5.98 s
+
+  --> Stage 2 ended on an OL unstable controller: back to the last OL stable one (obj = 40.592949)
+  --> Saved K_stage{2}
+  --> Advancing to Stage 3
+Iter  16 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 0.01 -> true (slack = 0)
+    D = 1.364
+    E = 3.566e-16+9.196e-10i
+D warm-start:
+    1.3641
+
+E warm-start:
+   3.5660e-16 + 9.1957e-10i
+
+  [expand] eta = 0.05 -> true (slack = 0)
+    D = 1.66
+    E = 9.66e-15+1.946e-08i
+D warm-start:
+    1.6603
+
+E warm-start:
+   9.6605e-15 + 1.9462e-08i
+
+  [expand] eta = 0.1 -> false (slack = 0)
+D warm-start:
+    1.6603
+
+E warm-start:
+   9.6605e-15 + 1.9462e-08i
+
+  [bisect  1] eta = 0.075 -> false (slack = 0)
+D warm-start:
+    1.6603
+
+E warm-start:
+   9.6605e-15 + 1.9462e-08i
+
+  [bisect  2] eta = 0.0625 -> true (slack = 0)
+    D = 1.933
+    E = 1.153e-14+3.62e-08i
+D warm-start:
+    1.9329
+
+E warm-start:
+   1.1531e-14 + 3.6196e-08i
+
+  [bisect  3] eta = 0.06875 -> true (slack = 0)
+    D = 2.163
+    E = -1.423e-14+4.802e-08i
+D warm-start:
+    2.1630
+
+E warm-start:
+  -1.4235e-14 + 4.8016e-08i
+
+  [bisect  4] eta = 0.071875 -> true (slack = 0)
+    D = 2.303
+    E = -4.289e-16+4.739e-08i
+D warm-start:
+    2.3026
+
+E warm-start:
+  -4.2885e-16 + 4.7390e-08i
+
+  [bisect  5] eta = 0.0734375 -> false (slack = 0)
+D warm-start:
+    2.3026
+
+E warm-start:
+  -4.2885e-16 + 4.7390e-08i
+
+  [bisect  6] eta = 0.0726563 -> true (slack = 0)
+    D = 2.356
+    E = 1.033e-13+4.22e-08i
+D warm-start:
+    2.3559
+
+E warm-start:
+   1.0332e-13 + 4.2202e-08i
+
+  [bisect  7] eta = 0.0730469 -> false (slack = 0)
+IQC_reduced_combinedPI_eta_bisection: converged, eta = 0.0726563
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -2.9010
+
+max:     0
+
+  obj = 21.813822 | eta = 0.07266 | K OL unstable | time = 31.20 s
+
+Iter  17 | Stage 3
+D warm-start:
+    2.3559
+
+E warm-start:
+   1.0332e-13 + 4.2202e-08i
+
+  [etaLower] eta = 0.01 -> true (slack = 0)
+    D = 2.708
+    E = 1.007e-15+2.252e-08i
+D warm-start:
+    2.7084
+
+E warm-start:
+   1.0071e-15 + 2.2519e-08i
+
+  [expand] eta = 0.07266 -> true (slack = 0)
+    D = 4.598
+    E = -2.539e-14-2.914e-07i
+D warm-start:
+    4.5983
+
+E warm-start:
+  -2.5392e-14 - 2.9140e-07i
+
+  [expand] eta = 0.1453 -> false (slack = 0)
+D warm-start:
+    4.5983
+
+E warm-start:
+  -2.5392e-14 - 2.9140e-07i
+
+  [bisect  1] eta = 0.108984 -> true (slack = 0)
+    D = 3.551
+    E = -2.252e-15+1.012e-07i
+D warm-start:
+    3.5507
+
+E warm-start:
+  -2.2522e-15 + 1.0116e-07i
+
+  [bisect  2] eta = 0.127148 -> true (slack = 0)
+    D = 3.589
+    E = -2.239e-14-1.246e-07i
+D warm-start:
+    3.5886
+
+E warm-start:
+  -2.2391e-14 - 1.2463e-07i
+
+  [bisect  3] eta = 0.13623 -> false (slack = 0)
+D warm-start:
+    3.5886
+
+E warm-start:
+  -2.2391e-14 - 1.2463e-07i
+
+  [bisect  4] eta = 0.131689 -> false (slack = 0)
+D warm-start:
+    3.5886
+
+E warm-start:
+  -2.2391e-14 - 1.2463e-07i
+
+  [bisect  5] eta = 0.129419 -> false (slack = 0)
+D warm-start:
+    3.5886
+
+E warm-start:
+  -2.2391e-14 - 1.2463e-07i
+
+  [bisect  6] eta = 0.128284 -> false (slack = 0)
+IQC_reduced_combinedPI_eta_bisection: converged, eta = 0.127148
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -4.3021
+
+max:     0
+
+  obj = 14.065808 | eta = 0.1271 | K OL unstable | time = 26.02 s
+
+Iter  18 | Stage 3
+D warm-start:
+    3.5886
+
+E warm-start:
+  -2.2391e-14 - 1.2463e-07i
+
+  [etaLower] eta = 0.01 -> true (slack = 0)
+    D = 3.33
+    E = -1.128e-14-5.867e-08i
+D warm-start:
+    3.3304
+
+E warm-start:
+  -1.1276e-14 - 5.8665e-08i
+
+  [expand] eta = 0.1271 -> true (slack = 0)
+    D = 3.282
+    E = -3.74e-15-6.207e-08i
+D warm-start:
+    3.2819
+
+E warm-start:
+  -3.7401e-15 - 6.2075e-08i
+
+  [expand] eta = 0.2543 -> false (slack = 0)
+D warm-start:
+    3.2819
+
+E warm-start:
+  -3.7401e-15 - 6.2075e-08i
+
+  [bisect  1] eta = 0.190723 -> false (slack = 0)
+D warm-start:
+    3.2819
+
+E warm-start:
+  -3.7401e-15 - 6.2075e-08i
+
+  [bisect  2] eta = 0.158936 -> false (slack = 0)
+D warm-start:
+    3.2819
+
+E warm-start:
+  -3.7401e-15 - 6.2075e-08i
+
+  [bisect  3] eta = 0.143042 -> true (slack = 0)
+    D = 4.064
+    E = 5.915e-15-8.484e-08i
+D warm-start:
+    4.0638
+
+E warm-start:
+   5.9146e-15 - 8.4838e-08i
+
+  [bisect  4] eta = 0.150989 -> true (slack = 0)
+    D = 9.25
+    E = -1.162e-15-1.5e-07i
+D warm-start:
+    9.2502
+
+E warm-start:
+  -1.1618e-15 - 1.5001e-07i
+
+  [bisect  5] eta = 0.154962 -> true (slack = 0)
+    D = 9.855
+    E = -3.727e-16-1.244e-09i
+D warm-start:
+    9.8546
+
+E warm-start:
+  -3.7271e-16 - 1.2442e-09i
+
+  [bisect  6] eta = 0.156949 -> true (slack = 0)
+    D = 5.097
+    E = -2.061e-15+1.398e-07i
+D warm-start:
+    5.0974
+
+E warm-start:
+  -2.0607e-15 + 1.3983e-07i
+
+  [bisect  7] eta = 0.157942 -> true (slack = 0)
+    D = 3.639
+    E = 2.196e-14+1.552e-07i
+IQC_reduced_combinedPI_eta_bisection: converged, eta = 0.157942
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -4.8188
+
+max:     0
+
+  obj = 7.754427 | eta = 0.1579 | K OL unstable | time = 31.57 s
+
+Iter  19 | Stage 3
+D warm-start:
+    3.6390
+
+E warm-start:
+   2.1963e-14 + 1.5523e-07i
+
+  [etaLower] eta = 0.01 -> true (slack = 0)
+    D = 3.134
+    E = 4.966e-16+6.3e-08i
+D warm-start:
+    3.1335
+
+E warm-start:
+   4.9664e-16 + 6.2999e-08i
+
+  [expand] eta = 0.1579 -> true (slack = 0)
+    D = 2.8
+    E = 3.354e-14+3.199e-08i
+D warm-start:
+    2.8003
+
+E warm-start:
+   3.3543e-14 + 3.1986e-08i
+
+  [expand] eta = 0.3159 -> false (slack = 0)
+D warm-start:
+    2.8003
+
+E warm-start:
+   3.3543e-14 + 3.1986e-08i
+
+  [bisect  1] eta = 0.236913 -> true (slack = 0)
+    D = 2.865
+    E = 1.632e-16+4.769e-06i
+D warm-start:
+    2.8647
+
+E warm-start:
+   1.6324e-16 + 4.7691e-06i
+
+  [bisect  2] eta = 0.276399 -> true (slack = 0)
+    D = 2.852
+    E = 2.172e-15+6.773e-06i
+D warm-start:
+    2.8516
+
+E warm-start:
+   2.1722e-15 + 6.7731e-06i
+
+  [bisect  3] eta = 0.296142 -> true (slack = 0)
+    D = 4.584
+    E = -6.124e-15+8.802e-06i
+D warm-start:
+    4.5842
+
+E warm-start:
+  -6.1237e-15 + 8.8024e-06i
+
+  [bisect  4] eta = 0.306013 -> false (slack = 0)
+D warm-start:
+    4.5842
+
+E warm-start:
+  -6.1237e-15 + 8.8024e-06i
+
+  [bisect  5] eta = 0.301077 -> false (slack = 0)
+D warm-start:
+    4.5842
+
+E warm-start:
+  -6.1237e-15 + 8.8024e-06i
+
+  [bisect  6] eta = 0.298609 -> false (slack = 0)
+IQC_reduced_combinedPI_eta_bisection: converged, eta = 0.296142
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -5.1219
+
+max:     0
+
+  !! Solver failed (code 4: Numerical problems (<a href="yalmip.github.io/inside/debuggingnumerics">learn to debug</a>) (MOSEK-SDP)) -> rolled back to last accepted controller
+Order 16: ||W1 S||_inf = 2.783, certified eta = 0.2961 (dm_bound = 0.3585)

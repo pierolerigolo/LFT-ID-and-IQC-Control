@@ -20,10 +20,10 @@ itmax    = {60000, [], [], 65000};   % last sample kept per file ([] = whole rec
 
 Ts  = 0.001;
 w   = logspace(log10(2*pi*10), log10(pi/Ts), 500);   % rad/s, 10 Hz .. Nyquist
-lag = [];      % spa lag window; [] = record length (no smoothing), smaller = smoother
+lag = 1000;      % spa lag window; [] = record length (no smoothing), smaller = smoother
 
-save_output = false;   % true: (over)write the output file below
-outfile     = fullfile('Data', 'GFRF_iddata_1028_spa.mat');
+save_output = true;   % true: (over)write the output file below
+outfile     = fullfile('Data', 'GFRF_iddata_1028_etfe.mat');
 
 %% FRF of each operating point
 nOP       = numel(files);
@@ -36,7 +36,7 @@ for i = 1:nOP
     d{i} = detrend(d{i});                          % remove the operating-point offset
 
     if isempty(lag), lag_i = length(d{i}.OutputData); else, lag_i = lag; end
-    GFRF_cell{i} = spa(d{i}, lag_i, w);
+    GFRF_cell{i} =interp(etfe(d{i}, lag_i, 1000),w);
     GFRF_cell{i}.Name      = sprintf('OP%d', i);
     GFRF_cell{i}.InputName = sprintf('u%d', i);
 

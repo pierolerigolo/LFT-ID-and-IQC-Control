@@ -15,10 +15,10 @@
 clear; close all; clc
 
 %% Config
-expname = '1028_spa';
+expname = '1028_etfe';
 fmin_dm = 25;          % band (Hz) used to fit G_dm
 fmax_dm = 75;
-nW2     = 40;          % order of the W2 fit (ucover)
+nW2     = 25;          % order of the W2 fit (ucover)
 f_dist  = 80;        % disturbance frequency (Hz) targeted by W1: kept ON the grid
 
 if ~exist('plots', 'dir'), mkdir('plots'); end

@@ -22,8 +22,8 @@
 close all; clc; clear; clear("yalmip");
 
 %% Config
-idname        = 'LFT_GFRF_GdmGLTIW2n40_1028_spa';   % file written by b_LFT2ndorderID
-orderK_list   = 16:2:20;     % controller orders to synthesise
+idname        = 'LFT_GFRF_GdmGLTIW2n25_1028_etfe';   % file written by b_LFT2ndorderID
+orderK_list   = 16;     % controller orders to synthesise
 Ts            = 0.001;
 seed          = 22;
 
