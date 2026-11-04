@@ -22,7 +22,8 @@
 close all; clc; clear; clear("yalmip");
 
 %% Config
-idname        = 'LFT_GFRF_GdmGLTIW2n25_1028_etfe';   % file written by b_LFT2ndorderID
+idname        = 'LFT_GFRF_GdmGLTIW2n25hpf100_1028_etfe';   % file written by b_LFT2ndorderID (W2 with high-pass)
+% idname      = 'LFT_GFRF_GdmGLTIW2n25_1028_etfe';         % without high-pass (use_hpf = false in b)
 orderK_list   = 16;     % controller orders to synthesise
 Ts            = 0.001;
 seed          = 22;
