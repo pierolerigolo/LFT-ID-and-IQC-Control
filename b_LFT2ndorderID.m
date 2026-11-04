@@ -6,10 +6,11 @@ end
 %% Multimodel non-parametric
 expname='1028_spa';
 load(fullfile('data',sprintf('GFRF_iddata_%s.mat',expname)));
-bode(GFRF_cell{:})
-figure
-nyquistplot(GFRF_cell{:},linspace(250*2*pi, 300*2*pi, 1000))
-legend
+figure;bode(GFRF_cell{:})
+exportgraphics(gcf,fullfile('plots','GFRFbode.jpg'),'Resolution',300)
+% figure
+% nyquistplot(GFRF_cell{:},linspace(250*2*pi, 300*2*pi, 1000))
+% legend
 
 %% Identification of Gd(m) on a freq range of the FRF
 [Gdm,Gdmnom,sys_est_Gdm,dm_bound,m0,m]=utils.Gdm_greyestid(GFRF,25,75);
@@ -31,12 +32,14 @@ for i=4%:length(Gdm)
     bode(GFRF(i))
 end
 s=tf('s');
-% figure;hold on
+figure;hold on
 clear GLTI
 for i=1:length(Gdm)
-    GLTI(1,1,i)=GFRF(i)/Gdm(i);
+    GLTI(1,i)=GFRF(i)/Gdm(i);
     bode(GFRF(i)/Gdm(i))
 end
+exportgraphics(gcf,fullfile('plots','GLTIbode.jpg'),'Resolution',300)
+
 %%  W2 multiplicative filter
 GLTImeandata=mean(GLTI.ResponseData,2);
 GLTImean=frd(GLTImeandata,GLTI.Frequency,GLTI.Ts)
@@ -68,6 +71,7 @@ W2  = ss(a*Ws.A, a*Ws.B, Ws.C, Ws.D);
 relerr = Pnom\(Pnom - Parray);
 bo = bodeoptions; bo.FreqUnits = 'Hz';
 figure; bodemag(relerr,'b--',W2,'r',bo);
+exportgraphics(gcf,fullfile('plots','relerrW2bode.jpg'),'Resolution',300)
 
 %% Elliptical IQC uncertain model
 yalmip('clear')

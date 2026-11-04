@@ -510,11 +510,11 @@ K_itr_current=K_itr;
 %% Analyse de resutlat nouveau id vs old id
 load(fullfile('Data','controller','LFT_GFRF_GdmGLTIW2n40_1028_spa_controller_order16_82hz_-34db_nperfhinf_lasthinfstabitrInf_etai0.05_etaf0.69_multi_freq.mat'))
 K_chosen=K_itr{17};
-K_old=K_stage{3}
+% K_old=K_stage{3}
 % load(fullfile('Data','finalrepportcont/','controller_sus_7nm_order18_82hz_-34db_nperfhinfnperfoptiIQC_eta9.139390e-01.mat'),'K_itr')
 % K_old=K_itr{26}; %eta=0.627  lpv
-% load(fullfile('Data','finalrepportcont/','controller_ellips_sus_7nm_order20_82hz_-30db_nomperf.mat'),'K_itr')
-% K_old=K_itr{end};
+load(fullfile('Data','finalrepportcont/','controller_ellips_sus_7nm_order20_82hz_-30db_nomperf.mat'),'K_itr')
+K_old=K_itr{end};
 
 
 % load(fullfile('data','controller_sus_7nm_order20_81hz_-9db_nomperf_eta0.1.mat'),'K_itr')
@@ -559,7 +559,7 @@ utils.magplot(inv(W1_frd),'color','c')
 %     utils.magplot(inv(1+K_old*GFRF(i)),'Color',[colors(i,:) .3],'DisplayName','Sjw old '+string(i),'Linestyle','--')
 % end
 % utils.magplot(inv(W1_frd))
-
+exportgraphics(gcf,fullfile('plots','results.jpg'),'Resolution',300)
 %% new id vs with W2
 load(fullfile('Data','controller','controller_order18_82hz_-34db_nperfhinfnperfoptiIQC_eta0.52_multi_freq.mat.mat'))
 K_old=K_stage{4};
