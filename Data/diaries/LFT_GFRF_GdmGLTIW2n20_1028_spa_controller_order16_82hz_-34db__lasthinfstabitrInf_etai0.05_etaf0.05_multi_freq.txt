@@ -1,0 +1,262 @@
+Iter   1 | Stage 1
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 0.000000 | gamma = 10.000000 | slack = 0.000000 | time = 2.55 s
+Controller is OL stable
+Iter   2 | Stage 1
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 0.000000 | gamma = 10.000000 | slack = 0.000000 | time = 2.10 s
+Controller is OL stable
+  --> Saved K_stage{2}
+  --> Advancing to Stage 2
+Iter   3 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 1380.667599 | time = 3.86 s
+
+Controller is OL stable
+Iter   4 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 1039.519183 | time = 3.95 s
+
+Controller is OL stable
+Iter   5 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 997.551226 | time = 3.61 s
+
+Controller is OL stable
+Iter   6 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 981.740293 | time = 4.28 s
+
+Controller is OL stable
+Iter   7 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 920.169985 | time = 5.57 s
+
+Controller is OL stable
+Iter   8 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 661.893665 | time = 5.14 s
+
+Controller is OL stable
+Iter   9 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 235.798582 | time = 5.38 s
+
+Controller is OL stable
+Iter  10 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 35.515482 | time = 5.24 s
+
+Controller is OL stable
+Iter  11 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 20.101246 | time = 5.25 s
+
+Controller is OL stable
+Iter  12 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 18.866476 | time = 6.14 s
+
+Controller is OL stable
+Iter  13 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  !! Solver failed (code 4: Numerical problems (<a href="yalmip.github.io/inside/debuggingnumerics">learn to debug</a>) (MOSEK-SDP)) -> rolled back to last accepted controller
+
+norminf_W1S =
+
+    4.3413
+
+
+norminf_T =
+
+    5.8394
+
+
+expname =
+
+    'LFT_GFRF_GdmGLTIW2n20_1028_spa_controller_order16_82hz_-34db__lasthinfstabitrInf_etai0.05_etaf0.05_multi_freq'
+
+[Warning: YALMIP objects cannot be saved in binary format. You will run into
+troubles if you try to load this file later. You should clear all YALMIP objects
+first, or avoid having any YALMIP objects in the list of variables which you
+save.] 
+[> In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('sdpvar/saveobj', 'C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\@sdpvar\saveobj.m', 3)" style="font-weight:bold">sdpvar/saveobj</a> (<a href="matlab: opentoline('C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\@sdpvar\saveobj.m',3,0)">line 3</a>)
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('c_IQCcontrolSynW2', 'C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\c_IQCcontrolSynW2.m', 414)" style="font-weight:bold">c_IQCcontrolSynW2</a> (<a href="matlab: opentoline('C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\c_IQCcontrolSynW2.m',414,0)">line 414</a>)] 
+[Warning: YALMIP objects cannot be saved in binary format. You will run into
+troubles if you try to load this file later. You should clear all YALMIP objects
+first, or avoid having any YALMIP objects in the list of variables which you
+save.] 
+[> In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('sdpvar/saveobj', 'C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\@sdpvar\saveobj.m', 3)" style="font-weight:bold">sdpvar/saveobj</a> (<a href="matlab: opentoline('C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\@sdpvar\saveobj.m',3,0)">line 3</a>)
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('c_IQCcontrolSynW2', 'C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\c_IQCcontrolSynW2.m', 414)" style="font-weight:bold">c_IQCcontrolSynW2</a> (<a href="matlab: opentoline('C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\c_IQCcontrolSynW2.m',414,0)">line 414</a>)] 
+[Warning: YALMIP objects cannot be saved in binary format. You will run into
+troubles if you try to load this file later. You should clear all YALMIP objects
+first, or avoid having any YALMIP objects in the list of variables which you
+save.] 
+[> In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('sdpvar/saveobj', 'C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\@sdpvar\saveobj.m', 3)" style="font-weight:bold">sdpvar/saveobj</a> (<a href="matlab: opentoline('C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\@sdpvar\saveobj.m',3,0)">line 3</a>)
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('c_IQCcontrolSynW2', 'C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\c_IQCcontrolSynW2.m', 414)" style="font-weight:bold">c_IQCcontrolSynW2</a> (<a href="matlab: opentoline('C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\c_IQCcontrolSynW2.m',414,0)">line 414</a>)] 
+[Warning: YALMIP objects cannot be saved in binary format. You will run into
+troubles if you try to load this file later. You should clear all YALMIP objects
+first, or avoid having any YALMIP objects in the list of variables which you
+save.] 
+[> In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('sdpvar/saveobj', 'C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\@sdpvar\saveobj.m', 3)" style="font-weight:bold">sdpvar/saveobj</a> (<a href="matlab: opentoline('C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\@sdpvar\saveobj.m',3,0)">line 3</a>)
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('c_IQCcontrolSynW2', 'C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\c_IQCcontrolSynW2.m', 414)" style="font-weight:bold">c_IQCcontrolSynW2</a> (<a href="matlab: opentoline('C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\c_IQCcontrolSynW2.m',414,0)">line 414</a>)] 
+[Warning: YALMIP objects cannot be saved in binary format. You will run into
+troubles if you try to load this file later. You should clear all YALMIP objects
+first, or avoid having any YALMIP objects in the list of variables which you
+save.] 
+[> In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('lmi/saveobj', 'C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\extras\@lmi\saveobj.m', 3)" style="font-weight:bold">lmi/saveobj</a> (<a href="matlab: opentoline('C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\extras\@lmi\saveobj.m',3,0)">line 3</a>)
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('c_IQCcontrolSynW2', 'C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\c_IQCcontrolSynW2.m', 414)" style="font-weight:bold">c_IQCcontrolSynW2</a> (<a href="matlab: opentoline('C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\c_IQCcontrolSynW2.m',414,0)">line 414</a>)] 
+[Warning: YALMIP objects cannot be saved in binary format. You will run into
+troubles if you try to load this file later. You should clear all YALMIP objects
+first, or avoid having any YALMIP objects in the list of variables which you
+save.] 
+[> In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('lmi/saveobj', 'C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\extras\@lmi\saveobj.m', 3)" style="font-weight:bold">lmi/saveobj</a> (<a href="matlab: opentoline('C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\extras\@lmi\saveobj.m',3,0)">line 3</a>)
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('c_IQCcontrolSynW2', 'C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\c_IQCcontrolSynW2.m', 414)" style="font-weight:bold">c_IQCcontrolSynW2</a> (<a href="matlab: opentoline('C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\c_IQCcontrolSynW2.m',414,0)">line 414</a>)] 
+[Warning: YALMIP objects cannot be saved in binary format. You will run into
+troubles if you try to load this file later. You should clear all YALMIP objects
+first, or avoid having any YALMIP objects in the list of variables which you
+save.] 
+[> In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('sdpvar/saveobj', 'C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\@sdpvar\saveobj.m', 3)" style="font-weight:bold">sdpvar/saveobj</a> (<a href="matlab: opentoline('C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\@sdpvar\saveobj.m',3,0)">line 3</a>)
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('c_IQCcontrolSynW2', 'C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\c_IQCcontrolSynW2.m', 414)" style="font-weight:bold">c_IQCcontrolSynW2</a> (<a href="matlab: opentoline('C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\c_IQCcontrolSynW2.m',414,0)">line 414</a>)] 
+[Warning: YALMIP objects cannot be saved in binary format. You will run into
+troubles if you try to load this file later. You should clear all YALMIP objects
+first, or avoid having any YALMIP objects in the list of variables which you
+save.] 
+[> In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('sdpvar/saveobj', 'C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\@sdpvar\saveobj.m', 3)" style="font-weight:bold">sdpvar/saveobj</a> (<a href="matlab: opentoline('C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\@sdpvar\saveobj.m',3,0)">line 3</a>)
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('c_IQCcontrolSynW2', 'C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\c_IQCcontrolSynW2.m', 414)" style="font-weight:bold">c_IQCcontrolSynW2</a> (<a href="matlab: opentoline('C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\c_IQCcontrolSynW2.m',414,0)">line 414</a>)] 
+[Warning: YALMIP objects cannot be saved in binary format. You will run into
+troubles if you try to load this file later. You should clear all YALMIP objects
+first, or avoid having any YALMIP objects in the list of variables which you
+save.] 
+[> In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('sdpvar/saveobj', 'C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\@sdpvar\saveobj.m', 3)" style="font-weight:bold">sdpvar/saveobj</a> (<a href="matlab: opentoline('C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\@sdpvar\saveobj.m',3,0)">line 3</a>)
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('c_IQCcontrolSynW2', 'C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\c_IQCcontrolSynW2.m', 414)" style="font-weight:bold">c_IQCcontrolSynW2</a> (<a href="matlab: opentoline('C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\c_IQCcontrolSynW2.m',414,0)">line 414</a>)] 

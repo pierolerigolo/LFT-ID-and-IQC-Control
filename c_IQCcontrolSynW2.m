@@ -25,7 +25,7 @@ Ts            = 0.001;
 seed          = 22;
 
 % Performance weight W1 = floor_gain + peak_extra * band-pass at omega_d
-omega_d       = 81.7*2*pi;   % disturbance frequency (rad/s)
+omega_d       = 80*2*pi;   % disturbance frequency (rad/s)
 floor_gain    = 0.5;
 peak_extra    = 500;
 zeta_d        = 0.001;

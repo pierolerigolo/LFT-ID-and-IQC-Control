@@ -19,7 +19,7 @@ expname = '1028_spa';
 fmin_dm = 25;          % band (Hz) used to fit G_dm
 fmax_dm = 75;
 nW2     = 40;          % order of the W2 fit (ucover)
-f_dist  = 81.7;        % disturbance frequency (Hz) targeted by W1: kept ON the grid
+f_dist  = 80;        % disturbance frequency (Hz) targeted by W1: kept ON the grid
 
 if ~exist('plots', 'dir'), mkdir('plots'); end
 load(fullfile('Data', sprintf('GFRF_iddata_%s.mat', expname)), 'GFRF', 'GFRF_cell', 'realmass');
