@@ -1,0 +1,1363 @@
+Iter   1 | Stage 1
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 0.000000 | gamma = 10.000000 | slack = 0.000000 | time = 1.86 s
+Controller is OL stable
+Iter   2 | Stage 1
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = -0.000000 | gamma = 10.000000 | slack = -0.000000 | time = 1.66 s
+Controller is OL stable
+  --> Saved K_stage{2}
+  --> Advancing to Stage 2
+Iter   3 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 63.561251 | time = 3.96 s
+
+Controller is OL unstable
+Iter   4 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 50.257457 | time = 3.66 s
+
+Controller is OL unstable
+Iter   5 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 44.357739 | time = 3.93 s
+
+Controller is OL stable
+Iter   6 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 28.432914 | time = 4.11 s
+
+Controller is OL stable
+Iter   7 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 12.416830 | time = 3.96 s
+
+Controller is OL stable
+Iter   8 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 3.962416 | time = 3.86 s
+
+Controller is OL stable
+Iter   9 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 2.981093 | time = 3.90 s
+
+Controller is OL stable
+Iter  10 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 2.691150 | time = 4.13 s
+
+Controller is OL stable
+Iter  11 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 2.198210 | time = 4.16 s
+
+Controller is OL stable
+Iter  12 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 1.642191 | time = 4.20 s
+
+Controller is OL stable
+Iter  13 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 1.284956 | time = 4.08 s
+
+Controller is OL stable
+Iter  14 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 1.107983 | time = 4.27 s
+
+Controller is OL stable
+Iter  15 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 1.177262 | time = 4.10 s
+
+Controller is OL stable
+Iter  16 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 1.263195 | time = 4.13 s
+
+Controller is OL stable
+Iter  17 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 1.134414 | time = 4.25 s
+
+Controller is OL stable
+Iter  18 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 1.011409 | time = 4.02 s
+
+Controller is OL stable
+Iter  19 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 0.947551 | time = 3.92 s
+
+Controller is OL stable
+Iter  20 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 0.882127 | time = 4.00 s
+
+Controller is OL stable
+Iter  21 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 0.825924 | time = 3.95 s
+
+Controller is OL stable
+Iter  22 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 0.893953 | time = 3.97 s
+
+Controller is OL stable
+Iter  23 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 0.790689 | time = 3.89 s
+
+Controller is OL unstable
+Iter  24 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 0.716579 | time = 4.11 s
+
+Controller is OL unstable
+Iter  25 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 0.909706 | time = 3.96 s
+
+Controller is OL stable
+  --> Saved K_stage{3}
+  --> Advancing to Stage 3
+Iter  26 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 0.01 -> true (slack = 0)
+    D = 1.466
+    E = 3.395e-16+1.365e-07i
+D warm-start:
+    1.4656
+
+E warm-start:
+   3.3952e-16 + 1.3653e-07i
+
+  [expand] eta = 0.1733 -> true (slack = 0)
+    D = 2.19
+    E = 1.13e-14+3.578e-05i
+D warm-start:
+    2.1897
+
+E warm-start:
+   1.1303e-14 + 3.5781e-05i
+
+  [expand] eta = 0.3467 -> false (slack = 0)
+D warm-start:
+    2.1897
+
+E warm-start:
+   1.1303e-14 + 3.5781e-05i
+
+  [bisect  1] eta = 0.260022 -> true (slack = 0)
+    D = 3.035
+    E = -2.424e-15+7.539e-05i
+D warm-start:
+    3.0348
+
+E warm-start:
+  -2.4240e-15 + 7.5389e-05i
+
+  [bisect  2] eta = 0.303359 -> true (slack = 0)
+    D = 3.173
+    E = -4.361e-16+5.679e-05i
+D warm-start:
+    3.1731
+
+E warm-start:
+  -4.3606e-16 + 5.6792e-05i
+
+  [bisect  3] eta = 0.325028 -> false (slack = 0)
+D warm-start:
+    3.1731
+
+E warm-start:
+  -4.3606e-16 + 5.6792e-05i
+
+  [bisect  4] eta = 0.314193 -> false (slack = 0)
+D warm-start:
+    3.1731
+
+E warm-start:
+  -4.3606e-16 + 5.6792e-05i
+
+  [bisect  5] eta = 0.308776 -> true (slack = 0)
+    D = 2.806
+    E = 4.625e-16+2.448e-05i
+D warm-start:
+    2.8055
+
+E warm-start:
+   4.6254e-16 + 2.4476e-05i
+
+  [bisect  6] eta = 0.311485 -> true (slack = 0)
+    D = 2.596
+    E = -2.235e-14+2.103e-05i
+IQC_reduced_combinedPI_eta_bisection: converged, eta = 0.311485
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.2299
+
+max:     0
+
+  obj = 14.136874 | time = 26.68 s
+
+Controller is OL stable
+Iter  27 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 0.01 -> true (slack = 0)
+    D = 1.359
+    E = -4.78e-16+1.352e-07i
+D warm-start:
+    1.3591
+
+E warm-start:
+  -4.7796e-16 + 1.3516e-07i
+
+  [expand] eta = 0.3115 -> true (slack = 0)
+    D = 1.533
+    E = 5.379e-14+0.0001181i
+D warm-start:
+    1.5329
+
+E warm-start:
+   5.3789e-14 + 1.1812e-04i
+
+  [expand] eta = 0.623 -> false (slack = 0)
+D warm-start:
+    1.5329
+
+E warm-start:
+   5.3789e-14 + 1.1812e-04i
+
+  [bisect  1] eta = 0.467227 -> true (slack = 0)
+    D = 1.657
+    E = -1.006e-15+0.0002271i
+D warm-start:
+    1.6566
+
+E warm-start:
+  -1.0062e-15 + 2.2706e-04i
+
+  [bisect  2] eta = 0.545098 -> false (slack = 0)
+D warm-start:
+    1.6566
+
+E warm-start:
+  -1.0062e-15 + 2.2706e-04i
+
+  [bisect  3] eta = 0.506163 -> true (slack = 0)
+    D = 2.724
+    E = -4.885e-16+0.0002789i
+D warm-start:
+    2.7242
+
+E warm-start:
+  -4.8851e-16 + 2.7891e-04i
+
+  [bisect  4] eta = 0.525631 -> false (slack = 0)
+D warm-start:
+    2.7242
+
+E warm-start:
+  -4.8851e-16 + 2.7891e-04i
+
+  [bisect  5] eta = 0.515897 -> true (slack = 0)
+    D = 5.122
+    E = 7.575e-15+0.0002322i
+D warm-start:
+    5.1220
+
+E warm-start:
+   7.5753e-15 + 2.3221e-04i
+
+  [bisect  6] eta = 0.520764 -> true (slack = 0)
+    D = 3.897
+    E = 6.086e-15-0.0002657i
+IQC_reduced_combinedPI_eta_bisection: converged, eta = 0.520764
+Pi scaler: 1.087e+00 used
+range of Pi plus
+min:     0
+
+max:    1.0000
+
+range of Pi minus
+min:   -4.1473
+
+max:     0
+
+  obj = 8.266891 | time = 27.21 s
+
+Controller is OL stable
+Iter  28 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 0.01 -> true (slack = 0)
+    D = 1.484
+    E = 5.881e-16+2.518e-07i
+D warm-start:
+    1.4836
+
+E warm-start:
+   5.8814e-16 + 2.5176e-07i
+
+  [expand] eta = 0.5208 -> false (slack = 0)
+D warm-start:
+    1.4836
+
+E warm-start:
+   5.8814e-16 + 2.5176e-07i
+
+  [bisect  1] eta = 0.265382 -> true (slack = 0)
+    D = 1.698
+    E = 6.253e-14+0.0001268i
+D warm-start:
+    1.6980
+
+E warm-start:
+   6.2534e-14 + 1.2684e-04i
+
+  [bisect  2] eta = 0.393073 -> true (slack = 0)
+    D = 2.047
+    E = -4.185e-16+0.0002524i
+D warm-start:
+    2.0467
+
+E warm-start:
+  -4.1855e-16 + 2.5241e-04i
+
+  [bisect  3] eta = 0.456918 -> true (slack = 0)
+    D = 2.417
+    E = -7.878e-16+0.0002445i
+D warm-start:
+    2.4172
+
+E warm-start:
+  -7.8776e-16 + 2.4448e-04i
+
+  [bisect  4] eta = 0.488841 -> true (slack = 0)
+    D = 2.943
+    E = 9.978e-15+0.06977i
+D warm-start:
+    2.9426
+
+E warm-start:
+   0.0000 + 0.0698i
+
+  [bisect  5] eta = 0.504802 -> true (slack = 0)
+    D = 4.659
+    E = 1.321e-14+0.03367i
+D warm-start:
+    4.6592
+
+E warm-start:
+   0.0000 + 0.0337i
+
+  [bisect  6] eta = 0.512783 -> false (slack = 0)
+D warm-start:
+    4.6592
+
+E warm-start:
+   0.0000 + 0.0337i
+
+  [bisect  7] eta = 0.508793 -> true (slack = 0)
+    D = 0.2386
+    E = 1.215e-15+0.09202i
+IQC_reduced_combinedPI_eta_bisection: converged, eta = 0.508793
+Pi scaler: 1.341e+00 used
+range of Pi plus
+min:     0
+
+max:    1.0000
+
+range of Pi minus
+min:   -4.2357
+
+max:     0
+
+  obj = 4.626778 | time = 29.84 s
+
+Controller is OL stable
+Iter  29 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 0.01 -> true (slack = 0)
+    D = 1.308
+    E = 3.971e-16+2.594e-07i
+D warm-start:
+    1.3078
+
+E warm-start:
+   3.9705e-16 + 2.5939e-07i
+
+  [expand] eta = 0.5088 -> true (slack = 0)
+    D = 1.634
+    E = 8.594e-15+0.0003461i
+D warm-start:
+    1.6339
+
+E warm-start:
+   8.5936e-15 + 3.4608e-04i
+
+  [expand] eta = 1.018 -> false (slack = 0)
+D warm-start:
+    1.6339
+
+E warm-start:
+   8.5936e-15 + 3.4608e-04i
+
+  [bisect  1] eta = 0.763189 -> false (slack = 0)
+D warm-start:
+    1.6339
+
+E warm-start:
+   8.5936e-15 + 3.4608e-04i
+
+  [bisect  2] eta = 0.635991 -> false (slack = 0)
+D warm-start:
+    1.6339
+
+E warm-start:
+   8.5936e-15 + 3.4608e-04i
+
+  [bisect  3] eta = 0.572392 -> true (slack = 0)
+    D = 3.118
+    E = 4.91e-16+0.0003983i
+D warm-start:
+    3.1179
+
+E warm-start:
+   4.9098e-16 + 3.9831e-04i
+
+  [bisect  4] eta = 0.604191 -> false (slack = 0)
+D warm-start:
+    3.1179
+
+E warm-start:
+   4.9098e-16 + 3.9831e-04i
+
+  [bisect  5] eta = 0.588291 -> false (slack = 0)
+D warm-start:
+    3.1179
+
+E warm-start:
+   4.9098e-16 + 3.9831e-04i
+
+  [bisect  6] eta = 0.580342 -> false (slack = 0)
+D warm-start:
+    3.1179
+
+E warm-start:
+   4.9098e-16 + 3.9831e-04i
+
+  [bisect  7] eta = 0.576367 -> false (slack = 0)
+IQC_reduced_combinedPI_eta_bisection: converged, eta = 0.572392
+Pi scaler: 1.035e+00 used
+range of Pi plus
+min:     0
+
+max:    1.0000
+
+range of Pi minus
+min:   -3.5355
+
+max:     0
+
+  obj = 4.328230 | time = 28.93 s
+
+Controller is OL stable
+Iter  30 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 0.01 -> true (slack = 0)
+    D = 1.309
+    E = -1.569e-15+3.216e-07i
+D warm-start:
+    1.3088
+
+E warm-start:
+  -1.5689e-15 + 3.2163e-07i
+
+  [expand] eta = 0.5724 -> true (slack = 0)
+    D = 1.558
+    E = 1.148e-14+0.0003776i
+D warm-start:
+    1.5580
+
+E warm-start:
+   1.1484e-14 + 3.7760e-04i
+
+  [expand] eta = 1.145 -> false (slack = 0)
+D warm-start:
+    1.5580
+
+E warm-start:
+   1.1484e-14 + 3.7760e-04i
+
+  [bisect  1] eta = 0.858587 -> false (slack = 0)
+D warm-start:
+    1.5580
+
+E warm-start:
+   1.1484e-14 + 3.7760e-04i
+
+  [bisect  2] eta = 0.71549 -> false (slack = 0)
+D warm-start:
+    1.5580
+
+E warm-start:
+   1.1484e-14 + 3.7760e-04i
+
+  [bisect  3] eta = 0.643941 -> false (slack = 0)
+D warm-start:
+    1.5580
+
+E warm-start:
+   1.1484e-14 + 3.7760e-04i
+
+  [bisect  4] eta = 0.608166 -> false (slack = 0)
+D warm-start:
+    1.5580
+
+E warm-start:
+   1.1484e-14 + 3.7760e-04i
+
+  [bisect  5] eta = 0.590279 -> false (slack = 0)
+D warm-start:
+    1.5580
+
+E warm-start:
+   1.1484e-14 + 3.7760e-04i
+
+  [bisect  6] eta = 0.581335 -> true (slack = 0)
+    D = 1.85
+    E = 2.437e-15+0.0004301i
+D warm-start:
+    1.8500
+
+E warm-start:
+   2.4374e-15 + 4.3007e-04i
+
+  [bisect  7] eta = 0.585807 -> false (slack = 0)
+IQC_reduced_combinedPI_eta_bisection: converged, eta = 0.581335
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -2.3924
+
+max:     0
+
+  obj = 4.088378 | time = 32.49 s
+
+Controller is OL stable
+Iter  31 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 0.01 -> true (slack = 0)
+    D = 1.46
+    E = -1.958e-15+3.031e-07i
+D warm-start:
+    1.4598
+
+E warm-start:
+  -1.9585e-15 + 3.0311e-07i
+
+  [expand] eta = 0.5813 -> true (slack = 0)
+    D = 1.849
+    E = -1.443e-15+0.0002462i
+D warm-start:
+    1.8494
+
+E warm-start:
+  -1.4427e-15 + 2.4623e-04i
+
+  [expand] eta = 1.163 -> false (slack = 0)
+D warm-start:
+    1.8494
+
+E warm-start:
+  -1.4427e-15 + 2.4623e-04i
+
+  [bisect  1] eta = 0.872003 -> false (slack = 0)
+D warm-start:
+    1.8494
+
+E warm-start:
+  -1.4427e-15 + 2.4623e-04i
+
+  [bisect  2] eta = 0.726669 -> false (slack = 0)
+D warm-start:
+    1.8494
+
+E warm-start:
+  -1.4427e-15 + 2.4623e-04i
+
+  [bisect  3] eta = 0.654002 -> false (slack = 0)
+D warm-start:
+    1.8494
+
+E warm-start:
+  -1.4427e-15 + 2.4623e-04i
+
+  [bisect  4] eta = 0.617669 -> false (slack = 0)
+D warm-start:
+    1.8494
+
+E warm-start:
+  -1.4427e-15 + 2.4623e-04i
+
+  [bisect  5] eta = 0.599502 -> false (slack = 0)
+D warm-start:
+    1.8494
+
+E warm-start:
+  -1.4427e-15 + 2.4623e-04i
+
+  [bisect  6] eta = 0.590419 -> true (slack = 0)
+    D = 1.921
+    E = -2.28e-15+0.0001326i
+D warm-start:
+    1.9208
+
+E warm-start:
+  -2.2805e-15 + 1.3264e-04i
+
+  [bisect  7] eta = 0.59496 -> false (slack = 0)
+IQC_reduced_combinedPI_eta_bisection: converged, eta = 0.590419
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -2.4468
+
+max:     0
+
+  obj = 5.636816 | time = 33.35 s
+
+Controller is OL stable
+Iter  32 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 0.01 -> true (slack = 0)
+    D = 1.839
+    E = 1.424e-15+3.848e-07i
+D warm-start:
+    1.8389
+
+E warm-start:
+   1.4240e-15 + 3.8480e-07i
+
+  [expand] eta = 0.5904 -> true (slack = 0)
+    D = 2.52
+    E = -3.575e-14+0.0001662i
+D warm-start:
+    2.5202
+
+E warm-start:
+  -3.5750e-14 + 1.6618e-04i
+
+  [expand] eta = 1.181 -> false (slack = 0)
+D warm-start:
+    2.5202
+
+E warm-start:
+  -3.5750e-14 + 1.6618e-04i
+
+  [bisect  1] eta = 0.885628 -> false (slack = 0)
+D warm-start:
+    2.5202
+
+E warm-start:
+  -3.5750e-14 + 1.6618e-04i
+
+  [bisect  2] eta = 0.738023 -> false (slack = 0)
+D warm-start:
+    2.5202
+
+E warm-start:
+  -3.5750e-14 + 1.6618e-04i
+
+  [bisect  3] eta = 0.664221 -> false (slack = 0)
+D warm-start:
+    2.5202
+
+E warm-start:
+  -3.5750e-14 + 1.6618e-04i
+
+  [bisect  4] eta = 0.62732 -> true (slack = 0)
+    D = 6.174
+    E = -5.546e-15+0.0001719i
+D warm-start:
+    6.1736
+
+E warm-start:
+  -5.5458e-15 + 1.7189e-04i
+
+  [bisect  5] eta = 0.64577 -> false (slack = 0)
+D warm-start:
+    6.1736
+
+E warm-start:
+  -5.5458e-15 + 1.7189e-04i
+
+  [bisect  6] eta = 0.636545 -> false (slack = 0)
+D warm-start:
+    6.1736
+
+E warm-start:
+  -5.5458e-15 + 1.7189e-04i
+
+  [bisect  7] eta = 0.631932 -> false (slack = 0)
+IQC_reduced_combinedPI_eta_bisection: converged, eta = 0.62732
+Pi scaler: 2.429e+00 used
+range of Pi plus
+min:     0
+
+max:    1.0000
+
+range of Pi minus
+min:   -2.7469
+
+max:     0
+
+  obj = 3.854906 | time = 33.68 s
+
+Controller is OL stable
+Iter  33 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 0.01 -> true (slack = 0)
+    D = 1.591
+    E = -1.542e-15+3.292e-07i
+D warm-start:
+    1.5909
+
+E warm-start:
+  -1.5421e-15 + 3.2918e-07i
+
+  [expand] eta = 0.6273 -> true (slack = 0)
+    D = 1.833
+    E = -6.554e-15+0.0001329i
+D warm-start:
+    1.8332
+
+E warm-start:
+  -6.5540e-15 + 1.3286e-04i
+
+  [expand] eta = 1.255 -> false (slack = 0)
+D warm-start:
+    1.8332
+
+E warm-start:
+  -6.5540e-15 + 1.3286e-04i
+
+  [bisect  1] eta = 0.94098 -> false (slack = 0)
+D warm-start:
+    1.8332
+
+E warm-start:
+  -6.5540e-15 + 1.3286e-04i
+
+  [bisect  2] eta = 0.78415 -> false (slack = 0)
+D warm-start:
+    1.8332
+
+E warm-start:
+  -6.5540e-15 + 1.3286e-04i
+
+  [bisect  3] eta = 0.705735 -> false (slack = 0)
+D warm-start:
+    1.8332
+
+E warm-start:
+  -6.5540e-15 + 1.3286e-04i
+
+  [bisect  4] eta = 0.666527 -> false (slack = 0)
+D warm-start:
+    1.8332
+
+E warm-start:
+  -6.5540e-15 + 1.3286e-04i
+
+  [bisect  5] eta = 0.646924 -> false (slack = 0)
+D warm-start:
+    1.8332
+
+E warm-start:
+  -6.5540e-15 + 1.3286e-04i
+
+  [bisect  6] eta = 0.637122 -> false (slack = 0)
+D warm-start:
+    1.8332
+
+E warm-start:
+  -6.5540e-15 + 1.3286e-04i
+
+  [bisect  7] eta = 0.632221 -> true (slack = 0)
+    D = 1.784
+    E = 1.909e-15+6.015e-06i
+IQC_reduced_combinedPI_eta_bisection: converged, eta = 0.632221
+Pi scaler: 1.753e+00 used
+range of Pi plus
+min:     0
+
+max:    0.9998
+
+range of Pi minus
+min:   -2.7866
+
+max:     0
+
+  obj = 3.690386 | time = 34.56 s
+
+Controller is OL stable
+Iter  34 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 0.01 -> true (slack = 0)
+    D = 1.316
+    E = -4.107e-16+3.171e-07i
+D warm-start:
+    1.3161
+
+E warm-start:
+  -4.1073e-16 + 3.1710e-07i
+
+  [expand] eta = 0.6322 -> true (slack = 0)
+    D = 1.523
+    E = 4.996e-15+0.0003345i
+D warm-start:
+    1.5228
+
+E warm-start:
+   4.9957e-15 + 3.3446e-04i
+
+  [expand] eta = 1.264 -> false (slack = 0)
+D warm-start:
+    1.5228
+
+E warm-start:
+   4.9957e-15 + 3.3446e-04i
+
+  [bisect  1] eta = 0.948331 -> false (slack = 0)
+D warm-start:
+    1.5228
+
+E warm-start:
+   4.9957e-15 + 3.3446e-04i
+
+  [bisect  2] eta = 0.790276 -> false (slack = 0)
+D warm-start:
+    1.5228
+
+E warm-start:
+   4.9957e-15 + 3.3446e-04i
+
+  [bisect  3] eta = 0.711248 -> false (slack = 0)
+D warm-start:
+    1.5228
+
+E warm-start:
+   4.9957e-15 + 3.3446e-04i
+
+  [bisect  4] eta = 0.671735 -> false (slack = 0)
+D warm-start:
+    1.5228
+
+E warm-start:
+   4.9957e-15 + 3.3446e-04i
+
+  [bisect  5] eta = 0.651978 -> false (slack = 0)
+D warm-start:
+    1.5228
+
+E warm-start:
+   4.9957e-15 + 3.3446e-04i
+
+  [bisect  6] eta = 0.642099 -> false (slack = 0)
+D warm-start:
+    1.5228
+
+E warm-start:
+   4.9957e-15 + 3.3446e-04i
+
+  [bisect  7] eta = 0.63716 -> false (slack = 0)
+IQC_reduced_combinedPI_eta_bisection: converged, eta = 0.632221
+Pi scaler: 1.732e+00 used
+range of Pi plus
+min:     0
+
+max:    0.9992
+
+range of Pi minus
+min:   -2.7886
+
+max:     0
+
+  obj = 3.594695 | time = 36.88 s
+
+Controller is OL stable
+Iter  35 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 0.01 -> true (slack = 0)
+    D = 1.438
+    E = -1.088e-15+2.837e-07i
+D warm-start:
+    1.4384
+
+E warm-start:
+  -1.0884e-15 + 2.8368e-07i
+
+  [expand] eta = 0.6322 -> true (slack = 0)
+    D = 1.638
+    E = -4.31e-15+0.0002002i
+D warm-start:
+    1.6376
+
+E warm-start:
+  -4.3098e-15 + 2.0016e-04i
+
+  [expand] eta = 1.264 -> false (slack = 0)
+D warm-start:
+    1.6376
+
+E warm-start:
+  -4.3098e-15 + 2.0016e-04i
+
+  [bisect  1] eta = 0.948331 -> false (slack = 0)
+D warm-start:
+    1.6376
+
+E warm-start:
+  -4.3098e-15 + 2.0016e-04i
+
+  [bisect  2] eta = 0.790276 -> false (slack = 0)
+D warm-start:
+    1.6376
+
+E warm-start:
+  -4.3098e-15 + 2.0016e-04i
+
+  [bisect  3] eta = 0.711248 -> false (slack = 0)
+D warm-start:
+    1.6376
+
+E warm-start:
+  -4.3098e-15 + 2.0016e-04i
+
+  [bisect  4] eta = 0.671735 -> false (slack = 0)
+D warm-start:
+    1.6376
+
+E warm-start:
+  -4.3098e-15 + 2.0016e-04i
+
+  [bisect  5] eta = 0.651978 -> false (slack = 0)
+D warm-start:
+    1.6376
+
+E warm-start:
+  -4.3098e-15 + 2.0016e-04i
+
+  [bisect  6] eta = 0.642099 -> false (slack = 0)
+D warm-start:
+    1.6376
+
+E warm-start:
+  -4.3098e-15 + 2.0016e-04i
+
+  [bisect  7] eta = 0.63716 -> false (slack = 0)
+IQC_reduced_combinedPI_eta_bisection: converged, eta = 0.632221
+Pi scaler: 1.817e+00 used
+range of Pi plus
+min:     0
+
+max:    0.9999
+
+range of Pi minus
+min:   -2.7768
+
+max:     0
+
+  obj = 3.596024 | time = 36.19 s
+
+Controller is OL stable
+  --> Saved K_stage{4}
+  --> Converged.
+
+norminf_W1S =
+
+    1.8948
+
+
+norminf_T =
+
+    2.4765
+
+
+expname =
+
+    'newtempLFT_GFRF_GdmGLTIW2n40_1028_spa_controller_order10_82hz_-21db_nperfhinfnperfoptiIQC_lasthinfstabitrInf_eta0.63_multi_freq'
+
+[Warning: YALMIP objects cannot be saved in binary format. You will run into
+troubles if you try to load this file later. You should clear all YALMIP objects
+first, or avoid having any YALMIP objects in the list of variables which you
+save.] 
+[> In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('sdpvar/saveobj', 'C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\@sdpvar\saveobj.m', 3)" style="font-weight:bold">sdpvar/saveobj</a> (<a href="matlab: opentoline('C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\@sdpvar\saveobj.m',3,0)">line 3</a>)
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('c_IQCcontrolSynW2', 'C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\c_IQCcontrolSynW2.m', 392)" style="font-weight:bold">c_IQCcontrolSynW2</a> (<a href="matlab: opentoline('C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\c_IQCcontrolSynW2.m',392,0)">line 392</a>)] 
+[Warning: YALMIP objects cannot be saved in binary format. You will run into
+troubles if you try to load this file later. You should clear all YALMIP objects
+first, or avoid having any YALMIP objects in the list of variables which you
+save.] 
+[> In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('sdpvar/saveobj', 'C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\@sdpvar\saveobj.m', 3)" style="font-weight:bold">sdpvar/saveobj</a> (<a href="matlab: opentoline('C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\@sdpvar\saveobj.m',3,0)">line 3</a>)
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('c_IQCcontrolSynW2', 'C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\c_IQCcontrolSynW2.m', 392)" style="font-weight:bold">c_IQCcontrolSynW2</a> (<a href="matlab: opentoline('C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\c_IQCcontrolSynW2.m',392,0)">line 392</a>)] 
+[Warning: YALMIP objects cannot be saved in binary format. You will run into
+troubles if you try to load this file later. You should clear all YALMIP objects
+first, or avoid having any YALMIP objects in the list of variables which you
+save.] 
+[> In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('sdpvar/saveobj', 'C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\@sdpvar\saveobj.m', 3)" style="font-weight:bold">sdpvar/saveobj</a> (<a href="matlab: opentoline('C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\@sdpvar\saveobj.m',3,0)">line 3</a>)
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('c_IQCcontrolSynW2', 'C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\c_IQCcontrolSynW2.m', 392)" style="font-weight:bold">c_IQCcontrolSynW2</a> (<a href="matlab: opentoline('C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\c_IQCcontrolSynW2.m',392,0)">line 392</a>)] 
+[Warning: YALMIP objects cannot be saved in binary format. You will run into
+troubles if you try to load this file later. You should clear all YALMIP objects
+first, or avoid having any YALMIP objects in the list of variables which you
+save.] 
+[> In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('sdpvar/saveobj', 'C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\@sdpvar\saveobj.m', 3)" style="font-weight:bold">sdpvar/saveobj</a> (<a href="matlab: opentoline('C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\@sdpvar\saveobj.m',3,0)">line 3</a>)
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('c_IQCcontrolSynW2', 'C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\c_IQCcontrolSynW2.m', 392)" style="font-weight:bold">c_IQCcontrolSynW2</a> (<a href="matlab: opentoline('C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\c_IQCcontrolSynW2.m',392,0)">line 392</a>)] 
+[Warning: YALMIP objects cannot be saved in binary format. You will run into
+troubles if you try to load this file later. You should clear all YALMIP objects
+first, or avoid having any YALMIP objects in the list of variables which you
+save.] 
+[> In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('lmi/saveobj', 'C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\extras\@lmi\saveobj.m', 3)" style="font-weight:bold">lmi/saveobj</a> (<a href="matlab: opentoline('C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\extras\@lmi\saveobj.m',3,0)">line 3</a>)
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('c_IQCcontrolSynW2', 'C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\c_IQCcontrolSynW2.m', 392)" style="font-weight:bold">c_IQCcontrolSynW2</a> (<a href="matlab: opentoline('C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\c_IQCcontrolSynW2.m',392,0)">line 392</a>)] 
+[Warning: YALMIP objects cannot be saved in binary format. You will run into
+troubles if you try to load this file later. You should clear all YALMIP objects
+first, or avoid having any YALMIP objects in the list of variables which you
+save.] 
+[> In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('lmi/saveobj', 'C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\extras\@lmi\saveobj.m', 3)" style="font-weight:bold">lmi/saveobj</a> (<a href="matlab: opentoline('C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\extras\@lmi\saveobj.m',3,0)">line 3</a>)
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('c_IQCcontrolSynW2', 'C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\c_IQCcontrolSynW2.m', 392)" style="font-weight:bold">c_IQCcontrolSynW2</a> (<a href="matlab: opentoline('C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\c_IQCcontrolSynW2.m',392,0)">line 392</a>)] 
+[Warning: YALMIP objects cannot be saved in binary format. You will run into
+troubles if you try to load this file later. You should clear all YALMIP objects
+first, or avoid having any YALMIP objects in the list of variables which you
+save.] 
+[> In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('sdpvar/saveobj', 'C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\@sdpvar\saveobj.m', 3)" style="font-weight:bold">sdpvar/saveobj</a> (<a href="matlab: opentoline('C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\@sdpvar\saveobj.m',3,0)">line 3</a>)
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('c_IQCcontrolSynW2', 'C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\c_IQCcontrolSynW2.m', 392)" style="font-weight:bold">c_IQCcontrolSynW2</a> (<a href="matlab: opentoline('C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\c_IQCcontrolSynW2.m',392,0)">line 392</a>)] 
+[Warning: YALMIP objects cannot be saved in binary format. You will run into
+troubles if you try to load this file later. You should clear all YALMIP objects
+first, or avoid having any YALMIP objects in the list of variables which you
+save.] 
+[> In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('sdpvar/saveobj', 'C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\@sdpvar\saveobj.m', 3)" style="font-weight:bold">sdpvar/saveobj</a> (<a href="matlab: opentoline('C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\@sdpvar\saveobj.m',3,0)">line 3</a>)
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('c_IQCcontrolSynW2', 'C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\c_IQCcontrolSynW2.m', 392)" style="font-weight:bold">c_IQCcontrolSynW2</a> (<a href="matlab: opentoline('C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\c_IQCcontrolSynW2.m',392,0)">line 392</a>)] 
+[Warning: YALMIP objects cannot be saved in binary format. You will run into
+troubles if you try to load this file later. You should clear all YALMIP objects
+first, or avoid having any YALMIP objects in the list of variables which you
+save.] 
+[> In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('sdpvar/saveobj', 'C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\@sdpvar\saveobj.m', 3)" style="font-weight:bold">sdpvar/saveobj</a> (<a href="matlab: opentoline('C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\@sdpvar\saveobj.m',3,0)">line 3</a>)
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('c_IQCcontrolSynW2', 'C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\c_IQCcontrolSynW2.m', 392)" style="font-weight:bold">c_IQCcontrolSynW2</a> (<a href="matlab: opentoline('C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\c_IQCcontrolSynW2.m',392,0)">line 392</a>)] 

@@ -2,7 +2,7 @@ close all; clc; clear; clear("yalmip");
 % warning('off')
 %% Config
 rng(22);
-orderK   = 20 ;
+orderK   = 16 ;
 Ts       = 0.001;
 
 %% Load data
@@ -48,12 +48,13 @@ legend('Location','best');
 % figure;bode(GLFT(2,2),GFRF(2))
 %% Performance weight W1
 omega_d    = 81.7*2*pi;
+% omega_d    = 50*2*pi;
 omega_n    = 1000;
 floor_gain = 0.5;
 
 zeta_d     = 0.001;
 zeta_n     = 0.0001;
-peak_extra = 200;
+peak_extra = 100;
 
 num_bp     = peak_extra * [2*zeta_n*omega_d, 0];
 den_bp     = [1, 2*zeta_d*omega_d, omega_d^2];
@@ -127,7 +128,7 @@ G_robustness = mktito(GLFT,ny, nu);
 
 A = model_elliptical.UncertaintySet.A;
 
-% easier to check for wierd values
+% easier to check for weird values
 A_1=A{1};
 for i =1:length(A{1})
     A_array(:,:,i)=A_1{i};
@@ -141,41 +142,45 @@ A_set = model_elliptical.UncertaintySet.A{1};  % cell of length(W_lft) 2x2 matri
 nW    = length(A_set);
 A_set{300}=A_set{299};
 
-% Find a robust scale: use the median of singular values, not the max
-sv_max = zeros(nW,1);
-for k = 1:nW
-    sv_max(k) = max(svd(A_set{k}));
-end
-
-% Clamp outliers: cap at e.g. 5x the median
-sv_threshold = 1e-2;
-for k = 1:nW
-    if sv_max(k) < sv_threshold
-        A_set{k} = A_set{k} * (sv_threshold / sv_max(k));
-    end
-end
+% % Find a robust scale: use the median of singular values, not the max
+% sv_max = zeros(nW,1);
+% for k = 1:nW
+%     sv_max(k) = max(svd(A_set{k}));
+% end
+% 
+% % Clamp outliers: cap at e.g. 5x the median
+% sv_threshold = 1e-2;
+% for k = 1:nW
+%     if sv_max(k) < sv_threshold
+%         A_set{k} = A_set{k} * (sv_threshold / sv_max(k));
+%     end
+% end
 A{1}=A_set;
 
 nw = length(W_lft);
 J  = [1, 0; 0, 1i];
-eta = dm_bound;                          % |dm| <= eta
-
+eta = dm_bound/4;                          % |dm| <= eta
+% eta=1e-6;
 % Block d (elliptical set)
 tmp   = A';
 tmp   = [tmp{:}];
 tmp   = cellfun(@(x) x*J', tmp, "UniformOutput", 0);
 A_bar = splitapply(@(x) {blkdiag(x{:})}, tmp, (1:nw)');
 
-% PI = diag(A, C, B, D) with
-%   A = eye(ny*nu)   B = -A_bar'*A_bar    (block d: p part, q part)
-%   C = eta^2        D = -1               (block dm: p part, q part)
-PI_cell = cellfun(@(x) blkdiag(eye(ny*nu), eta^2, -x'*x, -1), A_bar, "UniformOutput", 0);
+% PI = diag(A, C, B, D), channels ordered [z_d; z_dm; w_d; w_dm]
+% Per-block and per-frequency scaling (positive scalars, so the IQC is unchanged)
+PI_cell = cellfun(@(x) local_PI(x, eta, ny*nu), A_bar, "UniformOutput", false);
+PI      = frd(cat(3, PI_cell{:}), W_lft, G_hat.Ts);
 
-PI = frd(cat(3, PI_cell{:}), W_lft, G_hat.Ts);
+% PI_scaler = norm(PI, inf);   % keep disabled: scaling is done per frequency above
 
-% PI_scaler = norm(PI, inf);
-% PI        = PI / PI_scaler;
-
+% Local function (put at the END of the script/file)
+function P = local_PI(x, eta, n)
+Q  = x'*x;
+sd = max(norm(Q), 1);                 % scale of block d (never amplify tiny blocks)
+P  = blkdiag(eye(n)/sd, eta^2, -Q/sd, -1);
+P  = P / norm(P);                     % per-frequency normalization
+end
 alpha_PI_soft = 0;
 beta_PI_soft  = 0.5;
 % alpha_PI_hard = 0;
@@ -237,7 +242,7 @@ for iter = 1:max_iter
             % ── Stage 1: Robustness only (IQC_reduced slack) ─────────────
             [LMIs, OBJ] = datadriven.Objective.IQC_reduced( ...
                 G_robustness, K, PI, alpha_PI_soft, beta_PI_soft, W_lft, ...
-                "addSlack", true, "epsNormalisation", 1e-6,"pinorm",true);
+                "addSlack", false, "epsNormalisation", 1e-6,"pinorm",true);
             slack_val = OBJ;   % OBJ is the slack her
             has_slack = true;
                 % nextstage=1;
@@ -299,7 +304,7 @@ for iter = 1:max_iter
     else
         tol     = 1e-5;
         verbose = 0;
-        obj_err = 5e-3;
+        obj_err = 1e-9;
     end
 
     opts_sdp = sdpsettings('solver', solver, 'verbose', verbose, ...

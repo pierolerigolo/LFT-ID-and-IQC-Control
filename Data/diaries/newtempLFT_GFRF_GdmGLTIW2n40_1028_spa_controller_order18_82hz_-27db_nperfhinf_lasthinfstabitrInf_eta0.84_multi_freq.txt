@@ -1,0 +1,3841 @@
+Iter   1 | Stage 1
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 0.000000 | gamma = 10.000000 | slack = 0.000000 | time = 2.34 s
+Controller is OL stable
+Iter   2 | Stage 1
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 0.000000 | gamma = 10.000000 | slack = 0.000000 | time = 2.04 s
+Controller is OL stable
+  --> Saved K_stage{2}
+  --> Advancing to Stage 2
+Iter   3 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 289.852808 | time = 5.24 s
+
+Controller is OL stable
+Iter   4 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 221.549345 | time = 4.65 s
+
+Controller is OL stable
+Iter   5 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 193.790562 | time = 4.77 s
+
+Controller is OL unstable
+Iter   6 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 115.746242 | time = 5.47 s
+
+Controller is OL unstable
+Iter   7 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 46.496949 | time = 5.52 s
+
+Controller is OL unstable
+Iter   8 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 22.829751 | time = 5.47 s
+
+Controller is OL unstable
+Iter   9 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 14.594556 | time = 5.46 s
+
+Controller is OL stable
+Iter  10 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 9.976416 | time = 5.15 s
+
+Controller is OL unstable
+Iter  11 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 13.891615 | time = 5.16 s
+
+Controller is OL stable
+  --> Saved K_stage{3}
+  --> Advancing to Stage 3
+Iter  12 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 0.01 -> true (slack = 0)
+    D = 1.422
+    E = -2.994e-16+1.844e-07i
+D warm-start:
+    1.4217
+
+E warm-start:
+  -2.9941e-16 + 1.8438e-07i
+
+  [expand] eta = 0.1733 -> true (slack = 0)
+    D = 1.656
+    E = -1.137e-15+4.221e-05i
+D warm-start:
+    1.6557
+
+E warm-start:
+  -1.1367e-15 + 4.2207e-05i
+
+  [expand] eta = 0.3467 -> true (slack = 0)
+    D = 1.813
+    E = 1.376e-14+0.0001392i
+D warm-start:
+    1.8127
+
+E warm-start:
+   1.3765e-14 + 1.3920e-04i
+
+  [expand] eta = 0.6934 -> false (slack = 0)
+D warm-start:
+    1.8127
+
+E warm-start:
+   1.3765e-14 + 1.3920e-04i
+
+  [bisect  1] eta = 0.520044 -> false (slack = 0)
+D warm-start:
+    1.8127
+
+E warm-start:
+   1.3765e-14 + 1.3920e-04i
+
+  [bisect  2] eta = 0.43337 -> false (slack = 0)
+D warm-start:
+    1.8127
+
+E warm-start:
+   1.3765e-14 + 1.3920e-04i
+
+  [bisect  3] eta = 0.390033 -> false (slack = 0)
+D warm-start:
+    1.8127
+
+E warm-start:
+   1.3765e-14 + 1.3920e-04i
+
+  [bisect  4] eta = 0.368365 -> false (slack = 0)
+D warm-start:
+    1.8127
+
+E warm-start:
+   1.3765e-14 + 1.3920e-04i
+
+  [bisect  5] eta = 0.35753 -> true (slack = 0)
+    D = 2.027
+    E = 8.317e-15+0.0001856i
+D warm-start:
+    2.0269
+
+E warm-start:
+   8.3175e-15 + 1.8558e-04i
+
+  [bisect  6] eta = 0.362947 -> false (slack = 0)
+D warm-start:
+    2.0269
+
+E warm-start:
+   8.3175e-15 + 1.8558e-04i
+
+  [bisect  7] eta = 0.360239 -> false (slack = 0)
+IQC_reduced_combinedPI_eta_bisection: converged, eta = 0.35753
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -2.5764
+
+max:     0
+
+  obj = 8.449759 | time = 33.13 s
+
+Controller is OL stable
+Iter  13 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 0.01 -> true (slack = 0)
+    D = 1.461
+    E = 1.701e-16+1.714e-07i
+D warm-start:
+    1.4613
+
+E warm-start:
+   1.7010e-16 + 1.7140e-07i
+
+  [expand] eta = 0.3575 -> true (slack = 0)
+    D = 1.944
+    E = 4.256e-15+0.0001432i
+D warm-start:
+    1.9441
+
+E warm-start:
+   4.2562e-15 + 1.4321e-04i
+
+  [expand] eta = 0.7151 -> false (slack = 0)
+D warm-start:
+    1.9441
+
+E warm-start:
+   4.2562e-15 + 1.4321e-04i
+
+  [bisect  1] eta = 0.536296 -> false (slack = 0)
+D warm-start:
+    1.9441
+
+E warm-start:
+   4.2562e-15 + 1.4321e-04i
+
+  [bisect  2] eta = 0.446913 -> false (slack = 0)
+D warm-start:
+    1.9441
+
+E warm-start:
+   4.2562e-15 + 1.4321e-04i
+
+  [bisect  3] eta = 0.402222 -> true (slack = 0)
+    D = 5.515
+    E = 5.826e-16+0.0002236i
+D warm-start:
+    5.5149
+
+E warm-start:
+   5.8256e-16 + 2.2362e-04i
+
+  [bisect  4] eta = 0.424567 -> false (slack = 0)
+D warm-start:
+    5.5149
+
+E warm-start:
+   5.8256e-16 + 2.2362e-04i
+
+  [bisect  5] eta = 0.413394 -> false (slack = 0)
+D warm-start:
+    5.5149
+
+E warm-start:
+   5.8256e-16 + 2.2362e-04i
+
+  [bisect  6] eta = 0.407808 -> true (slack = 0)
+    D = 3.755
+    E = 6.639e-16-0.0001252i
+D warm-start:
+    3.7553
+
+E warm-start:
+   6.6394e-16 - 1.2518e-04i
+
+  [bisect  7] eta = 0.410601 -> true (slack = 0)
+    D = 2.832
+    E = -8.7e-15-0.0001435i
+IQC_reduced_combinedPI_eta_bisection: converged, eta = 0.410601
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -3.3923
+
+max:     0
+
+  obj = 10.482094 | time = 34.66 s
+
+Controller is OL stable
+Iter  14 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 0.01 -> true (slack = 0)
+    D = 1.426
+    E = 3.778e-16+1.431e-07i
+D warm-start:
+    1.4257
+
+E warm-start:
+   3.7782e-16 + 1.4306e-07i
+
+  [expand] eta = 0.4106 -> true (slack = 0)
+    D = 1.625
+    E = 3.63e-15+0.0001569i
+D warm-start:
+    1.6251
+
+E warm-start:
+   3.6297e-15 + 1.5690e-04i
+
+  [expand] eta = 0.8212 -> false (slack = 0)
+D warm-start:
+    1.6251
+
+E warm-start:
+   3.6297e-15 + 1.5690e-04i
+
+  [bisect  1] eta = 0.615902 -> false (slack = 0)
+D warm-start:
+    1.6251
+
+E warm-start:
+   3.6297e-15 + 1.5690e-04i
+
+  [bisect  2] eta = 0.513252 -> false (slack = 0)
+D warm-start:
+    1.6251
+
+E warm-start:
+   3.6297e-15 + 1.5690e-04i
+
+  [bisect  3] eta = 0.461926 -> true (slack = 0)
+    D = 3.193
+    E = -1.697e-15+0.0002336i
+D warm-start:
+    3.1930
+
+E warm-start:
+  -1.6970e-15 + 2.3357e-04i
+
+  [bisect  4] eta = 0.487589 -> false (slack = 0)
+D warm-start:
+    3.1930
+
+E warm-start:
+  -1.6970e-15 + 2.3357e-04i
+
+  [bisect  5] eta = 0.474758 -> false (slack = 0)
+D warm-start:
+    3.1930
+
+E warm-start:
+  -1.6970e-15 + 2.3357e-04i
+
+  [bisect  6] eta = 0.468342 -> true (slack = 0)
+    D = 4.003
+    E = -1.072e-14+4.405e-05i
+D warm-start:
+    4.0031
+
+E warm-start:
+  -1.0722e-14 + 4.4047e-05i
+
+  [bisect  7] eta = 0.47155 -> false (slack = 0)
+IQC_reduced_combinedPI_eta_bisection: converged, eta = 0.468342
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -4.5300
+
+max:     0
+
+  obj = 9.899146 | time = 35.47 s
+
+Controller is OL stable
+Iter  15 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 0.01 -> true (slack = 0)
+    D = 1.411
+    E = 3.419e-16+1.378e-07i
+D warm-start:
+    1.4110
+
+E warm-start:
+   3.4195e-16 + 1.3781e-07i
+
+  [expand] eta = 0.4683 -> true (slack = 0)
+    D = 2.15
+    E = 1.73e-15+0.0001519i
+D warm-start:
+    2.1503
+
+E warm-start:
+   1.7300e-15 + 1.5188e-04i
+
+  [expand] eta = 0.9367 -> false (slack = 0)
+D warm-start:
+    2.1503
+
+E warm-start:
+   1.7300e-15 + 1.5188e-04i
+
+  [bisect  1] eta = 0.702513 -> false (slack = 0)
+D warm-start:
+    2.1503
+
+E warm-start:
+   1.7300e-15 + 1.5188e-04i
+
+  [bisect  2] eta = 0.585428 -> false (slack = 0)
+D warm-start:
+    2.1503
+
+E warm-start:
+   1.7300e-15 + 1.5188e-04i
+
+  [bisect  3] eta = 0.526885 -> true (slack = 0)
+    D = 6.147
+    E = 2.649e-15+0.0001788i
+D warm-start:
+    6.1467
+
+E warm-start:
+   2.6494e-15 + 1.7882e-04i
+
+  [bisect  4] eta = 0.556156 -> false (slack = 0)
+D warm-start:
+    6.1467
+
+E warm-start:
+   2.6494e-15 + 1.7882e-04i
+
+  [bisect  5] eta = 0.541521 -> true (slack = 0)
+    D = 6.38
+    E = 5.548e-16-0.0002449i
+D warm-start:
+    6.3795
+
+E warm-start:
+   5.5478e-16 - 2.4490e-04i
+
+  [bisect  6] eta = 0.548838 -> false (slack = 0)
+D warm-start:
+    6.3795
+
+E warm-start:
+   5.5478e-16 - 2.4490e-04i
+
+  [bisect  7] eta = 0.545179 -> false (slack = 0)
+IQC_reduced_combinedPI_eta_bisection: converged, eta = 0.541521
+Pi scaler: 1.885e+00 used
+range of Pi plus
+min:     0
+
+max:    1.0000
+
+range of Pi minus
+min:   -3.6753
+
+max:     0
+
+  obj = 9.265308 | time = 34.93 s
+
+Controller is OL stable
+Iter  16 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 0.01 -> true (slack = 0)
+    D = 1.542
+    E = 1.769e-16+1.596e-07i
+D warm-start:
+    1.5417
+
+E warm-start:
+   1.7694e-16 + 1.5965e-07i
+
+  [expand] eta = 0.5415 -> true (slack = 0)
+    D = 1.729
+    E = -5.373e-15+0.0001281i
+D warm-start:
+    1.7293
+
+E warm-start:
+  -5.3729e-15 + 1.2813e-04i
+
+  [expand] eta = 1.083 -> false (slack = 0)
+D warm-start:
+    1.7293
+
+E warm-start:
+  -5.3729e-15 + 1.2813e-04i
+
+  [bisect  1] eta = 0.812281 -> false (slack = 0)
+D warm-start:
+    1.7293
+
+E warm-start:
+  -5.3729e-15 + 1.2813e-04i
+
+  [bisect  2] eta = 0.676901 -> false (slack = 0)
+D warm-start:
+    1.7293
+
+E warm-start:
+  -5.3729e-15 + 1.2813e-04i
+
+  [bisect  3] eta = 0.609211 -> false (slack = 0)
+D warm-start:
+    1.7293
+
+E warm-start:
+  -5.3729e-15 + 1.2813e-04i
+
+  [bisect  4] eta = 0.575366 -> false (slack = 0)
+D warm-start:
+    1.7293
+
+E warm-start:
+  -5.3729e-15 + 1.2813e-04i
+
+  [bisect  5] eta = 0.558443 -> true (slack = 0)
+    D = 2.423
+    E = -3.199e-16+0.0001312i
+D warm-start:
+    2.4233
+
+E warm-start:
+  -3.1994e-16 + 1.3121e-04i
+
+  [bisect  6] eta = 0.566904 -> true (slack = 0)
+    D = 2.67
+    E = -3.026e-14+1.323e-05i
+D warm-start:
+    2.6701
+
+E warm-start:
+  -3.0264e-14 + 1.3231e-05i
+
+  [bisect  7] eta = 0.571135 -> true (slack = 0)
+    D = 2.785
+    E = 4.793e-15-0.0001014i
+IQC_reduced_combinedPI_eta_bisection: converged, eta = 0.571135
+Pi scaler: 1.161e+00 used
+range of Pi plus
+min:     0
+
+max:    1.0000
+
+range of Pi minus
+min:   -3.4965
+
+max:     0
+
+  obj = 11.987340 | time = 36.27 s
+
+Controller is OL stable
+Iter  17 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 0.01 -> true (slack = 0)
+    D = 1.529
+    E = 2.912e-16+1.56e-07i
+D warm-start:
+    1.5288
+
+E warm-start:
+   2.9123e-16 + 1.5600e-07i
+
+  [expand] eta = 0.5711 -> true (slack = 0)
+    D = 1.592
+    E = 2.079e-15+0.000122i
+D warm-start:
+    1.5916
+
+E warm-start:
+   2.0791e-15 + 1.2202e-04i
+
+  [expand] eta = 1.142 -> false (slack = 0)
+D warm-start:
+    1.5916
+
+E warm-start:
+   2.0791e-15 + 1.2202e-04i
+
+  [bisect  1] eta = 0.856702 -> false (slack = 0)
+D warm-start:
+    1.5916
+
+E warm-start:
+   2.0791e-15 + 1.2202e-04i
+
+  [bisect  2] eta = 0.713919 -> false (slack = 0)
+D warm-start:
+    1.5916
+
+E warm-start:
+   2.0791e-15 + 1.2202e-04i
+
+  [bisect  3] eta = 0.642527 -> false (slack = 0)
+D warm-start:
+    1.5916
+
+E warm-start:
+   2.0791e-15 + 1.2202e-04i
+
+  [bisect  4] eta = 0.606831 -> true (slack = 0)
+    D = 3.397
+    E = 2.801e-17+0.0001856i
+D warm-start:
+    3.3974
+
+E warm-start:
+   2.8012e-17 + 1.8560e-04i
+
+  [bisect  5] eta = 0.624679 -> false (slack = 0)
+D warm-start:
+    3.3974
+
+E warm-start:
+   2.8012e-17 + 1.8560e-04i
+
+  [bisect  6] eta = 0.615755 -> false (slack = 0)
+D warm-start:
+    3.3974
+
+E warm-start:
+   2.8012e-17 + 1.8560e-04i
+
+  [bisect  7] eta = 0.611293 -> false (slack = 0)
+IQC_reduced_combinedPI_eta_bisection: converged, eta = 0.606831
+Pi scaler: 1.380e+00 used
+range of Pi plus
+min:     0
+
+max:    1.0000
+
+range of Pi minus
+min:   -3.0778
+
+max:     0
+
+  obj = 9.740958 | time = 35.54 s
+
+Controller is OL unstable
+Iter  18 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 0.01 -> true (slack = 0)
+    D = 1.475
+    E = 2.524e-16+1.673e-07i
+D warm-start:
+    1.4753
+
+E warm-start:
+   2.5239e-16 + 1.6728e-07i
+
+  [expand] eta = 0.6068 -> true (slack = 0)
+    D = 1.573
+    E = -2.006e-18+0.0001338i
+D warm-start:
+    1.5729
+
+E warm-start:
+  -2.0061e-18 + 1.3380e-04i
+
+  [expand] eta = 1.214 -> false (slack = 0)
+D warm-start:
+    1.5729
+
+E warm-start:
+  -2.0061e-18 + 1.3380e-04i
+
+  [bisect  1] eta = 0.910246 -> false (slack = 0)
+D warm-start:
+    1.5729
+
+E warm-start:
+  -2.0061e-18 + 1.3380e-04i
+
+  [bisect  2] eta = 0.758539 -> false (slack = 0)
+D warm-start:
+    1.5729
+
+E warm-start:
+  -2.0061e-18 + 1.3380e-04i
+
+  [bisect  3] eta = 0.682685 -> false (slack = 0)
+D warm-start:
+    1.5729
+
+E warm-start:
+  -2.0061e-18 + 1.3380e-04i
+
+  [bisect  4] eta = 0.644758 -> false (slack = 0)
+D warm-start:
+    1.5729
+
+E warm-start:
+  -2.0061e-18 + 1.3380e-04i
+
+  [bisect  5] eta = 0.625794 -> true (slack = 0)
+    D = 1.724
+    E = -4.631e-15+0.0001485i
+D warm-start:
+    1.7236
+
+E warm-start:
+  -4.6312e-15 + 1.4852e-04i
+
+  [bisect  6] eta = 0.635276 -> true (slack = 0)
+    D = 2.094
+    E = 9.914e-15+0.0001062i
+D warm-start:
+    2.0941
+
+E warm-start:
+   9.9143e-15 + 1.0618e-04i
+
+  [bisect  7] eta = 0.640017 -> false (slack = 0)
+IQC_reduced_combinedPI_eta_bisection: converged, eta = 0.635276
+Pi scaler: 1.667e+00 used
+range of Pi plus
+min:     0
+
+max:    1.0000
+
+range of Pi minus
+min:   -2.7777
+
+max:     0
+
+  obj = 11.394678 | time = 35.56 s
+
+Controller is OL stable
+Iter  19 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 0.01 -> true (slack = 0)
+    D = 1.498
+    E = 4.516e-16+1.615e-07i
+D warm-start:
+    1.4982
+
+E warm-start:
+   4.5161e-16 + 1.6147e-07i
+
+  [expand] eta = 0.6353 -> true (slack = 0)
+    D = 1.58
+    E = -2.109e-15+8.457e-05i
+D warm-start:
+    1.5803
+
+E warm-start:
+  -2.1092e-15 + 8.4569e-05i
+
+  [expand] eta = 1.271 -> false (slack = 0)
+D warm-start:
+    1.5803
+
+E warm-start:
+  -2.1092e-15 + 8.4569e-05i
+
+  [bisect  1] eta = 0.952914 -> false (slack = 0)
+D warm-start:
+    1.5803
+
+E warm-start:
+  -2.1092e-15 + 8.4569e-05i
+
+  [bisect  2] eta = 0.794095 -> false (slack = 0)
+D warm-start:
+    1.5803
+
+E warm-start:
+  -2.1092e-15 + 8.4569e-05i
+
+  [bisect  3] eta = 0.714686 -> false (slack = 0)
+D warm-start:
+    1.5803
+
+E warm-start:
+  -2.1092e-15 + 8.4569e-05i
+
+  [bisect  4] eta = 0.674981 -> false (slack = 0)
+D warm-start:
+    1.5803
+
+E warm-start:
+  -2.1092e-15 + 8.4569e-05i
+
+  [bisect  5] eta = 0.655128 -> false (slack = 0)
+D warm-start:
+    1.5803
+
+E warm-start:
+  -2.1092e-15 + 8.4569e-05i
+
+  [bisect  6] eta = 0.645202 -> true (slack = 0)
+    D = 1.689
+    E = -3.075e-15+0.0001028i
+D warm-start:
+    1.6892
+
+E warm-start:
+  -3.0748e-15 + 1.0277e-04i
+
+  [bisect  7] eta = 0.650165 -> false (slack = 0)
+IQC_reduced_combinedPI_eta_bisection: converged, eta = 0.645202
+Pi scaler: 1.130e+00 used
+range of Pi plus
+min:     0
+
+max:    0.9989
+
+range of Pi minus
+min:   -2.8422
+
+max:     0
+
+  obj = 12.243761 | time = 36.28 s
+
+Controller is OL stable
+Iter  20 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 0.01 -> true (slack = 0)
+    D = 1.442
+    E = 2.548e-16+1.461e-07i
+D warm-start:
+    1.4423
+
+E warm-start:
+   2.5481e-16 + 1.4606e-07i
+
+  [expand] eta = 0.6452 -> true (slack = 0)
+    D = 1.552
+    E = -2.466e-16+0.0001111i
+D warm-start:
+    1.5519
+
+E warm-start:
+  -2.4655e-16 + 1.1114e-04i
+
+  [expand] eta = 1.29 -> false (slack = 0)
+D warm-start:
+    1.5519
+
+E warm-start:
+  -2.4655e-16 + 1.1114e-04i
+
+  [bisect  1] eta = 0.967803 -> false (slack = 0)
+D warm-start:
+    1.5519
+
+E warm-start:
+  -2.4655e-16 + 1.1114e-04i
+
+  [bisect  2] eta = 0.806503 -> false (slack = 0)
+D warm-start:
+    1.5519
+
+E warm-start:
+  -2.4655e-16 + 1.1114e-04i
+
+  [bisect  3] eta = 0.725853 -> false (slack = 0)
+D warm-start:
+    1.5519
+
+E warm-start:
+  -2.4655e-16 + 1.1114e-04i
+
+  [bisect  4] eta = 0.685527 -> false (slack = 0)
+D warm-start:
+    1.5519
+
+E warm-start:
+  -2.4655e-16 + 1.1114e-04i
+
+  [bisect  5] eta = 0.665365 -> false (slack = 0)
+D warm-start:
+    1.5519
+
+E warm-start:
+  -2.4655e-16 + 1.1114e-04i
+
+  [bisect  6] eta = 0.655284 -> true (slack = 0)
+    D = 2.167
+    E = 1.875e-15+0.000125i
+D warm-start:
+    2.1670
+
+E warm-start:
+   1.8747e-15 + 1.2503e-04i
+
+  [bisect  7] eta = 0.660324 -> true (slack = 0)
+    D = 4.495
+    E = 6.629e-15+7.886e-05i
+IQC_reduced_combinedPI_eta_bisection: converged, eta = 0.660324
+Pi scaler: 1.960e+00 used
+range of Pi plus
+min:     0
+
+max:    1.0000
+
+range of Pi minus
+min:   -2.5485
+
+max:     0
+
+  obj = 13.648350 | time = 39.50 s
+
+Controller is OL stable
+Iter  21 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 0.01 -> true (slack = 0)
+    D = 1.438
+    E = 3.228e-16+1.337e-07i
+D warm-start:
+    1.4380
+
+E warm-start:
+   3.2284e-16 + 1.3369e-07i
+
+  [expand] eta = 0.6603 -> true (slack = 0)
+    D = 1.464
+    E = -5.838e-15+9.034e-05i
+D warm-start:
+    1.4643
+
+E warm-start:
+  -5.8383e-15 + 9.0336e-05i
+
+  [expand] eta = 1.321 -> false (slack = 0)
+D warm-start:
+    1.4643
+
+E warm-start:
+  -5.8383e-15 + 9.0336e-05i
+
+  [bisect  1] eta = 0.990486 -> false (slack = 0)
+D warm-start:
+    1.4643
+
+E warm-start:
+  -5.8383e-15 + 9.0336e-05i
+
+  [bisect  2] eta = 0.825405 -> false (slack = 0)
+D warm-start:
+    1.4643
+
+E warm-start:
+  -5.8383e-15 + 9.0336e-05i
+
+  [bisect  3] eta = 0.742865 -> false (slack = 0)
+D warm-start:
+    1.4643
+
+E warm-start:
+  -5.8383e-15 + 9.0336e-05i
+
+  [bisect  4] eta = 0.701594 -> false (slack = 0)
+D warm-start:
+    1.4643
+
+E warm-start:
+  -5.8383e-15 + 9.0336e-05i
+
+  [bisect  5] eta = 0.680959 -> false (slack = 0)
+D warm-start:
+    1.4643
+
+E warm-start:
+  -5.8383e-15 + 9.0336e-05i
+
+  [bisect  6] eta = 0.670642 -> true (slack = 0)
+    D = 1.584
+    E = -1.411e-16+0.0001157i
+D warm-start:
+    1.5840
+
+E warm-start:
+  -1.4115e-16 + 1.1573e-04i
+
+  [bisect  7] eta = 0.675801 -> true (slack = 0)
+    D = 1.743
+    E = 1.236e-15+7.388e-05i
+IQC_reduced_combinedPI_eta_bisection: converged, eta = 0.675801
+Pi scaler: 1.614e+00 used
+range of Pi plus
+min:     0
+
+max:    1.0000
+
+range of Pi minus
+min:   -2.4995
+
+max:     0
+
+  obj = 26.196910 | time = 40.00 s
+
+Controller is OL stable
+Iter  22 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 0.01 -> true (slack = 0)
+    D = 1.425
+    E = -6.309e-17+1.355e-07i
+D warm-start:
+    1.4252
+
+E warm-start:
+  -6.3085e-17 + 1.3555e-07i
+
+  [expand] eta = 0.6758 -> false (slack = 0)
+D warm-start:
+    1.4252
+
+E warm-start:
+  -6.3085e-17 + 1.3555e-07i
+
+  [bisect  1] eta = 0.3429 -> true (slack = 0)
+    D = 1.694
+    E = -2.731e-15+0.0001128i
+D warm-start:
+    1.6942
+
+E warm-start:
+  -2.7311e-15 + 1.1277e-04i
+
+  [bisect  2] eta = 0.50935 -> true (slack = 0)
+    D = 1.915
+    E = 3.092e-16+0.0001539i
+D warm-start:
+    1.9148
+
+E warm-start:
+   3.0923e-16 + 1.5385e-04i
+
+  [bisect  3] eta = 0.592575 -> true (slack = 0)
+    D = 2.049
+    E = 2.198e-14+8.932e-05i
+D warm-start:
+    2.0485
+
+E warm-start:
+   2.1983e-14 + 8.9315e-05i
+
+  [bisect  4] eta = 0.634188 -> true (slack = 0)
+    D = 4.252
+    E = -1.261e-15+6.358e-05i
+D warm-start:
+    4.2518
+
+E warm-start:
+  -1.2612e-15 + 6.3580e-05i
+
+  [bisect  5] eta = 0.654994 -> true (slack = 0)
+    D = 6.141
+    E = 2.126e-16-0.0004153i
+D warm-start:
+    6.1413
+
+E warm-start:
+   2.1260e-16 - 4.1529e-04i
+
+  [bisect  6] eta = 0.665397 -> true (slack = 0)
+    D = 7.802
+    E = -2.029e-16-0.0007475i
+D warm-start:
+    7.8021
+
+E warm-start:
+  -2.0288e-16 - 7.4746e-04i
+
+  [bisect  7] eta = 0.670599 -> true (slack = 0)
+    D = 3.015
+    E = -1.699e-16+0.01275i
+IQC_reduced_combinedPI_eta_bisection: converged, eta = 0.670599
+Pi scaler: 2.032e+00 used
+range of Pi plus
+min:     0
+
+max:    1.0000
+
+range of Pi minus
+min:   -2.4697
+
+max:     0
+
+  obj = 12.465164 | time = 39.00 s
+
+Controller is OL stable
+Iter  23 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 0.01 -> true (slack = 0)
+    D = 1.983
+    E = 3.024e-16+2.216e-07i
+D warm-start:
+    1.9835
+
+E warm-start:
+   3.0239e-16 + 2.2164e-07i
+
+  [expand] eta = 0.6706 -> true (slack = 0)
+    D = 1.909
+    E = 7.354e-15-8.64e-05i
+D warm-start:
+    1.9089
+
+E warm-start:
+   7.3536e-15 - 8.6403e-05i
+
+  [expand] eta = 1.341 -> false (slack = 0)
+D warm-start:
+    1.9089
+
+E warm-start:
+   7.3536e-15 - 8.6403e-05i
+
+  [bisect  1] eta = 1.0059 -> false (slack = 0)
+D warm-start:
+    1.9089
+
+E warm-start:
+   7.3536e-15 - 8.6403e-05i
+
+  [bisect  2] eta = 0.838249 -> false (slack = 0)
+D warm-start:
+    1.9089
+
+E warm-start:
+   7.3536e-15 - 8.6403e-05i
+
+  [bisect  3] eta = 0.754424 -> false (slack = 0)
+D warm-start:
+    1.9089
+
+E warm-start:
+   7.3536e-15 - 8.6403e-05i
+
+  [bisect  4] eta = 0.712511 -> true (slack = 0)
+    D = 2.783
+    E = -4.553e-15-0.0001508i
+D warm-start:
+    2.7826
+
+E warm-start:
+  -4.5528e-15 - 1.5077e-04i
+
+  [bisect  5] eta = 0.733468 -> false (slack = 0)
+D warm-start:
+    2.7826
+
+E warm-start:
+  -4.5528e-15 - 1.5077e-04i
+
+  [bisect  6] eta = 0.722989 -> false (slack = 0)
+D warm-start:
+    2.7826
+
+E warm-start:
+  -4.5528e-15 - 1.5077e-04i
+
+  [bisect  7] eta = 0.71775 -> true (slack = 0)
+    D = 2.324
+    E = 2.575e-15-0.0005308i
+IQC_reduced_combinedPI_eta_bisection: converged, eta = 0.71775
+Pi scaler: 2.488e+00 used
+range of Pi plus
+min:     0
+
+max:    0.9999
+
+range of Pi minus
+min:   -2.1420
+
+max:     0
+
+  obj = 11.474469 | time = 43.43 s
+
+Controller is OL stable
+Iter  24 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 0.01 -> true (slack = 0)
+    D = 1.376
+    E = 2.278e-16+1.507e-07i
+D warm-start:
+    1.3758
+
+E warm-start:
+   2.2778e-16 + 1.5070e-07i
+
+  [expand] eta = 0.7178 -> true (slack = 0)
+    D = 1.347
+    E = -3.142e-15+7.195e-05i
+D warm-start:
+    1.3474
+
+E warm-start:
+  -3.1416e-15 + 7.1953e-05i
+
+  [expand] eta = 1.436 -> false (slack = 0)
+D warm-start:
+    1.3474
+
+E warm-start:
+  -3.1416e-15 + 7.1953e-05i
+
+  [bisect  1] eta = 1.07663 -> false (slack = 0)
+D warm-start:
+    1.3474
+
+E warm-start:
+  -3.1416e-15 + 7.1953e-05i
+
+  [bisect  2] eta = 0.897188 -> false (slack = 0)
+D warm-start:
+    1.3474
+
+E warm-start:
+  -3.1416e-15 + 7.1953e-05i
+
+  [bisect  3] eta = 0.807469 -> false (slack = 0)
+D warm-start:
+    1.3474
+
+E warm-start:
+  -3.1416e-15 + 7.1953e-05i
+
+  [bisect  4] eta = 0.76261 -> false (slack = 0)
+D warm-start:
+    1.3474
+
+E warm-start:
+  -3.1416e-15 + 7.1953e-05i
+
+  [bisect  5] eta = 0.74018 -> false (slack = 0)
+D warm-start:
+    1.3474
+
+E warm-start:
+  -3.1416e-15 + 7.1953e-05i
+
+  [bisect  6] eta = 0.728965 -> true (slack = 0)
+    D = 1.506
+    E = -4.695e-16+0.0001167i
+D warm-start:
+    1.5057
+
+E warm-start:
+  -4.6948e-16 + 1.1674e-04i
+
+  [bisect  7] eta = 0.734573 -> false (slack = 0)
+IQC_reduced_combinedPI_eta_bisection: converged, eta = 0.728965
+Pi scaler: 2.531e+00 used
+range of Pi plus
+min:     0
+
+max:    0.9992
+
+range of Pi minus
+min:   -2.0779
+
+max:     0
+
+  obj = 11.163991 | time = 43.86 s
+
+Controller is OL stable
+Iter  25 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 0.01 -> true (slack = 0)
+    D = 1.555
+    E = 2.899e-17+1.447e-07i
+D warm-start:
+    1.5553
+
+E warm-start:
+   2.8992e-17 + 1.4475e-07i
+
+  [expand] eta = 0.729 -> true (slack = 0)
+    D = 2.049
+    E = -2.081e-15-1.295e-05i
+D warm-start:
+    2.0491
+
+E warm-start:
+  -2.0812e-15 - 1.2948e-05i
+
+  [expand] eta = 1.458 -> false (slack = 0)
+D warm-start:
+    2.0491
+
+E warm-start:
+  -2.0812e-15 - 1.2948e-05i
+
+  [bisect  1] eta = 1.09345 -> false (slack = 0)
+D warm-start:
+    2.0491
+
+E warm-start:
+  -2.0812e-15 - 1.2948e-05i
+
+  [bisect  2] eta = 0.911207 -> false (slack = 0)
+D warm-start:
+    2.0491
+
+E warm-start:
+  -2.0812e-15 - 1.2948e-05i
+
+  [bisect  3] eta = 0.820086 -> false (slack = 0)
+D warm-start:
+    2.0491
+
+E warm-start:
+  -2.0812e-15 - 1.2948e-05i
+
+  [bisect  4] eta = 0.774526 -> false (slack = 0)
+D warm-start:
+    2.0491
+
+E warm-start:
+  -2.0812e-15 - 1.2948e-05i
+
+  [bisect  5] eta = 0.751745 -> true (slack = 0)
+    D = 2.362
+    E = 3.593e-15-0.0002408i
+D warm-start:
+    2.3618
+
+E warm-start:
+   3.5932e-15 - 2.4077e-04i
+
+  [bisect  6] eta = 0.763136 -> false (slack = 0)
+D warm-start:
+    2.3618
+
+E warm-start:
+   3.5932e-15 - 2.4077e-04i
+
+  [bisect  7] eta = 0.75744 -> true (slack = 0)
+    D = 2.173
+    E = -1.76e-14-0.0005011i
+IQC_reduced_combinedPI_eta_bisection: converged, eta = 0.75744
+Pi scaler: 2.697e+00 used
+range of Pi plus
+min:     0
+
+max:    0.9999
+
+range of Pi minus
+min:   -1.9282
+
+max:     0
+
+  obj = 10.764927 | time = 43.61 s
+
+Controller is OL stable
+Iter  26 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 0.01 -> true (slack = 0)
+    D = 1.526
+    E = 2.15e-16+1.556e-07i
+D warm-start:
+    1.5259
+
+E warm-start:
+   2.1495e-16 + 1.5557e-07i
+
+  [expand] eta = 0.7574 -> true (slack = 0)
+    D = 1.579
+    E = -5.702e-15-4.152e-05i
+D warm-start:
+    1.5786
+
+E warm-start:
+  -5.7017e-15 - 4.1523e-05i
+
+  [expand] eta = 1.515 -> false (slack = 0)
+D warm-start:
+    1.5786
+
+E warm-start:
+  -5.7017e-15 - 4.1523e-05i
+
+  [bisect  1] eta = 1.13616 -> false (slack = 0)
+D warm-start:
+    1.5786
+
+E warm-start:
+  -5.7017e-15 - 4.1523e-05i
+
+  [bisect  2] eta = 0.946801 -> false (slack = 0)
+D warm-start:
+    1.5786
+
+E warm-start:
+  -5.7017e-15 - 4.1523e-05i
+
+  [bisect  3] eta = 0.852121 -> false (slack = 0)
+D warm-start:
+    1.5786
+
+E warm-start:
+  -5.7017e-15 - 4.1523e-05i
+
+  [bisect  4] eta = 0.804781 -> false (slack = 0)
+D warm-start:
+    1.5786
+
+E warm-start:
+  -5.7017e-15 - 4.1523e-05i
+
+  [bisect  5] eta = 0.781111 -> false (slack = 0)
+D warm-start:
+    1.5786
+
+E warm-start:
+  -5.7017e-15 - 4.1523e-05i
+
+  [bisect  6] eta = 0.769275 -> false (slack = 0)
+D warm-start:
+    1.5786
+
+E warm-start:
+  -5.7017e-15 - 4.1523e-05i
+
+  [bisect  7] eta = 0.763358 -> false (slack = 0)
+IQC_reduced_combinedPI_eta_bisection: converged, eta = 0.75744
+Pi scaler: 2.400e+00 used
+range of Pi plus
+min:     0
+
+max:    1.0000
+
+range of Pi minus
+min:   -1.9513
+
+max:     0
+
+  obj = 10.812431 | time = 52.16 s
+
+Controller is OL stable
+Iter  27 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 0.01 -> true (slack = 0)
+    D = 1.499
+    E = 2.872e-16+1.418e-07i
+D warm-start:
+    1.4995
+
+E warm-start:
+   2.8720e-16 + 1.4177e-07i
+
+  [expand] eta = 0.7574 -> false (slack = 0)
+D warm-start:
+    1.4995
+
+E warm-start:
+   2.8720e-16 + 1.4177e-07i
+
+  [bisect  1] eta = 0.38372 -> true (slack = 0)
+    D = 1.62
+    E = -1.682e-15+0.0001205i
+D warm-start:
+    1.6195
+
+E warm-start:
+  -1.6816e-15 + 1.2048e-04i
+
+  [bisect  2] eta = 0.57058 -> true (slack = 0)
+    D = 1.817
+    E = 6.186e-15+0.0001631i
+D warm-start:
+    1.8166
+
+E warm-start:
+   6.1856e-15 + 1.6314e-04i
+
+  [bisect  3] eta = 0.66401 -> true (slack = 0)
+    D = 2.005
+    E = -1.264e-15+4.314e-05i
+D warm-start:
+    2.0049
+
+E warm-start:
+  -1.2639e-15 + 4.3141e-05i
+
+  [bisect  4] eta = 0.710725 -> true (slack = 0)
+    D = 5.807
+    E = 1.313e-17-4.765e-05i
+D warm-start:
+    5.8070
+
+E warm-start:
+   1.3127e-17 - 4.7646e-05i
+
+  [bisect  5] eta = 0.734083 -> false (slack = 0)
+D warm-start:
+    5.8070
+
+E warm-start:
+   1.3127e-17 - 4.7646e-05i
+
+  [bisect  6] eta = 0.722404 -> true (slack = 0)
+    D = 4.048
+    E = 9.65e-16-0.001005i
+D warm-start:
+    4.0482
+
+E warm-start:
+   0.0000 - 0.0010i
+
+  [bisect  7] eta = 0.728244 -> true (slack = 0)
+    D = 5.662
+    E = -5.971e-15-0.0009123i
+IQC_reduced_combinedPI_eta_bisection: converged, eta = 0.728244
+Pi scaler: 3.015e+00 used
+range of Pi plus
+min:     0
+
+max:    1.0000
+
+range of Pi minus
+min:   -2.0514
+
+max:     0
+
+  obj = 9.715263 | time = 54.05 s
+
+Controller is OL stable
+Iter  28 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 0.01 -> true (slack = 0)
+    D = 1.529
+    E = 1.797e-16+1.407e-07i
+D warm-start:
+    1.5292
+
+E warm-start:
+   1.7970e-16 + 1.4070e-07i
+
+  [expand] eta = 0.7282 -> true (slack = 0)
+    D = 2.447
+    E = -9.988e-16+3.323e-05i
+D warm-start:
+    2.4473
+
+E warm-start:
+  -9.9884e-16 + 3.3233e-05i
+
+  [expand] eta = 1.456 -> false (slack = 0)
+D warm-start:
+    2.4473
+
+E warm-start:
+  -9.9884e-16 + 3.3233e-05i
+
+  [bisect  1] eta = 1.09237 -> false (slack = 0)
+D warm-start:
+    2.4473
+
+E warm-start:
+  -9.9884e-16 + 3.3233e-05i
+
+  [bisect  2] eta = 0.910304 -> false (slack = 0)
+D warm-start:
+    2.4473
+
+E warm-start:
+  -9.9884e-16 + 3.3233e-05i
+
+  [bisect  3] eta = 0.819274 -> false (slack = 0)
+D warm-start:
+    2.4473
+
+E warm-start:
+  -9.9884e-16 + 3.3233e-05i
+
+  [bisect  4] eta = 0.773759 -> false (slack = 0)
+D warm-start:
+    2.4473
+
+E warm-start:
+  -9.9884e-16 + 3.3233e-05i
+
+  [bisect  5] eta = 0.751001 -> false (slack = 0)
+D warm-start:
+    2.4473
+
+E warm-start:
+  -9.9884e-16 + 3.3233e-05i
+
+  [bisect  6] eta = 0.739622 -> false (slack = 0)
+D warm-start:
+    2.4473
+
+E warm-start:
+  -9.9884e-16 + 3.3233e-05i
+
+  [bisect  7] eta = 0.733933 -> true (slack = 0)
+    D = 2.301
+    E = 5.266e-16-0.0003012i
+IQC_reduced_combinedPI_eta_bisection: converged, eta = 0.733933
+Pi scaler: 2.173e+00 used
+range of Pi plus
+min:     0
+
+max:    1.0000
+
+range of Pi minus
+min:   -2.0865
+
+max:     0
+
+  obj = 10.098177 | time = 60.18 s
+
+Controller is OL stable
+Iter  29 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 0.01 -> true (slack = 0)
+    D = 1.48
+    E = 2.82e-16+1.434e-07i
+D warm-start:
+    1.4805
+
+E warm-start:
+   2.8200e-16 + 1.4343e-07i
+
+  [expand] eta = 0.7339 -> true (slack = 0)
+    D = 2.007
+    E = 9.848e-18+1.985e-05i
+D warm-start:
+    2.0071
+
+E warm-start:
+   9.8478e-18 + 1.9855e-05i
+
+  [expand] eta = 1.468 -> false (slack = 0)
+D warm-start:
+    2.0071
+
+E warm-start:
+   9.8478e-18 + 1.9855e-05i
+
+  [bisect  1] eta = 1.1009 -> false (slack = 0)
+D warm-start:
+    2.0071
+
+E warm-start:
+   9.8478e-18 + 1.9855e-05i
+
+  [bisect  2] eta = 0.917416 -> false (slack = 0)
+D warm-start:
+    2.0071
+
+E warm-start:
+   9.8478e-18 + 1.9855e-05i
+
+  [bisect  3] eta = 0.825675 -> false (slack = 0)
+D warm-start:
+    2.0071
+
+E warm-start:
+   9.8478e-18 + 1.9855e-05i
+
+  [bisect  4] eta = 0.779804 -> false (slack = 0)
+D warm-start:
+    2.0071
+
+E warm-start:
+   9.8478e-18 + 1.9855e-05i
+
+  [bisect  5] eta = 0.756868 -> false (slack = 0)
+D warm-start:
+    2.0071
+
+E warm-start:
+   9.8478e-18 + 1.9855e-05i
+
+  [bisect  6] eta = 0.745401 -> false (slack = 0)
+D warm-start:
+    2.0071
+
+E warm-start:
+   9.8478e-18 + 1.9855e-05i
+
+  [bisect  7] eta = 0.739667 -> true (slack = 0)
+    D = 2.08
+    E = 2.422e-15-0.000183i
+IQC_reduced_combinedPI_eta_bisection: converged, eta = 0.739667
+Pi scaler: 2.274e+00 used
+range of Pi plus
+min:     0
+
+max:    1.0000
+
+range of Pi minus
+min:   -2.0477
+
+max:     0
+
+  obj = 10.006447 | time = 62.63 s
+
+Controller is OL stable
+Iter  30 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 0.01 -> true (slack = 0)
+    D = 1.363
+    E = -6.748e-16+1.245e-07i
+D warm-start:
+    1.3626
+
+E warm-start:
+  -6.7476e-16 + 1.2453e-07i
+
+  [expand] eta = 0.7397 -> true (slack = 0)
+    D = 1.486
+    E = 4.072e-17+5.053e-05i
+D warm-start:
+    1.4857
+
+E warm-start:
+   4.0721e-17 + 5.0531e-05i
+
+  [expand] eta = 1.479 -> false (slack = 0)
+D warm-start:
+    1.4857
+
+E warm-start:
+   4.0721e-17 + 5.0531e-05i
+
+  [bisect  1] eta = 1.1095 -> false (slack = 0)
+D warm-start:
+    1.4857
+
+E warm-start:
+   4.0721e-17 + 5.0531e-05i
+
+  [bisect  2] eta = 0.924584 -> false (slack = 0)
+D warm-start:
+    1.4857
+
+E warm-start:
+   4.0721e-17 + 5.0531e-05i
+
+  [bisect  3] eta = 0.832125 -> false (slack = 0)
+D warm-start:
+    1.4857
+
+E warm-start:
+   4.0721e-17 + 5.0531e-05i
+
+  [bisect  4] eta = 0.785896 -> false (slack = 0)
+D warm-start:
+    1.4857
+
+E warm-start:
+   4.0721e-17 + 5.0531e-05i
+
+  [bisect  5] eta = 0.762781 -> false (slack = 0)
+D warm-start:
+    1.4857
+
+E warm-start:
+   4.0721e-17 + 5.0531e-05i
+
+  [bisect  6] eta = 0.751224 -> false (slack = 0)
+D warm-start:
+    1.4857
+
+E warm-start:
+   4.0721e-17 + 5.0531e-05i
+
+  [bisect  7] eta = 0.745445 -> false (slack = 0)
+IQC_reduced_combinedPI_eta_bisection: converged, eta = 0.739667
+Pi scaler: 2.282e+00 used
+range of Pi plus
+min:     0
+
+max:    0.9999
+
+range of Pi minus
+min:   -2.0468
+
+max:     0
+
+  obj = 9.837028 | time = 64.00 s
+
+Controller is OL unstable
+Iter  31 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 0.01 -> true (slack = 0)
+    D = 1.545
+    E = 2.625e-16+1.449e-07i
+D warm-start:
+    1.5445
+
+E warm-start:
+   2.6254e-16 + 1.4489e-07i
+
+  [expand] eta = 0.7397 -> true (slack = 0)
+    D = 3.476
+    E = -3.09e-15+3.925e-05i
+D warm-start:
+    3.4756
+
+E warm-start:
+  -3.0895e-15 + 3.9255e-05i
+
+  [expand] eta = 1.479 -> false (slack = 0)
+D warm-start:
+    3.4756
+
+E warm-start:
+  -3.0895e-15 + 3.9255e-05i
+
+  [bisect  1] eta = 1.1095 -> false (slack = 0)
+D warm-start:
+    3.4756
+
+E warm-start:
+  -3.0895e-15 + 3.9255e-05i
+
+  [bisect  2] eta = 0.924584 -> false (slack = 0)
+D warm-start:
+    3.4756
+
+E warm-start:
+  -3.0895e-15 + 3.9255e-05i
+
+  [bisect  3] eta = 0.832125 -> false (slack = 0)
+D warm-start:
+    3.4756
+
+E warm-start:
+  -3.0895e-15 + 3.9255e-05i
+
+  [bisect  4] eta = 0.785896 -> false (slack = 0)
+D warm-start:
+    3.4756
+
+E warm-start:
+  -3.0895e-15 + 3.9255e-05i
+
+  [bisect  5] eta = 0.762781 -> false (slack = 0)
+D warm-start:
+    3.4756
+
+E warm-start:
+  -3.0895e-15 + 3.9255e-05i
+
+  [bisect  6] eta = 0.751224 -> false (slack = 0)
+D warm-start:
+    3.4756
+
+E warm-start:
+  -3.0895e-15 + 3.9255e-05i
+
+  [bisect  7] eta = 0.745445 -> true (slack = 0)
+    D = 2.328
+    E = -4.264e-18-0.0006524i
+IQC_reduced_combinedPI_eta_bisection: converged, eta = 0.745445
+Pi scaler: 2.699e+00 used
+range of Pi plus
+min:     0
+
+max:    1.0000
+
+range of Pi minus
+min:   -1.9848
+
+max:     0
+
+  obj = 10.059631 | time = 66.09 s
+
+Controller is OL unstable
+Iter  32 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 0.01 -> true (slack = 0)
+    D = 1.606
+    E = 4.533e-17+1.566e-07i
+D warm-start:
+    1.6063
+
+E warm-start:
+   4.5332e-17 + 1.5656e-07i
+
+  [expand] eta = 0.7454 -> true (slack = 0)
+    D = 1.53
+    E = -1.046e-14-7.888e-05i
+D warm-start:
+    1.5298
+
+E warm-start:
+  -1.0459e-14 - 7.8881e-05i
+
+  [expand] eta = 1.491 -> false (slack = 0)
+D warm-start:
+    1.5298
+
+E warm-start:
+  -1.0459e-14 - 7.8881e-05i
+
+  [bisect  1] eta = 1.11817 -> false (slack = 0)
+D warm-start:
+    1.5298
+
+E warm-start:
+  -1.0459e-14 - 7.8881e-05i
+
+  [bisect  2] eta = 0.931807 -> false (slack = 0)
+D warm-start:
+    1.5298
+
+E warm-start:
+  -1.0459e-14 - 7.8881e-05i
+
+  [bisect  3] eta = 0.838626 -> false (slack = 0)
+D warm-start:
+    1.5298
+
+E warm-start:
+  -1.0459e-14 - 7.8881e-05i
+
+  [bisect  4] eta = 0.792036 -> false (slack = 0)
+D warm-start:
+    1.5298
+
+E warm-start:
+  -1.0459e-14 - 7.8881e-05i
+
+  [bisect  5] eta = 0.768741 -> false (slack = 0)
+D warm-start:
+    1.5298
+
+E warm-start:
+  -1.0459e-14 - 7.8881e-05i
+
+  [bisect  6] eta = 0.757093 -> false (slack = 0)
+D warm-start:
+    1.5298
+
+E warm-start:
+  -1.0459e-14 - 7.8881e-05i
+
+  [bisect  7] eta = 0.751269 -> true (slack = 0)
+    D = 1.548
+    E = -7.904e-16-9.544e-05i
+IQC_reduced_combinedPI_eta_bisection: converged, eta = 0.751269
+Pi scaler: 2.263e+00 used
+range of Pi plus
+min:     0
+
+max:    1.0000
+
+range of Pi minus
+min:   -1.9927
+
+max:     0
+
+  obj = 9.727013 | time = 68.79 s
+
+Controller is OL unstable
+Iter  33 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 0.01 -> true (slack = 0)
+    D = 1.37
+    E = 1.557e-16+1.698e-07i
+D warm-start:
+    1.3699
+
+E warm-start:
+   1.5567e-16 + 1.6984e-07i
+
+  [expand] eta = 0.7513 -> true (slack = 0)
+    D = 1.625
+    E = 1.49e-16+4.794e-05i
+D warm-start:
+    1.6255
+
+E warm-start:
+   1.4901e-16 + 4.7942e-05i
+
+  [expand] eta = 1.503 -> false (slack = 0)
+D warm-start:
+    1.6255
+
+E warm-start:
+   1.4901e-16 + 4.7942e-05i
+
+  [bisect  1] eta = 1.1269 -> false (slack = 0)
+D warm-start:
+    1.6255
+
+E warm-start:
+   1.4901e-16 + 4.7942e-05i
+
+  [bisect  2] eta = 0.939087 -> false (slack = 0)
+D warm-start:
+    1.6255
+
+E warm-start:
+   1.4901e-16 + 4.7942e-05i
+
+  [bisect  3] eta = 0.845178 -> false (slack = 0)
+D warm-start:
+    1.6255
+
+E warm-start:
+   1.4901e-16 + 4.7942e-05i
+
+  [bisect  4] eta = 0.798224 -> false (slack = 0)
+D warm-start:
+    1.6255
+
+E warm-start:
+   1.4901e-16 + 4.7942e-05i
+
+  [bisect  5] eta = 0.774746 -> false (slack = 0)
+D warm-start:
+    1.6255
+
+E warm-start:
+   1.4901e-16 + 4.7942e-05i
+
+  [bisect  6] eta = 0.763008 -> false (slack = 0)
+D warm-start:
+    1.6255
+
+E warm-start:
+   1.4901e-16 + 4.7942e-05i
+
+  [bisect  7] eta = 0.757139 -> true (slack = 0)
+    D = 1.73
+    E = 5.892e-15-9.594e-05i
+IQC_reduced_combinedPI_eta_bisection: converged, eta = 0.757139
+Pi scaler: 2.112e+00 used
+range of Pi plus
+min:     0
+
+max:    1.0000
+
+range of Pi minus
+min:   -1.9811
+
+max:     0
+
+  obj = 9.165524 | time = 69.90 s
+
+Controller is OL unstable
+Iter  34 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 0.01 -> true (slack = 0)
+    D = 1.365
+    E = 1.515e-16+1.761e-07i
+D warm-start:
+    1.3652
+
+E warm-start:
+   1.5150e-16 + 1.7610e-07i
+
+  [expand] eta = 0.7571 -> true (slack = 0)
+    D = 4.731
+    E = -7.648e-17+6.191e-05i
+D warm-start:
+    4.7311
+
+E warm-start:
+  -7.6475e-17 + 6.1907e-05i
+
+  [expand] eta = 1.514 -> false (slack = 0)
+D warm-start:
+    4.7311
+
+E warm-start:
+  -7.6475e-17 + 6.1907e-05i
+
+  [bisect  1] eta = 1.13571 -> false (slack = 0)
+D warm-start:
+    4.7311
+
+E warm-start:
+  -7.6475e-17 + 6.1907e-05i
+
+  [bisect  2] eta = 0.946423 -> false (slack = 0)
+D warm-start:
+    4.7311
+
+E warm-start:
+  -7.6475e-17 + 6.1907e-05i
+
+  [bisect  3] eta = 0.851781 -> false (slack = 0)
+D warm-start:
+    4.7311
+
+E warm-start:
+  -7.6475e-17 + 6.1907e-05i
+
+  [bisect  4] eta = 0.80446 -> false (slack = 0)
+D warm-start:
+    4.7311
+
+E warm-start:
+  -7.6475e-17 + 6.1907e-05i
+
+  [bisect  5] eta = 0.780799 -> false (slack = 0)
+D warm-start:
+    4.7311
+
+E warm-start:
+  -7.6475e-17 + 6.1907e-05i
+
+  [bisect  6] eta = 0.768969 -> false (slack = 0)
+D warm-start:
+    4.7311
+
+E warm-start:
+  -7.6475e-17 + 6.1907e-05i
+
+  [bisect  7] eta = 0.763054 -> false (slack = 0)
+IQC_reduced_combinedPI_eta_bisection: converged, eta = 0.757139
+Pi scaler: 2.712e+00 used
+range of Pi plus
+min:     0
+
+max:    1.0000
+
+range of Pi minus
+min:   -1.9288
+
+max:     0
+
+  obj = 12.555690 | time = 68.33 s
+
+Controller is OL unstable
+Iter  35 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 0.01 -> true (slack = 0)
+    D = 1.414
+    E = -9.327e-18+1.507e-07i
+D warm-start:
+    1.4142
+
+E warm-start:
+  -9.3274e-18 + 1.5074e-07i
+
+  [expand] eta = 0.7571 -> true (slack = 0)
+    D = 1.846
+    E = -5.257e-16+3.522e-05i
+D warm-start:
+    1.8459
+
+E warm-start:
+  -5.2573e-16 + 3.5215e-05i
+
+  [expand] eta = 1.514 -> false (slack = 0)
+D warm-start:
+    1.8459
+
+E warm-start:
+  -5.2573e-16 + 3.5215e-05i
+
+  [bisect  1] eta = 1.13571 -> false (slack = 0)
+D warm-start:
+    1.8459
+
+E warm-start:
+  -5.2573e-16 + 3.5215e-05i
+
+  [bisect  2] eta = 0.946423 -> false (slack = 0)
+D warm-start:
+    1.8459
+
+E warm-start:
+  -5.2573e-16 + 3.5215e-05i
+
+  [bisect  3] eta = 0.851781 -> false (slack = 0)
+D warm-start:
+    1.8459
+
+E warm-start:
+  -5.2573e-16 + 3.5215e-05i
+
+  [bisect  4] eta = 0.80446 -> false (slack = 0)
+D warm-start:
+    1.8459
+
+E warm-start:
+  -5.2573e-16 + 3.5215e-05i
+
+  [bisect  5] eta = 0.780799 -> true (slack = 0)
+    D = 4.591
+    E = -5.032e-15-0.0001336i
+D warm-start:
+    4.5911
+
+E warm-start:
+  -5.0319e-15 - 1.3357e-04i
+
+  [bisect  6] eta = 0.792629 -> true (slack = 0)
+    D = 2.927
+    E = 9.348e-16-0.0012i
+D warm-start:
+    2.9268
+
+E warm-start:
+   0.0000 - 0.0012i
+
+  [bisect  7] eta = 0.798545 -> true (slack = 0)
+    D = 2.077
+    E = 2.401e-15-0.001197i
+IQC_reduced_combinedPI_eta_bisection: converged, eta = 0.798545
+Pi scaler: 2.325e+00 used
+range of Pi plus
+min:     0
+
+max:    1.0000
+
+range of Pi minus
+min:   -1.7832
+
+max:     0
+
+  obj = 9.689163 | time = 70.07 s
+
+Controller is OL unstable
+Iter  36 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 0.01 -> true (slack = 0)
+    D = 1.514
+    E = -1.981e-18+1.797e-07i
+D warm-start:
+    1.5144
+
+E warm-start:
+  -1.9810e-18 + 1.7971e-07i
+
+  [expand] eta = 0.7985 -> true (slack = 0)
+    D = 3.247
+    E = -5.36e-15-3.766e-05i
+D warm-start:
+    3.2465
+
+E warm-start:
+  -5.3599e-15 - 3.7656e-05i
+
+  [expand] eta = 1.597 -> false (slack = 0)
+D warm-start:
+    3.2465
+
+E warm-start:
+  -5.3599e-15 - 3.7656e-05i
+
+  [bisect  1] eta = 1.19782 -> false (slack = 0)
+D warm-start:
+    3.2465
+
+E warm-start:
+  -5.3599e-15 - 3.7656e-05i
+
+  [bisect  2] eta = 0.998181 -> false (slack = 0)
+D warm-start:
+    3.2465
+
+E warm-start:
+  -5.3599e-15 - 3.7656e-05i
+
+  [bisect  3] eta = 0.898363 -> false (slack = 0)
+D warm-start:
+    3.2465
+
+E warm-start:
+  -5.3599e-15 - 3.7656e-05i
+
+  [bisect  4] eta = 0.848454 -> false (slack = 0)
+D warm-start:
+    3.2465
+
+E warm-start:
+  -5.3599e-15 - 3.7656e-05i
+
+  [bisect  5] eta = 0.823499 -> false (slack = 0)
+D warm-start:
+    3.2465
+
+E warm-start:
+  -5.3599e-15 - 3.7656e-05i
+
+  [bisect  6] eta = 0.811022 -> false (slack = 0)
+D warm-start:
+    3.2465
+
+E warm-start:
+  -5.3599e-15 - 3.7656e-05i
+
+  [bisect  7] eta = 0.804783 -> true (slack = 0)
+    D = 2.106
+    E = -3.039e-15-0.0009454i
+IQC_reduced_combinedPI_eta_bisection: converged, eta = 0.804783
+Pi scaler: 2.626e+00 used
+range of Pi plus
+min:     0
+
+max:    1.0000
+
+range of Pi minus
+min:   -1.7343
+
+max:     0
+
+  obj = 9.451769 | time = 69.54 s
+
+Controller is OL unstable
+Iter  37 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 0.01 -> true (slack = 0)
+    D = 1.407
+    E = -3.516e-16+1.539e-07i
+D warm-start:
+    1.4068
+
+E warm-start:
+  -3.5155e-16 + 1.5386e-07i
+
+  [expand] eta = 0.8048 -> true (slack = 0)
+    D = 1.342
+    E = -4.902e-15-6.223e-05i
+D warm-start:
+    1.3422
+
+E warm-start:
+  -4.9023e-15 - 6.2228e-05i
+
+  [expand] eta = 1.61 -> false (slack = 0)
+D warm-start:
+    1.3422
+
+E warm-start:
+  -4.9023e-15 - 6.2228e-05i
+
+  [bisect  1] eta = 1.20717 -> false (slack = 0)
+D warm-start:
+    1.3422
+
+E warm-start:
+  -4.9023e-15 - 6.2228e-05i
+
+  [bisect  2] eta = 1.00598 -> false (slack = 0)
+D warm-start:
+    1.3422
+
+E warm-start:
+  -4.9023e-15 - 6.2228e-05i
+
+  [bisect  3] eta = 0.905381 -> false (slack = 0)
+D warm-start:
+    1.3422
+
+E warm-start:
+  -4.9023e-15 - 6.2228e-05i
+
+  [bisect  4] eta = 0.855082 -> false (slack = 0)
+D warm-start:
+    1.3422
+
+E warm-start:
+  -4.9023e-15 - 6.2228e-05i
+
+  [bisect  5] eta = 0.829933 -> false (slack = 0)
+D warm-start:
+    1.3422
+
+E warm-start:
+  -4.9023e-15 - 6.2228e-05i
+
+  [bisect  6] eta = 0.817358 -> false (slack = 0)
+D warm-start:
+    1.3422
+
+E warm-start:
+  -4.9023e-15 - 6.2228e-05i
+
+  [bisect  7] eta = 0.811071 -> false (slack = 0)
+IQC_reduced_combinedPI_eta_bisection: converged, eta = 0.804783
+Pi scaler: 2.165e+00 used
+range of Pi plus
+min:     0
+
+max:    1.0000
+
+range of Pi minus
+min:   -1.7749
+
+max:     0
+
+  obj = 9.062715 | time = 71.87 s
+
+Controller is OL unstable
+Iter  38 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 0.01 -> true (slack = 0)
+    D = 1.353
+    E = -1.227e-16+1.488e-07i
+D warm-start:
+    1.3529
+
+E warm-start:
+  -1.2266e-16 + 1.4879e-07i
+
+  [expand] eta = 0.8048 -> true (slack = 0)
+    D = 2.888
+    E = 3.77e-16-1.07e-05i
+D warm-start:
+    2.8882
+
+E warm-start:
+   3.7702e-16 - 1.0704e-05i
+
+  [expand] eta = 1.61 -> false (slack = 0)
+D warm-start:
+    2.8882
+
+E warm-start:
+   3.7702e-16 - 1.0704e-05i
+
+  [bisect  1] eta = 1.20717 -> false (slack = 0)
+D warm-start:
+    2.8882
+
+E warm-start:
+   3.7702e-16 - 1.0704e-05i
+
+  [bisect  2] eta = 1.00598 -> false (slack = 0)
+D warm-start:
+    2.8882
+
+E warm-start:
+   3.7702e-16 - 1.0704e-05i
+
+  [bisect  3] eta = 0.905381 -> false (slack = 0)
+D warm-start:
+    2.8882
+
+E warm-start:
+   3.7702e-16 - 1.0704e-05i
+
+  [bisect  4] eta = 0.855082 -> false (slack = 0)
+D warm-start:
+    2.8882
+
+E warm-start:
+   3.7702e-16 - 1.0704e-05i
+
+  [bisect  5] eta = 0.829933 -> false (slack = 0)
+D warm-start:
+    2.8882
+
+E warm-start:
+   3.7702e-16 - 1.0704e-05i
+
+  [bisect  6] eta = 0.817358 -> false (slack = 0)
+D warm-start:
+    2.8882
+
+E warm-start:
+   3.7702e-16 - 1.0704e-05i
+
+  [bisect  7] eta = 0.811071 -> true (slack = 0)
+    D = 2.048
+    E = 3.771e-16-0.0008367i
+IQC_reduced_combinedPI_eta_bisection: converged, eta = 0.811071
+Pi scaler: 2.428e+00 used
+range of Pi plus
+min:     0
+
+max:    1.0000
+
+range of Pi minus
+min:   -1.7261
+
+max:     0
+
+  obj = 8.344546 | time = 73.08 s
+
+Controller is OL unstable
+Iter  39 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 0.01 -> true (slack = 0)
+    D = 1.37
+    E = 2.63e-16+1.425e-07i
+D warm-start:
+    1.3695
+
+E warm-start:
+   2.6295e-16 + 1.4250e-07i
+
+  [expand] eta = 0.8111 -> true (slack = 0)
+    D = 1.632
+    E = 4.048e-16-2.345e-05i
+D warm-start:
+    1.6321
+
+E warm-start:
+   4.0484e-16 - 2.3445e-05i
+
+  [expand] eta = 1.622 -> false (slack = 0)
+D warm-start:
+    1.6321
+
+E warm-start:
+   4.0484e-16 - 2.3445e-05i
+
+  [bisect  1] eta = 1.21661 -> false (slack = 0)
+D warm-start:
+    1.6321
+
+E warm-start:
+   4.0484e-16 - 2.3445e-05i
+
+  [bisect  2] eta = 1.01384 -> false (slack = 0)
+D warm-start:
+    1.6321
+
+E warm-start:
+   4.0484e-16 - 2.3445e-05i
+
+  [bisect  3] eta = 0.912454 -> false (slack = 0)
+D warm-start:
+    1.6321
+
+E warm-start:
+   4.0484e-16 - 2.3445e-05i
+
+  [bisect  4] eta = 0.861763 -> false (slack = 0)
+D warm-start:
+    1.6321
+
+E warm-start:
+   4.0484e-16 - 2.3445e-05i
+
+  [bisect  5] eta = 0.836417 -> false (slack = 0)
+D warm-start:
+    1.6321
+
+E warm-start:
+   4.0484e-16 - 2.3445e-05i
+
+  [bisect  6] eta = 0.823744 -> false (slack = 0)
+D warm-start:
+    1.6321
+
+E warm-start:
+   4.0484e-16 - 2.3445e-05i
+
+  [bisect  7] eta = 0.817407 -> false (slack = 0)
+IQC_reduced_combinedPI_eta_bisection: converged, eta = 0.811071
+Pi scaler: 2.344e+00 used
+range of Pi plus
+min:     0
+
+max:    1.0000
+
+range of Pi minus
+min:   -1.7334
+
+max:     0
+
+  obj = 8.829759 | time = 75.85 s
+
+Controller is OL unstable
+Iter  40 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 0.01 -> true (slack = 0)
+    D = 1.414
+    E = 2.931e-16+1.494e-07i
+D warm-start:
+    1.4143
+
+E warm-start:
+   2.9305e-16 + 1.4943e-07i
+
+  [expand] eta = 0.8111 -> true (slack = 0)
+    D = 1.551
+    E = 8.114e-16-5.519e-05i
+D warm-start:
+    1.5510
+
+E warm-start:
+   8.1141e-16 - 5.5188e-05i
+
+  [expand] eta = 1.622 -> false (slack = 0)
+D warm-start:
+    1.5510
+
+E warm-start:
+   8.1141e-16 - 5.5188e-05i
+
+  [bisect  1] eta = 1.21661 -> false (slack = 0)
+D warm-start:
+    1.5510
+
+E warm-start:
+   8.1141e-16 - 5.5188e-05i
+
+  [bisect  2] eta = 1.01384 -> false (slack = 0)
+D warm-start:
+    1.5510
+
+E warm-start:
+   8.1141e-16 - 5.5188e-05i
+
+  [bisect  3] eta = 0.912454 -> false (slack = 0)
+D warm-start:
+    1.5510
+
+E warm-start:
+   8.1141e-16 - 5.5188e-05i
+
+  [bisect  4] eta = 0.861763 -> false (slack = 0)
+D warm-start:
+    1.5510
+
+E warm-start:
+   8.1141e-16 - 5.5188e-05i
+
+  [bisect  5] eta = 0.836417 -> false (slack = 0)
+D warm-start:
+    1.5510
+
+E warm-start:
+   8.1141e-16 - 5.5188e-05i
+
+  [bisect  6] eta = 0.823744 -> false (slack = 0)
+D warm-start:
+    1.5510
+
+E warm-start:
+   8.1141e-16 - 5.5188e-05i
+
+  [bisect  7] eta = 0.817407 -> false (slack = 0)
+IQC_reduced_combinedPI_eta_bisection: converged, eta = 0.811071
+Pi scaler: 1.939e+00 used
+range of Pi plus
+min:     0
+
+max:    1.0000
+
+range of Pi minus
+min:   -1.7780
+
+max:     0
+
+  obj = 9.432811 | time = 76.18 s
+
+Controller is OL unstable
+Iter  41 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 0.01 -> true (slack = 0)
+    D = 1.339
+    E = 4.094e-16+1.365e-07i
+D warm-start:
+    1.3388
+
+E warm-start:
+   4.0938e-16 + 1.3648e-07i
+
+  [expand] eta = 0.8111 -> true (slack = 0)
+    D = 1.367
+    E = 9.723e-16-2.054e-05i
+D warm-start:
+    1.3675
+
+E warm-start:
+   9.7230e-16 - 2.0545e-05i
+
+  [expand] eta = 1.622 -> false (slack = 0)
+D warm-start:
+    1.3675
+
+E warm-start:
+   9.7230e-16 - 2.0545e-05i
+
+  [bisect  1] eta = 1.21661 -> false (slack = 0)
+D warm-start:
+    1.3675
+
+E warm-start:
+   9.7230e-16 - 2.0545e-05i
+
+  [bisect  2] eta = 1.01384 -> false (slack = 0)
+D warm-start:
+    1.3675
+
+E warm-start:
+   9.7230e-16 - 2.0545e-05i
+
+  [bisect  3] eta = 0.912454 -> false (slack = 0)
+D warm-start:
+    1.3675
+
+E warm-start:
+   9.7230e-16 - 2.0545e-05i
+
+  [bisect  4] eta = 0.861763 -> false (slack = 0)
+D warm-start:
+    1.3675
+
+E warm-start:
+   9.7230e-16 - 2.0545e-05i
+
+  [bisect  5] eta = 0.836417 -> false (slack = 0)
+D warm-start:
+    1.3675
+
+E warm-start:
+   9.7230e-16 - 2.0545e-05i
+
+  [bisect  6] eta = 0.823744 -> false (slack = 0)
+D warm-start:
+    1.3675
+
+E warm-start:
+   9.7230e-16 - 2.0545e-05i
+
+  [bisect  7] eta = 0.817407 -> true (slack = 0)
+    D = 4.713
+    E = 7.421e-16-3.914e-05i
+IQC_reduced_combinedPI_eta_bisection: converged, eta = 0.817407
+Pi scaler: 3.166e+00 used
+range of Pi plus
+min:     0
+
+max:    1.0000
+
+range of Pi minus
+min:   -1.6546
+
+max:     0
+
+  obj = 9.216508 | time = 78.36 s
+
+Controller is OL unstable
+Iter  42 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 0.01 -> true (slack = 0)
+    D = 1.562
+    E = -1.636e-16+1.765e-07i
+D warm-start:
+    1.5623
+
+E warm-start:
+  -1.6360e-16 + 1.7649e-07i
+
+  [expand] eta = 0.8174 -> true (slack = 0)
+    D = 1.343
+    E = -1.141e-14-0.0001828i
+D warm-start:
+    1.3435
+
+E warm-start:
+  -1.1408e-14 - 1.8277e-04i
+
+  [expand] eta = 1.635 -> false (slack = 0)
+D warm-start:
+    1.3435
+
+E warm-start:
+  -1.1408e-14 - 1.8277e-04i
+
+  [bisect  1] eta = 1.22611 -> false (slack = 0)
+D warm-start:
+    1.3435
+
+E warm-start:
+  -1.1408e-14 - 1.8277e-04i
+
+  [bisect  2] eta = 1.02176 -> false (slack = 0)
+D warm-start:
+    1.3435
+
+E warm-start:
+  -1.1408e-14 - 1.8277e-04i
+
+  [bisect  3] eta = 0.919583 -> false (slack = 0)
+D warm-start:
+    1.3435
+
+E warm-start:
+  -1.1408e-14 - 1.8277e-04i
+
+  [bisect  4] eta = 0.868495 -> false (slack = 0)
+D warm-start:
+    1.3435
+
+E warm-start:
+  -1.1408e-14 - 1.8277e-04i
+
+  [bisect  5] eta = 0.842951 -> false (slack = 0)
+D warm-start:
+    1.3435
+
+E warm-start:
+  -1.1408e-14 - 1.8277e-04i
+
+  [bisect  6] eta = 0.830179 -> false (slack = 0)
+D warm-start:
+    1.3435
+
+E warm-start:
+  -1.1408e-14 - 1.8277e-04i
+
+  [bisect  7] eta = 0.823793 -> true (slack = 0)
+    D = 1.362
+    E = -2.358e-15-0.0001484i
+IQC_reduced_combinedPI_eta_bisection: converged, eta = 0.823793
+Pi scaler: 1.899e+00 used
+range of Pi plus
+min:     0
+
+max:    1.0000
+
+range of Pi minus
+min:   -1.7368
+
+max:     0
+
+  obj = 8.178106 | time = 81.13 s
+
+Controller is OL unstable
+Iter  43 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 0.01 -> true (slack = 0)
+    D = 1.372
+    E = 1.451e-16+1.561e-07i
+D warm-start:
+    1.3725
+
+E warm-start:
+   1.4513e-16 + 1.5614e-07i
+
+  [expand] eta = 0.8238 -> true (slack = 0)
+    D = 1.664
+    E = -9.249e-17-5.661e-05i
+D warm-start:
+    1.6641
+
+E warm-start:
+  -9.2490e-17 - 5.6607e-05i
+
+  [expand] eta = 1.648 -> false (slack = 0)
+D warm-start:
+    1.6641
+
+E warm-start:
+  -9.2490e-17 - 5.6607e-05i
+
+  [bisect  1] eta = 1.23569 -> false (slack = 0)
+D warm-start:
+    1.6641
+
+E warm-start:
+  -9.2490e-17 - 5.6607e-05i
+
+  [bisect  2] eta = 1.02974 -> false (slack = 0)
+D warm-start:
+    1.6641
+
+E warm-start:
+  -9.2490e-17 - 5.6607e-05i
+
+  [bisect  3] eta = 0.926767 -> false (slack = 0)
+D warm-start:
+    1.6641
+
+E warm-start:
+  -9.2490e-17 - 5.6607e-05i
+
+  [bisect  4] eta = 0.87528 -> false (slack = 0)
+D warm-start:
+    1.6641
+
+E warm-start:
+  -9.2490e-17 - 5.6607e-05i
+
+  [bisect  5] eta = 0.849537 -> false (slack = 0)
+D warm-start:
+    1.6641
+
+E warm-start:
+  -9.2490e-17 - 5.6607e-05i
+
+  [bisect  6] eta = 0.836665 -> false (slack = 0)
+D warm-start:
+    1.6641
+
+E warm-start:
+  -9.2490e-17 - 5.6607e-05i
+
+  [bisect  7] eta = 0.830229 -> true (slack = 0)
+    D = 1.822
+    E = -2.822e-15-0.0003014i
+IQC_reduced_combinedPI_eta_bisection: converged, eta = 0.830229
+Pi scaler: 1.930e+00 used
+range of Pi plus
+min:     0
+
+max:    1.0000
+
+range of Pi minus
+min:   -1.7098
+
+max:     0
+
+  obj = 8.771338 | time = 81.97 s
+
+Controller is OL unstable
+Iter  44 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 0.01 -> true (slack = 0)
+    D = 1.35
+    E = 3.357e-16+1.31e-07i
+D warm-start:
+    1.3503
+
+E warm-start:
+   3.3570e-16 + 1.3104e-07i
+
+  [expand] eta = 0.8302 -> true (slack = 0)
+    D = 1.642
+    E = -8.451e-17-3.927e-05i
+D warm-start:
+    1.6423
+
+E warm-start:
+  -8.4506e-17 - 3.9271e-05i
+
+  [expand] eta = 1.66 -> false (slack = 0)
+D warm-start:
+    1.6423
+
+E warm-start:
+  -8.4506e-17 - 3.9271e-05i
+
+  [bisect  1] eta = 1.24534 -> false (slack = 0)
+D warm-start:
+    1.6423
+
+E warm-start:
+  -8.4506e-17 - 3.9271e-05i
+
+  [bisect  2] eta = 1.03779 -> false (slack = 0)
+D warm-start:
+    1.6423
+
+E warm-start:
+  -8.4506e-17 - 3.9271e-05i
+
+  [bisect  3] eta = 0.934008 -> false (slack = 0)
+D warm-start:
+    1.6423
+
+E warm-start:
+  -8.4506e-17 - 3.9271e-05i
+
+  [bisect  4] eta = 0.882118 -> false (slack = 0)
+D warm-start:
+    1.6423
+
+E warm-start:
+  -8.4506e-17 - 3.9271e-05i
+
+  [bisect  5] eta = 0.856174 -> false (slack = 0)
+D warm-start:
+    1.6423
+
+E warm-start:
+  -8.4506e-17 - 3.9271e-05i
+
+  [bisect  6] eta = 0.843201 -> false (slack = 0)
+D warm-start:
+    1.6423
+
+E warm-start:
+  -8.4506e-17 - 3.9271e-05i
+
+  [bisect  7] eta = 0.836715 -> true (slack = 0)
+    D = 1.705
+    E = 4.949e-15-0.000276i
+IQC_reduced_combinedPI_eta_bisection: converged, eta = 0.836715
+Pi scaler: 1.928e+00 used
+range of Pi plus
+min:     0
+
+max:    1.0000
+
+range of Pi minus
+min:   -1.6877
+
+max:     0
+
+  obj = 8.314644 | time = 82.19 s
+
+Controller is OL unstable
+Iter  45 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 0.01 -> true (slack = 0)
+    D = 1.359
+    E = 3.27e-16+1.354e-07i
+D warm-start:
+    1.3587
+
+E warm-start:
+   3.2704e-16 + 1.3539e-07i
+
+  [expand] eta = 0.8367 -> true (slack = 0)
+    D = 1.395
+    E = -1.542e-15-8.239e-05i
+D warm-start:
+    1.3947
+
+E warm-start:
+  -1.5421e-15 - 8.2387e-05i
+
+  [expand] eta = 1.673 -> false (slack = 0)
+D warm-start:
+    1.3947
+
+E warm-start:
+  -1.5421e-15 - 8.2387e-05i
+
+  [bisect  1] eta = 1.25507 -> false (slack = 0)
+D warm-start:
+    1.3947
+
+E warm-start:
+  -1.5421e-15 - 8.2387e-05i
+
+  [bisect  2] eta = 1.04589 -> false (slack = 0)
+D warm-start:
+    1.3947
+
+E warm-start:
+  -1.5421e-15 - 8.2387e-05i
+
+  [bisect  3] eta = 0.941305 -> false (slack = 0)
+D warm-start:
+    1.3947
+
+E warm-start:
+  -1.5421e-15 - 8.2387e-05i
+
+  [bisect  4] eta = 0.88901 -> false (slack = 0)
+D warm-start:
+    1.3947
+
+E warm-start:
+  -1.5421e-15 - 8.2387e-05i
+
+  [bisect  5] eta = 0.862862 -> false (slack = 0)
+D warm-start:
+    1.3947
+
+E warm-start:
+  -1.5421e-15 - 8.2387e-05i
+
+  [bisect  6] eta = 0.849789 -> false (slack = 0)
+D warm-start:
+    1.3947
+
+E warm-start:
+  -1.5421e-15 - 8.2387e-05i
+
+  [bisect  7] eta = 0.843252 -> false (slack = 0)
+IQC_reduced_combinedPI_eta_bisection: converged, eta = 0.836715
+Pi scaler: 1.854e+00 used
+range of Pi plus
+min:     0
+
+max:    1.0000
+
+range of Pi minus
+min:   -1.6980
+
+max:     0
+
+  obj = 8.304736 | time = 84.93 s
+
+Controller is OL unstable
+Iter  46 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 0.01 -> true (slack = 0)
+    D = 1.342
+    E = 2.516e-16+1.368e-07i
+D warm-start:
+    1.3416
+
+E warm-start:
+   2.5156e-16 + 1.3679e-07i
+
+  [expand] eta = 0.8367 -> true (slack = 0)
+    D = 1.484
+    E = -6.3e-16-5.971e-05i
+D warm-start:
+    1.4842
+
+E warm-start:
+  -6.2997e-16 - 5.9706e-05i
+
+  [expand] eta = 1.673 -> false (slack = 0)
+D warm-start:
+    1.4842
+
+E warm-start:
+  -6.2997e-16 - 5.9706e-05i
+
+  [bisect  1] eta = 1.25507 -> false (slack = 0)
+D warm-start:
+    1.4842
+
+E warm-start:
+  -6.2997e-16 - 5.9706e-05i
+
+  [bisect  2] eta = 1.04589 -> false (slack = 0)
+D warm-start:
+    1.4842
+
+E warm-start:
+  -6.2997e-16 - 5.9706e-05i
+
+  [bisect  3] eta = 0.941305 -> false (slack = 0)
+D warm-start:
+    1.4842
+
+E warm-start:
+  -6.2997e-16 - 5.9706e-05i
+
+  [bisect  4] eta = 0.88901 -> false (slack = 0)
+D warm-start:
+    1.4842
+
+E warm-start:
+  -6.2997e-16 - 5.9706e-05i
+
+  [bisect  5] eta = 0.862862 -> false (slack = 0)
+D warm-start:
+    1.4842
+
+E warm-start:
+  -6.2997e-16 - 5.9706e-05i
+
+  [bisect  6] eta = 0.849789 -> false (slack = 0)
+D warm-start:
+    1.4842
+
+E warm-start:
+  -6.2997e-16 - 5.9706e-05i
+
+  [bisect  7] eta = 0.843252 -> false (slack = 0)
+IQC_reduced_combinedPI_eta_bisection: converged, eta = 0.836715
+Pi scaler: 1.763e+00 used
+range of Pi plus
+min:     0
+
+max:    1.0000
+
+range of Pi minus
+min:   -1.7120
+
+max:     0
+
+  obj = 7.868417 | time = 87.38 s
+
+Controller is OL unstable
+Iter  47 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 0.01 -> true (slack = 0)
+    D = 2.433
+    E = 4.059e-16+2.667e-07i
+D warm-start:
+    2.4328
+
+E warm-start:
+   4.0587e-16 + 2.6665e-07i
+
+  [expand] eta = 0.8367 -> true (slack = 0)
+    D = 1.609
+    E = -1.74e-15-0.0007476i
+D warm-start:
+    1.6090
+
+E warm-start:
+  -1.7399e-15 - 7.4761e-04i
+
+  [expand] eta = 1.673 -> false (slack = 0)
+D warm-start:
+    1.6090
+
+E warm-start:
+  -1.7399e-15 - 7.4761e-04i
+
+  [bisect  1] eta = 1.25507 -> false (slack = 0)
+D warm-start:
+    1.6090
+
+E warm-start:
+  -1.7399e-15 - 7.4761e-04i
+
+  [bisect  2] eta = 1.04589 -> false (slack = 0)
+D warm-start:
+    1.6090
+
+E warm-start:
+  -1.7399e-15 - 7.4761e-04i
+
+  [bisect  3] eta = 0.941305 -> false (slack = 0)
+D warm-start:
+    1.6090
+
+E warm-start:
+  -1.7399e-15 - 7.4761e-04i
+
+  [bisect  4] eta = 0.88901 -> false (slack = 0)
+D warm-start:
+    1.6090
+
+E warm-start:
+  -1.7399e-15 - 7.4761e-04i
+
+  [bisect  5] eta = 0.862862 -> false (slack = 0)
+D warm-start:
+    1.6090
+
+E warm-start:
+  -1.7399e-15 - 7.4761e-04i
+
+  [bisect  6] eta = 0.849789 -> false (slack = 0)
+D warm-start:
+    1.6090
+
+E warm-start:
+  -1.7399e-15 - 7.4761e-04i
+
+  [bisect  7] eta = 0.843252 -> false (slack = 0)
+IQC_reduced_combinedPI_eta_bisection: converged, eta = 0.836715
+Pi scaler: 2.198e+00 used
+range of Pi plus
+min:     0
+
+max:    1.0000
+
+range of Pi minus
+min:   -1.6559
+
+max:     0
+
+  obj = 7.509960 | time = 86.35 s
+
+Controller is OL unstable
+Iter  48 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 0.01 -> true (slack = 0)
+    D = 1.432
+    E = 2.298e-16+1.335e-07i
+D warm-start:
+    1.4322
+
+E warm-start:
+   2.2985e-16 + 1.3352e-07i
+
+  [expand] eta = 0.8367 -> true (slack = 0)
+    D = 2.529
+    E = 2.663e-16-8.111e-05i
+D warm-start:
+    2.5292
+
+E warm-start:
+   2.6630e-16 - 8.1114e-05i
+
+  [expand] eta = 1.673 -> false (slack = 0)
+D warm-start:
+    2.5292
+
+E warm-start:
+   2.6630e-16 - 8.1114e-05i
+
+  [bisect  1] eta = 1.25507 -> false (slack = 0)
+D warm-start:
+    2.5292
+
+E warm-start:
+   2.6630e-16 - 8.1114e-05i
+
+  [bisect  2] eta = 1.04589 -> false (slack = 0)
+D warm-start:
+    2.5292
+
+E warm-start:
+   2.6630e-16 - 8.1114e-05i
+
+  [bisect  3] eta = 0.941305 -> false (slack = 0)
+D warm-start:
+    2.5292
+
+E warm-start:
+   2.6630e-16 - 8.1114e-05i
+
+  [bisect  4] eta = 0.88901 -> false (slack = 0)
+D warm-start:
+    2.5292
+
+E warm-start:
+   2.6630e-16 - 8.1114e-05i
+
+  [bisect  5] eta = 0.862862 -> false (slack = 0)
+D warm-start:
+    2.5292
+
+E warm-start:
+   2.6630e-16 - 8.1114e-05i
+
+  [bisect  6] eta = 0.849789 -> false (slack = 0)
+D warm-start:
+    2.5292
+
+E warm-start:
+   2.6630e-16 - 8.1114e-05i
+
+  [bisect  7] eta = 0.843252 -> false (slack = 0)
+IQC_reduced_combinedPI_eta_bisection: converged, eta = 0.836715
+Pi scaler: 2.213e+00 used
+range of Pi plus
+min:     0
+
+max:    1.0000
+
+range of Pi minus
+min:   -1.6543
+
+max:     0
+
+  obj = 7.467548 | time = 88.83 s
+
+Controller is OL unstable
+Iter  49 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 0.01 -> true (slack = 0)
+    D = 1.365
+    E = 3.874e-16+1.382e-07i
+D warm-start:
+    1.3652
+
+E warm-start:
+   3.8736e-16 + 1.3822e-07i
+
+  [expand] eta = 0.8367 -> true (slack = 0)
+    D = 1.348
+    E = 2.902e-15-8.075e-05i
+D warm-start:
+    1.3481
+
+E warm-start:
+   2.9018e-15 - 8.0746e-05i
+
+  [expand] eta = 1.673 -> false (slack = 0)
+D warm-start:
+    1.3481
+
+E warm-start:
+   2.9018e-15 - 8.0746e-05i
+
+  [bisect  1] eta = 1.25507 -> false (slack = 0)
+D warm-start:
+    1.3481
+
+E warm-start:
+   2.9018e-15 - 8.0746e-05i
+
+  [bisect  2] eta = 1.04589 -> false (slack = 0)
+D warm-start:
+    1.3481
+
+E warm-start:
+   2.9018e-15 - 8.0746e-05i
+
+  [bisect  3] eta = 0.941305 -> false (slack = 0)
+D warm-start:
+    1.3481
+
+E warm-start:
+   2.9018e-15 - 8.0746e-05i
+
+  [bisect  4] eta = 0.88901 -> false (slack = 0)
+D warm-start:
+    1.3481
+
+E warm-start:
+   2.9018e-15 - 8.0746e-05i
+
+  [bisect  5] eta = 0.862862 -> false (slack = 0)
+D warm-start:
+    1.3481
+
+E warm-start:
+   2.9018e-15 - 8.0746e-05i
+
+  [bisect  6] eta = 0.849789 -> false (slack = 0)
+D warm-start:
+    1.3481
+
+E warm-start:
+   2.9018e-15 - 8.0746e-05i
+
+  [bisect  7] eta = 0.843252 -> false (slack = 0)
+IQC_reduced_combinedPI_eta_bisection: converged, eta = 0.836715
+Pi scaler: 2.368e+00 used
+range of Pi plus
+min:     0
+
+max:    1.0000
+
+range of Pi minus
+min:   -1.6395
+
+max:     0
+
+  obj = 7.596519 | time = 90.19 s
+
+Controller is OL unstable
+Iter  50 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 0.01 -> true (slack = 0)
+    D = 1.36
+    E = 1.086e-16+1.505e-07i
+D warm-start:
+    1.3603
+
+E warm-start:
+   1.0857e-16 + 1.5045e-07i
+
+  [expand] eta = 0.8367 -> true (slack = 0)
+    D = 1.738
+    E = -6.92e-18-5.316e-05i
+D warm-start:
+    1.7378
+
+E warm-start:
+  -6.9199e-18 - 5.3163e-05i
+
+  [expand] eta = 1.673 -> false (slack = 0)
+D warm-start:
+    1.7378
+
+E warm-start:
+  -6.9199e-18 - 5.3163e-05i
+
+  [bisect  1] eta = 1.25507 -> false (slack = 0)
+D warm-start:
+    1.7378
+
+E warm-start:
+  -6.9199e-18 - 5.3163e-05i
+
+  [bisect  2] eta = 1.04589 -> false (slack = 0)
+D warm-start:
+    1.7378
+
+E warm-start:
+  -6.9199e-18 - 5.3163e-05i
+
+  [bisect  3] eta = 0.941305 -> false (slack = 0)
+D warm-start:
+    1.7378
+
+E warm-start:
+  -6.9199e-18 - 5.3163e-05i
+
+  [bisect  4] eta = 0.88901 -> false (slack = 0)
+D warm-start:
+    1.7378
+
+E warm-start:
+  -6.9199e-18 - 5.3163e-05i
+
+  [bisect  5] eta = 0.862862 -> false (slack = 0)
+D warm-start:
+    1.7378
+
+E warm-start:
+  -6.9199e-18 - 5.3163e-05i
+
+  [bisect  6] eta = 0.849789 -> false (slack = 0)
+D warm-start:
+    1.7378
+
+E warm-start:
+  -6.9199e-18 - 5.3163e-05i
+
+  [bisect  7] eta = 0.843252 -> true (slack = 0)
+    D = 2.59
+    E = -2.003e-14-0.0003152i
+IQC_reduced_combinedPI_eta_bisection: converged, eta = 0.843252
+Pi scaler: 2.611e+00 used
+range of Pi plus
+min:     0
+
+max:    1.0000
+
+range of Pi minus
+min:   -1.5978
+
+max:     0
+
+  obj = 7.025390 | time = 92.85 s
+
+Controller is OL unstable
+
+norminf_W1S =
+
+    2.6499
+
+
+norminf_T =
+
+    6.2651
+
+
+expname =
+
+    'newtempLFT_GFRF_GdmGLTIW2n40_1028_spa_controller_order18_82hz_-27db_nperfhinf_lasthinfstabitrInf_eta0.84_multi_freq'
+
+[Warning: YALMIP objects cannot be saved in binary format. You will run into
+troubles if you try to load this file later. You should clear all YALMIP objects
+first, or avoid having any YALMIP objects in the list of variables which you
+save.] 
+[> In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('sdpvar/saveobj', 'C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\@sdpvar\saveobj.m', 3)" style="font-weight:bold">sdpvar/saveobj</a> (<a href="matlab: opentoline('C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\@sdpvar\saveobj.m',3,0)">line 3</a>)
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('c_IQCcontrolSynW2', 'C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\c_IQCcontrolSynW2.m', 392)" style="font-weight:bold">c_IQCcontrolSynW2</a> (<a href="matlab: opentoline('C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\c_IQCcontrolSynW2.m',392,0)">line 392</a>)] 
+[Warning: YALMIP objects cannot be saved in binary format. You will run into
+troubles if you try to load this file later. You should clear all YALMIP objects
+first, or avoid having any YALMIP objects in the list of variables which you
+save.] 
+[> In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('sdpvar/saveobj', 'C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\@sdpvar\saveobj.m', 3)" style="font-weight:bold">sdpvar/saveobj</a> (<a href="matlab: opentoline('C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\@sdpvar\saveobj.m',3,0)">line 3</a>)
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('c_IQCcontrolSynW2', 'C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\c_IQCcontrolSynW2.m', 392)" style="font-weight:bold">c_IQCcontrolSynW2</a> (<a href="matlab: opentoline('C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\c_IQCcontrolSynW2.m',392,0)">line 392</a>)] 
+[Warning: YALMIP objects cannot be saved in binary format. You will run into
+troubles if you try to load this file later. You should clear all YALMIP objects
+first, or avoid having any YALMIP objects in the list of variables which you
+save.] 
+[> In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('sdpvar/saveobj', 'C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\@sdpvar\saveobj.m', 3)" style="font-weight:bold">sdpvar/saveobj</a> (<a href="matlab: opentoline('C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\@sdpvar\saveobj.m',3,0)">line 3</a>)
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('c_IQCcontrolSynW2', 'C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\c_IQCcontrolSynW2.m', 392)" style="font-weight:bold">c_IQCcontrolSynW2</a> (<a href="matlab: opentoline('C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\c_IQCcontrolSynW2.m',392,0)">line 392</a>)] 
+[Warning: YALMIP objects cannot be saved in binary format. You will run into
+troubles if you try to load this file later. You should clear all YALMIP objects
+first, or avoid having any YALMIP objects in the list of variables which you
+save.] 
+[> In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('sdpvar/saveobj', 'C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\@sdpvar\saveobj.m', 3)" style="font-weight:bold">sdpvar/saveobj</a> (<a href="matlab: opentoline('C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\@sdpvar\saveobj.m',3,0)">line 3</a>)
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('c_IQCcontrolSynW2', 'C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\c_IQCcontrolSynW2.m', 392)" style="font-weight:bold">c_IQCcontrolSynW2</a> (<a href="matlab: opentoline('C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\c_IQCcontrolSynW2.m',392,0)">line 392</a>)] 
+[Warning: YALMIP objects cannot be saved in binary format. You will run into
+troubles if you try to load this file later. You should clear all YALMIP objects
+first, or avoid having any YALMIP objects in the list of variables which you
+save.] 
+[> In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('lmi/saveobj', 'C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\extras\@lmi\saveobj.m', 3)" style="font-weight:bold">lmi/saveobj</a> (<a href="matlab: opentoline('C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\extras\@lmi\saveobj.m',3,0)">line 3</a>)
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('c_IQCcontrolSynW2', 'C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\c_IQCcontrolSynW2.m', 392)" style="font-weight:bold">c_IQCcontrolSynW2</a> (<a href="matlab: opentoline('C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\c_IQCcontrolSynW2.m',392,0)">line 392</a>)] 
+[Warning: YALMIP objects cannot be saved in binary format. You will run into
+troubles if you try to load this file later. You should clear all YALMIP objects
+first, or avoid having any YALMIP objects in the list of variables which you
+save.] 
+[> In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('lmi/saveobj', 'C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\extras\@lmi\saveobj.m', 3)" style="font-weight:bold">lmi/saveobj</a> (<a href="matlab: opentoline('C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\extras\@lmi\saveobj.m',3,0)">line 3</a>)
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('c_IQCcontrolSynW2', 'C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\c_IQCcontrolSynW2.m', 392)" style="font-weight:bold">c_IQCcontrolSynW2</a> (<a href="matlab: opentoline('C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\c_IQCcontrolSynW2.m',392,0)">line 392</a>)] 
+[Warning: YALMIP objects cannot be saved in binary format. You will run into
+troubles if you try to load this file later. You should clear all YALMIP objects
+first, or avoid having any YALMIP objects in the list of variables which you
+save.] 
+[> In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('sdpvar/saveobj', 'C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\@sdpvar\saveobj.m', 3)" style="font-weight:bold">sdpvar/saveobj</a> (<a href="matlab: opentoline('C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\@sdpvar\saveobj.m',3,0)">line 3</a>)
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('c_IQCcontrolSynW2', 'C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\c_IQCcontrolSynW2.m', 392)" style="font-weight:bold">c_IQCcontrolSynW2</a> (<a href="matlab: opentoline('C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\c_IQCcontrolSynW2.m',392,0)">line 392</a>)] 
+[Warning: YALMIP objects cannot be saved in binary format. You will run into
+troubles if you try to load this file later. You should clear all YALMIP objects
+first, or avoid having any YALMIP objects in the list of variables which you
+save.] 
+[> In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('sdpvar/saveobj', 'C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\@sdpvar\saveobj.m', 3)" style="font-weight:bold">sdpvar/saveobj</a> (<a href="matlab: opentoline('C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\@sdpvar\saveobj.m',3,0)">line 3</a>)
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('c_IQCcontrolSynW2', 'C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\c_IQCcontrolSynW2.m', 392)" style="font-weight:bold">c_IQCcontrolSynW2</a> (<a href="matlab: opentoline('C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\c_IQCcontrolSynW2.m',392,0)">line 392</a>)] 
+[Warning: YALMIP objects cannot be saved in binary format. You will run into
+troubles if you try to load this file later. You should clear all YALMIP objects
+first, or avoid having any YALMIP objects in the list of variables which you
+save.] 
+[> In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('sdpvar/saveobj', 'C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\@sdpvar\saveobj.m', 3)" style="font-weight:bold">sdpvar/saveobj</a> (<a href="matlab: opentoline('C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\@sdpvar\saveobj.m',3,0)">line 3</a>)
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('c_IQCcontrolSynW2', 'C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\c_IQCcontrolSynW2.m', 392)" style="font-weight:bold">c_IQCcontrolSynW2</a> (<a href="matlab: opentoline('C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\c_IQCcontrolSynW2.m',392,0)">line 392</a>)] 
