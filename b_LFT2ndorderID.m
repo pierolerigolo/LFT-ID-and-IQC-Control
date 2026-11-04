@@ -6,7 +6,9 @@ end
 %% Multimodel non-parametric
 expname='1028_spa';
 load(fullfile('data',sprintf('GFRF_iddata_%s.mat',expname)));
-bodemag(GFRF_cell{:})
+bode(GFRF_cell{:})
+figure
+nyquistplot(GFRF_cell{:},linspace(250*2*pi, 300*2*pi, 1000))
 legend
 
 %% Identification of Gd(m) on a freq range of the FRF
@@ -85,7 +87,7 @@ addpath(genpath("/Users/pierre/Documents/MATLAB/tbxmanager"))
 % end
 model_elliptical = datadriven.find_elliptical_uncertainty(GLTI, w_lft,'verbosity',2);
 
-% Plant & frequency grid
+%% Plant & frequency grid
 G_hat  = model_elliptical.NominalModel;
 G_hat.ResponseData(300)=G_hat.ResponseData(299);
 W_lft  = G_hat.Frequency;
@@ -102,6 +104,59 @@ figure; hold on; grid on;
 utils.magplot(GLTI(1), 'Color', [0.7 0.7 0.7], 'LineWidth', 0.5, 'DisplayName','Gresid(e^{j\omega})')
 for i = 1:size(GLTI,2)
     utils.magplot(GLTI(i), 'Color', [0.7 0.7 0.7], 'LineWidth', 0.5,'HandleVisibility','off');
+end
+
+% Plot nominal model
+utils.magplot(G_hat, 'Color', 'b', 'LineWidth', 2, 'DisplayName', 'P');
+
+% Plot elliptical bounds: at each freq, bound = G_hat +/- 1/|A(jw)|
+% The ellipse semi-axis in complex plane is 1/sigma_min(A)
+G_resp = squeeze(freqresp(G_hat, W_lft)).';  % 1 x N complex
+
+upper_dB = zeros(length(W_lft), 1);
+lower_dB = NaN(length(W_lft), 1);  % NaN so wrapped-zero freqs are not plotted
+
+for k = 1:length(W_lft)
+    G_val = G_resp(k);
+    A_val = A_set{k};
+    r(k) = 1 / min(svd(double(A_val)));
+    
+    upper_dB(k) = 20*log10(abs(G_val) + r(k));
+    
+    lin_lower = abs(G_val) - r(k);
+    if lin_lower > 0
+        lower_dB(k) = 20*log10(lin_lower);
+    else
+        lower_dB(k) = -60;
+    end
+    % else: ellipse wraps zero → lower bound is -inf, leave as NaN
+end
+
+plot(W_lft/2/pi, upper_dB, 'r--', 'LineWidth', 1.5, 'DisplayName', 'Elliptical bound');
+plot(W_lft/2/pi, lower_dB, 'r--', 'LineWidth', 1.5, 'HandleVisibility', 'off');
+
+%% Plant & frequency grid of the full frf
+for i =1:length(GFRF)
+    frdmodels(1,1,i)=GFRF(i);
+end
+model_elliptical_full = datadriven.find_elliptical_uncertainty(frdmodels, w_lft,'verbosity',2);
+
+G_hat  = model_elliptical_full.NominalModel;
+G_hat.ResponseData(300)=G_hat.ResponseData(299);
+W_lft  = G_hat.Frequency;
+A = model_elliptical_full.UncertaintySet.A;
+
+% plot the plant
+
+figure; hold on; grid on;
+A_set = A{1};
+
+figure; hold on; grid on;
+
+% Plot raw FRFs
+utils.magplot(GFRF(1), 'Color', [0.7 0.7 0.7], 'LineWidth', 0.5, 'DisplayName','Gresid(e^{j\omega})')
+for i = 1:size(GFRF,2)
+    utils.magplot(GFRF(i), 'Color', [0.7 0.7 0.7], 'LineWidth', 0.5,'HandleVisibility','off');
 end
 
 % Plot nominal model
@@ -366,7 +421,7 @@ GLFT_delta=GdmLFT*GLTILFT;
 [GLFT,Delta] = lftdata(GLFT_delta)
 
 save(fullfile('data',sprintf('LFT_GFRF_GdmGLTIellipses_%s.mat',expname)), ...
-   "GLFT_delta","model_elliptical", "GLFT","Delta","dm_bound","m0","m","GFRF","GFRF_cell","realmass")
+   "GLFT_delta","model_elliptical_full", "GLFT","Delta","dm_bound","m0","m","GFRF","GFRF_cell","realmass")
 
 %% Table for the obtained parameter and their std 
 function T = param_table(sys_est, names)

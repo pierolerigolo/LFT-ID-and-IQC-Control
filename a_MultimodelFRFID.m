@@ -18,17 +18,28 @@ end
 Ts   = 0.001;
 nOP  = numel(y);
 lag  = 1000;                                   % spa window lag (smaller = smoother, less resolution)
-w    = logspace(log10(2*pi*10), log10(pi/Ts), 500);   % rad/s, 1 Hz up to Nyquist
+w    = logspace(log10(2*pi*10), log10(pi/Ts), 500);   % rad/s, 10 Hz up to Nyquist
 GFRF_cell    = cell(1, nOP);
 d    = cell(1, nOP);
 
 for i = 1:nOP
+
     d{i} = iddata(y{i}(:), u{i}(:), Ts, 'InputName','u'+string(i), 'OutputName','y');
     d{i} = detrend(d{i});                          % remove offset/trend of the operating point
+        lag = length(d{i}.OutputData);
+
     GFRF_cell{i} = spa(d{i}, lag, w);
+    GFRF_cell_etfe{i} = etfe(d{i},lag,1000);
     GFRF_cell{i}.Name = sprintf('OP%d', i);
     GFRF_cell{i}.InputName=sprintf('u%d',i);
+    GFRF_cell_etfe{i}.Name = sprintf('OP%d etfe', i);
+    GFRF_cell_etfe{i}.InputName=sprintf('u%d etfe',i);
     GFRF(1,i)=frd(GFRF_cell{i}.ResponseData,GFRF_cell{1}.Frequency,Ts);
+end
+
+%%
+for i = 1:4
+        GFRF_cell_etfe{i} =interp(GFRF_cell_etfe{i},w)
 end
 figure
 bode(GFRF_cell{:}); grid on; legend show
@@ -42,13 +53,13 @@ Havg = Havg / nOP;
 
 Gavg = idfrd(Havg, GFRF_cell{1}.Frequency, Ts, 'Name', 'Average');
 hold on
-bode(Gavg)
+% bode(Gavg)
 
 realmass=[0 2.1 5.9 7.6];
 
+bode(GFRF_cell_etfe{:});grid on; legend
 
-
-save(fullfile('Data','GFRF_iddata_1028_spa.mat'),'GFRF_cell','GFRF','Gavg','d','realmass')
+% save(fullfile('Data','GFRF_iddata_1028_spa.mat'),'GFRF_cell','GFRF','Gavg','d','realmass')
 
 
 %% old stuff %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
