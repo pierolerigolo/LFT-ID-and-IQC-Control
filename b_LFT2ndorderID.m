@@ -30,7 +30,7 @@ f_dist  = 80;        % disturbance frequency (Hz) targeted by W1: kept ON the gr
 use_hpf = false;     % W2 <- Hpf*W2 (Butterworth high-pass)
 n_hpf   = 6;         % order of the high-pass filter
 f_hpf   = 100;       % cut-off frequency (Hz)
-w2_floor_db = -40;   % lower bound on |W2| in dB (-Inf = none). Keeps the uncertainty
+w2_floor_db = -Inf;   % lower bound on |W2| in dB (-Inf = none). Keeps the uncertainty
                      % channel from vanishing below f_hpf (6th order: -120 dB at 10 Hz),
                      % which makes the IQC LMIs badly scaled. Raising |W2| only adds
                      % uncertainty (conservative); the phase of W2 is kept.
@@ -84,16 +84,10 @@ switch w2_type
         W2    = W2frd;
         W2tag = 'opt';
     case "fit"
-        % Rational fit of order nW2. ucover is run on a frequency axis scaled
-        % by a (better conditioning), the fit is scaled back: W2(s) = Ws(s/a).
-        a  = 1e3;
-        ws = GLTImean.Frequency/a;
-        Parray_s = cellfun(@(P) frd(P.ResponseData, ws), Parray, 'UniformOutput', false);
-        [~, info_s] = ucover(stack(1, Parray_s{:}), frd(GLTImean.ResponseData, ws), nW2);
-        Ws = ss(info_s.W1);
-        W2 = ss(a*Ws.A, a*Ws.B, Ws.C, Ws.D);
-        W2frd    = frd(W2, w_lft);      % continuous-time W2 sampled in rad/s
-        W2frd.Ts = GFRF.Ts;             % same Ts as GLTI_selected
+        % Rational fit of order nW2 (on the identification grid)
+        [~, info] = ucover(stack(1, Parray{:}), GLTImean, nW2);
+        W2    = info.W1;
+        W2frd = frd(W2, w_lft);
         W2tag = sprintf('n%d', nW2);
     otherwise
         error('w2_type must be "frequency" or "fit".')
