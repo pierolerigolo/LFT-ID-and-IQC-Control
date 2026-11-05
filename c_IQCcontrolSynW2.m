@@ -30,7 +30,7 @@ close all; clc; clear; clear("yalmip");
 idname        = 'LFT_GFRF_GdmGLTIW2n25hpf100fl40_1028_etfe'; % file written by b_LFT2ndorderID (W2: high-pass + -40 dB floor)
 % idname      = 'LFT_GFRF_GdmGLTIW2n25hpf100_1028_etfe';     % high-pass, no floor (w2_floor_db = -Inf in b)
 % idname      = 'LFT_GFRF_GdmGLTIW2n25_1028_etfe';         % without high-pass (use_hpf = false in b)
-orderK_list   = 20;     % controller orders to synthesise
+orderK_list   = 16:2:18;     % controller orders to synthesise
 Ts            = 0.001;
 seed          = 22;
 
@@ -62,7 +62,7 @@ addpath(genpath("C:\Users\admin\Documents\MATLAB\tbxmanager"))
 
 %% Load the LFT plant
 load(fullfile('Data', sprintf('%s.mat', idname)), 'GLFT', 'Delta', 'dm_bound', 'GFRF')
-eta0            = dm_bound/2;      % initial bound on dm (mass units)
+eta0            = dm_bound/1.5;      % initial bound on dm (mass units)
 W_lft = GLFT.Frequency;
 [nout_lft, nin_lft] = size(GLFT);
 [nq, np] = size(Delta);          % Delta: p (plant outputs, np) -> q (plant inputs, nq)
@@ -318,12 +318,14 @@ figure; pzplot(K_final); title('Controller poles/zeros')
 
 
 %% chosen controller on every measured operating point
-% opensave=load(fullfile('data','controller','LFT_GFRF_GdmGLTIW2n25hpf100_1028_etfe_controller_order16_80hz_-34db_nperfoptiIQC_notconv_etai0.18_etaf0.62_multi_freq.mat'));
+% opensave=load(fullfile('data','controller','LFT_GFRF_GdmGLTIW2n25hpf100fl40_1028_etfe_controller_order18_80hz_-34db_nperfhinf_notconv_etai0.18_etaf0.42_multi_freq.mat'))
 % iteration=18;
+% K_chosen=opensave.K_final;
+% opensave=load(fullfile('data','controller','LFT_GFRF_GdmGLTIW2n25hpf100_1028_etfe_controller_order18_80hz_-34db_nperfoptiIQC_etai0.18_etaf0.88_multi_freq.mat'));
+% iteration=26;
 % K_chosen=opensave.K_itr{iteration};
-opensave=load(fullfile('data','controller','LFT_GFRF_GdmGLTIW2n25hpf100_1028_etfe_controller_order18_80hz_-34db_nperfoptiIQC_etai0.18_etaf0.88_multi_freq.mat'));
-iteration=26;
-K_chosen=opensave.K_itr{iteration};
+opensave=load(fullfile('data','controller','LFT_GFRF_GdmGLTIW2n25hpf100fl40_1028_etfe_controller_order16_80hz_-34db_nperfhinf_notconv_etai0.18_etaf0.33_multi_freq.mat'));
+K_chosen=opensave.K_final;
 
 
 SOAsave=load(fullfile('data','finalrepportcont','controller_ellips_sus_7nm_order20_82hz_-30db_nomperf.mat'));
@@ -337,7 +339,7 @@ end
 utils.magplot(inv(1 + K_chosen*G_hat), 'Color', 'k', 'DisplayName', 'S nominal');
 utils.magplot(inv(1 + KSOA*G_hat), 'Color', [0 0 0 .3],'linestyle','--', 'DisplayName', 'S SOA nominal');
 utils.magplot(inv(opensave.W1_frd), 'Color', 'c', 'DisplayName', 'W_1^{-1}');
-title(sprintf('Sensitivity on the measured FRFs, order %d, \\eta = %.3g (dm_{bound}=%.3f), compared to ellipses SOA', opensave.orderK, opensave.eta_itr{iteration},opensave.dm_bound))
+title(sprintf('Sensitivity on the measured FRFs, order %d, \\eta = %.3g (dm_{bound}=%.3f), compared to ellipses SOA', opensave.orderK, opensave.eta,opensave.dm_bound))
 
 figure; utils.magplot(K_chosen, 'DisplayName', 'K chosen')
 utils.magplot(KSOA, 'DisplayName', 'K SOA');title('Controller')
