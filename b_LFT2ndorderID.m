@@ -5,14 +5,17 @@
 %   2. Residual LTI part of each operating point  G_LTI,i = G_i / G_dm,i
 %      and nominal G_LTI = mean of the residuals.
 %   3. Multiplicative uncertainty weight W2 covering
-%      |(G_LTI,i - G_LTI)/G_LTI| (ucover), optionally times a high-pass
-%      filter (use_hpf): the residual uncertainty below f_hpf is then dropped,
-%      so the robustness certificate no longer covers it there.
+%      |(G_LTI,i - G_LTI)/G_LTI| (ucover): either the pointwise bound on the
+%      synthesis grid (w2_type = "frequency") or a rational fit ("fit").
+%      Optionally times a high-pass filter (use_hpf: the residual uncertainty
+%      below f_hpf is then dropped, so the certificate no longer covers it
+%      there) and with a lower bound on |W2| (w2_floor_db).
 %   4. LFT:  dm in [-dm_bound, dm_bound] (ureal, centred, not normalised)
 %            Delta: 1x1 LTI, ||Delta||_inf <= 1 (ultidyn)
 %
 %   Input : Data/GFRF_iddata_<expname>.mat              (from a_MultimodelFRFID)
-%   Output: Data/LFT_GFRF_GdmGLTIW2n<nW2>[hpf<f_hpf>]_<expname>.mat (for c_IQCcontrolSynW2)
+%   Output: Data/LFT_GFRF_GdmGLTIW2<opt|n<nW2>>[hpf<f_hpf>][fl<dB>]_<expname>.mat
+%           (for c_IQCcontrolSynW2)
 %
 clear; close all; clc
 
@@ -20,12 +23,14 @@ clear; close all; clc
 expname = '1028_etfe';
 fmin_dm = 25;          % band (Hz) used to fit G_dm
 fmax_dm = 75;
-nW2     = 25;          % order of the W2 fit (ucover)
+w2_type = "frequency"; % "frequency": pointwise optimal bound (ucover W1opt) on the
+                       % synthesis grid; "fit": rational fit of order nW2
+nW2     = 25;          % order of the W2 fit (w2_type = "fit" only)
 f_dist  = 80;        % disturbance frequency (Hz) targeted by W1: kept ON the grid
-use_hpf = true;      % W2 <- Hpf*W2 (Butterworth high-pass)
+use_hpf = false;     % W2 <- Hpf*W2 (Butterworth high-pass)
 n_hpf   = 6;         % order of the high-pass filter
 f_hpf   = 100;       % cut-off frequency (Hz)
-w2_floor_db = -40;   % lower bound on |W2| in dB (-Inf = none). Keeps the uncertainty
+w2_floor_db = -Inf;   % lower bound on |W2| in dB (-Inf = none). Keeps the uncertainty
                      % channel from vanishing below f_hpf (6th order: -120 dB at 10 Hz),
                      % which makes the IQC LMIs badly scaled. Raising |W2| only adds
                      % uncertainty (conservative); the phase of W2 is kept.
@@ -56,64 +61,69 @@ GLTImean = frd(mean(GLTI.ResponseData, 2), GLTI.Frequency, GLTI.Ts);
 bode(GLTImean)
 exportgraphics(gcf, fullfile('plots', 'GLTIbode.jpg'), 'Resolution', 300)
 
-%% 3. Multiplicative uncertainty weight W2
-% ucover is run on a frequency axis scaled by a (better conditioning) and the
-% continuous-time fit is scaled back: W2(s) = Ws(s/a).
-a  = 1e3;
-ws = GLTImean.Frequency/a;
-Pn_s     = frd(GLTImean.ResponseData, ws);
-Parray_s = cell(1, nOP);
-Parray   = cell(1, nOP);
-for i = 1:nOP
-    Parray_s{i} = frd(GLTI(1, i).ResponseData, ws);
-    Parray{i}   = GLTI(1, i);
-end
-[~, info_s] = ucover(stack(1, Parray_s{:}), Pn_s, nW2);
-Ws = ss(info_s.W1);
-W2 = ss(a*Ws.A, a*Ws.B, Ws.C, Ws.D);
-
-relerr = GLTImean\(GLTImean - stack(1, Parray{:}));
-bo = bodeoptions; bo.FreqUnits = 'Hz';
-figure; bodemag(relerr, 'b--', W2, 'r', bo);
-exportgraphics(gcf, fullfile('plots', 'relerrW2bode.jpg'), 'Resolution', 300)
-
-% Optional high-pass filter on W2 (discrete Butterworth)
-if use_hpf
-    [b_hpf, a_hpf] = butter(n_hpf, f_hpf/(1/GFRF.Ts/2), 'high');
-    Hpf = tf(b_hpf, a_hpf, GFRF.Ts);
-    W2plot    = frd(W2, GLTImean.Frequency);
-    W2plot.Ts = GFRF.Ts;
-    figure; bodemag(relerr, 'b--', W2plot, 'r', frd(Hpf, GLTImean.Frequency), 'k:', ...
-        frd(Hpf, GLTImean.Frequency)*W2plot, 'm', bo);
-    legend('relative error', 'W2', 'Hpf', 'Hpf*W2', 'Location', 'best')
-    xlim([10 500])
-    exportgraphics(gcf, fullfile('plots', 'w2relerrhpf.jpg'), 'Resolution', 300)
-    W2tag = sprintf('n%dhpf%d', nW2, f_hpf);
-else
-    Hpf   = tf(1, 1, GFRF.Ts);
-    W2tag = sprintf('n%d', nW2);
-end
-
-%% 4. LFT on the synthesis frequency grid
+%% 3. LFT frequency grid
 omega_global     = logspace(log10(2*pi*10), log10(pi/GFRF.Ts), 150);   % 10 Hz .. Nyquist
 omega_peak_dense = logspace(log10(25*2*pi), log10(100*2*pi), 150);     % dense 25-100 Hz
 w_lft = unique([omega_global(:); omega_peak_dense(:); 2*pi*f_dist]);
 
-% G_LTI*(1 + W2*Delta) = Fu([0, W2; G_LTI, G_LTI], Delta)
+%% 4. Multiplicative uncertainty weight W2 (on w_lft)
+Parray = cell(1, nOP);
+for i = 1:nOP
+    Parray{i} = GLTI(1, i);
+end
+relerr = GLTImean\(GLTImean - stack(1, Parray{:}));
 GLTI_selected = interp(GLTImean, w_lft);
-W2frd    = frd(W2, w_lft);      % continuous-time W2 sampled in rad/s
-W2frd.Ts = GFRF.Ts;             % same Ts as GLTI_selected
-W2frd    = frd(Hpf, w_lft)*W2frd;   % high-pass (identity if ~use_hpf)
+
+switch w2_type
+    case "frequency"
+        % Pointwise optimal bound: |W2(jw)| = max_i |relative error_i(jw)|,
+        % computed directly on the synthesis grid (no fitted filter)
+        Parray_w = cellfun(@(P) interp(P, w_lft), Parray, 'UniformOutput', false);
+        [~, info] = ucover(stack(1, Parray_w{:}), GLTI_selected, 2);
+        W2frd = info.W1opt;
+        W2    = W2frd;
+        W2tag = 'opt';
+    case "fit"
+        % Rational fit of order nW2 (on the identification grid)
+        [~, info] = ucover(stack(1, Parray{:}), GLTImean, nW2);
+        W2    = info.W1;
+        W2frd = frd(W2, w_lft);
+        W2tag = sprintf('n%d', nW2);
+    otherwise
+        error('w2_type must be "frequency" or "fit".')
+end
+W2frd.Ts = GFRF.Ts;
+W2_unfiltered = W2frd;
+
+% Optional high-pass filter on W2 (discrete Butterworth)
+if use_hpf
+    [b_hpf, a_hpf] = butter(n_hpf, f_hpf/(1/GFRF.Ts/2), 'high');
+    Hpf   = tf(b_hpf, a_hpf, GFRF.Ts);
+    W2frd = frd(Hpf, w_lft)*W2frd;
+    W2tag = sprintf('%shpf%d', W2tag, f_hpf);
+else
+    Hpf   = tf(1, 1, GFRF.Ts);
+end
+
+% Optional lower bound on |W2| (phase kept)
 if isfinite(w2_floor_db)
-    R     = W2frd.ResponseData;
-    magR  = abs(R);
+    R      = W2frd.ResponseData;
     floorv = db2mag(w2_floor_db);
-    low   = magR < floorv;
-    R(low) = floorv*exp(1j*angle(R(low)));   % same phase, magnitude = floor
+    low    = abs(R) < floorv;
+    R(low) = floorv*exp(1j*angle(R(low)));
     W2frd.ResponseData = R;
     fprintf('W2 floor %.0f dB applied at %d of %d frequencies\n', w2_floor_db, nnz(low), numel(R));
     W2tag = sprintf('%sfl%.0f', W2tag, -w2_floor_db);
 end
+
+bo = bodeoptions; bo.FreqUnits = 'Hz';
+figure; bodemag(relerr, 'b--', W2_unfiltered, 'r', W2frd, 'm', bo);
+legend('relative error', 'W2', 'W2 used (hpf/floor)', 'Location', 'best')
+xlim([10 500])
+exportgraphics(gcf, fullfile('plots', 'relerrW2bode.jpg'), 'Resolution', 300)
+
+%% 5. LFT
+% G_LTI*(1 + W2*Delta) = Fu([0, W2; G_LTI, G_LTI], Delta)
 GLTI_H   = [0,             W2frd;
             GLTI_selected, GLTI_selected];
 GLTILFT  = lft(ultidyn('d', 1), GLTI_H);
@@ -129,7 +139,7 @@ GLFT_delta    = GdmLFT*GLTILFT;
 
 save(fullfile('Data', sprintf('LFT_GFRF_GdmGLTIW2%s_%s.mat', W2tag, expname)), ...
     "GLFT_delta", "GLFT", "Delta", "dm_bound", "m0", "m", "GFRF", "GFRF_cell", ...
-    "realmass", "W2", "Hpf", "W2frd", "GLTImean")
+    "realmass", "W2", "Hpf", "W2frd", "GLTImean", "relerr")
 
 %% Local functions
 function T = param_table(sys_est, names)
