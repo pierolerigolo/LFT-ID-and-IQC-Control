@@ -85,7 +85,17 @@ if any(~isfinite(GLTIarray.ResponseData(:))) || any(~isfinite(GLTImean.ResponseD
     error('G_LTI has non-finite values on w_lft: ucover cannot fit W2.');
 end
 relerr    = GLTImean\(GLTImean - GLTIarray);
-[~, info] = ucover(GLTIarray, GLTImean, nW2);
+fprintf('|relative error| range: %.3g .. %.3g\n', ...
+    min(abs(relerr.ResponseData(:))), max(abs(relerr.ResponseData(:))));
+try
+    [~, info] = ucover(GLTIarray, GLTImean, nW2);
+catch ME
+    % ucover also fits a rational weight (fitmagfrd); when that fit fails it
+    % stops with "Index in position 2 exceeds array bounds" (ltipack.compreal).
+    if w2_type == "fit", rethrow(ME); end
+    warning('b:ucover', 'ucover failed (%s).\nW1opt computed directly (same pointwise bound).', ME.message);
+    info.W1opt = frd(max(abs(relerr.ResponseData), [], 4), w_lft, Ts);   % max over the 4 models
+end
 
 switch w2_type
     case "frequency"
