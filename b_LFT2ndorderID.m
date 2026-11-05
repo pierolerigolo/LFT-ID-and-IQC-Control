@@ -25,6 +25,10 @@ f_dist  = 80;        % disturbance frequency (Hz) targeted by W1: kept ON the gr
 use_hpf = true;      % W2 <- Hpf*W2 (Butterworth high-pass)
 n_hpf   = 6;         % order of the high-pass filter
 f_hpf   = 100;       % cut-off frequency (Hz)
+w2_floor_db = -40;   % lower bound on |W2| in dB (-Inf = none). Keeps the uncertainty
+                     % channel from vanishing below f_hpf (6th order: -120 dB at 10 Hz),
+                     % which makes the IQC LMIs badly scaled. Raising |W2| only adds
+                     % uncertainty (conservative); the phase of W2 is kept.
 
 if ~exist('plots', 'dir'), mkdir('plots'); end
 load(fullfile('Data', sprintf('GFRF_iddata_%s.mat', expname)), 'GFRF', 'GFRF_cell', 'realmass');
@@ -100,6 +104,16 @@ GLTI_selected = interp(GLTImean, w_lft);
 W2frd    = frd(W2, w_lft);      % continuous-time W2 sampled in rad/s
 W2frd.Ts = GFRF.Ts;             % same Ts as GLTI_selected
 W2frd    = frd(Hpf, w_lft)*W2frd;   % high-pass (identity if ~use_hpf)
+if isfinite(w2_floor_db)
+    R     = W2frd.ResponseData;
+    magR  = abs(R);
+    floorv = db2mag(w2_floor_db);
+    low   = magR < floorv;
+    R(low) = floorv*exp(1j*angle(R(low)));   % same phase, magnitude = floor
+    W2frd.ResponseData = R;
+    fprintf('W2 floor %.0f dB applied at %d of %d frequencies\n', w2_floor_db, nnz(low), numel(R));
+    W2tag = sprintf('%sfl%.0f', W2tag, -w2_floor_db);
+end
 GLTI_H   = [0,             W2frd;
             GLTI_selected, GLTI_selected];
 GLTILFT  = lft(ultidyn('d', 1), GLTI_H);
