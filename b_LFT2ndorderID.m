@@ -38,6 +38,15 @@ load(fullfile('Data', sprintf('GFRF_iddata_%s.mat', expname)), 'GFRF', 'GFRF_cel
 nOP = numel(GFRF_cell);
 Ts  = GFRF.Ts;
 
+% Keep only frequencies where every FRF is finite (interp in step 1 returns
+% NaN outside the original range, e.g. at Nyquist); NaN breaks ucover's fit.
+ok = squeeze(all(isfinite(GFRF.ResponseData), [1 2]));
+if ~all(ok)
+    fprintf('Dropping %d frequencies with non-finite FRF data: %s Hz\n', ...
+        nnz(~ok), mat2str(GFRF.Frequency(~ok).'/2/pi, 5));
+    GFRF = frd(GFRF.ResponseData(:, :, ok), GFRF.Frequency(ok), Ts);
+end
+
 figure; bode(GFRF_cell{:})
 exportgraphics(gcf, fullfile('plots', 'GFRFbode.jpg'), 'Resolution', 300)
 
@@ -72,6 +81,9 @@ figure; bode(GLTIarray, GLTImean)
 exportgraphics(gcf, fullfile('plots', 'GLTIbode.jpg'), 'Resolution', 300)
 
 %% 4. Multiplicative uncertainty weight W2
+if any(~isfinite(GLTIarray.ResponseData(:))) || any(~isfinite(GLTImean.ResponseData(:)))
+    error('G_LTI has non-finite values on w_lft: ucover cannot fit W2.');
+end
 relerr    = GLTImean\(GLTImean - GLTIarray);
 [~, info] = ucover(GLTIarray, GLTImean, nW2);
 
