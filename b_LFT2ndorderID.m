@@ -59,9 +59,11 @@ disp(T_Gdm)
 writetable(T_Gdm, fullfile('plots', 'params_Gdm.xlsx'))
 
 %% 2. Synthesis frequency grid
-% Log grid 10 Hz .. Nyquist, replaced by a denser log grid on 25-100 Hz
+% Log grid 10 Hz .. 0.99*Nyquist, replaced by a denser log grid on 25-100 Hz
 % (no near-duplicate points), with the grid point closest to f_dist moved onto it.
-w_glob  = logspace(log10(2*pi*10), log10(pi/Ts), 150);
+% The exact Nyquist point is excluded: with the Tustin G_dm, ucover's internal
+% fit (fitmagfrd) fails there ("Index in position 2 exceeds array bounds").
+w_glob  = logspace(log10(2*pi*10), log10(0.99*pi/Ts), 150);
 w_dense = logspace(log10(2*pi*25), log10(2*pi*100), 150);
 w_lft   = sort([w_glob(w_glob < w_dense(1) | w_glob > w_dense(end)), w_dense]).';
 [~, k]  = min(abs(w_lft - 2*pi*f_dist));
@@ -85,17 +87,7 @@ if any(~isfinite(GLTIarray.ResponseData(:))) || any(~isfinite(GLTImean.ResponseD
     error('G_LTI has non-finite values on w_lft: ucover cannot fit W2.');
 end
 relerr    = GLTImean\(GLTImean - GLTIarray);
-fprintf('|relative error| range: %.3g .. %.3g\n', ...
-    min(abs(relerr.ResponseData(:))), max(abs(relerr.ResponseData(:))));
-try
-    [~, info] = ucover(GLTIarray, GLTImean, nW2);
-catch ME
-    % ucover also fits a rational weight (fitmagfrd); when that fit fails it
-    % stops with "Index in position 2 exceeds array bounds" (ltipack.compreal).
-    if w2_type == "fit", rethrow(ME); end
-    warning('b:ucover', 'ucover failed (%s).\nW1opt computed directly (same pointwise bound).', ME.message);
-    info.W1opt = frd(max(abs(relerr.ResponseData), [], 4), w_lft, Ts);   % max over the 4 models
-end
+[~, info] = ucover(GLTIarray, GLTImean, nW2);
 
 switch w2_type
     case "frequency"
