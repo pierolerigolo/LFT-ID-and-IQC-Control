@@ -76,11 +76,20 @@ GLTI_selected = interp(GLTImean, w_lft);
 
 switch w2_type
     case "frequency"
-        % Pointwise optimal bound: |W2(jw)| = max_i |relative error_i(jw)|,
-        % computed directly on the synthesis grid (no fitted filter)
-        Parray_w = cellfun(@(P) interp(P, w_lft), Parray, 'UniformOutput', false);
-        [~, info] = ucover(stack(1, Parray_w{:}), GLTI_selected, 2);
-        W2frd = info.W1opt;
+        % Pointwise optimal bound (= ucover's W1opt for a SISO array):
+        %   |W2(jw)| = max_i |(G_LTI,i(jw) - G_LTI(jw)) / G_LTI(jw)|  on w_lft.
+        % Computed directly: ucover also fits a rational weight, which fails
+        % on the interpolated synthesis grid and is not needed here.
+        Pn   = squeeze(GLTI_selected.ResponseData);
+        magW = zeros(numel(w_lft), 1);
+        for i = 1:nOP
+            Pi   = squeeze(interp(Parray{i}, w_lft).ResponseData);
+            magW = max(magW, abs((Pi - Pn)./Pn));
+        end
+        if any(~isfinite(magW))
+            error('W2 bound is not finite at %d frequencies (check the frequency ranges).', nnz(~isfinite(magW)));
+        end
+        W2frd = frd(reshape(magW, 1, 1, []), w_lft, GFRF.Ts);
         W2    = W2frd;
         W2tag = 'opt';
     case "fit"
