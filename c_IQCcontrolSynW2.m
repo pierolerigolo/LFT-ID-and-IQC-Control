@@ -24,7 +24,7 @@ close all; clc; clear; clear("yalmip");
 %% Config
 idname        = 'LFT_GFRF_GdmGLTIW2n25hpf100_1028_etfe';   % file written by b_LFT2ndorderID (W2 with high-pass)
 % idname      = 'LFT_GFRF_GdmGLTIW2n25_1028_etfe';         % without high-pass (use_hpf = false in b)
-orderK_list   = 16;     % controller orders to synthesise
+orderK_list   = 20;     % controller orders to synthesise
 Ts            = 0.001;
 seed          = 22;
 
@@ -36,17 +36,16 @@ zeta_d        = 0.001;
 zeta_n        = 0.0001;
 
 % IQC
-eta0            = 0.05;      % initial bound on dm (mass units)
 alpha_PI        = 0;         % split of the multiplier (Gupta et al. 2024, Cor. 1)
 beta_PI         = 0.5;
 multiplier_type = "frequency";   % "frequency" or "constant" D, E
 
 % Optimisation
 solver          = 'mosek';
-mosek_near_rel  = 1e3;       % MOSEK default; 1e6 accepted very inaccurate solutions
-max_iter        = 50;
+mosek_near_rel  = 1e6;       % MOSEK default; 1e6 accepted very inaccurate solutions
+max_iter        = 30;
 obj_err         = [5e-3, 1e-3, 1e-3];   % convergence tolerance per stage
-obj_rise_tol    = 1e-3;      % relative objective increase that rejects a step
+obj_rise_tol    = 10;      % relative objective increase that rejects a step
 
 % Solver paths (machine specific)
 addpath(genpath("C:\Users\admin\mosek"))
@@ -57,6 +56,7 @@ addpath(genpath("C:\Users\admin\Documents\MATLAB\tbxmanager"))
 
 %% Load the LFT plant
 load(fullfile('Data', sprintf('%s.mat', idname)), 'GLFT', 'Delta', 'dm_bound', 'GFRF')
+eta0            = dm_bound/2;      % initial bound on dm (mass units)
 W_lft = GLFT.Frequency;
 [nout_lft, nin_lft] = size(GLFT);
 [nq, np] = size(Delta);          % Delta: p (plant outputs, np) -> q (plant inputs, nq)
@@ -134,6 +134,7 @@ for orderK = orderK_list
                     G_robustness, K, PI, alpha_PI, beta_PI, W_lft, ...
                     "addSlack", false, "pinorm", true);
                 LMIs = [LMIs, LMIs_rob];
+                % if iter==9, nextstage=true;end
             case 3
                 [LMIs, OBJ] = datadriven.Objective.Hinf(G_performance, K, W_lft);
                 % (a) multiplier for the current (frozen) controller,
@@ -284,3 +285,29 @@ title(sprintf('Sensitivity on the measured FRFs, order %d, \\eta = %.3g', orderK
 
 figure; utils.magplot(K_final, 'DisplayName', 'K final'); title('Controller')
 figure; pzplot(K_final); title('Controller poles/zeros')
+
+
+%% chosen controller on every measured operating point
+% opensave=load(fullfile('data','controller','LFT_GFRF_GdmGLTIW2n25hpf100_1028_etfe_controller_order16_80hz_-34db_nperfoptiIQC_notconv_etai0.18_etaf0.62_multi_freq.mat'));
+% iteration=18;
+% K_chosen=opensave.K_itr{iteration};
+opensave=load(fullfile('data','controller','LFT_GFRF_GdmGLTIW2n25hpf100_1028_etfe_controller_order18_80hz_-34db_nperfoptiIQC_etai0.18_etaf0.88_multi_freq.mat'));
+iteration=26;
+K_chosen=opensave.K_itr{iteration};
+
+
+SOAsave=load(fullfile('data','finalrepportcont','controller_ellips_sus_7nm_order20_82hz_-30db_nomperf.mat'));
+KSOA=SOAsave.K_itr{end};
+if isstable(K_chosen), fprintf('K chosen is OL stable\n'); else, fprintf('K chosen is OL unstable\n'); end
+figure; hold on
+for i = 1:nOP
+    utils.magplot(inv(1 + K_chosen*GFRF(i)), 'Color', colors(i, :), 'DisplayName', 'S OP'+string(i));
+    utils.magplot(inv(1 + KSOA*GFRF(i)), 'Color', [colors(i, :) .3],'linestyle','--', 'DisplayName', 'S SOA OP'+string(i));
+end
+utils.magplot(inv(1 + K_chosen*G_hat), 'Color', 'k', 'DisplayName', 'S nominal');
+utils.magplot(inv(1 + KSOA*G_hat), 'Color', [0 0 0 .3],'linestyle','--', 'DisplayName', 'S SOA nominal');
+utils.magplot(inv(opensave.W1_frd), 'Color', 'c', 'DisplayName', 'W_1^{-1}');
+title(sprintf('Sensitivity on the measured FRFs, order %d, \\eta = %.3g (dm_{bound}=%.3f), compared to ellipses SOA', opensave.orderK, opensave.eta_itr{iteration},opensave.dm_bound))
+
+figure; utils.magplot(K_chosen, 'DisplayName', 'K chosen')
+utils.magplot(KSOA, 'DisplayName', 'K SOA');title('Controller')

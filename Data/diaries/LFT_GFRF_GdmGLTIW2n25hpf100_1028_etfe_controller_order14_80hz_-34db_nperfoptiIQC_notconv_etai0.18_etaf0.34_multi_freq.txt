@@ -1,0 +1,244 @@
+Iter   1 | Stage 1
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+{Operation terminated by user during <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('sdpvar/size', 'C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\@sdpvar\size.m', 13)" style="font-weight:bold">sdpvar/size</a> (<a href="matlab: opentoline('C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\@sdpvar\size.m',13,0)">line 13</a>)
+
+
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('sdpvar/vertcat', 'C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\@sdpvar\vertcat.m', 18)" style="font-weight:bold">sdpvar/vertcat</a> (<a href="matlab: opentoline('C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\@sdpvar\vertcat.m',18,0)">line 18</a>)
+    [n(i),m(i)]=size(varargin{i});
+                ^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('lmi/imag2reallmi', 'C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\extras\@lmi\imag2reallmi.m', 16)" style="font-weight:bold">lmi/imag2reallmi</a> (<a href="matlab: opentoline('C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\extras\@lmi\imag2reallmi.m',16,0)">line 16</a>)
+                Freal.clauses{j}.data = [reF imF;-imF reF];
+                                        ^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('compileinterfacedata', 'C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\extras\compileinterfacedata.m', 721)" style="font-weight:bold">compileinterfacedata</a> (<a href="matlab: opentoline('C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\extras\compileinterfacedata.m',721,0)">line 721</a>)
+    F = imag2reallmi(F);
+        ^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('solvesdp', 'C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\extras\solvesdp.m', 301)" style="font-weight:bold">solvesdp</a> (<a href="matlab: opentoline('C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\extras\solvesdp.m',301,0)">line 301</a>)
+[interfacedata,recoverdata,solver,diagnostic,F,Fremoved,ForiginalQuadratics] = compileinterfacedata(F,[],logdetStruct,h,options,0,solving_parametric,solvers);
+                                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('optimize', 'C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\extras\optimize.m', 31)" style="font-weight:bold">optimize</a> (<a href="matlab: opentoline('C:\Users\admin\Documents\MATLAB\tbxmanager\toolboxes\yalmip\R20230609\all\YALMIP-master\extras\optimize.m',31,0)">line 31</a>)
+[varargout{1:nargout}] = solvesdp(varargin{:});
+                         ^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('c_IQCcontrolSynW2', 'C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\c_IQCcontrolSynW2.m', 158)" style="font-weight:bold">c_IQCcontrolSynW2</a> (<a href="matlab: opentoline('C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\c_IQCcontrolSynW2.m',158,0)">line 158</a>)
+        JOB = optimize(LMIs, OBJ, opts_sdp);
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+} 
+{Operation terminated by user during <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('usejava', 'C:\Program Files\MATLAB\R2026b\toolbox\matlab\general\usejava.m', 7)" style="font-weight:bold">usejava</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2026b\toolbox\matlab\general\usejava.m',7,0)">line 7</a>)
+
+
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('internal.matlab.datatoolsservices.FormatDataUtils.formatSize', 'C:\Program Files\MATLAB\R2026b\toolbox\matlab\datatools\datatoolsservices\matlab\+internal\+matlab\+datatoolsservices\@FormatDataUtils\formatSize.m', 22)" style="font-weight:bold">internal.matlab.datatoolsservices.FormatDataUtils.formatSize</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2026b\toolbox\matlab\datatools\datatoolsservices\matlab\+internal\+matlab\+datatoolsservices\@FormatDataUtils\formatSize.m',22,0)">line 22</a>)
+            elseif usejava('jvm') && isjava(data)
+                   ^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('internal.matlab.datatoolsservices.WSBUtil.getDisplayStruct', 'C:\Program Files\MATLAB\R2026b\toolbox\matlab\datatools\datatoolsservices\matlab\+internal\+matlab\+datatoolsservices\WSBUtil.m', 252)" style="font-weight:bold">internal.matlab.datatoolsservices.WSBUtil.getDisplayStruct</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2026b\toolbox\matlab\datatools\datatoolsservices\matlab\+internal\+matlab\+datatoolsservices\WSBUtil.m',252,0)">line 252</a>)
+                                t(idx).Size = FormatDataUtils.formatSize(var);
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('internal.matlab.datatoolsservices.WSBUtil.getWorkspaceDisplay', 'C:\Program Files\MATLAB\R2026b\toolbox\matlab\datatools\datatoolsservices\matlab\+internal\+matlab\+datatoolsservices\WSBUtil.m', 56)" style="font-weight:bold">internal.matlab.datatoolsservices.WSBUtil.getWorkspaceDisplay</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2026b\toolbox\matlab\datatools\datatoolsservices\matlab\+internal\+matlab\+datatoolsservices\WSBUtil.m',56,0)">line 56</a>)
+                info = internal.matlab.datatoolsservices.WSBUtil.getDisplayStruct( ...
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+} 
+{Operation terminated by user during <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('usejava', 'C:\Program Files\MATLAB\R2026b\toolbox\matlab\general\usejava.m', 7)" style="font-weight:bold">usejava</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2026b\toolbox\matlab\general\usejava.m',7,0)">line 7</a>)
+
+
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('internal.matlab.datatoolsservices.FormatDataUtils.formatSize', 'C:\Program Files\MATLAB\R2026b\toolbox\matlab\datatools\datatoolsservices\matlab\+internal\+matlab\+datatoolsservices\@FormatDataUtils\formatSize.m', 22)" style="font-weight:bold">internal.matlab.datatoolsservices.FormatDataUtils.formatSize</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2026b\toolbox\matlab\datatools\datatoolsservices\matlab\+internal\+matlab\+datatoolsservices\@FormatDataUtils\formatSize.m',22,0)">line 22</a>)
+            elseif usejava('jvm') && isjava(data)
+                   ^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('internal.matlab.datatoolsservices.WSBUtil.getDisplayStruct', 'C:\Program Files\MATLAB\R2026b\toolbox\matlab\datatools\datatoolsservices\matlab\+internal\+matlab\+datatoolsservices\WSBUtil.m', 252)" style="font-weight:bold">internal.matlab.datatoolsservices.WSBUtil.getDisplayStruct</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2026b\toolbox\matlab\datatools\datatoolsservices\matlab\+internal\+matlab\+datatoolsservices\WSBUtil.m',252,0)">line 252</a>)
+                                t(idx).Size = FormatDataUtils.formatSize(var);
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('internal.matlab.datatoolsservices.WSBUtil.getWorkspaceDisplay', 'C:\Program Files\MATLAB\R2026b\toolbox\matlab\datatools\datatoolsservices\matlab\+internal\+matlab\+datatoolsservices\WSBUtil.m', 56)" style="font-weight:bold">internal.matlab.datatoolsservices.WSBUtil.getWorkspaceDisplay</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2026b\toolbox\matlab\datatools\datatoolsservices\matlab\+internal\+matlab\+datatoolsservices\WSBUtil.m',56,0)">line 56</a>)
+                info = internal.matlab.datatoolsservices.WSBUtil.getDisplayStruct( ...
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+} 
+c_IQCcontrolSynW2
+
+===== Controller order 14 =====
+[Warning: The resource 'Data\diaries\diary_temp.txt' is currently in use.] 
+[> In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('c_IQCcontrolSynW2', 'C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\c_IQCcontrolSynW2.m', 120)" style="font-weight:bold">c_IQCcontrolSynW2</a> (<a href="matlab: opentoline('C:\Users\admin\Desktop\Val pdm Pierre Gretillat\LFT-ID-and-IQC-Control\c_IQCcontrolSynW2.m',120,0)">line 120</a>)] 
+Iter   1 | Stage 1
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 0.000000 | eta = 0.1788 | K OL stable | time = 2.50 s
+
+Iter   2 | Stage 1
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 0.000000 | eta = 0.1788 | K OL stable | time = 2.04 s
+
+  --> Saved K_stage{1}
+  --> Advancing to Stage 2
+Iter   3 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 1294.515875 | eta = 0.1788 | K OL stable | time = 4.97 s
+
+Iter   4 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 897.569955 | eta = 0.1788 | K OL stable | time = 4.87 s
+
+Iter   5 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 713.450836 | eta = 0.1788 | K OL stable | time = 4.71 s
+
+Iter   6 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  !! Solver failed (code 4: Numerical problems (<a href="yalmip.github.io/inside/debuggingnumerics">learn to debug</a>) (MOSEK-SDP)) -> rolled back to last accepted controller
+  obj = 713.450836 | eta = 0.1788 | K OL stable | time = 4.63 s
+
+  --> Saved K_stage{2}
+  --> Advancing to Stage 3
+Iter   7 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 0.01 -> true (slack = 0)
+    D = 1.4
+    E = -2.435e-17+6.248e-09i
+D warm-start:
+    1.4004
+
+E warm-start:
+  -2.4355e-17 + 6.2483e-09i
+
+  [expand] eta = 0.1788 -> true (slack = 0)
+    D = 1.638
+    E = 3.127e-14+1.286e-06i
+D warm-start:
+    1.6384
+
+E warm-start:
+   3.1270e-14 + 1.2864e-06i
+
+  [expand] eta = 0.3575 -> false (slack = 0)
+D warm-start:
+    1.6384
+
+E warm-start:
+   3.1270e-14 + 1.2864e-06i
+
+  [bisect  1] eta = 0.268154 -> true (slack = 0)
+    D = 1.925
+    E = 8.512e-15+4.228e-06i
+D warm-start:
+    1.9255
+
+E warm-start:
+   8.5115e-15 + 4.2277e-06i
+
+  [bisect  2] eta = 0.312847 -> true (slack = 0)
+    D = 2.571
+    E = -7.917e-17+6.131e-06i
+D warm-start:
+    2.5705
+
+E warm-start:
+  -7.9174e-17 + 6.1315e-06i
+
+  [bisect  3] eta = 0.335193 -> true (slack = 0)
+    D = 7.033
+    E = 8.717e-18+6.806e-06i
+D warm-start:
+    7.0334
+
+E warm-start:
+   8.7169e-18 + 6.8059e-06i
+
+  [bisect  4] eta = 0.346366 -> false (slack = 0)
+D warm-start:
+    7.0334
+
+E warm-start:
+   8.7169e-18 + 6.8059e-06i
+
+  [bisect  5] eta = 0.34078 -> true (slack = 0)
+    D = 4.58
+    E = -4.552e-15-4.417e-06i
+D warm-start:
+    4.5796
+
+E warm-start:
+  -4.5521e-15 - 4.4172e-06i
+
+  [bisect  6] eta = 0.343573 -> false (slack = 0)
+IQC_reduced_combinedPI_eta_bisection: converged, eta = 0.34078
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -5.0885
+
+max:     0
+
+  !! Solver failed (code 4: Numerical problems (<a href="yalmip.github.io/inside/debuggingnumerics">learn to debug</a>) (MOSEK-SDP)) -> rolled back to last accepted controller
+Order 14: ||W1 S||_inf = 26.496, certified eta = 0.3408 (dm_bound = 0.3575)

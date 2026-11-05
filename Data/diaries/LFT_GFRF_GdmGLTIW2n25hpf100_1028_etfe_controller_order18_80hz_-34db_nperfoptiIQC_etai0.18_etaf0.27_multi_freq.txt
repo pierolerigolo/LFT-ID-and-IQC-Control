@@ -1,0 +1,212 @@
+Iter   1 | Stage 1
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = -0.000000 | eta = 0.1788 | K OL stable | time = 2.38 s
+
+Iter   2 | Stage 1
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 0.000000 | eta = 0.1788 | K OL stable | time = 2.06 s
+
+  --> Saved K_stage{1}
+  --> Advancing to Stage 2
+Iter   3 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 1120.057986 | eta = 0.1788 | K OL unstable | time = 4.26 s
+
+Iter   4 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 573.732844 | eta = 0.1788 | K OL unstable | time = 5.80 s
+
+Iter   5 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 57.945395 | eta = 0.1788 | K OL unstable | time = 5.60 s
+
+Iter   6 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 2.013535 | eta = 0.1788 | K OL unstable | time = 5.83 s
+
+Iter   7 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 1.488090 | eta = 0.1788 | K OL stable | time = 5.97 s
+
+Iter   8 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  !! Objective increased (1.488090 -> 4.411154): step rejected, rolled back
+  obj = 1.488090 | eta = 0.1788 | K OL stable | time = 5.75 s
+
+  --> Saved K_stage{2}
+  --> Advancing to Stage 3
+Iter   9 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 0.01 -> true (slack = 0)
+    D = 1.441
+    E = -3.789e-15-6.981e-09i
+D warm-start:
+    1.4410
+
+E warm-start:
+  -3.7890e-15 - 6.9815e-09i
+
+  [expand] eta = 0.1788 -> true (slack = 0)
+    D = 1.711
+    E = -1.407e-16-2.08e-06i
+D warm-start:
+    1.7114
+
+E warm-start:
+  -1.4074e-16 - 2.0795e-06i
+
+  [expand] eta = 0.3575 -> false (slack = 0)
+D warm-start:
+    1.7114
+
+E warm-start:
+  -1.4074e-16 - 2.0795e-06i
+
+  [bisect  1] eta = 0.268154 -> true (slack = 0)
+    D = 2.284
+    E = 7.264e-15-5.215e-06i
+D warm-start:
+    2.2835
+
+E warm-start:
+   7.2638e-15 - 5.2146e-06i
+
+  [bisect  2] eta = 0.312847 -> false (slack = 0)
+D warm-start:
+    2.2835
+
+E warm-start:
+   7.2638e-15 - 5.2146e-06i
+
+  [bisect  3] eta = 0.290501 -> false (slack = 0)
+D warm-start:
+    2.2835
+
+E warm-start:
+   7.2638e-15 - 5.2146e-06i
+
+  [bisect  4] eta = 0.279328 -> false (slack = 0)
+D warm-start:
+    2.2835
+
+E warm-start:
+   7.2638e-15 - 5.2146e-06i
+
+  [bisect  5] eta = 0.273741 -> false (slack = 0)
+D warm-start:
+    2.2835
+
+E warm-start:
+   7.2638e-15 - 5.2146e-06i
+
+  [bisect  6] eta = 0.270948 -> false (slack = 0)
+D warm-start:
+    2.2835
+
+E warm-start:
+   7.2638e-15 - 5.2146e-06i
+
+  [bisect  7] eta = 0.269551 -> false (slack = 0)
+IQC_reduced_combinedPI_eta_bisection: converged, eta = 0.268154
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -2.7925
+
+max:     0
+
+  !! Objective increased (1.488090 -> 3.057146): step rejected, rolled back
+  obj = 1.488090 | eta = 0.2682 | K OL stable | time = 31.05 s
+
+  --> Saved K_stage{3}
+  --> Converged.
+Order 18: ||W1 S||_inf = 1.174, certified eta = 0.2682 (dm_bound = 0.3575)

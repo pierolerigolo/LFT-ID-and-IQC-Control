@@ -16,7 +16,7 @@ arguments (Input)
 end
     hold on
     if isa(model, 'tf') || isa(model, 'ss')
-        model = frd(model, linspace(2*pi*10, pi/model.Ts, 700));
+        model = frd(model, linspace(2*pi*1, pi/model.Ts, 700));
     end
     plot(model.Frequency/2/pi, mag2db(squeeze(abs(model.ResponseData))), plotoptions)
     xlim([10 1/2/model.Ts])
