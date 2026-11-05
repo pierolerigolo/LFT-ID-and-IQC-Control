@@ -59,15 +59,17 @@ disp(T_Gdm)
 writetable(T_Gdm, fullfile('plots', 'params_Gdm.xlsx'))
 
 %% 2. Synthesis frequency grid
-% Log grid 10 Hz .. 0.99*Nyquist, replaced by a denser log grid on 25-100 Hz
-% (no near-duplicate points), with the grid point closest to f_dist moved onto it.
+% Log grid 10 Hz .. 0.99*Nyquist merged with a denser log grid on 25-100 Hz
+% (300 points, the practical maximum for YALMIP); the grid point closest to
+% f_dist is moved onto it (no extra point).
 % The exact Nyquist point is excluded: with the Tustin G_dm, ucover's internal
 % fit (fitmagfrd) fails there ("Index in position 2 exceeds array bounds").
 w_glob  = logspace(log10(2*pi*10), log10(0.99*pi/Ts), 150);
 w_dense = logspace(log10(2*pi*25), log10(2*pi*100), 150);
-w_lft   = sort([w_glob(w_glob < w_dense(1) | w_glob > w_dense(end)), w_dense]).';
+w_lft   = unique([w_glob(:); w_dense(:)]);
 [~, k]  = min(abs(w_lft - 2*pi*f_dist));
 w_lft(k) = 2*pi*f_dist;
+w_lft   = unique(w_lft);
 w_lft   = w_lft(w_lft >= min(GFRF.Frequency) & w_lft <= max(GFRF.Frequency));   % no extrapolation
 
 %% 3. Residual LTI part and its nominal (mean), on w_lft
