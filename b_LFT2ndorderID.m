@@ -26,11 +26,11 @@ exportgraphics(gcf,fullfile('plots','gdmcompare.jpg'),'Resolution',300)
 % figure
 % bode(test,test2)
 %%
-figure;hold on
-for i=4%:length(Gdm)
-    bode(Gdm(i))
-    bode(GFRF(i))
-end
+% figure;hold on
+% for i=4%:length(Gdm)
+%     bode(Gdm(i))
+%     bode(GFRF(i))
+% end
 s=tf('s');
 figure;hold on
 clear GLTI
@@ -55,22 +55,22 @@ fs = Pnom.Frequency/a;
 Pn = squeeze(Pnom.ResponseData);         % 500x1
 Pa = squeeze(Parray.ResponseData);       % 500x4
 
-Pn_s = frd(reshape(Pn,1,1,[]), fs);
+Pn_s = frd(reshape(Pn,1,1,[]), Pnom.Frequency , GLTI.Ts);
 Parray_s = stack(1, ...
     frd(reshape(Pa(:,1),1,1,[]), fs), ...
     frd(reshape(Pa(:,2),1,1,[]), fs), ...
     frd(reshape(Pa(:,3),1,1,[]), fs), ...
     frd(reshape(Pa(:,4),1,1,[]), fs));
 
-n = 20;
-[~, info_s] = ucover(Parray_s, Pn_s, n);
+n = 2;
+[~, info_s] = ucover(Parray, Pnom, n);
 
-Ws = ss(info_s.W1);
-W2  = ss(a*Ws.A, a*Ws.B, Ws.C, Ws.D);
+W2 = (info_s.W1opt);
+% W2  = ss(a*Ws.A, a*Ws.B, Ws.C, Ws.D);
 
 relerr = Pnom\(Pnom - Parray);
 bo = bodeoptions; bo.FreqUnits = 'Hz';
-figure; bodemag(relerr,'b--',W2,'r',bo);
+figure; bodemag(relerr,'b-',W2,'r:',bo);
 exportgraphics(gcf,fullfile('plots','relerrW2bode.jpg'),'Resolution',300)
 
 %% Elliptical IQC uncertain model
