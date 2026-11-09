@@ -53,6 +53,7 @@ Same approach as `exp_controller.m` of the reference code
 (gitlab.epfl.ch/ddmac/paper-codes/2024/non-parametric-iqc-for-generalised-plant):
 the nominal model and a minimum-volume ellipse per frequency are computed
 directly from the measured FRFs (`+datadriven/find_elliptical_uncertainty.m`),
-then performance only -> robust stability only -> nominal H-inf performance
-subject to robust stability. Same `W1` and frequency grid as the W2 design.
+then robust stability only -> nominal H-inf performance subject to robust
+stability, with the same settings, stopping rules and OL-stable fallbacks as
+`c_IQCcontrolSynW2.m`. Same `W1` and frequency grid as the W2 design.
 
