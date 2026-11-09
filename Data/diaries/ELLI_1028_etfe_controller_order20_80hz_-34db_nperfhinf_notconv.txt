@@ -1,0 +1,227 @@
+Iter   1 | Stage 1
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   0.0000e+00 - 5.9107e-07i
+
+max:   -1.0000
+
+  obj = 0.000000 | K OL stable | time = 3.21 s
+
+Iter   2 | Stage 1
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   0.0000e+00 - 5.9107e-07i
+
+max:   -1.0000
+
+  obj = 0.000000 | K OL stable | time = 3.16 s
+
+  --> Saved K_stage{1}
+  --> Advancing to Stage 2
+Iter   3 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   0.0000e+00 - 5.9107e-07i
+
+max:   -1.0000
+
+  obj = 1987.241983 | K OL stable | time = 6.76 s
+
+Iter   4 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   0.0000e+00 - 5.9107e-07i
+
+max:   -1.0000
+
+  obj = 1497.844392 | K OL stable | time = 8.23 s
+
+Iter   5 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   0.0000e+00 - 5.9107e-07i
+
+max:   -1.0000
+
+  obj = 1183.076306 | K OL unstable | time = 7.80 s
+
+Iter   6 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   0.0000e+00 - 5.9107e-07i
+
+max:   -1.0000
+
+  obj = 897.219822 | K OL unstable | time = 7.11 s
+
+Iter   7 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   0.0000e+00 - 5.9107e-07i
+
+max:   -1.0000
+
+  obj = 686.978226 | K OL unstable | time = 8.35 s
+
+Iter   8 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   0.0000e+00 - 5.9107e-07i
+
+max:   -1.0000
+
+  obj = 509.349417 | K OL stable | time = 7.17 s
+
+Iter   9 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   0.0000e+00 - 5.9107e-07i
+
+max:   -1.0000
+
+  obj = 475.406763 | K OL stable | time = 8.46 s
+
+Iter  10 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   0.0000e+00 - 5.9107e-07i
+
+max:   -1.0000
+
+  obj = 333.852737 | K OL stable | time = 7.60 s
+
+Iter  11 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   0.0000e+00 - 5.9107e-07i
+
+max:   -1.0000
+
+  obj = 293.637655 | K OL stable | time = 9.28 s
+
+Iter  12 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   0.0000e+00 - 5.9107e-07i
+
+max:   -1.0000
+
+  obj = 221.546586 | K OL stable | time = 7.90 s
+
+Iter  13 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   0.0000e+00 - 5.9107e-07i
+
+max:   -1.0000
+
+  obj = 178.617016 | K OL stable | time = 6.62 s
+
+Iter  14 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   0.0000e+00 - 5.9107e-07i
+
+max:   -1.0000
+
+  obj = 141.640387 | K OL stable | time = 7.48 s
+
+Iter  15 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   0.0000e+00 - 5.9107e-07i
+
+max:   -1.0000
+
+  obj = 120.594481 | K OL stable | time = 6.85 s
+
+Iter  16 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   0.0000e+00 - 5.9107e-07i
+
+max:   -1.0000
+
+  !! Solver failed (code 4: Numerical problems (<a href="yalmip.github.io/inside/debuggingnumerics">learn to debug</a>) (MOSEK-SDP))
+  --> back to the best OL stable controller of stage 2 (iter 15, obj = 120.594481)
+Order 20: ||W1 S||_inf = 10.981, K OL stable: 1

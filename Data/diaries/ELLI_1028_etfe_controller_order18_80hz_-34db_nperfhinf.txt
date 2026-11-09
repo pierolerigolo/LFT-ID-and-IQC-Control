@@ -1,0 +1,314 @@
+Iter   1 | Stage 1
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   0.0000e+00 - 5.9107e-07i
+
+max:   -1.0000
+
+  obj = 0.000000 | K OL stable | time = 3.79 s
+
+Iter   2 | Stage 1
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   0.0000e+00 - 5.9107e-07i
+
+max:   -1.0000
+
+  obj = 0.000000 | K OL stable | time = 3.57 s
+
+  --> Saved K_stage{1}
+  --> Advancing to Stage 2
+Iter   3 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   0.0000e+00 - 5.9107e-07i
+
+max:   -1.0000
+
+  obj = 1746.314472 | K OL stable | time = 7.52 s
+
+Iter   4 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   0.0000e+00 - 5.9107e-07i
+
+max:   -1.0000
+
+  obj = 1174.231168 | K OL stable | time = 8.07 s
+
+Iter   5 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   0.0000e+00 - 5.9107e-07i
+
+max:   -1.0000
+
+  obj = 766.442315 | K OL stable | time = 8.54 s
+
+Iter   6 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   0.0000e+00 - 5.9107e-07i
+
+max:   -1.0000
+
+  obj = 519.451978 | K OL stable | time = 10.44 s
+
+Iter   7 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   0.0000e+00 - 5.9107e-07i
+
+max:   -1.0000
+
+  obj = 364.695298 | K OL stable | time = 9.25 s
+
+Iter   8 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   0.0000e+00 - 5.9107e-07i
+
+max:   -1.0000
+
+  obj = 245.285579 | K OL stable | time = 9.01 s
+
+Iter   9 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   0.0000e+00 - 5.9107e-07i
+
+max:   -1.0000
+
+  obj = 159.203340 | K OL stable | time = 9.67 s
+
+Iter  10 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   0.0000e+00 - 5.9107e-07i
+
+max:   -1.0000
+
+  obj = 100.266818 | K OL stable | time = 8.71 s
+
+Iter  11 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   0.0000e+00 - 5.9107e-07i
+
+max:   -1.0000
+
+  obj = 59.230004 | K OL stable | time = 8.71 s
+
+Iter  12 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   0.0000e+00 - 5.9107e-07i
+
+max:   -1.0000
+
+  obj = 36.981016 | K OL stable | time = 9.24 s
+
+Iter  13 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   0.0000e+00 - 5.9107e-07i
+
+max:   -1.0000
+
+  obj = 24.512931 | K OL stable | time = 8.62 s
+
+Iter  14 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   0.0000e+00 - 5.9107e-07i
+
+max:   -1.0000
+
+  obj = 14.269548 | K OL stable | time = 7.20 s
+
+Iter  15 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   0.0000e+00 - 5.9107e-07i
+
+max:   -1.0000
+
+  obj = 8.130594 | K OL stable | time = 7.15 s
+
+Iter  16 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   0.0000e+00 - 5.9107e-07i
+
+max:   -1.0000
+
+  obj = 5.835494 | K OL stable | time = 7.86 s
+
+Iter  17 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   0.0000e+00 - 5.9107e-07i
+
+max:   -1.0000
+
+  obj = 3.968555 | K OL stable | time = 10.66 s
+
+Iter  18 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   0.0000e+00 - 5.9107e-07i
+
+max:   -1.0000
+
+  obj = 3.428013 | K OL stable | time = 6.63 s
+
+Iter  19 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   0.0000e+00 - 5.9107e-07i
+
+max:   -1.0000
+
+  obj = 3.237883 | K OL stable | time = 10.50 s
+
+Iter  20 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   0.0000e+00 - 5.9107e-07i
+
+max:   -1.0000
+
+  obj = 3.261555 | K OL stable | time = 6.43 s
+
+Iter  21 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   0.0000e+00 - 5.9107e-07i
+
+max:   -1.0000
+
+  obj = 3.029541 | K OL stable | time = 9.16 s
+
+Iter  22 | Stage 2
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   0.0000e+00 - 5.9107e-07i
+
+max:   -1.0000
+
+  obj = 10.492626 | K OL stable | time = 9.70 s
+
+  --> Stage 2: 20 iterations reached (max_iter_stage2)
+  --> Saved K_stage{2}
+  --> Converged.
+Order 18: ||W1 S||_inf = 3.213, K OL stable: 1
