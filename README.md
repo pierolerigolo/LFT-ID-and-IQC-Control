@@ -10,6 +10,7 @@ YALMIP and MOSEK).
 | 1 | `a_MultimodelFRFID.m` | `Data/MIVIDA 261028/*_xsswp.mat` (one sine sweep per mass) | `Data/GFRF_iddata_1028_spa.mat` (set `save_output = true`) |
 | 2 | `b_LFT2ndorderID.m` | `Data/GFRF_iddata_1028_spa.mat` | `Data/LFT_GFRF_GdmGLTIW2n<nW2>_1028_spa.mat` |
 | 3 | `c_IQCcontrolSynW2.m` | the LFT file of step 2 (`idname`) | `Data/controller/*.mat`, `Data/diaries/*.txt` |
+| 3 (alt.) | `c_IQCcontrolSynElli.m` | the measured FRFs and grid of the step-2 file | `Data/controller/ELLI_*.mat`, `Data/diaries/ELLI_*.txt` |
 
 ## Model (step 2)
 
@@ -45,3 +46,14 @@ covers the whole identified mass range.
 - `+datadriven/+Constraint/polygonal_chain.m`: nominal stability constraint.
 - `+utils`: data loading, `G_dm` grey-box fit, magnitude plots. `Gdm.m` is the
   grey-box model used by `idgrey`.
+
+## Elliptical-set alternative (`c_IQCcontrolSynElli.m`)
+
+Same approach as `exp_controller.m` of the reference code
+(gitlab.epfl.ch/ddmac/paper-codes/2024/non-parametric-iqc-for-generalised-plant):
+the nominal model and a minimum-volume ellipse per frequency are computed
+directly from the measured FRFs (`+datadriven/find_elliptical_uncertainty.m`),
+then robust stability only -> nominal H-inf performance subject to robust
+stability, with the same settings, stopping rules and OL-stable fallbacks as
+`c_IQCcontrolSynW2.m`. Same `W1` and frequency grid as the W2 design.
+
