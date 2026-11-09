@@ -1,0 +1,504 @@
+Iter   1 | Stage 1
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = -0.000000 | eta = 0.2384 | K OL unstable | time = 2.24 s
+
+Iter   2 | Stage 1
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 0.000000 | eta = 0.2384 | K OL unstable | time = 1.99 s
+
+  --> Saved K_stage{1}
+  --> Advancing to Stage 2
+Iter   3 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 1173.783636 | eta = 0.2384 | K OL stable | time = 3.81 s
+
+Iter   4 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 616.105559 | eta = 0.2384 | K OL stable | time = 4.16 s
+
+Iter   5 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 216.742891 | eta = 0.2384 | K OL stable | time = 4.70 s
+
+Iter   6 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 33.956675 | eta = 0.2384 | K OL stable | time = 4.34 s
+
+Iter   7 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 7.095273 | eta = 0.2384 | K OL stable | time = 4.98 s
+
+Iter   8 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 5.068085 | eta = 0.2384 | K OL stable | time = 5.20 s
+
+Iter   9 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 4.258727 | eta = 0.2384 | K OL stable | time = 4.86 s
+
+Iter  10 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 3.771404 | eta = 0.2384 | K OL unstable | time = 5.05 s
+
+Iter  11 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 4.287331 | eta = 0.2384 | K OL unstable | time = 4.71 s
+
+Iter  12 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 3.052397 | eta = 0.2384 | K OL unstable | time = 5.10 s
+
+Iter  13 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 2.154044 | eta = 0.2384 | K OL unstable | time = 4.89 s
+
+Iter  14 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 1.794682 | eta = 0.2384 | K OL unstable | time = 4.89 s
+
+Iter  15 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 2.138994 | eta = 0.2384 | K OL unstable | time = 5.09 s
+
+Iter  16 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 2.064907 | eta = 0.2384 | K OL unstable | time = 4.98 s
+
+Iter  17 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 1.991649 | eta = 0.2384 | K OL unstable | time = 4.97 s
+
+Iter  18 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 1.898902 | eta = 0.2384 | K OL unstable | time = 4.85 s
+
+Iter  19 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 1.798229 | eta = 0.2384 | K OL unstable | time = 4.87 s
+
+Iter  20 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 1.645121 | eta = 0.2384 | K OL unstable | time = 5.25 s
+
+Iter  21 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 1.547592 | eta = 0.2384 | K OL unstable | time = 4.96 s
+
+Iter  22 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 1.453634 | eta = 0.2384 | K OL unstable | time = 5.08 s
+
+Iter  23 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 1.406361 | eta = 0.2384 | K OL unstable | time = 4.95 s
+
+Iter  24 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 1.260389 | eta = 0.2384 | K OL unstable | time = 5.48 s
+
+Iter  25 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 1.137391 | eta = 0.2384 | K OL unstable | time = 4.46 s
+
+Iter  26 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 83.832453 | eta = 0.2384 | K OL unstable | time = 6.69 s
+
+Iter  27 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 1.362159 | eta = 0.2384 | K OL unstable | time = 4.88 s
+
+Iter  28 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 0.989430 | eta = 0.2384 | K OL unstable | time = 4.87 s
+
+Iter  29 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 0.780785 | eta = 0.2384 | K OL unstable | time = 4.56 s
+
+Iter  30 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 0.581014 | eta = 0.2384 | K OL unstable | time = 4.87 s
+
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 0.01 -> true (slack = 0)
+    D = 1.393
+    E = 2.362e-16-1.239e-08i
+D warm-start:
+    1.3933
+
+E warm-start:
+   2.3618e-16 - 1.2387e-08i
+
+  [expand] eta = 0.2384 -> true (slack = 0)
+    D = 2.027
+    E = -7.086e-16-6.159e-06i
+D warm-start:
+    2.0273
+
+E warm-start:
+  -7.0860e-16 - 6.1587e-06i
+
+  [expand] eta = 0.4767 -> false (slack = 0)
+D warm-start:
+    2.0273
+
+E warm-start:
+  -7.0860e-16 - 6.1587e-06i
+
+  [bisect  1] eta = 0.357539 -> true (slack = 0)
+    D = 2.643
+    E = -1.111e-15-1.101e-05i
+D warm-start:
+    2.6428
+
+E warm-start:
+  -1.1106e-15 - 1.1012e-05i
+
+  [bisect  2] eta = 0.417129 -> false (slack = 0)
+D warm-start:
+    2.6428
+
+E warm-start:
+  -1.1106e-15 - 1.1012e-05i
+
+  [bisect  3] eta = 0.387334 -> false (slack = 0)
+D warm-start:
+    2.6428
+
+E warm-start:
+  -1.1106e-15 - 1.1012e-05i
+
+  [bisect  4] eta = 0.372437 -> true (slack = 0)
+    D = 6.009
+    E = -1.437e-17-1.272e-05i
+D warm-start:
+    6.0095
+
+E warm-start:
+  -1.4367e-17 - 1.2723e-05i
+
+  [bisect  5] eta = 0.379885 -> false (slack = 0)
+D warm-start:
+    6.0095
+
+E warm-start:
+  -1.4367e-17 - 1.2723e-05i
+
+  [bisect  6] eta = 0.376161 -> false (slack = 0)
+D warm-start:
+    6.0095
+
+E warm-start:
+  -1.4367e-17 - 1.2723e-05i
+
+  [bisect  7] eta = 0.374299 -> true (slack = 0)
+    D = 3.821
+    E = 9.731e-16+9.849e-06i
+IQC_reduced_combinedPI_eta_bisection: converged, eta = 0.374299
+Order 16: ||W1 S||_inf = 0.761, certified eta = 0.3743 (dm_bound = 0.3575), K OL stable: 0

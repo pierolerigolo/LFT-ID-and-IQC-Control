@@ -32,7 +32,7 @@ idname        = 'LFT_GFRF_GdmGLTIW2opt_1028_etfe';          % file written by b_
 % idname        = 'LFT_GFRF_GdmGLTIW2n25hpf100fl40_1028_etfe'; % file written by b_LFT2ndorderID (W2: high-pass + -40 dB floor)
 % idname      = 'LFT_GFRF_GdmGLTIW2n25hpf100_1028_etfe';     % high-pass, no floor (w2_floor_db = -Inf in b)
 % idname      = 'LFT_GFRF_GdmGLTIW2n25_1028_etfe';         % without high-pass (use_hpf = false in b)
-orderK_list   = 16:2:18;     % controller orders to synthesise
+orderK_list   = 10:2:20;     % controller orders to synthesise
 Ts            = 0.001;
 seed          = 22;
 
