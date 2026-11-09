@@ -27,17 +27,26 @@
 close all; clc; clear; clear("yalmip");
 
 %% Config
-idname        = 'LFT_GFRF_GdmGLTIW2opt_1028_etfe';          % file written by b_LFT2ndorderID (pointwise W2, no floor, no hpf)
+% idname        = 'LFT_GFRF_GdmGLTIW2opt_1028_etfe';          % file written by b_LFT2ndorderID (pointwise W2, no floor, no hpf)
 % idname        = 'LFT_GFRF_GdmGLTIW2optfl40_1028_etfe';      % file written by b_LFT2ndorderID (pointwise W2, -40 dB floor)
 % idname        = 'LFT_GFRF_GdmGLTIW2n25hpf100fl40_1028_etfe'; % file written by b_LFT2ndorderID (W2: high-pass + -40 dB floor)
 % idname      = 'LFT_GFRF_GdmGLTIW2n25hpf100_1028_etfe';     % high-pass, no floor (w2_floor_db = -Inf in b)
 % idname      = 'LFT_GFRF_GdmGLTIW2n25_1028_etfe';         % without high-pass (use_hpf = false in b)
-orderK_list   = 10:2:20;     % controller orders to synthesise
+% idname = 'LFT_GFRF_GdmGLTIW2opthpf75fl40_1028_etfe';
+idname ='LFT_GFRF_GdmGLTIW2opthpf75fl40_1028_etfe_50hz';
+orderK_list   = 24:2:26;     % controller orders to synthesise
 Ts            = 0.001;
 seed          = 22;
 
+% % Performance weight W1 = floor_gain + peak_extra * band-pass at omega_d
+% omega_d       = 80*2*pi;   % disturbance frequency (rad/s)
+% floor_gain    = 0.5;
+% peak_extra    = 500;
+% zeta_d        = 0.001;
+% zeta_n        = 0.0001;
+
 % Performance weight W1 = floor_gain + peak_extra * band-pass at omega_d
-omega_d       = 80*2*pi;   % disturbance frequency (rad/s)
+omega_d       = 50*2*pi;   % disturbance frequency (rad/s)
 floor_gain    = 0.5;
 peak_extra    = 500;
 zeta_d        = 0.001;
@@ -342,21 +351,22 @@ figure; utils.magplot(K_final, 'DisplayName', 'K final'); title('Controller')
 figure; pzplot(K_final); title('Controller poles/zeros')
 
 
-%% chosen controller on every measured operating point
+%% 80hz chosen controller on every measured operating point vs SOA
 % opensave=load(fullfile('data','controller','LFT_GFRF_GdmGLTIW2n25hpf100fl40_1028_etfe_controller_order18_80hz_-34db_nperfhinf_notconv_etai0.18_etaf0.42_multi_freq.mat'))
 % iteration=18;
 % K_chosen=opensave.K_final;
 % opensave=load(fullfile('data','controller','LFT_GFRF_GdmGLTIW2n25hpf100_1028_etfe_controller_order18_80hz_-34db_nperfoptiIQC_etai0.18_etaf0.88_multi_freq.mat'));
 % iteration=26;
 % K_chosen=opensave.K_itr{iteration};
-opensave=load(fullfile('data','controller','LFT_GFRF_GdmGLTIW2n25hpf100fl40_1028_etfe_controller_order16_80hz_-34db_nperfhinf_notconv_etai0.18_etaf0.33_multi_freq.mat'));
+% opensave=load(fullfile('data','controller','LFT_GFRF_GdmGLTIW2n25hpf100fl40_1028_etfe_controller_order16_80hz_-34db_nperfhinf_notconv_etai0.18_etaf0.33_multi_freq.mat'));
+% K_chosen=opensave.K_final;
+opensave=load(fullfile('data','controller','LFT_GFRF_GdmGLTIW2opthpf75fl40_1028_etfe_controller_order18_80hz_-34db_nperfoptiIQC_notconv_etai0.24_etaf0.37_multi_freq.mat'));
 K_chosen=opensave.K_final;
-
-
 SOAsave=load(fullfile('data','finalrepportcont','controller_ellips_sus_7nm_order20_82hz_-30db_nomperf.mat'));
 KSOA=SOAsave.K_itr{end};
 if isstable(K_chosen), fprintf('K chosen is OL stable\n'); else, fprintf('K chosen is OL unstable\n'); end
 figure; hold on
+GFRF=interp(GFRF,W_lft)
 for i = 1:nOP
     utils.magplot(inv(1 + K_chosen*GFRF(i)), 'Color', colors(i, :), 'DisplayName', 'S OP'+string(i));
     utils.magplot(inv(1 + KSOA*GFRF(i)), 'Color', [colors(i, :) .3],'linestyle','--', 'DisplayName', 'S SOA OP'+string(i));
@@ -368,6 +378,43 @@ title(sprintf('Sensitivity on the measured FRFs, order %d, \\eta = %.3g (dm_{bou
 
 figure; utils.magplot(K_chosen, 'DisplayName', 'K chosen')
 utils.magplot(KSOA, 'DisplayName', 'K SOA');title('Controller')
+
+%% 50hz chosen controller on every measured operating point
+% % -30db
+% opensave_A=load(fullfile('data','controller','LFT_GFRF_GdmGLTIW2opthpf75fl40_1028_etfe_50hz_controller_order16_50hz_-30db_nperfoptiIQC_etai0.24_etaf0.82_multi_freq.mat'));
+% K_A=opensave_A.K_final;
+% opensave_B=load(fullfile('data','controller','LFT_GFRF_GdmGLTIW2opthpf75fl40_1028_etfe_50hz_controller_order18_50hz_-30db_nperfoptiIQC_etai0.24_etaf1.63_multi_freq.mat'));
+% K_B=opensave_B.K_final;
+
+% -34db
+fn_A='LFT_GFRF_GdmGLTIW2opthpf75fl40_1028_etfe_50hz_controller_order20_50hz_-34db_nperfoptiIQC_etai0.24_etaf1.72_multi_freq';
+opensave_A=load(fullfile('data','controller',[fn_A,'.mat']));
+K_A=opensave_A.K_final;
+% fn_B='LFT_GFRF_GdmGLTIW2opthpf75fl40_1028_etfe_50hz_controller_order16_50hz_-34db_nperfoptiIQC_etai0.24_etaf1.50_multi_freq';
+fn_B='LFT_GFRF_GdmGLTIW2opthpf75fl40_1028_etfe_50hz_controller_order22_50hz_-34db_nperfoptiIQC_notconv_etai0.24_etaf0.80_multi_freq'
+opensave_B=load(fullfile('data','controller',[fn_B,'.mat']));
+K_B=opensave_B.K_final;
+
+if isstable(K_A), fprintf('K A is OL stable\n'); else, fprintf('K A is OL unstable\n'); end
+if isstable(K_B), fprintf('K B is OL stable\n'); else, fprintf('K B is OL unstable\n'); end
+figure; hold on
+GFRF=interp(GFRF,W_lft);
+for i = 1:nOP
+    utils.magplot(inv(1 + K_A*GFRF(i)), 'Color', colors(i, :), 'DisplayName', ...
+        'S A OP'+string(i));
+    utils.magplot(inv(1 + K_B*GFRF(i)), 'Color', [colors(i, :) .3],'linestyle','--', ...
+        'DisplayName', 'S B OP'+string(i));
+end
+utils.magplot(inv(1 + K_A*G_hat), 'Color', 'k', 'DisplayName', 'S B nominal');
+utils.magplot(inv(1 + K_B*G_hat), 'Color', [0 0 0 .3],'linestyle','--', 'DisplayName', ...
+    'S A nominal');
+utils.magplot(inv(opensave_A.W1_frd), 'Color', 'c', 'DisplayName', 'W_1^{-1}');
+title(sprintf(['Sensitivity on the measured FRFs, K A order %d, \\eta = %.3g' ...
+    ' compared to K B order %d, \\eta = %.3g (dm_{bound}=%.3f)'], opensave_A.orderK, ...
+    opensave_A.eta,opensave_B.orderK, opensave_B.eta,opensave_A.dm_bound))
+
+figure; utils.magplot(K_A, 'DisplayName', 'K A')
+utils.magplot(K_B, 'DisplayName', 'K B');title('Controller')
 
 
 %% Local functions

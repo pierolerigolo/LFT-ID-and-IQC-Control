@@ -23,15 +23,15 @@ clear; close all; clc
 expname = '1028_etfe';
 fmin_dm = 25;            % band (Hz) used to fit G_dm
 fmax_dm = 75;
-f_dist  = 80;            % disturbance frequency (Hz) targeted by W1: a grid point
+f_dist  = 50;            % disturbance frequency (Hz) targeted by W1: a grid point
 
 w2_type = "frequency";   % "frequency": pointwise bound W1opt, "fit": rational fit W1
 nW2     = 2;             % order of the ucover fit (used by "fit"; ucover always fits)
 
-use_hpf     = false;     % W2 <- Hpf*W2 (Butterworth high-pass)
+use_hpf     = true;     % W2 <- Hpf*W2 (Butterworth high-pass)
 n_hpf       = 6;         % order of the high-pass filter
-f_hpf       = 100;       % cut-off frequency (Hz)
-w2_floor_db = -Inf;      % lower bound on |W2| in dB (-Inf = none, phase kept)
+f_hpf       = 75;       % cut-off frequency (Hz)
+w2_floor_db = -40;      % lower bound on |W2| in dB (-Inf = none, phase kept)
 
 if ~exist('plots', 'dir'), mkdir('plots'); end
 load(fullfile('Data', sprintf('GFRF_iddata_%s.mat', expname)), 'GFRF', 'GFRF_cell', 'realmass');
@@ -142,7 +142,7 @@ GdmLFT   = lft(ureal('dm', 0, 'PlusMinus', dm_bound), Gdm_H);
 GLFT_delta    = GdmLFT*GLTILFT;
 [GLFT, Delta] = lftdata(GLFT_delta)
 
-save(fullfile('Data', sprintf('LFT_GFRF_GdmGLTIW2%s_%s.mat', W2tag, expname)), ...
+save(fullfile('Data', sprintf('LFT_GFRF_GdmGLTIW2%s_%s_%dhz.mat', W2tag, expname, f_dist)), ...
     "GLFT_delta", "GLFT", "Delta", "dm_bound", "m0", "m", "GFRF", "GFRF_cell", ...
     "realmass", "W2", "W2frd", "Hpf", "GLTI", "GLTImean", "relerr")
 
