@@ -53,6 +53,8 @@ solver          = 'mosek';
 mosek_near_rel  = 1e6;       % controller steps only (MOSEK default 1e3); the eta
                              % bisection always runs at the MOSEK defaults
 max_iter        = 30;
+max_iter_stage2 = 20;        % stage 2 ends after this many iterations even if the
+                             % objective still oscillates (Inf = only on convergence)
 obj_err         = [5e-3, 1e-3, 1e-3];   % convergence tolerance per stage
 
 % Solver paths (machine specific)
@@ -124,6 +126,7 @@ for orderK = orderK_list
     converged = false;
     nextstage = false;
     prev_obj  = Inf;          % for the convergence test
+    iter_in_stage = 0;        % solved iterations in the current stage
     K_good_state  = K.getstate();   % last solved controller (rollback on failure)
     K_stage_state = cell(3, 1);     % parameters of K_stage{s} (for fallbacks)
 
@@ -208,10 +211,15 @@ for orderK = orderK_list
         hist_obj(iter)    = obj_val;
         hist_stable(iter) = K_is_stable;
         hist_stage(iter)  = STAGE;
+        iter_in_stage     = iter_in_stage + 1;
         if K_is_stable, stab = 'stable'; else, stab = 'unstable'; end
         fprintf('  obj = %.6f | eta = %.4g | K OL %s | time = %.2f s\n\n', obj_val, eta, stab, elapsed);
 
         err = abs(prev_obj - obj_val);
+        if STAGE == 2 && iter_in_stage >= max_iter_stage2
+            fprintf('  --> Stage 2: %d iterations reached (max_iter_stage2)\n', iter_in_stage);
+            nextstage = true;
+        end
         if err < obj_err(STAGE) || err/prev_obj < obj_err(STAGE) || nextstage
             nextstage = false;
             if STAGE == 2 && ~K_is_stable
@@ -235,6 +243,7 @@ for orderK = orderK_list
             if STAGE < 3
                 STAGE    = STAGE + 1;
                 prev_obj = Inf;
+                iter_in_stage = 0;
                 fprintf('  --> Advancing to Stage %d\n', STAGE);
             else
                 converged = true;
@@ -247,6 +256,20 @@ for orderK = orderK_list
     end
 
     % ----- Final controller -----
+    % Run ended in stage 2 (max_iter reached): best OL-stable stage-2 controller.
+    if STAGE == 2 && ~isstable(ss(K))
+        [ok, idx] = select_stable(hist_stage, hist_stable, hist_obj, 2, 'best');
+        if ok
+            K.setstate(hist_state{idx});
+            fprintf('Final controller OL unstable: best OL stable stage-2 controller (iter %d, obj = %.6f)\n', ...
+                idx, hist_obj(idx));
+        elseif ~isempty(K_stage_state{1}) && isstable(K_stage{1})
+            K.setstate(K_stage_state{1});
+            fprintf('No OL stable stage-2 controller: back to the stage-1 controller\n');
+        else
+            warning('No open-loop stable controller found: the final controller is OL unstable.');
+        end
+    end
     % Stage 3: the last OL-stable stage-3 controller (objective NOT compared,
     % it may be higher than earlier ones). Its eta is recomputed below.
     if STAGE == 3 && ~isstable(ss(K))
@@ -271,7 +294,7 @@ for orderK = orderK_list
         end
     end
     K_final = ss(K);
-    if STAGE == 3, K_stage{3} = K_final; end
+    K_stage{STAGE} = K_final;
 
     %% Nominal closed loop and save
     norminf_W1S = norm(W1_frd*frd(feedback(1, G_hat*K_final), W_lft), inf);
