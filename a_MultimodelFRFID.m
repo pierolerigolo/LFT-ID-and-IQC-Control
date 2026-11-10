@@ -3,7 +3,7 @@
 %   One sine-sweep experiment per operating point (added mass) -> one FRF
 %   per operating point, estimated with spa.
 %
-%   Output (when save_output = true): Data/GFRF_iddata_1028_spa.mat
+%   Output (when save_output = true): Data/GFRF_iddata_<date>_etfe.mat (outfile)
 %     GFRF      1 x nOP frd (channel i = operating point i)
 %     GFRF_cell 1 x nOP cell of idfrd (same FRFs)
 %     d         1 x nOP cell of iddata (detrended time data)
@@ -12,11 +12,13 @@
 clear; close all; clc
 
 %% Config
-idfolder = fullfile('Data', 'MIVIDA 261028');
-files    = {'261028_gfrf0kg_xsswp.mat', '261028_gfrf2.1kg_xsswp.mat', ...
-            '261028_gfrf5.9kg_xsswp.mat', '261028_gfrf7.6kg_xsswp.mat'};
+% one sine-sweep file per operating point (0 kg re-identified on 2026-11-10)
+files    = {fullfile('Data', 'MIVIDA 261110', '261110_gfrf0kg_xsswp.mat'), ...
+            fullfile('Data', 'MIVIDA 261028', '261028_gfrf2.1kg_xsswp.mat'), ...
+            fullfile('Data', 'MIVIDA 261028', '261028_gfrf5.9kg_xsswp.mat'), ...
+            fullfile('Data', 'MIVIDA 261028', '261028_gfrf7.6kg_xsswp.mat')};
 realmass = [0 2.1 5.9 7.6];          % added mass of each file (kg)
-itmax    = {60000, [], [], 65000};   % last sample kept per file ([] = whole record)
+itmax    = {[], [], [], 65000};      % last sample kept per file ([] = whole record)
 
 Ts  = 0.001;
 % FRF frequency vector (rad/s): log spacing f_lo..f_split, linear spacing above
@@ -31,14 +33,14 @@ w   = [logspace(log10(2*pi*f_lo), log10(2*pi*f_split), n_log), w_lin(2:end)];
 lag = 1000;      % spa lag window; [] = record length (no smoothing), smaller = smoother
 
 save_output = true;   % true: (over)write the output file below
-outfile     = fullfile('Data', 'GFRF_iddata_1028_etfe.mat');
+outfile     = fullfile('Data', 'GFRF_iddata_1110_etfe.mat');
 
 %% FRF of each operating point
 nOP       = numel(files);
 GFRF_cell = cell(1, nOP);
 d         = cell(1, nOP);
 for i = 1:nOP
-    [u, y] = utils.openIOtemp(fullfile(idfolder, files{i}), 1, itmax{i});
+    [u, y] = utils.openIOtemp(files{i}, 1, itmax{i});
 
     d{i} = iddata(y(:), u(:), Ts, 'InputName', 'u'+string(i), 'OutputName', 'y');
     d{i} = detrend(d{i});                          % remove the operating-point offset

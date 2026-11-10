@@ -20,7 +20,7 @@
 clear; close all; clc
 
 %% Config
-expname = '1028_etfe';
+expname = '1110_etfe';   % GFRF_iddata_<expname>.mat from a_MultimodelFRFID (0 kg from 2026-11-10)
 fmin_dm = 25;            % band (Hz) used to fit G_dm
 fmax_dm = 75;
 f_dist  = 80;            % disturbance frequency (Hz) targeted by W1: a grid point
