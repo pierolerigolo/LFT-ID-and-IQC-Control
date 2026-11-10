@@ -8,17 +8,25 @@
 %   all read at the disturbance frequency of the case.
 %
 %   Data layout (segments are found automatically from the recorded signals):
-%     Data/experimental/<case folder>/sine/<mass>kg*.mat
-%     Data/experimental/<case folder>/sweep/<mass>kg*.mat
-%   e.g. Data/experimental/80hz_gdmw2/sine/2.1kg.mat and .../sweep/2.1kg.mat
+%     Data/Experiments/<case folder>/sine/<mass>kg*.mat
+%     Data/Experiments/<case folder>/sweep/<mass>kg*.mat
+%   e.g. Data/Experiments/80hz_gdmw2/sine/2.1kg.mat and .../sweep/2.1kg.mat
 %
 %   Output: one table per case (command window), plots/d_<case>_S.jpg and
 %           plots/d_experimental_attenuation.tex
 %
+%   Unstable runs (instab_folder, top-level .mat files): growth frequency and
+%   rate, decay, plateau clipping (utils.instability); if the file name holds
+%   k_final_<controller name>, the controller poles near the growth frequency
+%   are listed.
+%
 clear; close all; clc
 
 %% Config
-expfolder = fullfile('Data', 'experimental');
+run_cases     = false;                         % attenuation analysis of the cases below
+run_instab    = true;                          % analysis of unstable runs
+instab_folder = fullfile('Data', 'Experiments');
+expfolder = fullfile('Data', 'Experiments');
 trans     = 3000;      % samples skipped after each switch in the sine experiments
 Ts        = 0.001;
 
@@ -32,11 +40,35 @@ cases = struct( ...
     'itr',        {[],                              [],                              []}, ...
     'f_dist',     {80,                              80,                              50});
 
-%% Analysis
 if ~exist('plots', 'dir'), mkdir('plots'); end
+
+%% Unstable runs
+if run_instab
+    files = dir(fullfile(instab_folder, '*.mat'));
+    for i = 1:numel(files)
+        fprintf('\n== %s ==\n', files(i).name);
+        r = utils.instability(fullfile(files(i).folder, files(i).name));
+        fprintf(['controller on at %.2f s\n' ...
+            'growth : %.2f Hz, sigma = %+.2f 1/s, closed-loop damping %.4f\n' ...
+            'decay  : %.2f Hz, sigma = %+.2f 1/s, damping %.4f\n' ...
+            'plateau: |u| = %.3g (crest %.2f, 3rd harm. %.0f dB, clipped %d), |y| = %.3g (crest %.2f)\n'], ...
+            r.t_on, r.f_growth, r.sigma_growth, r.zeta_cl, r.f_decay, r.sigma_decay, r.zeta_decay, ...
+            r.u_amp, r.u_crest, r.u_harm3_dB, r.u_clipped, r.y_amp, r.y_crest);
+        tok = regexp(files(i).name, 'k_final_(.*)$', 'tokens', 'once');
+        if ~isempty(tok) && exist(fullfile('Data', 'controller', tok{1}), 'file')
+            Kf = load(fullfile('Data', 'controller', tok{1}), 'K_final');   K = Kf.K_final;
+            [wn, z] = damp(K);
+            sel = abs(wn/2/pi - r.f_growth) < 0.2*r.f_growth;
+            fprintf('controller poles near %.0f Hz: %s Hz, damping %s\n', r.f_growth, ...
+                mat2str(wn(sel).'/2/pi, 5), mat2str(z(sel).', 3));
+        end
+    end
+end
+
+%% Analysis of the cases
 nC  = numel(cases);
 res = cell(nC, 1);
-for c = 1:nC
+for c = 1:nC*run_cases
     C    = cases(c);
     dirC = fullfile(expfolder, C.folder);
     ctrl = load(fullfile('Data', 'controller', C.controller));
@@ -80,6 +112,7 @@ for c = 1:nC
 end
 
 %% LaTeX table: one row per mass, Sine / Sweep / Th. / SNR per case
+if ~run_cases, return, end
 allmass = unique(cell2mat(cellfun(@(T) T.Mass_kg, res, 'UniformOutput', false)));
 fid = fopen(fullfile('plots', 'd_experimental_attenuation.tex'), 'w');
 fprintf(fid, '\\begin{table}[h]\n\\centering\n\\begin{tabular}{l%s}\n\\toprule\n', repmat('cccc', 1, nC));
