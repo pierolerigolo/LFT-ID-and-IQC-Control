@@ -23,16 +23,16 @@ clear; close all; clc
 expname = '1028_etfe';
 fmin_dm = 25;            % band (Hz) used to fit G_dm
 fmax_dm = 75;
-f_dist  = 50;            % disturbance frequency (Hz) targeted by W1: a grid point
-f_min   = 1;             % lower end (Hz) of the synthesis grid (upper end: Nyquist)
+f_dist  = 80;            % disturbance frequency (Hz) targeted by W1: a grid point
+f_min   = 10;             % lower end (Hz) of the synthesis grid (upper end: Nyquist)
 
 w2_type = "frequency";   % "frequency": pointwise bound W1opt, "fit": rational fit W1
 nW2     = 2;             % order of the ucover fit (used by "fit"; ucover always fits)
 
-use_hpf     = true;     % W2 <- Hpf*W2 (Butterworth high-pass)
+use_hpf     = false;     % W2 <- Hpf*W2 (Butterworth high-pass)
 n_hpf       = 6;         % order of the high-pass filter
 f_hpf       = 75;       % cut-off frequency (Hz)
-w2_floor_db = -40;      % lower bound on |W2| in dB (-Inf = none, phase kept)
+w2_floor_db = -Inf;      % lower bound on |W2| in dB (-Inf = none, phase kept)
 
 if ~exist('plots', 'dir'), mkdir('plots'); end
 load(fullfile('Data', sprintf('GFRF_iddata_%s.mat', expname)), 'GFRF', 'GFRF_cell', 'realmass');

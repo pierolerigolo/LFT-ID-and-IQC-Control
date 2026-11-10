@@ -33,24 +33,25 @@ close all; clc; clear; clear("yalmip");
 % idname      = 'LFT_GFRF_GdmGLTIW2n25hpf100_1028_etfe';     % high-pass, no floor (w2_floor_db = -Inf in b)
 % idname      = 'LFT_GFRF_GdmGLTIW2n25_1028_etfe';         % without high-pass (use_hpf = false in b)
 % idname = 'LFT_GFRF_GdmGLTIW2opthpf75fl40_1028_etfe';
-idname ='LFT_GFRF_GdmGLTIW2opthpf75fl40_1028_etfe_50hz';
-orderK_list   = 24:2:26;     % controller orders to synthesise
+% idname ='LFT_GFRF_GdmGLTIW2opthpf75fl40_1028_etfe_50hz';
+idname='LFT_GFRF_GdmGLTIW2opt_1028_etfe_80hz_fmin10';
+orderK_list   = 18;     % controller orders to synthesise
 Ts            = 0.001;
 seed          = 22;
 
-% % Performance weight W1 = floor_gain + peak_extra * band-pass at omega_d
-% omega_d       = 80*2*pi;   % disturbance frequency (rad/s)
-% floor_gain    = 0.5;
-% peak_extra    = 500;
-% zeta_d        = 0.001;
-% zeta_n        = 0.0001;
-
 % Performance weight W1 = floor_gain + peak_extra * band-pass at omega_d
-omega_d       = 50*2*pi;   % disturbance frequency (rad/s)
+omega_d       = 80*2*pi;   % disturbance frequency (rad/s)
 floor_gain    = 0.5;
 peak_extra    = 500;
 zeta_d        = 0.001;
 zeta_n        = 0.0001;
+
+% % Performance weight W1 = floor_gain + peak_extra * band-pass at omega_d
+% omega_d       = 50*2*pi;   % disturbance frequency (rad/s)
+% floor_gain    = 0.5;
+% peak_extra    = 500;
+% zeta_d        = 0.001;
+% zeta_n        = 0.0001;
 
 % IQC
 alpha_PI        = 0;         % split of the multiplier (Gupta et al. 2024, Cor. 1)
@@ -67,11 +68,11 @@ max_iter_stage2 = 20;        % stage 2 ends after this many iterations even if t
 obj_err         = [5e-3, 1e-3, 1e-3];   % convergence tolerance per stage
 
 % Solver paths (machine specific)
-addpath(genpath("C:\Users\admin\mosek"))
-addpath(genpath("C:\Program Files\Mosek\10.1"))
-addpath(genpath("C:\Users\admin\Documents\MATLAB\tbxmanager"))
-% addpath(genpath("/Users/pierre/mosek"))
-% addpath(genpath("/Users/pierre/Documents/MATLAB/tbxmanager"))
+% addpath(genpath("C:\Users\admin\mosek"))
+% addpath(genpath("C:\Program Files\Mosek\10.1"))
+% addpath(genpath("C:\Users\admin\Documents\MATLAB\tbxmanager"))
+addpath(genpath("/Users/pierre/mosek"))
+addpath(genpath("/Users/pierre/Documents/MATLAB/tbxmanager"))
 
 %% Load the LFT plant
 load(fullfile('Data', sprintf('%s.mat', idname)), 'GLFT', 'Delta', 'dm_bound', 'GFRF')
@@ -140,7 +141,7 @@ for orderK = orderK_list
     K_stage_state = cell(3, 1);     % parameters of K_stage{s} (for fallbacks)
 
     diaryfile = fullfile('Data', 'diaries', 'diary_temp.txt');
-    if exist(diaryfile, 'file'), delete(diaryfile); end
+    if exist(diaryfile, 'file'),diary off; delete(diaryfile); end
     diary(diaryfile)
 
     for iter = 1:max_iter
@@ -378,7 +379,11 @@ title(sprintf('Sensitivity on the measured FRFs, order %d, \\eta = %.3g (dm_{bou
 
 figure; utils.magplot(K_chosen, 'DisplayName', 'K chosen')
 utils.magplot(KSOA, 'DisplayName', 'K SOA');title('Controller')
-
+%%
+L0 = K_chosen*GFRF(1);                                 % 0 kg
+[mm, k] = min(abs(squeeze(1 + L0.ResponseData)));
+fprintf('min |1+L| = %.3f at %.1f Hz\n', mm, L0.Frequency(k)/2/pi);
+figure; nyquist(L0)
 %% 50hz chosen controller on every measured operating point
 % % -30db
 % opensave_A=load(fullfile('data','controller','LFT_GFRF_GdmGLTIW2opthpf75fl40_1028_etfe_50hz_controller_order16_50hz_-30db_nperfoptiIQC_etai0.24_etaf0.82_multi_freq.mat'));
