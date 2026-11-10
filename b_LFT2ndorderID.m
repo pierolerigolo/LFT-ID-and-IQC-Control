@@ -101,7 +101,8 @@ for i = 1:nOP
     GLTI(1, i) = GFRF_w(i)/Gdm(i); %#ok<SAGROW>
 end
 GLTImean  = frd(mean(GLTI.ResponseData, 2), w_lft, Ts);
-GLTIarray = stack(1, GLTI(1, 1), GLTI(1, 2), GLTI(1, 3), GLTI(1, 4));
+GLTIcell  = arrayfun(@(i) GLTI(1, i), 1:nOP, 'UniformOutput', false);
+GLTIarray = stack(1, GLTIcell{:});
 
 figure; bode(GLTIarray, GLTImean)
 exportgraphics(gcf, fullfile('plots', 'GLTIbode.jpg'), 'Resolution', 300)
