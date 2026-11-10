@@ -14,7 +14,7 @@
 %            Delta: 1x1 LTI, ||Delta||_inf <= 1 (ultidyn)
 %
 %   Input : Data/GFRF_iddata_<expname>.mat   (from a_MultimodelFRFID)
-%   Output: Data/LFT_GFRF_GdmGLTIW2<opt|n<nW2>>[hpf<f_hpf>][fl<dB>]_<expname>.mat
+%   Output: Data/LFT_GFRF_GdmGLTIW2<opt|n<nW2>>[hpf<f_hpf>][fl<dB>]_<expname>_<f_dist>hz_fmin<f_min>.mat
 %           (for c_IQCcontrolSynW2)
 %
 clear; close all; clc
@@ -24,6 +24,7 @@ expname = '1028_etfe';
 fmin_dm = 25;            % band (Hz) used to fit G_dm
 fmax_dm = 75;
 f_dist  = 50;            % disturbance frequency (Hz) targeted by W1: a grid point
+f_min   = 1;             % lower end (Hz) of the synthesis grid (upper end: Nyquist)
 
 w2_type = "frequency";   % "frequency": pointwise bound W1opt, "fit": rational fit W1
 nW2     = 2;             % order of the ucover fit (used by "fit"; ucover always fits)
@@ -59,18 +60,22 @@ disp(T_Gdm)
 writetable(T_Gdm, fullfile('plots', 'params_Gdm.xlsx'))
 
 %% 2. Synthesis frequency grid
-% Log grid 10 Hz .. 0.99*Nyquist merged with a denser log grid on 25-100 Hz
+% Log grid f_min .. Nyquist merged with a denser log grid on 25-100 Hz
 % (300 points, the practical maximum for YALMIP); the grid point closest to
 % f_dist is moved onto it (no extra point).
-% The exact Nyquist point is excluded: with the Tustin G_dm, ucover's internal
-% fit (fitmagfrd) fails there ("Index in position 2 exceeds array bounds").
-w_glob  = logspace(log10(2*pi*10), log10(0.99*pi/Ts), 150);
+w_glob  = logspace(log10(2*pi*f_min), log10(pi/Ts), 150);
 w_dense = logspace(log10(2*pi*25), log10(2*pi*100), 150);
 w_lft   = unique([w_glob(:); w_dense(:)]);
 [~, k]  = min(abs(w_lft - 2*pi*f_dist));
 w_lft(k) = 2*pi*f_dist;
 w_lft   = unique(w_lft);
-w_lft   = w_lft(w_lft >= min(GFRF.Frequency) & w_lft <= max(GFRF.Frequency));   % no extrapolation
+inrange = w_lft >= min(GFRF.Frequency) & w_lft <= max(GFRF.Frequency);   % no extrapolation
+if ~all(inrange)
+    warning('b:grid', ['%d grid points outside the measured FRF range (%.3g-%.3g Hz) dropped: ' ...
+        'extend the frequency vector w in a_MultimodelFRFID.'], nnz(~inrange), ...
+        min(GFRF.Frequency)/2/pi, max(GFRF.Frequency)/2/pi);
+end
+w_lft   = w_lft(inrange);
 
 %% 3. Residual LTI part and its nominal (mean), on w_lft
 GFRF_w = interp(GFRF, w_lft);
@@ -89,7 +94,15 @@ if any(~isfinite(GLTIarray.ResponseData(:))) || any(~isfinite(GLTImean.ResponseD
     error('G_LTI has non-finite values on w_lft: ucover cannot fit W2.');
 end
 relerr    = GLTImean\(GLTImean - GLTIarray);
-[~, info] = ucover(GLTIarray, GLTImean, nW2);
+try
+    [~, info] = ucover(GLTIarray, GLTImean, nW2);
+catch ME
+    % ucover also fits a rational weight (fitmagfrd), which can fail (e.g. with
+    % the Nyquist point: "Index in position 2 exceeds array bounds").
+    if w2_type == "fit", rethrow(ME); end
+    warning('b:ucover', 'ucover failed (%s): W1opt computed directly.', ME.message);
+    info.W1opt = frd(max(abs(relerr.ResponseData), [], 4), w_lft, Ts);   % max over the models
+end
 
 switch w2_type
     case "frequency"
@@ -142,7 +155,7 @@ GdmLFT   = lft(ureal('dm', 0, 'PlusMinus', dm_bound), Gdm_H);
 GLFT_delta    = GdmLFT*GLTILFT;
 [GLFT, Delta] = lftdata(GLFT_delta)
 
-save(fullfile('Data', sprintf('LFT_GFRF_GdmGLTIW2%s_%s_%dhz.mat', W2tag, expname, f_dist)), ...
+save(fullfile('Data', sprintf('LFT_GFRF_GdmGLTIW2%s_%s_%dhz_fmin%g.mat', W2tag, expname, f_dist, f_min)), ...
     "GLFT_delta", "GLFT", "Delta", "dm_bound", "m0", "m", "GFRF", "GFRF_cell", ...
     "realmass", "W2", "W2frd", "Hpf", "GLTI", "GLTImean", "relerr")
 
