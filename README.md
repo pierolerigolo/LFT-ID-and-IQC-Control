@@ -11,6 +11,7 @@ YALMIP and MOSEK).
 | 2 | `b_LFT2ndorderID.m` | `Data/GFRF_iddata_1028_spa.mat` | `Data/LFT_GFRF_GdmGLTIW2n<nW2>_1028_spa.mat` |
 | 3 | `c_IQCcontrolSynW2.m` | the LFT file of step 2 (`idname`) | `Data/controller/*.mat`, `Data/diaries/*.txt` |
 | 3 (alt.) | `c_IQCcontrolSynElli.m` | the measured FRFs and grid of the step-2 file | `Data/controller/ELLI_*.mat`, `Data/diaries/ELLI_*.txt` |
+| 4 | `d_ExperimentalResults.m` | `Data/experimental/<case>/{sine,sweep}/<mass>kg*.mat` + the controller files | tables, `plots/d_*_S.jpg`, `plots/d_experimental_attenuation.tex` |
 
 ## Model (step 2)
 
