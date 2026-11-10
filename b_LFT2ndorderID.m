@@ -14,7 +14,7 @@
 %            Delta: 1x1 LTI, ||Delta||_inf <= 1 (ultidyn)
 %
 %   Input : Data/GFRF_iddata_<expname>.mat   (from a_MultimodelFRFID)
-%   Output: Data/LFT_GFRF_GdmGLTIW2<opt|n<nW2>>[hpf<f_hpf>][fl<dB>]_<expname>_<f_dist>hz_fmin<f_min>.mat
+%   Output: Data/LFT_GFRF_GdmGLTIW2<opt|n<nW2>>[hpf<f_hpf>][fl<dB>]_<expname>_<f_dist>hz_fmin<f_min>[_hyb].mat
 %           (for c_IQCcontrolSynW2)
 %
 clear; close all; clc
@@ -25,6 +25,11 @@ fmin_dm = 25;            % band (Hz) used to fit G_dm
 fmax_dm = 75;
 f_dist  = 80;            % disturbance frequency (Hz) targeted by W1: a grid point
 f_min   = 10;             % lower end (Hz) of the synthesis grid (upper end: Nyquist)
+grid_type    = "hybrid";  % "log": log grid + dense 25-100 Hz grid
+                          % "hybrid": log f_min..f_split_grid, linear above (finer at high frequency)
+n_grid       = 300;       % number of grid points (practical maximum for YALMIP)
+f_split_grid = 20;        % "hybrid": log below, linear above (Hz)
+n_grid_log   = 30;        % "hybrid": points f_min..f_split_grid
 
 w2_type = "frequency";   % "frequency": pointwise bound W1opt, "fit": rational fit W1
 nW2     = 2;             % order of the ucover fit (used by "fit"; ucover always fits)
@@ -59,13 +64,25 @@ T_Gdm = param_table(sys_est_Gdm, [compose("m_%d", 1:nOP), "c", "k"]);
 disp(T_Gdm)
 writetable(T_Gdm, fullfile('plots', 'params_Gdm.xlsx'))
 
-%% 2. Synthesis frequency grid
-% Log grid f_min .. Nyquist merged with a denser log grid on 25-100 Hz
-% (300 points, the practical maximum for YALMIP); the grid point closest to
-% f_dist is moved onto it (no extra point).
-w_glob  = logspace(log10(2*pi*f_min), log10(pi/Ts), 150);
-w_dense = logspace(log10(2*pi*25), log10(2*pi*100), 150);
-w_lft   = unique([w_glob(:); w_dense(:)]);
+%% 2. Synthesis frequency grid (n_grid points)
+% "log"   : log grid f_min .. Nyquist merged with a denser log grid on 25-100 Hz
+% "hybrid": log grid f_min .. f_split_grid, then linear up to Nyquist
+%           (~1.7 Hz spacing, resolves the high-frequency modes much better)
+% The grid point closest to f_dist is moved onto it (no extra point).
+switch grid_type
+    case "log"
+        w_glob  = logspace(log10(2*pi*f_min), log10(pi/Ts), n_grid/2);
+        w_dense = logspace(log10(2*pi*25), log10(2*pi*100), n_grid/2);
+        w_lft   = unique([w_glob(:); w_dense(:)]);
+        gridtag = '';
+    case "hybrid"
+        w_low  = logspace(log10(2*pi*f_min), log10(2*pi*f_split_grid), n_grid_log);
+        w_high = linspace(2*pi*f_split_grid, pi/Ts, n_grid - n_grid_log + 1);
+        w_lft  = [w_low(:); w_high(2:end).'];     % f_split_grid only once
+        gridtag = '_hyb';
+    otherwise
+        error('grid_type must be "log" or "hybrid".')
+end
 [~, k]  = min(abs(w_lft - 2*pi*f_dist));
 w_lft(k) = 2*pi*f_dist;
 w_lft   = unique(w_lft);
@@ -155,7 +172,7 @@ GdmLFT   = lft(ureal('dm', 0, 'PlusMinus', dm_bound), Gdm_H);
 GLFT_delta    = GdmLFT*GLTILFT;
 [GLFT, Delta] = lftdata(GLFT_delta)
 
-save(fullfile('Data', sprintf('LFT_GFRF_GdmGLTIW2%s_%s_%dhz_fmin%g.mat', W2tag, expname, f_dist, f_min)), ...
+save(fullfile('Data', sprintf('LFT_GFRF_GdmGLTIW2%s_%s_%dhz_fmin%g%s.mat', W2tag, expname, f_dist, f_min, gridtag)), ...
     "GLFT_delta", "GLFT", "Delta", "dm_bound", "m0", "m", "GFRF", "GFRF_cell", ...
     "realmass", "W2", "W2frd", "Hpf", "GLTI", "GLTImean", "relerr")
 

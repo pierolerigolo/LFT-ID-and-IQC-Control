@@ -19,7 +19,15 @@ realmass = [0 2.1 5.9 7.6];          % added mass of each file (kg)
 itmax    = {60000, [], [], 65000};   % last sample kept per file ([] = whole record)
 
 Ts  = 0.001;
-w   = logspace(log10(2*pi*10), log10(pi/Ts), 500);   % rad/s, 10 Hz .. Nyquist
+% FRF frequency vector (rad/s): log spacing f_lo..f_split, linear spacing above
+% (fine enough to resolve the high-frequency modes)
+f_lo    = 10;          % lowest frequency (Hz)
+f_split = 20;          % log below, linear above (Hz)
+n_log   = 50;          % points f_lo..f_split
+n_lin   = 1000;        % points f_split..Nyquist (~0.5 Hz spacing)
+n_etfe  = 2000;        % etfe frequency points (0..Nyquist, ~0.25 Hz)
+w_lin = linspace(2*pi*f_split, pi/Ts, n_lin + 1);
+w   = [logspace(log10(2*pi*f_lo), log10(2*pi*f_split), n_log), w_lin(2:end)];
 lag = 1000;      % spa lag window; [] = record length (no smoothing), smaller = smoother
 
 save_output = true;   % true: (over)write the output file below
@@ -36,7 +44,7 @@ for i = 1:nOP
     d{i} = detrend(d{i});                          % remove the operating-point offset
 
     if isempty(lag), lag_i = length(d{i}.OutputData); else, lag_i = lag; end
-    GFRF_cell{i} =interp(etfe(d{i}, lag_i, 1000),w);
+    GFRF_cell{i} = interp(etfe(d{i}, lag_i, n_etfe), w);
     GFRF_cell{i}.Name      = sprintf('OP%d', i);
     GFRF_cell{i}.InputName = sprintf('u%d', i);
 
