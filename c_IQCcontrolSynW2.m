@@ -414,6 +414,7 @@ for c = 1:2
     end
 end
 legend('Location', 'best')
+exportgraphics(gcf, fullfile('plots', 'nyquist_delay_gain.png'), 'Resolution', 300)
 %% 50hz chosen controller on every measured operating point
 % % -30db
 % opensave_A=load(fullfile('data','controller','LFT_GFRF_GdmGLTIW2opthpf75fl40_1028_etfe_50hz_controller_order16_50hz_-30db_nperfoptiIQC_etai0.24_etaf0.82_multi_freq.mat'));
