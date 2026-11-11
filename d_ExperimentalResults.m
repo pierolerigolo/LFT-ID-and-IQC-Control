@@ -16,9 +16,11 @@
 %           plots/d_experimental_attenuation.tex
 %
 %   Unstable runs (instab_folder, top-level .mat files): growth frequency and
-%   rate, decay, plateau clipping (utils.instability); if the file name holds
-%   k_final_<controller name>, the controller poles near the growth frequency
-%   are listed.
+%   rate, decay, plateau clipping (utils.instability). With the controller of
+%   the run (contfn, or k_final_<controller file> in the run's file name):
+%   its poles near the growth frequency, the recorded controller u/y compared
+%   with -K_final at that frequency, and the lsim check (K_final applied to the
+%   recorded acceleration vs the recorded controller output).
 %
 clear; close all; clc
 
@@ -26,6 +28,8 @@ clear; close all; clc
 run_cases     = false;                         % attenuation analysis of the cases below
 run_instab    = true;                          % analysis of unstable runs
 instab_folder = fullfile('Data', 'Experiments');
+contfn        = '';                            % controller file (Data/controller) used in the unstable
+                                               % runs; '' = from the run's file name after k_final_
 expfolder = fullfile('Data', 'Experiments');
 trans     = 3000;      % samples skipped after each switch in the sine experiments
 Ts        = 0.001;
@@ -54,14 +58,43 @@ if run_instab
             'plateau: |u| = %.3g (crest %.2f, 3rd harm. %.0f dB, clipped %d), |y| = %.3g (crest %.2f)\n'], ...
             r.t_on, r.f_growth, r.sigma_growth, r.zeta_cl, r.f_decay, r.sigma_decay, r.zeta_decay, ...
             r.u_amp, r.u_crest, r.u_harm3_dB, r.u_clipped, r.y_amp, r.y_crest);
-        tok = regexp(files(i).name, 'k_final_(.*)$', 'tokens', 'once');
-        if ~isempty(tok) && exist(fullfile('Data', 'controller', tok{1}), 'file')
-            Kf = load(fullfile('Data', 'controller', tok{1}), 'K_final');   K = Kf.K_final;
-            [wn, z] = damp(K);
-            sel = abs(wn/2/pi - r.f_growth) < 0.2*r.f_growth;
-            fprintf('controller poles near %.0f Hz: %s Hz, damping %s\n', r.f_growth, ...
-                mat2str(wn(sel).'/2/pi, 5), mat2str(z(sel).', 3));
+        cfile = contfn;
+        if isempty(cfile)
+            tok = regexp(files(i).name, 'k_final_(.*)$', 'tokens', 'once');
+            if ~isempty(tok), cfile = tok{1}; end
         end
+        if isempty(cfile) || ~exist(fullfile('Data', 'controller', cfile), 'file')
+            fprintf('controller file not found (set contfn): no controller check\n');
+            continue
+        end
+        Kf = load(fullfile('Data', 'controller', cfile), 'K_final');   K = Kf.K_final;
+        [wn, z] = damp(K);
+        sel = abs(wn/2/pi - r.f_growth) < 0.2*r.f_growth;
+        fprintf('controller poles near %.0f Hz: %s Hz, damping %s\n', r.f_growth, ...
+            mat2str(wn(sel).'/2/pi, 5), mat2str(z(sel).', 3));
+
+        % --- implemented vs designed controller (u = -K y) ---
+        if isempty(r.idx_growth)
+            fprintf('no growth window found: no controller check\n');
+            continue
+        end
+        [y, ~, u] = utils.loadexp(fullfile(files(i).folder, files(i).name));
+        t   = (0:numel(y)-1).'*Ts;
+        idx = r.idx_growth(1):r.idx_growth(2);
+        Hrec = band_ratio(u(idx), y(idx), r.f_growth, 1/Ts);          % recorded u/y
+        Hdes = -squeeze(freqresp(K, 2*pi*r.f_growth));                % designed  -K
+        fprintf(['at %.2f Hz: recorded u/y %6.1f dB %7.1f deg | designed -K %6.1f dB %7.1f deg' ...
+            ' | difference %+.1f dB %+.1f deg\n'], r.f_growth, ...
+            mag2db(abs(Hrec)), rad2deg(angle(Hrec)), mag2db(abs(Hdes)), rad2deg(angle(Hdes)), ...
+            mag2db(abs(Hrec/Hdes)), rad2deg(angle(Hrec/Hdes)));
+
+        usim = lsim(K, -y, t);                                         % K_final on the recorded y
+        figure('Name', ['lsim check: ' files(i).name])
+        plot(t, u, t, usim, '--'); grid on
+        xlim(t(idx([1 end])).' + [-0.05 0.05])
+        legend('recorded controller output', 'K\_final applied to the recorded y', 'Location', 'best')
+        xlabel('time (s)'); ylabel('controller output')
+        title(sprintf('growth window, %.1f Hz', r.f_growth))
     end
 end
 
@@ -137,6 +170,15 @@ fprintf(fid, ['\\caption{Experimental attenuation [dB] at the disturbance freque
 fclose(fid);
 
 %% Local functions
+function H = band_ratio(num, den, f0, Fs)
+%BAND_RATIO num/den at f0 (Hann window, cross-spectrum over +/- 3 Hz)
+    w = hann(numel(num));
+    N = fft((num(:) - mean(num)).*w);   D = fft((den(:) - mean(den)).*w);
+    f = (0:numel(num)-1).'*Fs/numel(num);
+    m = abs(f - f0) < 3;
+    H = sum(N(m).*conj(D(m)))/sum(abs(D(m)).^2);
+end
+
 function [mass, files] = list_mass(folder)
 %LIST_MASS .mat files of a folder named <mass>kg*.mat, sorted by mass
     d = dir(fullfile(folder, '*.mat'));

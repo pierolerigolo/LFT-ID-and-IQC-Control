@@ -9,6 +9,7 @@ function r = instability(path, Fs, do_plot)
 %   the plateau) and the decay after the peak, and checks the plateau for
 %   clipping. Fields of r:
 %     t_on            controller output becomes active (s)
+%     idx_growth      [first last] sample of the growth window (fit window)
 %     f_growth        oscillation frequency while it grows (Hz)
 %     sigma_growth    envelope growth rate (1/s), > 0 = unstable closed loop
 %     zeta_cl         equivalent closed-loop damping  = -sigma/(2 pi f)
@@ -51,6 +52,7 @@ end
         'u_crest', max(abs(up))/rms(up), 'y_crest', max(abs(yp))/rms(yp), ...
         'u_harm3_dB', 20*log10(max(Xu(max(i3-2, 1):min(i3+2, end)))/Xu(i1)));
     r.u_clipped = r.u_crest < 1.38;
+    if isempty(g), r.idx_growth = []; else, r.idx_growth = [g(1), g(end)]; end
 
     if do_plot
         figure('Name', path)
