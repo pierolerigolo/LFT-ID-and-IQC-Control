@@ -383,11 +383,37 @@ title(sprintf('Sensitivity on the measured FRFs, order %d, \\eta = %.3g (dm_{bou
 
 figure; utils.magplot(K_chosen, 'DisplayName', 'K chosen')
 utils.magplot(KSOA, 'DisplayName', 'K SOA');title('Controller')
-%%
-L0 = K_chosen*GFRF(1);                                 % 0 kg
-[mm, k] = min(abs(squeeze(1 + L0.ResponseData)));
-fprintf('min |1+L| = %.3f at %.1f Hz\n', mm, L0.Frequency(k)/2/pi);
-figure; nyquist(L0)
+%% Loop as designed vs as implemented on the setup (extra delay / gain test)
+% The recorded unstable run showed u/y = -20.3 dB, -28 deg vs -K_final at 77.7 Hz:
+% one extra sample of delay and a factor ~1/9.81 (g instead of m/s^2?).
+% If that explains the experiments, K_chosen must lose stability (curve around -1,
+% min|1+L| -> 0 near 78 Hz) while KSOA stays clear of -1.
+delay_impl = 1;          % extra delay in the setup (samples)
+gain_impl  = 1/9.81;     % extra gain in the setup
+F  = load(fullfile('Data', [opensave.idname '.mat']), 'GFRF');       % measured FRFs (all points)
+w  = unique([F.GFRF.Frequency(:); 2*pi*linspace(70, 90, 20001).']);  % + fine grid around 80 Hz
+Kc    = {K_chosen, KSOA};
+Kname = {'K chosen (Gdm-W2)', 'KSOA (ellipse)'};
+corr  = {ones(size(w)), exp(-1j*w*Ts*delay_impl), gain_impl*exp(-1j*w*Ts*delay_impl)};
+cname = {'as designed', sprintf('+ %d sample delay', delay_impl), '+ delay and gain'};
+
+figure
+for c = 1:2
+    Kw = squeeze(freqresp(Kc{c}, w));
+    for v = 1:3
+        subplot(2, 3, 3*(c - 1) + v); hold on; grid on
+        for i = 1:size(F.GFRF, 2)
+            L = corr{v}.*Kw.*squeeze(interp(F.GFRF(i), w).ResponseData);
+            [mm, k] = min(abs(1 + L));
+            fprintf('%-18s %-18s OP%d: min|1+L| = %.3f at %.2f Hz\n', Kname{c}, cname{v}, i, mm, w(k)/2/pi);
+            plot(real(L), imag(L), 'Color', colors(i, :), 'DisplayName', 'OP'+string(i))
+        end
+        plot(-1, 0, 'r+', 'MarkerSize', 12, 'LineWidth', 2, 'HandleVisibility', 'off')
+        axis equal; xlim([-4 2]); ylim([-3 3])
+        title([Kname{c} ', ' cname{v}])
+    end
+end
+legend('Location', 'best')
 %% 50hz chosen controller on every measured operating point
 % % -30db
 % opensave_A=load(fullfile('data','controller','LFT_GFRF_GdmGLTIW2opthpf75fl40_1028_etfe_50hz_controller_order16_50hz_-30db_nperfoptiIQC_etai0.24_etaf0.82_multi_freq.mat'));
