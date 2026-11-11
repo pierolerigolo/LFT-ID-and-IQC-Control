@@ -28,7 +28,7 @@ clear; close all; clc
 run_cases     = false;                         % attenuation analysis of the cases below
 run_instab    = true;                          % analysis of unstable runs
 instab_folder = fullfile('Data', 'Experiments');
-contfn        = '';                            % controller file (Data/controller) used in the unstable
+contfn        = 'LFT_GFRF_GdmGLTIW2opt_1028_etfe_80hz_fmin10_hyb_controller_order18_80hz_-34db_nperfoptiIQC_notconv_etai0.24_etaf0.60_multi_freq.mat';                            % controller file (Data/controller) used in the unstable
                                                % runs; '' = from the run's file name after k_final_
 expfolder = fullfile('Data', 'Experiments');
 trans     = 3000;      % samples skipped after each switch in the sine experiments

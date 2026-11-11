@@ -362,7 +362,10 @@ figure; pzplot(K_final); title('Controller poles/zeros')
 % K_chosen=opensave.K_itr{iteration};
 % opensave=load(fullfile('data','controller','LFT_GFRF_GdmGLTIW2n25hpf100fl40_1028_etfe_controller_order16_80hz_-34db_nperfhinf_notconv_etai0.18_etaf0.33_multi_freq.mat'));
 % K_chosen=opensave.K_final;
-opensave=load(fullfile('data','controller','LFT_GFRF_GdmGLTIW2opthpf75fl40_1028_etfe_controller_order18_80hz_-34db_nperfoptiIQC_notconv_etai0.24_etaf0.37_multi_freq.mat'));
+% opensave=load(fullfile('data','controller','LFT_GFRF_GdmGLTIW2opthpf75fl40_1028_etfe_controller_order18_80hz_-34db_nperfoptiIQC_notconv_etai0.24_etaf0.37_multi_freq.mat'));
+% K_chosen=opensave.K_final;
+fn='LFT_GFRF_GdmGLTIW2opt_1028_etfe_80hz_fmin10_hyb_controller_order18_80hz_-34db_nperfoptiIQC_notconv_etai0.24_etaf0.60_multi_freq';
+opensave=load(fullfile('data','controller',[fn,'.mat']));
 K_chosen=opensave.K_final;
 SOAsave=load(fullfile('data','finalrepportcont','controller_ellips_sus_7nm_order20_82hz_-30db_nomperf.mat'));
 KSOA=SOAsave.K_itr{end};
