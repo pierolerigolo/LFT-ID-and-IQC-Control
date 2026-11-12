@@ -1,7 +1,10 @@
-function [S ,Uclfrd]= sweepS(path, Ts, pre)
+function [S, Uclfrd, Yclfrd, Yolfrd] = sweepS(path, Ts, pre)
 %SWEEPS Experimental sensitivity from an open-loop / closed-loop sine-sweep pair
 %
 %   S = utils.sweepS(path, Ts, pre)
+%   [S, Uclfrd, Yclfrd, Yolfrd] = utils.sweepS(...) also returns the raw FFT
+%   bins (frd) of the controller output and of the acceleration in the
+%   closed-loop window, and of the acceleration in the open-loop window.
 %
 %   The recording holds identical sweeps of the disturbance, with the controller
 %   off (open loop) and on (closed loop), in any order. Only full-length sweeps
@@ -43,5 +46,7 @@ end
     k = (1:floor(L/2)).';                 % 0 < f <= Nyquist
     w = 2*pi*k/(L*Ts);
     Uclfrd =frd(reshape(Ucl(k + 1), 1, 1, []), w, Ts);
+    Yclfrd = frd(reshape(Ycl(k + 1), 1, 1, []), w, Ts);
+    Yolfrd = frd(reshape(Yol(k + 1), 1, 1, []), w, Ts);
     S = frd(reshape(Ycl(k + 1)./Yol(k + 1), 1, 1, []), w, Ts);
 end
