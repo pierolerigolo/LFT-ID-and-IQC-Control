@@ -1,4 +1,4 @@
-function S = sweepS(path, Ts, pre)
+function [S ,Uclfrd]= sweepS(path, Ts, pre)
 %SWEEPS Experimental sensitivity from an open-loop / closed-loop sine-sweep pair
 %
 %   S = utils.sweepS(path, Ts, pre)
@@ -15,7 +15,7 @@ arguments
     pre (1,1) double = 1000
 end
     [y, d, u] = utils.loadexp(path);
-
+    % figure;hold on;plot(y);plot(d);plot(u); %debugger
     m = sqrt(movmean(d.^2, 500));
     on = m > 0.05*max(m);
     starts = find(diff([0; on]) == 1);
@@ -38,8 +38,10 @@ end
     L  = min([L, numel(y) - s0(1) + 1, numel(y) - s0(2) + 1]);
     Yol = fft(y(s0(iol):s0(iol) + L - 1));
     Ycl = fft(y(s0(icl):s0(icl) + L - 1));
+    Ucl = fft(u(s0(icl):s0(icl) + L - 1));
 
     k = (1:floor(L/2)).';                 % 0 < f <= Nyquist
     w = 2*pi*k/(L*Ts);
+    Uclfrd =frd(reshape(Ucl(k + 1), 1, 1, []), w, Ts);
     S = frd(reshape(Ycl(k + 1)./Yol(k + 1), 1, 1, []), w, Ts);
 end
