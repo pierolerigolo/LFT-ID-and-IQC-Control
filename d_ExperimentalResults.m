@@ -20,19 +20,47 @@
 %   the run (contfn, or k_final_<controller file> in the run's file name):
 %   its poles near the growth frequency, the recorded controller u/y compared
 %   with -K_final at that frequency, and the lsim check (K_final applied to the
-%   recorded acceleration vs the recorded controller output).
+%   recorded acceleration vs the recorded controller output). The designed
+%   controller is evaluated at s = sigma + j*omega (the oscillation grows).
+%
+%   Sweep runs (sweep_runs): implemented vs designed controller over the whole
+%   band (-u/y in the closed-loop sweep vs K), estimated implementation gain,
+%   and measured S = Y_cl/Y_ol vs 1/(1+K Gu) and 1/(1+gain K Gu), with Gu the
+%   controller-output -> acceleration path measured from the sweeps.
+%
+%   Nyquist (nyq_K): loop on every measured FRF as designed and with the
+%   implementation gain (gain_impl, or the gain estimated from the sweep runs).
 %
 clear; close all; clc
 
 %% Config
 run_cases     = false;                         % attenuation analysis of the cases below
 run_instab    = true;                          % analysis of unstable runs
+run_sweepchk  = true;                          % implemented vs designed controller on sweep runs
+run_nyquist   = true;                          % Nyquist of the loop with the implementation gain
 instab_folder = fullfile('Data', 'Experiments');
 contfn        = 'LFT_GFRF_GdmGLTIW2opt_1028_etfe_80hz_fmin10_hyb_controller_order18_80hz_-34db_nperfoptiIQC_notconv_etai0.24_etaf0.60_multi_freq.mat';                            % controller file (Data/controller) used in the unstable
                                                % runs; '' = from the run's file name after k_final_
 expfolder = fullfile('Data', 'Experiments');
 trans     = 3000;      % samples skipped after each switch in the sine experiments
 Ts        = 0.001;
+
+% Sweep runs (open-loop then closed-loop disturbance sweep) and their controller
+% (file, and itr: [] = K_final, n = K_itr{n}, Inf = last K_itr)
+sweep_runs = struct( ...
+    'file',       {fullfile('Data', 'Experiments', 'Old Experiments', ...
+                   'controller_sus_7nm_order18_82hz_-34db_nperfhinfnperfoptiIQC_eta9.139390e-01_itr26', 'gfrf0_sswep.mat')}, ...
+    'controller', {fullfile('Data', 'finalrepportcont', 'controller_sus_7nm_order18_82hz_-34db_nperfhinfnperfoptiIQC_eta9.139390e-01.mat')}, ...
+    'itr',        {26});
+f_chk = (15:5:450).';   % frequencies of the controller / sensitivity comparison (Hz)
+
+% Nyquist: controllers to compare (same fields), plant = measured FRFs of nyq_frf
+nyq_K = struct( ...
+    'name',       {'K chosen (Gdm-W2)',                         'KSOA (ellipse)'}, ...
+    'controller', {fullfile('Data', 'controller', contfn),     fullfile('Data', 'finalrepportcont', 'controller_ellips_sus_7nm_order20_82hz_-30db_nomperf.mat')}, ...
+    'itr',        {[],                                          Inf});
+nyq_frf   = 'LFT_GFRF_GdmGLTIW2opt_1028_etfe_80hz_fmin10_hyb';   % Data/<nyq_frf>.mat holds GFRF
+gain_impl = [];         % implementation gain; [] = estimated from the sweep runs
 
 % folder      : case folder in expfolder
 % controller  : file in Data/controller (K_final, or K_itr{itr} if itr is set)
@@ -82,13 +110,17 @@ if run_instab
         t   = (0:numel(y)-1).'*Ts;
         idx = r.idx_growth(1):r.idx_growth(2);
         Hrec = band_ratio(u(idx), y(idx), r.f_growth, 1/Ts);          % recorded u/y
-        Hdes = -squeeze(freqresp(K, 2*pi*r.f_growth));                % designed  -K
-        fprintf(['at %.2f Hz: recorded u/y %6.1f dB %7.1f deg | designed -K %6.1f dB %7.1f deg' ...
-            ' | difference %+.1f dB %+.1f deg\n'], r.f_growth, ...
+        % the oscillation grows as exp((sigma + j w) t): compare with K at s = sigma + j w
+        % (K(j w) gives a fake phase shift next to a lightly damped controller pole)
+        s_g  = r.sigma_growth + 1j*2*pi*r.f_growth;
+        Hdes = -evalfr(K, exp(s_g*Ts));                               % designed  -K
+        fprintf(['at %.2f Hz (sigma %+.2f): recorded u/y %6.1f dB %7.1f deg | designed -K %6.1f dB %7.1f deg' ...
+            ' | difference %+.2f dB %+.1f deg\n'], r.f_growth, r.sigma_growth, ...
             mag2db(abs(Hrec)), rad2deg(angle(Hrec)), mag2db(abs(Hdes)), rad2deg(angle(Hdes)), ...
             mag2db(abs(Hrec/Hdes)), rad2deg(angle(Hrec/Hdes)));
 
         usim = lsim(K, -y, t);                                         % K_final on the recorded y
+        % (with an implementation gain g, the recorded output is g times this curve)
         figure('Name', ['lsim check: ' files(i).name])
         plot(t, u, t, usim, '--'); grid on
         xlim(t(idx([1 end])).' + [-0.05 0.05])
@@ -96,6 +128,83 @@ if run_instab
         xlabel('time (s)'); ylabel('controller output')
         title(sprintf('growth window, %.1f Hz', r.f_growth))
     end
+end
+
+%% Sweep runs: implemented vs designed controller, gain estimate, sensitivity
+g_est = [];
+for i = 1:numel(sweep_runs)*run_sweepchk
+    R = sweep_runs(i);
+    K = load_K(R.controller, R.itr);
+    [y, d, u] = utils.loadexp(R.file);
+    [iol, icl, L] = sweep_windows(d, u, 1000);
+    F  = @(x) fft(x - mean(x));
+    Yo = F(y(iol:iol+L-1));  Do = F(d(iol:iol+L-1));
+    Yc = F(y(icl:icl+L-1));  Dc = F(d(icl:icl+L-1));  Uc = F(u(icl:icl+L-1));
+    fv = (0:L-1).'/(L*Ts);
+    n  = numel(f_chk);
+    [ratio, Gd, Gu, Sexp] = deal(complex(zeros(n, 1)));
+    for k = 1:n
+        m = abs(fv - f_chk(k)) < 1;                                  % +/- 1 Hz band
+        Gd(k)    = sum(Yo(m).*conj(Do(m)))/sum(abs(Do(m)).^2);      % disturbance -> y (open loop)
+        rr       = Yc(m) - Gd(k)*Dc(m);                              % closed loop: y = Gd d + Gu u
+        Gu(k)    = sum(rr.*conj(Uc(m)))/sum(abs(Uc(m)).^2);         % controller output -> y
+        Himpl    = -sum(Uc(m).*conj(Yc(m)))/sum(abs(Yc(m)).^2);     % implemented controller -u/y
+        ratio(k) = Himpl/evalfr(K, exp(1j*2*pi*f_chk(k)*Ts));        % implemented / designed
+        Sexp(k)  = (sum(Yc(m).*conj(Dc(m)))/sum(abs(Dc(m)).^2))/Gd(k);
+    end
+    g = median(abs(ratio))*sign(median(cos(angle(ratio))));          % robust to the controller peak
+    g_est(end+1) = g; %#ok<AGROW>
+    [~, nm] = fileparts(R.file);
+    fprintf(['\n== sweep run %s ==\nimplemented / designed controller: median %.4f (%+.2f dB), ' ...
+        'phase median %+.1f deg (1 sample of delay would be -360 f Ts)\n'], ...
+        nm, g, mag2db(abs(g)), rad2deg(median(angle(ratio))));
+    Kw   = arrayfun(@(f) evalfr(K, exp(1j*2*pi*f*Ts)), f_chk);
+    Sth  = 1./(1 + Kw.*Gu);
+    Sthg = 1./(1 + g*Kw.*Gu);
+    disp(table(f_chk, mag2db(abs(ratio)), rad2deg(angle(ratio)), mag2db(abs(Sexp)), mag2db(abs(Sth)), mag2db(abs(Sthg)), ...
+        'VariableNames', {'f_Hz', 'impl_over_K_dB', 'impl_over_K_deg', 'S_meas_dB', 'S_th_K_dB', 'S_th_gK_dB'}))
+
+    figure('Name', ['sweep check: ' nm])
+    subplot(3, 1, 1); semilogx(f_chk, mag2db(abs(ratio)), 'o-'); grid on
+    yline(mag2db(abs(g)), '--', sprintf('%.2f dB', mag2db(abs(g)))); ylabel('|impl / K| (dB)')
+    title('implemented controller (-u/y, closed-loop sweep) / designed K')
+    subplot(3, 1, 2); semilogx(f_chk, rad2deg(angle(ratio)), 'o-', f_chk, -360*f_chk*Ts, '--'); grid on
+    ylabel('phase (deg)'); legend('impl / K', '1 sample delay', 'Location', 'best')
+    subplot(3, 1, 3); semilogx(f_chk, mag2db(abs(Sexp)), 'k-', f_chk, mag2db(abs(Sth)), 'b--', f_chk, mag2db(abs(Sthg)), 'r--'); grid on
+    ylabel('|S| (dB)'); xlabel('Frequency (Hz)')
+    legend('measured Y_{cl}/Y_{ol}', '1/(1+K G_u)', sprintf('1/(1+%.2f K G_u)', g), 'Location', 'best')
+end
+
+%% Nyquist: loop as designed vs with the implementation gain
+if run_nyquist
+    if isempty(gain_impl)
+        if isempty(g_est), error('Set gain_impl or enable run_sweepchk to estimate it.'); end
+        gain_impl = median(g_est);
+    end
+    FRF = load(fullfile('Data', [nyq_frf '.mat']), 'GFRF');
+    w   = unique([FRF.GFRF.Frequency(:); 2*pi*linspace(60, 100, 20001).']);   % + fine grid at 60-100 Hz
+    w   = w(w >= min(FRF.GFRF.Frequency) & w <= max(FRF.GFRF.Frequency));
+    nOP = size(FRF.GFRF, 2);
+    col = lines(nOP);
+    gains = [1, gain_impl];
+    figure('Name', 'Nyquist: designed vs implemented gain')
+    for c = 1:numel(nyq_K)
+        Kw = squeeze(freqresp(load_K(nyq_K(c).controller, nyq_K(c).itr), w));
+        for v = 1:2
+            subplot(numel(nyq_K), 2, 2*(c - 1) + v); hold on; grid on
+            for i = 1:nOP
+                Lw = gains(v)*Kw.*squeeze(interp(FRF.GFRF(i), w).ResponseData);
+                [mm, k] = min(abs(1 + Lw));
+                fprintf('%-18s gain %6.3f OP%d: min|1+L| = %.3f at %.2f Hz\n', nyq_K(c).name, gains(v), i, mm, w(k)/2/pi);
+                plot(real(Lw), imag(Lw), 'Color', col(i, :), 'DisplayName', 'OP'+string(i))
+            end
+            plot(-1, 0, 'r+', 'MarkerSize', 12, 'LineWidth', 2, 'HandleVisibility', 'off')
+            axis equal; xlim([-6 4]); ylim([-5 5])
+            title(sprintf('%s, gain %.3g', nyq_K(c).name, gains(v)))
+        end
+    end
+    legend('Location', 'best')
+    exportgraphics(gcf, fullfile('plots', 'd_nyquist_gain.png'), 'Resolution', 300)
 end
 
 %% Analysis of the cases
@@ -170,6 +279,32 @@ fprintf(fid, ['\\caption{Experimental attenuation [dB] at the disturbance freque
 fclose(fid);
 
 %% Local functions
+function K = load_K(file, itr)
+%LOAD_K Controller from a saved run: [] = K_final, n = K_itr{n}, Inf = last K_itr
+    if isempty(itr)
+        S = load(file, 'K_final');   K = S.K_final;
+    else
+        S = load(file, 'K_itr');
+        if isinf(itr), itr = numel(S.K_itr); end
+        K = S.K_itr{itr};
+    end
+end
+
+function [iol, icl, L] = sweep_windows(d, u, pre)
+%SWEEP_WINDOWS Start of the open-loop and closed-loop sweeps (same length L),
+%   from the disturbance command d and the controller output u.
+    m  = sqrt(movmean(d.^2, 500));   on = m > 0.05*max(m);
+    st = find(diff([0; on]) == 1);   en = find(diff([on; 0]) == -1);
+    full = (en - st) >= 0.8*max(en - st);   st = st(full);   en = en(full);
+    ru  = arrayfun(@(k) rms(u(st(k):en(k))), 1:numel(st));
+    isc = ru > 0.1*max(ru);
+    kol = find(~isc, 1);   kcl = find(isc, 1);
+    if isempty(kol) || isempty(kcl), error('Need one open-loop and one closed-loop sweep.'); end
+    iol = max(st(kol) - pre, 1);   icl = max(st(kcl) - pre, 1);
+    L   = min([en(kol) - st(kol), en(kcl) - st(kcl)]) + pre;
+    L   = min([L, numel(d) - iol + 1, numel(d) - icl + 1]);
+end
+
 function H = band_ratio(num, den, f0, Fs)
 %BAND_RATIO num/den at f0 (Hann window, cross-spectrum over +/- 3 Hz)
     w = hann(numel(num));
