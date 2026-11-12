@@ -91,3 +91,36 @@ semilogx(f, mag2db(abs(Smeas)), 'k', ...
 legend('measured y_{cl}/y_{ol}', sprintf('1/(1+K GFRF(%d))', iOP), sprintf('1/(1+0.1K GFRF(%d))', iOP), ...
     '1/(1+0.1K G_{cl})', 'Location', 'best')
 ylabel('|S| (dB)'); xlabel('Frequency (Hz)'); xlim([15 450])
+
+%% Theoretical command: K applied to the recorded acceleration (lsim) vs recorded command
+[y, ~, u] = utils.loadexp(fullfile(expforlder, 'gfrf0_sswep.mat'));
+k0   = find(abs(u) > 1e-3*max(abs(u)), 1);                 % controller switched on
+idx  = (k0:numel(y)).';
+t    = (idx - 1)*Ts;
+u_th = lsim(K, -y(idx), t - t(1));                          % u = -K y from the recorded y
+ur   = u(idx);
+
+% best gain for lags of -3..3 samples (a delay would move the best fit off lag 0)
+lags = -3:3;  gl = zeros(size(lags));  res = gl;
+for j = 1:numel(lags)
+    a = ur(max(1, 1 + lags(j)):end + min(0, lags(j)));
+    b = u_th(max(1, 1 - lags(j)):end + min(0, -lags(j)));
+    gl(j)  = (b.'*a)/(b.'*b);
+    res(j) = norm(a - gl(j)*b)/norm(a);
+end
+disp(table(lags.', gl.', mag2db(abs(gl.')), 100*res.', ...
+    'VariableNames', {'lag_samples', 'gain', 'gain_dB', 'residual_pct'}))
+[~, jb] = min(res);
+fprintf('recorded command = %.4f x lsim(K) with lag %+d samples (residual %.2f %%)\n', gl(jb), lags(jb), 100*res(jb));
+
+figure('Name', 'command: recorded vs lsim(K)')
+[~, kp] = max(abs(u_th));                                   % zoom where the command is largest
+zm = t(kp) + [-0.05 0.05];
+subplot(2, 1, 1)
+plot(t, ur, 'b', t, u_th, 'k:', t, gl(jb)*u_th, 'r--'); grid on
+legend('recorded command', 'lsim(K, -y)', sprintf('%.3f x lsim(K, -y)', gl(jb)), 'Location', 'best')
+ylabel('controller output'); title('closed-loop part of the run')
+subplot(2, 1, 2)
+plot(t, ur, 'b', t, gl(jb)*u_th, 'r--'); grid on; xlim(zm)
+legend('recorded command', sprintf('%.3f x lsim(K, -y)', gl(jb)), 'Location', 'best')
+xlabel('time (s)'); ylabel('controller output'); title('zoom')
