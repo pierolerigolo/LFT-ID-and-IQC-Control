@@ -16,7 +16,10 @@
 %   of the controller is tracked at every iteration:
 %     - solver failure in stage 2/3 -> best (lowest objective) OL-stable
 %       controller of that stage; stage 2 then goes on with stage 3, stage 3 stops
-%     - end of stage 2 on an OL-unstable controller -> best OL-stable one of stage 2
+%     - end of stage 2 (convergence, max_iter_stage2 or max_iter) -> always the
+%       best (lowest objective) OL-stable controller of stage 2, even when the last
+%       one is stable (all stage-2 iterates satisfy the same robust constraint at
+%       eta0, so their objectives are comparable)
 %     - end of stage 3 on an OL-unstable controller -> LAST OL-stable one of
 %       stage 3 (objective not compared)
 %   The final eta is recomputed by bisection for the final controller.
@@ -121,7 +124,8 @@ for orderK = orderK_list
             PILTI = frd(repmat(diag([1, -1]), [1 1 N]), W_lft, Ts);          % W2 block
             PI0   = frd(repmat(diag([1, eta0^2, -1, -1]), [1 1 N]), W_lft, Ts); % W2 block + dm at eta0
 
-            fprintf('\n===== Controller order %d =====\n', orderK);
+            fprintf('\n===== Controller order %d, peak_extra %g, eta0 %.3g =====\n', orderK, peak_extra, eta0);
+            try
             yalmip('clear');     % YALMIP numbering restarts, as in a fresh session
             rng(seed);
         
@@ -238,13 +242,14 @@ for orderK = orderK_list
                 end
                 if err < obj_err(STAGE) || err/prev_obj < obj_err(STAGE) || nextstage
                     nextstage = false;
-                    if STAGE == 2 && ~K_is_stable
-                        % Stage 2 -> 3 from the best (lowest objective) OL-stable controller
+                    if STAGE == 2
+                        % Stage 2 -> 3 from the best (lowest objective) OL-stable
+                        % controller, also when the last one is stable
                         [ok, idx] = select_stable(hist_stage, hist_stable, hist_obj, 2, 'best');
                         if ok
                             K.setstate(hist_state{idx});
-                            fprintf('  --> Stage 2 ended on an OL unstable controller: best OL stable one (iter %d, obj = %.6f)\n', ...
-                                idx, hist_obj(idx));
+                            fprintf('  --> Stage 2: best OL stable controller (iter %d, obj = %.6f; last iter %d, obj = %.6f)\n', ...
+                                idx, hist_obj(idx), iter, obj_val);
                         elseif ~isempty(K_stage_state{1}) && isstable(K_stage{1})
                             K.setstate(K_stage_state{1});
                             fprintf('  --> No OL stable controller in stage 2: back to the stage-1 controller\n');
@@ -273,11 +278,11 @@ for orderK = orderK_list
         
             % ----- Final controller -----
             % Run ended in stage 2 (max_iter reached): best OL-stable stage-2 controller.
-            if STAGE == 2 && ~isstable(ss(K))
+            if STAGE == 2
                 [ok, idx] = select_stable(hist_stage, hist_stable, hist_obj, 2, 'best');
                 if ok
                     K.setstate(hist_state{idx});
-                    fprintf('Final controller OL unstable: best OL stable stage-2 controller (iter %d, obj = %.6f)\n', ...
+                    fprintf('Final controller: best OL stable stage-2 controller (iter %d, obj = %.6f)\n', ...
                         idx, hist_obj(idx));
                 elseif ~isempty(K_stage_state{1}) && isstable(K_stage{1})
                     K.setstate(K_stage_state{1});
@@ -328,6 +333,12 @@ for orderK = orderK_list
                 'eta', 'eta0', 'dm_bound', 'W1_frd', 'orderK', 'idname', 'STAGE', 'converged', 'norminf_W1S')
             diary off
             movefile(diaryfile, fullfile('Data', 'diaries', sprintf('%s.txt', expname)))
+            catch ME
+                % one failed run must not stop the sweep
+                diary off
+                warning('c:run', 'order %d, peak_extra %g, eta0 %.3g failed: %s', ...
+                    orderK, peak_extra, eta0, ME.message);
+            end
         end
     end
 end

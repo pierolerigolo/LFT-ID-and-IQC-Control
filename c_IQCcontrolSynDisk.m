@@ -17,7 +17,7 @@
 %   c_IQCcontrolSynElli:
 %     1  robust stability only (slack minimised)
 %     2  min nominal H-inf  s.t. robust stability
-%   with the same open-loop-stable fallbacks.
+%   with the same open-loop-stable fallbacks (final = best OL-stable stage-2 controller).
 %
 %   Output: Data/controller/DISK_<expname>_controller_... .mat and the run diary.
 %
@@ -263,12 +263,13 @@ for orderK = orderK_list
         end
     end
 
-    % ----- Final controller: best OL-stable stage-2 one if the last is unstable -----
-    if STAGE == 2 && ~isstable(ss(K))
+    % ----- Final controller: best (lowest objective) OL-stable stage-2 one,
+    %       also when the last one is stable -----
+    if STAGE == 2
         [ok, idx] = select_stable(hist_stage, hist_stable, hist_obj, 2, 'best');
         if ok
             K.setstate(hist_state{idx});
-            fprintf('Final controller OL unstable: best OL stable stage-2 controller (iter %d, obj = %.6f)\n', ...
+            fprintf('Final controller: best OL stable stage-2 controller (iter %d, obj = %.6f)\n', ...
                 idx, hist_obj(idx));
         elseif ~isempty(K_stage_state{1}) && isstable(K_stage{1})
             K.setstate(K_stage_state{1});

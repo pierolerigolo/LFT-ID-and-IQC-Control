@@ -14,8 +14,9 @@
 %   The objective may oscillate (no step is rejected). Open-loop (OL) stability
 %   of the controller is tracked at every iteration:
 %     - solver failure in stage 2 -> best (lowest objective) OL-stable stage-2 controller
-%     - end of stage 2 (convergence, max_iter_stage2 or max_iter) on an OL-unstable
-%       controller -> best OL-stable stage-2 controller (stage-1 one as fallback)
+%     - end of stage 2 (convergence, max_iter_stage2 or max_iter) -> best (lowest
+%       objective) OL-stable stage-2 controller, even when the last one is stable
+%       (stage-1 one as fallback)
 %
 %   Output: Data/controller/ELLI_<expname>_controller_... .mat and the run diary.
 %
@@ -222,12 +223,13 @@ for orderK = orderK_list
         end
     end
 
-    % ----- Final controller: best OL-stable stage-2 one if the last is unstable -----
-    if STAGE == 2 && ~isstable(ss(K))
+    % ----- Final controller: best (lowest objective) OL-stable stage-2 one,
+    %       also when the last one is stable -----
+    if STAGE == 2
         [ok, idx] = select_stable(hist_stage, hist_stable, hist_obj, 2, 'best');
         if ok
             K.setstate(hist_state{idx});
-            fprintf('Final controller OL unstable: best OL stable stage-2 controller (iter %d, obj = %.6f)\n', ...
+            fprintf('Final controller: best OL stable stage-2 controller (iter %d, obj = %.6f)\n', ...
                 idx, hist_obj(idx));
         elseif ~isempty(K_stage_state{1}) && isstable(K_stage{1})
             K.setstate(K_stage_state{1});
