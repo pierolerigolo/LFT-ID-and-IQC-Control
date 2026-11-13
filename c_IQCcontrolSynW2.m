@@ -401,6 +401,9 @@ fn='LFT_GFRF_GdmGLTIW2opt_1028_etfe_80hz_fmin10_hyb_controller_order18_80hz_-34d
 opensave=load(fullfile('data','controller',[fn,'.mat']));
 iteration=24;
 K_chosen=opensave.K_final;
+% fn='LFT_GFRF_GdmGLTIW2opt_1028_etfe_80hz_fmin10_hyb_controller_order18_80hz_-34db_nperfoptiIQC_notconv_etai0.24_etaf0.60_multi_freq';
+% opensave=load(fullfile('data','controller',[fn,'.mat']));
+% K_chosen=opensave.K_final;
 SOAsave=load(fullfile('data','finalrepportcont','controller_ellips_sus_7nm_order20_82hz_-30db_nomperf.mat'));
 KSOA=SOAsave.K_itr{end};
 if isstable(K_chosen), fprintf('K chosen is OL stable\n'); else, fprintf('K chosen is OL unstable\n'); end
