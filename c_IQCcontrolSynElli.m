@@ -42,8 +42,8 @@ beta_PI         = 0.5;
 % Optimisation
 solver          = 'mosek';
 mosek_near_rel  = 1e6;       % MOSEK default 1e3
-max_iter        = 30;
-max_iter_stage2 = 20;        % stage 2 ends after this many iterations even if the
+max_iter        = 60;        % was 30: order 18 stopped on max_iter_stage2 (iter 22) while still improving
+max_iter_stage2 = 50;        % was 20;        % stage 2 ends after this many iterations even if the
                              % objective still oscillates (Inf = only on convergence)
 obj_err         = [5e-3, 1e-3];   % convergence tolerance per stage
 
