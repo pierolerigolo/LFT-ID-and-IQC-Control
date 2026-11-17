@@ -105,7 +105,7 @@ figure('Position',[635,928,560,291]); hold on; axis equal; grid on
 plot(real(squeeze(G_hat.ResponseData)), imag(squeeze(G_hat.ResponseData)), 'b', 'DisplayName', 'G\_hat')
 for k = round(linspace(1, numel(W_lft), 8))
     plot(real(Z(k, :)), imag(Z(k, :)), 'k.', 'MarkerSize', 12, 'HandleVisibility', 'off')
-    [hc, he] = utils.plot_ellipse(G_hat.ResponseData(1, 1, k), real(A_set{k}), ...
+    [hc, he] = utils.plot_ellipse(G_hat.ResponseData(1, 1, k), real(A_set{k})/1.1, ...
         'Color', 'r', 'LineStyle', '-', 'LineWidth', 1);   % EPFL plot function
     set([hc, he], 'HandleVisibility', 'off')
 end
