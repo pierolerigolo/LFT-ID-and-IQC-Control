@@ -56,6 +56,10 @@ addpath(genpath("C:\Users\admin\Documents\MATLAB\tbxmanager"))
 
 %% Load the measured FRFs and the frequency grid
 load(fullfile('Data', sprintf('%s.mat', idname)), 'GLFT', 'GFRF')
+realmass = [];
+if ismember('realmass', who('-file', fullfile('Data', sprintf('%s.mat', idname))))
+    load(fullfile('Data', sprintf('%s.mat', idname)), 'realmass')
+end
 W_lft   = GLFT.Frequency;
 nOP     = size(GFRF, 2);
 GFRF_w  = interp(GFRF, W_lft);
@@ -325,13 +329,24 @@ title(sprintf('Nominal sensitivity (elliptical set), order %d', orderK))
 % Final controller on every measured operating point
 figure; hold on
 utils.magplot(inv(W1_frd), 'Color', 'c', 'DisplayName', 'W_1^{-1}');
-for i = 1:nOPx§
+for i = 1:nOP
     utils.magplot(inv(1 + K_final*GFRF(i)), 'Color', colors(i, :), 'DisplayName', 'S OP'+string(i));
 end
 utils.magplot(inv(1 + K_final*G_hat), 'Color', 'k', 'DisplayName', 'S nominal');
 title(sprintf('Elliptical set: sensitivity on the measured FRFs, order %d', orderK))
 ylim([-35 10])
 exportgraphics(gcf,fullfile('plots','ellisensbode.pdf'))
+
+% Performance table at the disturbance frequency (tab separated in the clipboard
+% -> paste in Keynote), Ellipse controller and the saved Disk controller
+other_file = fullfile('data', 'controller', 'DISK_1028_etfe_controller_order18_80hz_-34db_nperfhinf.mat');
+Ks_tab = {K_final};   names_tab = "Ellipse";
+if exist(other_file, 'file')
+    other = load(other_file, 'K_final');
+    Ks_tab{end+1} = other.K_final;   names_tab(end+1) = "Disk";
+end
+perf_table = utils.perftable(Ks_tab, names_tab, GFRF, omega_d, 'realmass', realmass, ...
+    'G_hat', G_hat, 'file', fullfile('plots', 'elli_perf_table.csv'));
 %%
 figure; utils.magplot(K_final, 'DisplayName', 'K final'); title('Controller')
 figure; pzplot(K_final); title('Controller poles/zeros')
