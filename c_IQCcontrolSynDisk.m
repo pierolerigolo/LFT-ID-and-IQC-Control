@@ -33,6 +33,7 @@ seed          = 22;
 nominal_type  = "chebyshev"; % "chebyshev" | "mean" | "elliptical"
 disk_radius   = "pointwise"; % "pointwise" (ucover W1opt) | "fitted" (ucover rational fit)
 nWdisk        = 4;           % order of the ucover fit
+disk_margin   = 1.1;         % radius scaled by this factor (1 = disks through the farthest FRF)
 
 % Performance weight W1 = floor_gain + peak_extra * band-pass at omega_d
 omega_d       = 80*2*pi;   % disturbance frequency (rad/s)
@@ -107,6 +108,7 @@ switch disk_radius
         if isempty(W_disk), error('disk_radius = "fitted" needs the ucover fit.'); end
         r = max(abs(squeeze(freqresp(W_disk, W_lft))), r_opt(:));
 end
+r = disk_margin*r;                              % enlarged disks: used by the IQC AND the plots
 r = max(r, 1e-6*max(r));                        % no zero radius (PI = diag(1, -1/r^2))
 bad = ~isfinite(r) | ~isfinite(squeeze(G_hat.ResponseData));
 if any(bad)
@@ -114,7 +116,7 @@ if any(bad)
 end
 model_disk = struct('NominalModel', G_hat, 'Radius', frd(reshape(r, 1, 1, []), W_lft, Ts), ...
     'RadiusPointwise', r_opt(:), 'Weight', W_disk, 'nominal_type', nominal_type, ...
-    'disk_radius', disk_radius);
+    'disk_radius', disk_radius, 'disk_margin', disk_margin);
 
 % FRFs, nominal model and |G_hat| +/- r
 Gmag = abs(squeeze(G_hat.ResponseData));
