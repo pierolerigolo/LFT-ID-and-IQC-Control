@@ -97,18 +97,17 @@ title('Measured FRFs, nominal model and elliptical set')
 exportgraphics(gcf,fullfile('plots','ellibode.pdf'),'ContentType','vector')
 
 % Nyquist: operating points and ellipses at a few frequencies
-%   ellipse boundary: G_hat + d,  [Re d; Im d] = A \ [cos t; sin t]
+%   ellipse ||A [Re d; Im d]|| <= 1 around G_hat (utils.plot_ellipse, EPFL)
 Z = squeeze(frdmodels.ResponseData);           % nw x nOP
 if isvector(Z), Z = Z(:); end
 if size(Z, 1) ~= numel(W_lft), Z = Z.'; end
 figure('Position',[635,928,560,291]); hold on; axis equal; grid on
 plot(real(squeeze(G_hat.ResponseData)), imag(squeeze(G_hat.ResponseData)), 'b', 'DisplayName', 'G\_hat')
-th = linspace(0, 2*pi, 100);
 for k = round(linspace(1, numel(W_lft), 8))
     plot(real(Z(k, :)), imag(Z(k, :)), 'k.', 'MarkerSize', 12, 'HandleVisibility', 'off')
-    xy = real(A_set{k}) \ [cos(th); sin(th)];
-    plot(real(G_hat.ResponseData(1, 1, k)) + xy(1, :), ...
-         imag(G_hat.ResponseData(1, 1, k)) + xy(2, :), 'r', 'HandleVisibility', 'off')
+    [hc, he] = utils.plot_ellipse(G_hat.ResponseData(1, 1, k), real(A_set{k}), ...
+        'Color', 'r', 'LineStyle', '-', 'LineWidth', 1);   % EPFL plot function
+    set([hc, he], 'HandleVisibility', 'off')
 end
 xlabel('Re'); ylabel('Im'); title('Elliptical set (8 frequencies)')
 exportgraphics(gcf,fullfile('plots','ellinyquist.pdf'),'ContentType','vector')
