@@ -24,7 +24,7 @@ close all; clc; clear; clear("yalmip");
 
 %% Config
 idname        = 'LFT_GFRF_GdmGLTIW2opt_1028_etfe';  % only its frequency grid and measured FRFs are used
-orderK_list   = 18 %10:2:20;     % controller orders to synthesise
+orderK_list   = 18; %10:2:20;     % controller orders to synthesise
 Ts            = 0.001;
 seed          = 22;
 
@@ -48,11 +48,11 @@ max_iter_stage2 = 20;        % stage 2 ends after this many iterations even if t
 obj_err         = [5e-3, 1e-3];   % convergence tolerance per stage
 
 % Solver paths (machine specific)
-% addpath(genpath("C:\Users\admin\mosek"))
-% addpath(genpath("C:\Program Files\Mosek\10.1"))
-% addpath(genpath("C:\Users\admin\Documents\MATLAB\tbxmanager"))
-addpath(genpath("/Users/pierre/mosek"))
-addpath(genpath("/Users/pierre/Documents/MATLAB/tbxmanager"))
+addpath(genpath("C:\Users\admin\mosek"))
+addpath(genpath("C:\Program Files\Mosek\10.1"))
+addpath(genpath("C:\Users\admin\Documents\MATLAB\tbxmanager"))
+% addpath(genpath("/Users/pierre/mosek"))
+% addpath(genpath("/Users/pierre/Documents/MATLAB/tbxmanager"))
 
 %% Load the measured FRFs and the frequency grid
 load(fullfile('Data', sprintf('%s.mat', idname)), 'GLFT', 'GFRF')
@@ -294,16 +294,18 @@ for s = 1:2
 end
 utils.magplot(inv(W1_frd), 'Color', [0 0 1 .3], 'DisplayName', 'W_1^{-1}');
 title(sprintf('Nominal sensitivity (elliptical set), order %d', orderK))
-
+%%
 % Final controller on every measured operating point
 figure; hold on
+utils.magplot(inv(W1_frd), 'Color', 'c', 'DisplayName', 'W_1^{-1}');
 for i = 1:nOP
     utils.magplot(inv(1 + K_final*GFRF(i)), 'Color', colors(i, :), 'DisplayName', 'S OP'+string(i));
 end
 utils.magplot(inv(1 + K_final*G_hat), 'Color', 'k', 'DisplayName', 'S nominal');
-utils.magplot(inv(W1_frd), 'Color', 'c', 'DisplayName', 'W_1^{-1}');
 title(sprintf('Elliptical set: sensitivity on the measured FRFs, order %d', orderK))
-
+ylim([-35 10])
+exportgraphics(gcf,fullfile('plots','ellisensbode.pdf'))
+%%
 figure; utils.magplot(K_final, 'DisplayName', 'K final'); title('Controller')
 figure; pzplot(K_final); title('Controller poles/zeros')
 
