@@ -104,7 +104,10 @@ GLTImean  = frd(mean(GLTI.ResponseData, 2), w_lft, Ts);
 GLTIcell  = arrayfun(@(i) GLTI(1, i), 1:nOP, 'UniformOutput', false);
 GLTIarray = stack(1, GLTIcell{:});
 
-figure; bode(GLTIarray, GLTImean)
+figure;
+bode(GLTIarray, GLTImean,bo)
+xlim([10 500])
+legend('location','best') 
 exportgraphics(gcf, fullfile('plots', 'GLTIbode.jpg'), 'Resolution', 300)
 
 %% 4. Multiplicative uncertainty weight W2

@@ -30,6 +30,7 @@ function [constraints, slack, D, E, PI] = IQC_reduced_combinedPI_par_fix(plant, 
     %   ([M,Delta,BlkStruct] = lftdata(...)); if the parametric block comes
     %   first pass "ltiIdx", 2.
     %
+    %   PILTI = zeros(0) (nl = 0): no LTI block, only the optimised multiplier.
     %   PILTI can be an frd / any DynamicSystem (evaluated at omegas), a numeric
     %   2nl x 2nl (same at every frequency) or a numeric 2nl x 2nl x nomegas
     %   array (page k belongs to omegas(k) as given by the caller).
@@ -135,9 +136,10 @@ function [constraints, slack, D, E, PI] = IQC_reduced_combinedPI_par_fix(plant, 
 
     % ----- Split the delta channels: LTI part (given) / optimised part -----
     nl = size(PILTI, 1) / 2;
-    if nl ~= round(nl) || size(PILTI, 2) ~= size(PILTI, 1) || nl < 1 || nl >= n
+    % nl = 0 (PILTI = zeros(0)): no LTI block, the optimised block takes all channels
+    if nl ~= round(nl) || size(PILTI, 2) ~= size(PILTI, 1) || nl < 0 || nl >= n
         error("IQC_reduced_combinedPI:PILTISize", ...
-            "PILTI must be (2*nl x 2*nl) with 1 <= nl < n = %d (got %d x %d).", ...
+            "PILTI must be (2*nl x 2*nl) with 0 <= nl < n = %d (got %d x %d).", ...
             n, size(PILTI, 1), size(PILTI, 2));
     end
     idxL = opts.ltiIdx;

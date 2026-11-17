@@ -52,9 +52,11 @@ for i = 1:nOP
 
     GFRF(1, i) = frd(GFRF_cell{i}.ResponseData, GFRF_cell{1}.Frequency, Ts); %#ok<SAGROW>
 end
-
-figure; bode(GFRF_cell{:}); grid on; legend show
-
+bo=bodeoptions;
+bo.FreqUnits='Hz';
+figure; bode(GFRF_cell{:},bo); grid on; legend('location','best')
+xlim([10 500])
+exportgraphics(gcf,fullfile('plots','GFRF.jpg'),'Resolution',300)
 %% Save
 if save_output
     save(outfile, 'GFRF_cell', 'GFRF', 'd', 'realmass')
