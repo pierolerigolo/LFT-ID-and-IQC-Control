@@ -80,7 +80,7 @@ addpath(genpath("C:\Users\admin\Documents\MATLAB\tbxmanager"))
 
 %% Load the LFT plant
 load(fullfile('Data', sprintf('%s.mat', idname)), 'GLFT', 'Delta', 'dm_bound', 'GFRF')
-eta0_list           = dm_bound/[2 1.5 1];      % initial bound on dm (mass units)
+eta0_list           = dm_bound./[2 1.5 1];      % initial bound on dm (mass units)
 W_lft = GLFT.Frequency;
 [nout_lft, nin_lft] = size(GLFT);
 [nq, np] = size(Delta);          % Delta: p (plant outputs, np) -> q (plant inputs, nq)
@@ -345,6 +345,13 @@ end
 
 %% Analysis (last synthesised order)
 colors = lines(max(3, nOP));
+% use a loaded K_final
+savedcont=load(fullfile('data','controller/','LFT_GFRF_GdmGLTIW2opt_1028_etfe_80hz_fmin10_controller_order18_80hz_-40db_nperfoptiIQC_notconv_etai0.36_etaf0.51_multi_freq.mat'))
+K_final=savedcont.K_final;
+orderK=savedcont.orderK;
+eta=savedcont.eta;
+K_stage=savedcont.K_stage;
+W1_frd=savedcont.W1_frd;
 
 % Sensitivity of the stage controllers on the nominal plant
 figure; hold on
@@ -359,6 +366,7 @@ utils.magplot(inv(W1_frd), 'Color', [0 0 1 .3], 'DisplayName', 'W_1^{-1}');
 title(sprintf('Nominal sensitivity, order %d', orderK))
 
 % Final controller on every measured operating point
+
 figure; hold on
 comparewithELI=false;
 comparewitholdLPV=true;

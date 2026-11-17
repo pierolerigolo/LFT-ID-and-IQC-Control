@@ -10,7 +10,7 @@ min:   -1.5000
 
 max:     0
 
-  obj = -0.000000 | eta = 0.2384 | K OL stable | time = 5.54 s
+  obj = -0.000000 | eta = 0.2384 | K OL stable | time = 2.14 s
 
 Iter   2 | Stage 1
 Pi scaler: 1.000e+00 used
@@ -24,7 +24,7 @@ min:   -1.5000
 
 max:     0
 
-  obj = 0.000000 | eta = 0.2384 | K OL stable | time = 2.55 s
+  obj = 0.000000 | eta = 0.2384 | K OL stable | time = 2.06 s
 
   --> Saved K_stage{1}
   --> Advancing to Stage 2
@@ -40,7 +40,7 @@ min:   -1.5000
 
 max:     0
 
-  obj = 1296.721917 | eta = 0.2384 | K OL stable | time = 4.73 s
+  obj = 1296.721917 | eta = 0.2384 | K OL stable | time = 3.96 s
 
 Iter   4 | Stage 2
 Pi scaler: 1.000e+00 used
@@ -54,7 +54,7 @@ min:   -1.5000
 
 max:     0
 
-  obj = 821.310176 | eta = 0.2384 | K OL unstable | time = 6.97 s
+  obj = 821.310176 | eta = 0.2384 | K OL unstable | time = 6.73 s
 
 Iter   5 | Stage 2
 Pi scaler: 1.000e+00 used
@@ -68,7 +68,7 @@ min:   -1.5000
 
 max:     0
 
-  obj = 307.416189 | eta = 0.2384 | K OL unstable | time = 5.46 s
+  obj = 307.416189 | eta = 0.2384 | K OL unstable | time = 5.32 s
 
 Iter   6 | Stage 2
 Pi scaler: 1.000e+00 used
@@ -82,7 +82,7 @@ min:   -1.5000
 
 max:     0
 
-  obj = 24.619908 | eta = 0.2384 | K OL unstable | time = 6.03 s
+  obj = 24.619908 | eta = 0.2384 | K OL unstable | time = 5.90 s
 
 Iter   7 | Stage 2
 Pi scaler: 1.000e+00 used
@@ -96,7 +96,7 @@ min:   -1.5000
 
 max:     0
 
-  obj = 5.613624 | eta = 0.2384 | K OL unstable | time = 5.40 s
+  obj = 5.613624 | eta = 0.2384 | K OL unstable | time = 5.38 s
 
 Iter   8 | Stage 2
 Pi scaler: 1.000e+00 used
@@ -110,7 +110,7 @@ min:   -1.5000
 
 max:     0
 
-  obj = 9.813032 | eta = 0.2384 | K OL stable | time = 4.87 s
+  obj = 9.813032 | eta = 0.2384 | K OL stable | time = 4.93 s
 
 Iter   9 | Stage 2
 Pi scaler: 1.000e+00 used
@@ -124,7 +124,7 @@ min:   -1.5000
 
 max:     0
 
-  obj = 4.664646 | eta = 0.2384 | K OL stable | time = 5.56 s
+  obj = 4.664646 | eta = 0.2384 | K OL stable | time = 5.67 s
 
 Iter  10 | Stage 2
 Pi scaler: 1.000e+00 used
@@ -138,7 +138,7 @@ min:   -1.5000
 
 max:     0
 
-  obj = 5.522457 | eta = 0.2384 | K OL stable | time = 5.23 s
+  obj = 5.522457 | eta = 0.2384 | K OL stable | time = 5.36 s
 
 Iter  11 | Stage 2
 Pi scaler: 1.000e+00 used
@@ -152,7 +152,7 @@ min:   -1.5000
 
 max:     0
 
-  obj = 5.579377 | eta = 0.2384 | K OL stable | time = 5.03 s
+  obj = 5.579377 | eta = 0.2384 | K OL stable | time = 5.17 s
 
 Iter  12 | Stage 2
 Pi scaler: 1.000e+00 used
@@ -166,7 +166,7 @@ min:   -1.5000
 
 max:     0
 
-  obj = 3.815184 | eta = 0.2384 | K OL stable | time = 7.78 s
+  obj = 3.815184 | eta = 0.2384 | K OL stable | time = 7.86 s
 
 Iter  13 | Stage 2
 Pi scaler: 1.000e+00 used
@@ -180,7 +180,7 @@ min:   -1.5000
 
 max:     0
 
-  obj = 3.948777 | eta = 0.2384 | K OL stable | time = 5.27 s
+  obj = 3.948777 | eta = 0.2384 | K OL stable | time = 5.35 s
 
 Iter  14 | Stage 2
 Pi scaler: 1.000e+00 used
@@ -194,7 +194,7 @@ min:   -1.5000
 
 max:     0
 
-  obj = 3.343924 | eta = 0.2384 | K OL stable | time = 4.98 s
+  obj = 3.343924 | eta = 0.2384 | K OL stable | time = 5.04 s
 
 Iter  15 | Stage 2
 Pi scaler: 1.000e+00 used
@@ -208,7 +208,7 @@ min:   -1.5000
 
 max:     0
 
-  obj = 3.259026 | eta = 0.2384 | K OL stable | time = 5.37 s
+  obj = 3.259026 | eta = 0.2384 | K OL stable | time = 5.49 s
 
 Iter  16 | Stage 2
 Pi scaler: 1.000e+00 used
@@ -222,7 +222,7 @@ min:   -1.5000
 
 max:     0
 
-  obj = 3.505569 | eta = 0.2384 | K OL stable | time = 5.12 s
+  obj = 3.505569 | eta = 0.2384 | K OL stable | time = 6.22 s
 
 Iter  17 | Stage 2
 Pi scaler: 1.000e+00 used
@@ -236,7 +236,7 @@ min:   -1.5000
 
 max:     0
 
-  obj = 3.274109 | eta = 0.2384 | K OL stable | time = 4.99 s
+  obj = 3.274109 | eta = 0.2384 | K OL stable | time = 5.09 s
 
 Iter  18 | Stage 2
 Pi scaler: 1.000e+00 used
@@ -250,7 +250,7 @@ min:   -1.5000
 
 max:     0
 
-  obj = 3.841925 | eta = 0.2384 | K OL stable | time = 4.86 s
+  obj = 3.841925 | eta = 0.2384 | K OL stable | time = 4.91 s
 
 Iter  19 | Stage 2
 Pi scaler: 1.000e+00 used
@@ -264,7 +264,7 @@ min:   -1.5000
 
 max:     0
 
-  obj = 3.645289 | eta = 0.2384 | K OL stable | time = 7.52 s
+  obj = 3.645289 | eta = 0.2384 | K OL stable | time = 7.68 s
 
 Iter  20 | Stage 2
 Pi scaler: 1.000e+00 used
@@ -278,7 +278,7 @@ min:   -1.5000
 
 max:     0
 
-  obj = 3.311756 | eta = 0.2384 | K OL stable | time = 5.07 s
+  obj = 3.311756 | eta = 0.2384 | K OL stable | time = 5.14 s
 
 Iter  21 | Stage 2
 Pi scaler: 1.000e+00 used
@@ -292,7 +292,7 @@ min:   -1.5000
 
 max:     0
 
-  obj = 2.696141 | eta = 0.2384 | K OL stable | time = 5.45 s
+  obj = 2.696141 | eta = 0.2384 | K OL stable | time = 5.56 s
 
 Iter  22 | Stage 2
 Pi scaler: 1.000e+00 used
@@ -306,9 +306,10 @@ min:   -1.5000
 
 max:     0
 
-  obj = 2.343382 | eta = 0.2384 | K OL stable | time = 5.00 s
+  obj = 2.343382 | eta = 0.2384 | K OL stable | time = 5.10 s
 
   --> Stage 2: 20 iterations reached (max_iter_stage2)
+  --> Stage 2: best OL stable controller (iter 22, obj = 2.343382; last iter 22, obj = 2.343382)
   --> Saved K_stage{2}
   --> Advancing to Stage 3
 Iter  23 | Stage 3
@@ -406,7 +407,7 @@ min:   -3.1968
 
 max:     0
 
-  obj = 4.059285 | eta = 0.3184 | K OL stable | time = 34.38 s
+  obj = 4.059285 | eta = 0.3184 | K OL stable | time = 33.70 s
 
 Iter  24 | Stage 3
 D warm-start:
@@ -499,7 +500,7 @@ min:   -4.3866
 
 max:     0
 
-  obj = 3.977496 | eta = 0.3483 | K OL stable | time = 32.21 s
+  obj = 3.977496 | eta = 0.3483 | K OL stable | time = 33.33 s
 
 Iter  25 | Stage 3
 D warm-start:
@@ -594,7 +595,7 @@ min:   -5.7985
 
 max:     0
 
-  obj = 8.540767 | eta = 0.4163 | K OL stable | time = 33.05 s
+  obj = 8.540767 | eta = 0.4163 | K OL stable | time = 34.29 s
 
 Iter  26 | Stage 3
 D warm-start:
@@ -689,7 +690,7 @@ min:   -5.3554
 
 max:     0
 
-  obj = 5.910815 | eta = 0.4521 | K OL stable | time = 34.18 s
+  obj = 5.910815 | eta = 0.4521 | K OL stable | time = 35.40 s
 
 Iter  27 | Stage 3
 D warm-start:
@@ -780,7 +781,7 @@ min:   -5.1598
 
 max:     0
 
-  obj = 8.919098 | eta = 0.4592 | K OL stable | time = 32.98 s
+  obj = 8.919098 | eta = 0.4592 | K OL stable | time = 34.29 s
 
 Iter  28 | Stage 3
 D warm-start:
@@ -873,7 +874,7 @@ min:   -4.8749
 
 max:     0
 
-  obj = 7.769125 | eta = 0.4699 | K OL stable | time = 32.92 s
+  obj = 7.769125 | eta = 0.4699 | K OL stable | time = 34.31 s
 
 Iter  29 | Stage 3
 D warm-start:
@@ -964,7 +965,7 @@ min:   -4.7819
 
 max:     0
 
-  obj = 9.749153 | eta = 0.4736 | K OL stable | time = 34.51 s
+  obj = 9.749153 | eta = 0.4736 | K OL stable | time = 35.67 s
 
 Iter  30 | Stage 3
 D warm-start:
@@ -1055,7 +1056,7 @@ min:   -4.2588
 
 max:     0
 
-  obj = 8.614484 | eta = 0.5032 | K OL stable | time = 34.80 s
+  obj = 8.614484 | eta = 0.5032 | K OL stable | time = 37.01 s
 
 D warm-start:
     3.0458
