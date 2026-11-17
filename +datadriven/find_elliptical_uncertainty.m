@@ -200,7 +200,10 @@ function MVEE = MVEE_optimizer(d, N, solver, verbosity)
 
     constraints = [...
         A >= 0;
-        splitapply(@(x) cone(A*x + b, 1.1), P, 1:N);
+        % was cone(A*x + b, 1.1) in the reference code: the points then lie on
+        % ||A x + b|| = 1.1, i.e. 10 % OUTSIDE the set ||A x + b|| <= 1 used by
+        % the IQC. 1 makes the set the actual minimum-volume enclosing ellipse.
+        splitapply(@(x) cone(A*x + b, 1), P, 1:N);
         ];
 
     objective =  - log(det(A));

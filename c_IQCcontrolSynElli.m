@@ -72,6 +72,12 @@ A_set = model_elliptical.UncertaintySet.A{1};          % one 2x2 matrix per freq
 [ny, nu] = size(G_hat);
 
 bad = cellfun(@(x) any(~isfinite(x(:))), A_set) | ~isfinite(squeeze(G_hat.ResponseData));
+% every measured FRF must lie in its ellipse: ||A [Re; Im](G_i - G_hat)|| <= 1
+Zc  = squeeze(frdmodels.ResponseData);  if size(Zc, 1) ~= numel(W_lft), Zc = Zc.'; end
+dZ  = Zc - squeeze(G_hat.ResponseData);
+inE = arrayfun(@(k) max(vecnorm(real(A_set{k})*[real(dZ(k, :)); imag(dZ(k, :))])), (1:numel(W_lft)).');
+fprintf('Ellipse containment: max ||A d|| = %.3f (median %.3f), %d / %d frequencies > 1.01\n', ...
+    max(inE), median(inE), nnz(inE > 1.01), numel(W_lft));
 if any(bad)
     error('Elliptical set / nominal model not finite at %s Hz.', mat2str(W_lft(bad).'/2/pi, 4));
 end
