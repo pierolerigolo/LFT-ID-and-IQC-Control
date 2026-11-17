@@ -33,7 +33,9 @@ seed          = 22;
 nominal_type  = "chebyshev"; % "chebyshev" | "mean" | "elliptical"
 disk_radius   = "pointwise"; % "pointwise" (ucover W1opt) | "fitted" (ucover rational fit)
 nWdisk        = 4;           % order of the ucover fit
-disk_margin   = 1.1;         % radius scaled by this factor (1 = disks through the farthest FRF)
+disk_margin   = 1.1;         % as cone(A*x + b, 1.1) in the EPFL find_elliptical_uncertainty:
+                             % the FRFs lie at disk_margin*r, i.e. r = r_fit/disk_margin
+                             % (1 = disks through the farthest FRF)
 
 % Performance weight W1 = floor_gain + peak_extra * band-pass at omega_d
 omega_d       = 80*2*pi;   % disturbance frequency (rad/s)
@@ -108,7 +110,7 @@ switch disk_radius
         if isempty(W_disk), error('disk_radius = "fitted" needs the ucover fit.'); end
         r = max(abs(squeeze(freqresp(W_disk, W_lft))), r_opt(:));
 end
-r = disk_margin*r;                              % enlarged disks: used by the IQC AND the plots
+r = r/disk_margin;                              % IQC radius (same convention as the EPFL ellipses)
 r = max(r, 1e-6*max(r));                        % no zero radius (PI = diag(1, -1/r^2))
 bad = ~isfinite(r) | ~isfinite(squeeze(G_hat.ResponseData));
 if any(bad)
@@ -138,8 +140,8 @@ plot(real(squeeze(G_hat.ResponseData)), imag(squeeze(G_hat.ResponseData)), 'b', 
 th = linspace(0, 2*pi, 100);
 for k = round(linspace(1, numel(W_lft), 8))
     plot(real(Z(k, :)), imag(Z(k, :)), 'k.', 'MarkerSize', 12, 'HandleVisibility', 'off')
-    plot(real(G_hat.ResponseData(1, 1, k)) + r(k)*cos(th), ...
-         imag(G_hat.ResponseData(1, 1, k)) + r(k)*sin(th), 'r', 'HandleVisibility', 'off')
+    plot(real(G_hat.ResponseData(1, 1, k)) + disk_margin*r(k)*cos(th), ...   % *disk_margin as A/1.1 for the ellipses
+         imag(G_hat.ResponseData(1, 1, k)) + disk_margin*r(k)*sin(th), 'r', 'HandleVisibility', 'off')
 end
 xlabel('Re'); ylabel('Im'); title('Disk set (8 frequencies)')
 exportgraphics(gcf,fullfile('plots','disknyquist.pdf'),'ContentType','vector')
@@ -155,7 +157,7 @@ end
 plot(real(Gz(kz)), imag(Gz(kz)), 'b', 'DisplayName', 'G\_hat')
 for k = kz(round(linspace(1, numel(kz), 8))).'
     plot(real(Z(k, :)), imag(Z(k, :)), 'k.', 'MarkerSize', 12, 'HandleVisibility', 'off')
-    plot(real(Gz(k)) + r(k)*cos(th), imag(Gz(k)) + r(k)*sin(th), 'r', 'HandleVisibility', 'off')
+    plot(real(Gz(k)) + disk_margin*r(k)*cos(th), imag(Gz(k)) + disk_margin*r(k)*sin(th), 'r', 'HandleVisibility', 'off')
     text(real(Gz(k)), imag(Gz(k)), sprintf(' %.0f Hz', W_lft(k)/2/pi), 'FontSize', 7)
 end
 xlabel('Re'); ylabel('Im'); title(sprintf('Disk set (8 frequencies, %g-%g Hz)', f_zoom))
