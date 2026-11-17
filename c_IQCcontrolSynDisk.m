@@ -300,6 +300,14 @@ for orderK = orderK_list
 end
 
 %% Analysis (last synthesised order)
+% load a saved controller
+savecont=load(fullfile('data','controller','DISK_1028_etfe_controller_order18_80hz_-34db_nperfhinf.mat'));
+K_final=savecont.K_final;
+K_stage=savecont.K_stage;
+orderK=savecont.orderK;
+W1_frd=savecont.W1_frd;
+G_hat=savecont.model_disk.NominalModel;
+
 colors = lines(max(3, nOP));
 
 % Sensitivity of the stage controllers on the nominal plant
@@ -314,15 +322,17 @@ end
 utils.magplot(inv(W1_frd), 'Color', [0 0 1 .3], 'DisplayName', 'W_1^{-1}');
 title(sprintf('Nominal sensitivity (disk set), order %d', orderK))
 
-% Final controller on every measured operating point
+%% Final controller on every measured operating point
 figure; hold on
+utils.magplot(inv(W1_frd), 'Color', 'c', 'DisplayName', 'W_1^{-1}');
 for i = 1:nOP
     utils.magplot(inv(1 + K_final*GFRF(i)), 'Color', colors(i, :), 'DisplayName', 'S OP'+string(i));
 end
 utils.magplot(inv(1 + K_final*G_hat), 'Color', 'k', 'DisplayName', 'S nominal');
-utils.magplot(inv(W1_frd), 'Color', 'c', 'DisplayName', 'W_1^{-1}');
 title(sprintf('Disk set: sensitivity on the measured FRFs, order %d', orderK))
-
+ylim([-40 10])
+exportgraphics(gcf,fullfile('plots','disksensbode.pdf'))
+%%
 figure; utils.magplot(K_final, 'DisplayName', 'K final'); title('Controller')
 figure; pzplot(K_final); title('Controller poles/zeros')
 
