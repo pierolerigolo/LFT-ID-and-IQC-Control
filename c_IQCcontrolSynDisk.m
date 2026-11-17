@@ -25,7 +25,7 @@ close all; clc; clear; clear("yalmip");
 
 %% Config
 idname        = 'LFT_GFRF_GdmGLTIW2opt_1028_etfe';  % only its frequency grid and measured FRFs are used
-orderK_list   = 10:2:20;     % controller orders to synthesise
+orderK_list   = 18 %10:2:20;     % controller orders to synthesise
 Ts            = 0.001;
 seed          = 22;
 
@@ -54,11 +54,11 @@ max_iter_stage2 = 20;        % stage 2 ends after this many iterations even if t
 obj_err         = [5e-3, 1e-3];   % convergence tolerance per stage
 
 % Solver paths (machine specific)
-addpath(genpath("C:\Users\admin\mosek"))
-addpath(genpath("C:\Program Files\Mosek\10.1"))
-addpath(genpath("C:\Users\admin\Documents\MATLAB\tbxmanager"))
-% addpath(genpath("/Users/pierre/mosek"))
-% addpath(genpath("/Users/pierre/Documents/MATLAB/tbxmanager"))
+% addpath(genpath("C:\Users\admin\mosek"))
+% addpath(genpath("C:\Program Files\Mosek\10.1"))
+% addpath(genpath("C:\Users\admin\Documents\MATLAB\tbxmanager"))
+addpath(genpath("/Users/pierre/mosek"))
+addpath(genpath("/Users/pierre/Documents/MATLAB/tbxmanager"))
 
 %% Load the measured FRFs and the frequency grid
 load(fullfile('Data', sprintf('%s.mat', idname)), 'GLFT', 'GFRF')
@@ -118,18 +118,20 @@ model_disk = struct('NominalModel', G_hat, 'Radius', frd(reshape(r, 1, 1, []), W
 
 % FRFs, nominal model and |G_hat| +/- r
 Gmag = abs(squeeze(G_hat.ResponseData));
-figure; hold on
+figure('Position',[635,928,560,291]); hold on
 for i = 1:nOP
     utils.magplot(GFRF_w(i), 'Color', [0.7 0.7 0.7], 'LineWidth', 0.5, 'HandleVisibility', 'off');
 end
 utils.magplot(G_hat, 'Color', 'b', 'LineWidth', 2, 'DisplayName', 'Nominal G\_hat (' + nominal_type + ')');
 plot(W_lft/2/pi, mag2db(Gmag + r), 'r--', 'DisplayName', '|G\_hat| \pm r')
-plot(W_lft/2/pi, mag2db(max(Gmag - r, eps)), 'r--', 'HandleVisibility', 'off')
+plot(W_lft/2/pi, mag2db(max(Gmag - r, 0.01)), 'r--', 'HandleVisibility', 'off')
 plot(W_lft/2/pi, mag2db(r), 'm', 'DisplayName', 'radius r')
 title('Measured FRFs, nominal model and disk set')
+legend('location','southwest')
+exportgraphics(gcf,fullfile('plots','diskbode.pdf'),'ContentType','vector')
 
 % Nyquist: operating points and disks at a few frequencies
-figure; hold on; axis equal; grid on
+figure('Position',[635,928,560,291]); hold on; axis equal; grid on
 plot(real(squeeze(G_hat.ResponseData)), imag(squeeze(G_hat.ResponseData)), 'b', 'DisplayName', 'G\_hat')
 th = linspace(0, 2*pi, 100);
 for k = round(linspace(1, numel(W_lft), 8))
@@ -138,6 +140,7 @@ for k = round(linspace(1, numel(W_lft), 8))
          imag(G_hat.ResponseData(1, 1, k)) + r(k)*sin(th), 'r', 'HandleVisibility', 'off')
 end
 xlabel('Re'); ylabel('Im'); title('Disk set (8 frequencies)')
+exportgraphics(gcf,fullfile('plots','disknyquist.pdf'),'ContentType','vector')
 
 %% Performance weight W1 (prewarped at omega_d so the discrete peak stays there)
 W1_ct  = floor_gain + tf(peak_extra*[2*zeta_n*omega_d, 0], [1, 2*zeta_d*omega_d, omega_d^2]);

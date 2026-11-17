@@ -24,7 +24,7 @@ close all; clc; clear; clear("yalmip");
 
 %% Config
 idname        = 'LFT_GFRF_GdmGLTIW2opt_1028_etfe';  % only its frequency grid and measured FRFs are used
-orderK_list   = 10:2:20;     % controller orders to synthesise
+orderK_list   = 18 %10:2:20;     % controller orders to synthesise
 Ts            = 0.001;
 seed          = 22;
 
@@ -48,11 +48,11 @@ max_iter_stage2 = 20;        % stage 2 ends after this many iterations even if t
 obj_err         = [5e-3, 1e-3];   % convergence tolerance per stage
 
 % Solver paths (machine specific)
-addpath(genpath("C:\Users\admin\mosek"))
-addpath(genpath("C:\Program Files\Mosek\10.1"))
-addpath(genpath("C:\Users\admin\Documents\MATLAB\tbxmanager"))
-% addpath(genpath("/Users/pierre/mosek"))
-% addpath(genpath("/Users/pierre/Documents/MATLAB/tbxmanager"))
+% addpath(genpath("C:\Users\admin\mosek"))
+% addpath(genpath("C:\Program Files\Mosek\10.1"))
+% addpath(genpath("C:\Users\admin\Documents\MATLAB\tbxmanager"))
+addpath(genpath("/Users/pierre/mosek"))
+addpath(genpath("/Users/pierre/Documents/MATLAB/tbxmanager"))
 
 %% Load the measured FRFs and the frequency grid
 load(fullfile('Data', sprintf('%s.mat', idname)), 'GLFT', 'GFRF')
@@ -72,6 +72,12 @@ A_set = model_elliptical.UncertaintySet.A{1};          % one 2x2 matrix per freq
 [ny, nu] = size(G_hat);
 
 bad = cellfun(@(x) any(~isfinite(x(:))), A_set) | ~isfinite(squeeze(G_hat.ResponseData));
+% every measured FRF must lie in its ellipse: ||A [Re; Im](G_i - G_hat)|| <= 1
+Zc  = squeeze(frdmodels.ResponseData);  if size(Zc, 1) ~= numel(W_lft), Zc = Zc.'; end
+dZ  = Zc - squeeze(G_hat.ResponseData);
+inE = arrayfun(@(k) max(vecnorm(real(A_set{k})*[real(dZ(k, :)); imag(dZ(k, :))])), (1:numel(W_lft)).');
+fprintf('Ellipse containment: max ||A d|| = %.3f (median %.3f), %d / %d frequencies > 1.01\n', ...
+    max(inE), median(inE), nnz(inE > 1.01), numel(W_lft));
 if any(bad)
     error('Elliptical set / nominal model not finite at %s Hz.', mat2str(W_lft(bad).'/2/pi, 4));
 end
@@ -79,14 +85,32 @@ end
 % FRFs, nominal model and |G_hat| +/- largest semi-axis of the ellipse
 r    = cellfun(@(x) 1/min(svd(x)), A_set);
 Gmag = abs(squeeze(G_hat.ResponseData));
-figure; hold on
+figure('Position',[635,928,560,291]); hold on
 for i = 1:nOP
     utils.magplot(GFRF_w(i), 'Color', [0.7 0.7 0.7], 'LineWidth', 0.5, 'HandleVisibility', 'off');
 end
 utils.magplot(G_hat, 'Color', 'b', 'LineWidth', 2, 'DisplayName', 'Nominal G\_hat');
 plot(W_lft/2/pi, mag2db(Gmag + r), 'r--', 'DisplayName', 'Elliptical bound')
-plot(W_lft/2/pi, mag2db(max(Gmag - r, eps)), 'r--', 'HandleVisibility', 'off')
+plot(W_lft/2/pi, mag2db(max(Gmag - r, 0.01)), 'r--', 'HandleVisibility', 'off')
+plot(W_lft/2/pi, mag2db(r), 'm', 'DisplayName', 'largest semi-axis')
 title('Measured FRFs, nominal model and elliptical set')
+exportgraphics(gcf,fullfile('plots','ellibode.pdf'),'ContentType','vector')
+
+% Nyquist: operating points and ellipses at a few frequencies
+%   ellipse ||A [Re d; Im d]|| <= 1 around G_hat (utils.plot_ellipse, EPFL)
+Z = squeeze(frdmodels.ResponseData);           % nw x nOP
+if isvector(Z), Z = Z(:); end
+if size(Z, 1) ~= numel(W_lft), Z = Z.'; end
+figure('Position',[635,928,560,291]); hold on; axis equal; grid on
+plot(real(squeeze(G_hat.ResponseData)), imag(squeeze(G_hat.ResponseData)), 'b', 'DisplayName', 'G\_hat')
+for k = round(linspace(1, numel(W_lft), 8))
+    plot(real(Z(k, :)), imag(Z(k, :)), 'k.', 'MarkerSize', 12, 'HandleVisibility', 'off')
+    [hc, he] = utils.plot_ellipse(G_hat.ResponseData(1, 1, k), real(A_set{k}), ...
+        'Color', 'r', 'LineStyle', '-', 'LineWidth', 1);   % EPFL plot function
+    set([hc, he], 'HandleVisibility', 'off')
+end
+xlabel('Re'); ylabel('Im'); title('Elliptical set (8 frequencies)')
+exportgraphics(gcf,fullfile('plots','ellinyquist.pdf'),'ContentType','vector')
 
 %% Performance weight W1 (prewarped at omega_d so the discrete peak stays there)
 W1_ct  = floor_gain + tf(peak_extra*[2*zeta_n*omega_d, 0], [1, 2*zeta_d*omega_d, omega_d^2]);
