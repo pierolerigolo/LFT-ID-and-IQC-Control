@@ -127,6 +127,7 @@ plot(W_lft/2/pi, mag2db(Gmag + r), 'r--', 'DisplayName', '|G\_hat| \pm r')
 plot(W_lft/2/pi, mag2db(max(Gmag - r, 0.01)), 'r--', 'HandleVisibility', 'off')
 plot(W_lft/2/pi, mag2db(r), 'm', 'DisplayName', 'radius r')
 title('Measured FRFs, nominal model and disk set')
+legend('location','southwest')
 exportgraphics(gcf,fullfile('plots','diskbode.pdf'),'ContentType','vector')
 
 % Nyquist: operating points and disks at a few frequencies
