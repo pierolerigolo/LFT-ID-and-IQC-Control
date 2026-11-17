@@ -112,16 +112,16 @@ end
 xlabel('Re'); ylabel('Im'); title('Elliptical set (8 frequencies)')
 exportgraphics(gcf,fullfile('plots','ellinyquist.pdf'),'ContentType','vector')
 
-% Nyquist zoom: 70-120 Hz only, 8 ellipses spread over that band
+%% Nyquist zoom: 70-120 Hz only, 8 ellipses spread over that band
 f_zoom = [70 120];
 kz  = find(W_lft/2/pi >= f_zoom(1) & W_lft/2/pi <= f_zoom(2));
 Gz  = squeeze(G_hat.ResponseData);
-figure('Position',[635,928,560,291]); hold on; axis equal; grid on
+figure('Position',[1162,936,398,302]); hold on; axis equal; grid on
 for i = 1:size(Z, 2)
     plot(real(Z(kz, i)), imag(Z(kz, i)), 'Color', [0.7 0.7 0.7], 'HandleVisibility', 'off')
 end
 plot(real(Gz(kz)), imag(Gz(kz)), 'b', 'DisplayName', 'G\_hat')
-for k = kz(round(linspace(1, numel(kz), 8))).'
+for k = kz(round(linspace(1, numel(kz), 3))).'
     plot(real(Z(k, :)), imag(Z(k, :)), 'k.', 'MarkerSize', 12, 'HandleVisibility', 'off')
     [hc, he] = utils.plot_ellipse(Gz(k), real(A_set{k})/1.1, ...
         'Color', 'r', 'LineStyle', '-', 'LineWidth', 1);
