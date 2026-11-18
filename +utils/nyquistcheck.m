@@ -12,6 +12,7 @@ function T = nyquistcheck(K, GFRF, opts)
 %     min_1pL     min |1 + L|  (modulus margin; 1/min_1pL = peak |S|)
 %     peak_S_dB   -20 log10(min_1pL)
 %     angL_deg    phase of L at that point
+%   'file', 'plots/x' saves plots/x.pdf and plots/x.csv.
 %   Only positive frequencies are drawn. The FRFs are interpolated (interp, linear)
 %   on n_interp points between their first and last measured frequency (no
 %   extrapolation); K is evaluated exactly on that grid. 'n_interp', 0 = measured grid.
@@ -24,6 +25,7 @@ arguments
     opts.name string = ""
     opts.zoom (1,1) double = 1.5      % half-width of the zoom window around -1
     opts.n_interp (1,1) double = 5000  % FRFs interpolated on this many linear points (0 = measured grid)
+    opts.file string = ""            % if given: <file>.pdf (figure) and <file>.csv (table)
 end
     nOP = size(GFRF, 2);
     labels = "OP" + string((1:nOP).');
@@ -77,4 +79,12 @@ end
     T = table(f_c, m_c, -mag2db(m_c), a_c, ...
         'VariableNames', {'f_Hz', 'min_1pL', 'peak_S_dB', 'angL_deg'}, 'RowNames', cellstr(labels));
     disp(T)
+    if strlength(opts.file) > 0
+        [d, ~] = fileparts(opts.file);
+        if strlength(d) > 0 && ~exist(d, 'dir'), mkdir(d); end
+        fig.Position(3:4) = [1100 500];
+        exportgraphics(fig, opts.file + ".pdf", 'ContentType', 'vector');
+        writetable(T, opts.file + ".csv", 'WriteRowNames', true);
+        fprintf('Nyquist check saved: %s.pdf / .csv\n', opts.file);
+    end
 end

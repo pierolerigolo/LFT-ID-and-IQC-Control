@@ -375,7 +375,8 @@ figure; pzplot(K_final); title('Controller poles/zeros')
 %% Nyquist check: L = G K_final on every operating point, closest point to -1
 if ~exist('realmass', 'var'), realmass = []; end
 nyq_table = utils.nyquistcheck(K_final, GFRF, 'G_hat', G_hat, 'realmass', realmass, ...
-    'name', sprintf('disk: L = G K_final, order %d', orderK));
+    'name', sprintf('disk: L = G K_final, order %d', orderK), ...
+    'file', fullfile('plots', sprintf('%s_nyquist_order%d', 'disk', orderK)));
 
 %% Local functions
 function [ok, idx] = select_stable(hist_stage, hist_stable, hist_obj, stage, mode)
