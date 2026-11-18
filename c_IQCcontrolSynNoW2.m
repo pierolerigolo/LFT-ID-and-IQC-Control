@@ -40,8 +40,8 @@ close all; clc; clear; clear("yalmip");
 % idname = 'LFT_GFRF_GdmGLTIW2opthpf75fl40_1028_etfe';
 % idname ='LFT_GFRF_GdmGLTIW2opthpf75fl40_1028_etfe_50hz';
 % idname='LFT_GFRF_GdmGLTIW2opt_1028_etfe_80hz_fmin10';
-idname='LFT_GFRF_GdmGLTIW2opt_1028_etfe_80hz_fmin10';
-orderK_list   = 16:2:20;     % controller orders to synthesise
+idname='LFT_GFRF_GdmGLTIW2opt_1110_etfe_80hz_fmin10_hyb';
+orderK_list   = 18;     % controller orders to synthesise
 Ts            = 0.001;
 seed          = 22;
 
@@ -66,7 +66,7 @@ multiplier_type = "frequency";   % "frequency" or "constant" D, E
 
 % Optimisation
 solver          = 'mosek';
-mosek_near_rel  = 1e6;       % controller steps only (MOSEK default 1e3); the eta
+mosek_near_rel  = 1e3;       % controller steps only (MOSEK default 1e3); the eta
                              % bisection always runs at the MOSEK defaults
 max_iter        = 30;
 max_iter_stage2 = 20;        % stage 2 ends after this many iterations even if the
@@ -88,7 +88,7 @@ GLFT_noW2     = usubs(GLFT_delta, 'd', 0);
 if size(Delta, 1) ~= 1
     error('Expected only the dm block after removing W2 (got %d channels).', size(Delta, 1));
 end
-eta0_list           = dm_bound/[1.5];      % initial bound on dm (mass units)
+eta0_list           = dm_bound/[1];      % initial bound on dm (mass units)
 W_lft = GLFT.Frequency;
 [nout_lft, nin_lft] = size(GLFT);
 [nq, np] = size(Delta);          % Delta: p (plant outputs, np) -> q (plant inputs, nq)
