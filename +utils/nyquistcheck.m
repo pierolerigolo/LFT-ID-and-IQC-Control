@@ -12,7 +12,9 @@ function T = nyquistcheck(K, GFRF, opts)
 %     min_1pL     min |1 + L|  (modulus margin; 1/min_1pL = peak |S|)
 %     peak_S_dB   -20 log10(min_1pL)
 %     angL_deg    phase of L at that point
-%   Only the measured positive frequencies are drawn (no mirror, no extrapolation).
+%   Only positive frequencies are drawn. The FRFs are interpolated (interp, linear)
+%   on n_interp points between their first and last measured frequency (no
+%   extrapolation); K is evaluated exactly on that grid. 'n_interp', 0 = measured grid.
 %
 arguments
     K
@@ -21,6 +23,7 @@ arguments
     opts.realmass double = []
     opts.name string = ""
     opts.zoom (1,1) double = 1.5      % half-width of the zoom window around -1
+    opts.n_interp (1,1) double = 5000  % FRFs interpolated on this many linear points (0 = measured grid)
 end
     nOP = size(GFRF, 2);
     labels = "OP" + string((1:nOP).');
@@ -42,8 +45,12 @@ end
     ax  = [nexttile(tl), nexttile(tl)];
     for a = ax, hold(a, 'on'); grid(a, 'on'); axis(a, 'equal'); end
     for i = 1:n
-        w = Gs{i}.Frequency;
-        L = squeeze(freqresp(K, w)).*squeeze(Gs{i}.ResponseData);
+        Gi = Gs{i};
+        if opts.n_interp > 0
+            Gi = interp(Gi, linspace(min(Gi.Frequency), max(Gi.Frequency), opts.n_interp).');
+        end
+        w = Gi.Frequency;
+        L = squeeze(freqresp(K, w)).*squeeze(Gi.ResponseData);
         ok = isfinite(L);   w = w(ok);   L = L(ok);
         [m_c(i), k] = min(abs(1 + L));
         f_c(i) = w(k)/2/pi;   a_c(i) = rad2deg(angle(L(k)));
