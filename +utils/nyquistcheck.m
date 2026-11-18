@@ -1,0 +1,74 @@
+function T = nyquistcheck(K, GFRF, opts)
+%NYQUISTCHECK Nyquist plot of L = G K on every operating point, closest point to -1
+%
+%   T = utils.nyquistcheck(K, GFRF)
+%   T = utils.nyquistcheck(K, GFRF, 'G_hat', G_hat, 'realmass', m, 'name', "W2 order 18")
+%
+%   GFRF  measured FRFs, one channel per operating point (as in the c scripts)
+%   For each operating point (and the nominal model G_hat if given) the
+%   frequency where L(jw) = G(jw) K(jw) is closest to -1 is marked on the
+%   Nyquist plot (full plot and zoom around -1), and returned in T:
+%     f_Hz        frequency of the closest point
+%     min_1pL     min |1 + L|  (modulus margin; 1/min_1pL = peak |S|)
+%     peak_S_dB   -20 log10(min_1pL)
+%     angL_deg    phase of L at that point
+%   Only the measured frequency grid is used (no extrapolation).
+%
+arguments
+    K
+    GFRF
+    opts.G_hat = []
+    opts.realmass double = []
+    opts.name string = ""
+    opts.zoom (1,1) double = 1.5      % half-width of the zoom window around -1
+end
+    nOP = size(GFRF, 2);
+    labels = "OP" + string((1:nOP).');
+    if numel(opts.realmass) == nOP
+        labels = labels + " (" + compose("%.2f", opts.realmass(:)) + " kg)";
+    end
+    Gs = cell(nOP, 1);
+    for i = 1:nOP, Gs{i} = GFRF(i); end
+    if ~isempty(opts.G_hat)
+        Gs{end+1} = opts.G_hat;   labels(end+1) = "Nominal";
+    end
+    n = numel(Gs);
+    col = lines(max(n, 3));   col(n, :) = 0;     % nominal (last) in black when present
+    if isempty(opts.G_hat), col = lines(max(n, 3)); end
+
+    f_c = zeros(n, 1);   m_c = f_c;   a_c = f_c;
+    fig = figure('Name', 'Nyquist L = G K');
+    tl  = tiledlayout(fig, 1, 2, 'TileSpacing', 'compact');
+    ax  = [nexttile(tl), nexttile(tl)];
+    for a = ax, hold(a, 'on'); grid(a, 'on'); axis(a, 'equal'); end
+    for i = 1:n
+        w = Gs{i}.Frequency;
+        L = squeeze(freqresp(K, w)).*squeeze(Gs{i}.ResponseData);
+        ok = isfinite(L);   w = w(ok);   L = L(ok);
+        [m_c(i), k] = min(abs(1 + L));
+        f_c(i) = w(k)/2/pi;   a_c(i) = rad2deg(angle(L(k)));
+        for a = ax
+            plot(a, real(L), imag(L), 'Color', col(i, :), 'DisplayName', labels(i));
+            plot(a, real(L), -imag(L), ':', 'Color', col(i, :), 'HandleVisibility', 'off');
+            plot(a, [-1 real(L(k))], [0 imag(L(k))], '--', 'Color', col(i, :), 'HandleVisibility', 'off');
+            plot(a, real(L(k)), imag(L(k)), 'o', 'Color', col(i, :), 'MarkerFaceColor', col(i, :), ...
+                'HandleVisibility', 'off');
+        end
+        text(ax(2), real(L(k)), imag(L(k)), sprintf('  %.1f Hz, |1+L| = %.2f', f_c(i), m_c(i)), ...
+            'Color', col(i, :), 'FontSize', 8, 'Clipping', 'on');
+    end
+    th = linspace(0, 2*pi, 200);
+    for a = ax
+        plot(a, -1, 0, 'r+', 'MarkerSize', 12, 'LineWidth', 2, 'HandleVisibility', 'off');
+        plot(a, -1 + min(m_c)*cos(th), min(m_c)*sin(th), 'r:', 'HandleVisibility', 'off');
+        xlabel(a, 'Re L'); ylabel(a, 'Im L');
+    end
+    xlim(ax(2), -1 + opts.zoom*[-1 1]);   ylim(ax(2), opts.zoom*[-1 1]);
+    title(ax(1), 'L = G K');   title(ax(2), 'zoom around -1 (circle: smallest |1+L|)');
+    legend(ax(1), 'Location', 'best');
+    if strlength(opts.name) > 0, title(tl, opts.name, 'Interpreter', 'none'); end
+
+    T = table(f_c, m_c, -mag2db(m_c), a_c, ...
+        'VariableNames', {'f_Hz', 'min_1pL', 'peak_S_dB', 'angL_deg'}, 'RowNames', cellstr(labels));
+    disp(T)
+end

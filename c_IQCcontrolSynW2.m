@@ -505,6 +505,11 @@ figure; utils.magplot(K_A, 'DisplayName', 'K A')
 utils.magplot(K_B, 'DisplayName', 'K B');title('Controller')
 
 %}
+%% Nyquist check: L = G K_final on every operating point, closest point to -1
+if ~exist('realmass', 'var'), realmass = []; end
+nyq_table = utils.nyquistcheck(K_final, GFRF, 'G_hat', G_hat, 'realmass', realmass, ...
+    'name', sprintf('W2: L = G K_final, order %d', orderK));
+
 %% Local functions
 function [eta, D_val, E_val, PI_matrix] = multiplier_bisection(G_robustness, PILTI, K, eta, D_val, E_val, ...
         alpha_PI, beta_PI, W_lft, dm_bound, multiplier_type)

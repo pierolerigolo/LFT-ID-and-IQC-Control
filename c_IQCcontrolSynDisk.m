@@ -372,6 +372,11 @@ perf_table = utils.perftable(Ks_tab, names_tab, GFRF, omega_d, 'realmass', realm
 figure; utils.magplot(K_final, 'DisplayName', 'K final'); title('Controller')
 figure; pzplot(K_final); title('Controller poles/zeros')
 
+%% Nyquist check: L = G K_final on every operating point, closest point to -1
+if ~exist('realmass', 'var'), realmass = []; end
+nyq_table = utils.nyquistcheck(K_final, GFRF, 'G_hat', G_hat, 'realmass', realmass, ...
+    'name', sprintf('disk: L = G K_final, order %d', orderK));
+
 %% Local functions
 function [ok, idx] = select_stable(hist_stage, hist_stable, hist_obj, stage, mode)
 %SELECT_STABLE OL-stable solved iteration of a stage: 'best' = lowest objective,
