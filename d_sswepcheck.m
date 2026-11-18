@@ -1,11 +1,17 @@
 %% d_sswepcheck  -  gain between the designed controller and the one that ran
 %
 %   For every sine-sweep run (open-loop sweep + closed-loop sweep):
+%     0. g_set: gain set in the controller build (1, or e.g. 5.6)
 %     1. from the recorded command: u_rec = g_cmd * K(-y)   (utils.implgain, lsim)
+%        -> g_cmd/g_set = scaling inside the controller block (logged y -> logged u)
+%     1b. plant from the logged command to the logged acceleration in closed loop,
+%        G_cl = (Y_cl - Y_ol)/U_cl, against G = GFRF(iOP): g_plant = |G_cl/G|
+%        -> scaling between the logged signals and the identification signals
 %     2. from the sensitivity only (does not use the recorded command):
 %          S_meas = y_cl/y_ol = 1/(1 + g_S K G)  ->  g_S = (1/S_meas - 1)/(K G)
 %        with G = GFRF(iOP) of the identification (median over a band)
 %     3. plot S_meas against 1/(1 + K G) (as designed) and 1/(1 + g K G)
+%   Loop as designed <=> g_S = 1, and g_S ~ g_cmd * g_plant.
 %   g = 1 is expected. g_cmd and g_S agree when the plant seen by the controller
 %   is the identified one; g_S alone also catches a scaling AFTER the logged
 %   command (actuator side) or BEFORE the logged acceleration (sensor side).
@@ -15,11 +21,11 @@ clear; close all; clc;
 %% Config
 expdir  = fullfile('data', 'Experiments');
 contdir = fullfile('data', 'finalrepportcont');
-% {experiment file, controller file, controller variable, index (Inf = end)}
+% {experiment file, controller file, controller variable, index (Inf = end), gain set in the build}
 runs = {
-    fullfile('Old Experiments', 'gfrf0_ellips_80hz_sswep_order20.mat'),                           'controller_ellips_sus_7nm_order20_82hz_-30db_nomperf.mat', 'K_itr', 5
-    'gfrf0_K_final_''controller_ellips_sus_7nm_order20_82hz_-30db_nomperf.mat',                    'controller_ellips_sus_7nm_order20_82hz_-30db_nomperf.mat', 'K_itr', Inf
-    'gfrf0_K_final_''controller_ellips_sus_7nm_order20_82hz_-30db_nomperf_stbgain5.6.mat',         'controller_ellips_sus_7nm_order20_82hz_-30db_nomperf.mat', 'K_itr', Inf
+    fullfile('Old Experiments', 'gfrf0_ellips_80hz_sswep_order20.mat'),                           'controller_ellips_sus_7nm_order20_82hz_-30db_nomperf.mat', 'K_itr', 5,   1
+    'gfrf0_K_final_''controller_ellips_sus_7nm_order20_82hz_-30db_nomperf.mat',                    'controller_ellips_sus_7nm_order20_82hz_-30db_nomperf.mat', 'K_itr', Inf, 1
+    'gfrf0_K_final_''controller_ellips_sus_7nm_order20_82hz_-30db_nomperf_stbgain5.6.mat',         'controller_ellips_sus_7nm_order20_82hz_-30db_nomperf.mat', 'K_itr', Inf, 5.6
     };
 idfile  = fullfile('data', 'GFRF_iddata_1028_etfe.mat');   % identification FRFs
 iOP     = 1;                                               % operating point of the runs (gfrf0)
@@ -33,8 +39,8 @@ w_id = idd.GFRF.Frequency;
 
 %% Runs
 nr  = size(runs, 1);
-res = table('Size', [nr 6], 'VariableTypes', {'string', 'double', 'double', 'double', 'double', 'double'}, ...
-    'VariableNames', {'run', 'g_cmd', 'lag', 'residual_pct', 'g_S', 'g_S_phase_deg'});
+res = table('Size', [nr 9], 'VariableTypes', {'string', 'double', 'double', 'double', 'double', 'double', 'double', 'double', 'double'}, ...
+    'VariableNames', {'run', 'g_set', 'g_cmd', 'lag', 'residual_pct', 'ctrl_block', 'g_plant', 'g_S', 'g_S_phase_deg'});
 col = lines(nr);
 figS = figure('Name', 'sensitivity: measured vs designed vs with gain'); hold on
 for i = 1:nr
@@ -52,7 +58,7 @@ for i = 1:nr
     r = utils.implgain(expfile, K);
 
     % 2. gain from the sensitivity
-    S  = utils.sweepS(expfile);
+    [S, Ufrd, Ycfrd, Yofrd] = utils.sweepS(expfile);
     w  = S.Frequency;   f = w/2/pi;
     sel = f >= f_band(1) & f <= f_band(2) & abs(f - f_notch) > 3 & ...
           w >= min(w_id) & w <= max(w_id);
@@ -61,7 +67,14 @@ for i = 1:nr
     gS = (1./Sm(sel) - 1)./KG;
     gS_med = median(abs(gS));   gS_ph = rad2deg(median(angle(gS)));
 
-    res(i, :) = {string(name), r.gain, r.lag, 100*r.residual, gS_med, gS_ph};
+    % 1b. plant seen from the logged command to the logged acceleration
+    nb  = 61;                                       % bins averaged (~1 Hz)
+    Uc  = squeeze(Ufrd.ResponseData);  Yc = squeeze(Ycfrd.ResponseData);  Yo = squeeze(Yofrd.ResponseData);
+    Gcl = movsum((Yc - Yo).*conj(Uc), nb)./movsum(abs(Uc).^2, nb);
+    g_plant = median(abs(Gcl(sel)./squeeze(interp(G, w(sel)).ResponseData)));
+
+    g_set = runs{i, 5};
+    res(i, :) = {string(name), g_set, r.gain, r.lag, 100*r.residual, r.gain/g_set, g_plant, gS_med, gS_ph};
 
     % 3. sensitivity plot
     fw = f(f >= 10 & w <= max(w_id));   ww = 2*pi*fw;
@@ -79,9 +92,13 @@ xlabel('Frequency (Hz)'); ylabel('|S| (dB)'); legend('Location', 'best', 'Interp
 title(sprintf('Sweeps: measured S vs 1/(1 + g K G), G = GFRF(%d)', iOP))
 
 disp(res)
-fprintf(['g_cmd: recorded command / designed K (lsim, lag 0 and residual ~0 = pure gain).\n' ...
-         'g_S  : gain explaining the measured sensitivity with G = GFRF(%d); ~g_cmd if the\n' ...
-         '       plant seen in closed loop is the identified one, 1 when the loop is as designed.\n'], iOP);
+fprintf(['g_cmd     : recorded command / designed K (lsim; lag 0 and residual ~0 = pure gain)\n' ...
+         'ctrl_block: g_cmd/g_set, scaling inside the controller block (should be 1)\n' ...
+         'g_plant   : |G_cl/GFRF(%d)|, logged command -> logged acceleration vs identification (should be 1)\n' ...
+         'g_S       : loop gain / designed loop from the measured S (should be 1; ~ g_cmd*g_plant)\n' ...
+         'gain to set in the build for the designed loop: g_set/g_S\n'], iOP);
+res.g_to_set = res.g_set./res.g_S;
+disp(res(:, {'run', 'g_set', 'g_S', 'g_to_set'}))
 
 %% Recorded vs simulated command (last run, zoom)
 figure('Name', 'command: recorded vs lsim(K)')
