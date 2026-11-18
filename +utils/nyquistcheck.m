@@ -12,6 +12,13 @@ function T = nyquistcheck(K, GFRF, opts)
 %     min_1pL     min |1 + L|  (modulus margin; 1/min_1pL = peak |S|)
 %     peak_S_dB   -20 log10(min_1pL)
 %     angL_deg    phase of L at that point
+%     N_enc       encirclements of -1 by L (counter-clockwise > 0), from the winding
+%                 of 1 + L over -w_max..w_max (positive frequencies and their mirror)
+%     CL_stable   Nyquist: with K and G stable, closed loop stable iff N_enc = 0
+%                 (K unstable: |N_enc| must equal its number of unstable poles)
+%   The frequency grid is refined around the lightly damped poles of K (zeta < 0.05),
+%   so narrow controller peaks between FRF points are not missed.
+%   Below the first FRF frequency L is assumed small (warning if |L| > 0.5 there).
 %   'file', 'plots/x' saves plots/x.pdf and plots/x.csv.
 %   Only positive frequencies are drawn. The FRFs are interpolated (interp, linear)
 %   on n_interp points between their first and last measured frequency (no
@@ -41,7 +48,18 @@ end
     col = lines(max(n, 3));   col(n, :) = 0;     % nominal (last) in black when present
     if isempty(opts.G_hat), col = lines(max(n, 3)); end
 
-    f_c = zeros(n, 1);   m_c = f_c;   a_c = f_c;
+    f_c = zeros(n, 1);   m_c = f_c;   a_c = f_c;   N_enc = f_c;
+
+    % dense points around the lightly damped poles of K (narrow peaks)
+    pK  = pole(K);
+    if K.Ts > 0, sK = log(pK)/K.Ts; else, sK = pK; end
+    wn  = abs(sK);   zK = -real(sK)./max(wn, eps);
+    sel = imag(sK) > 0 & zK < 0.05;
+    w_K = [];
+    for q = find(sel).'
+        w_K = [w_K; wn(q)*linspace(1 - 30*max(zK(q), 1e-4), 1 + 30*max(zK(q), 1e-4), 2000).']; %#ok<AGROW>
+    end
+    if K.Ts > 0, P = sum(abs(pK) > 1); else, P = sum(real(pK) > 0); end
     fig = figure('Name', 'Nyquist L = G K');
     tl  = tiledlayout(fig, 1, 2, 'TileSpacing', 'compact');
     ax  = [nexttile(tl), nexttile(tl)];
@@ -49,13 +67,22 @@ end
     for i = 1:n
         Gi = Gs{i};
         if opts.n_interp > 0
-            Gi = interp(Gi, linspace(min(Gi.Frequency), max(Gi.Frequency), opts.n_interp).');
+            wg = linspace(min(Gi.Frequency), max(Gi.Frequency), opts.n_interp).';
+            wg = unique([wg; w_K(w_K >= min(Gi.Frequency) & w_K <= max(Gi.Frequency))]);
+            Gi = interp(Gi, wg);
         end
         w = Gi.Frequency;
         L = squeeze(freqresp(K, w)).*squeeze(Gi.ResponseData);
         ok = isfinite(L);   w = w(ok);   L = L(ok);
         [m_c(i), k] = min(abs(1 + L));
         f_c(i) = w(k)/2/pi;   a_c(i) = rad2deg(angle(L(k)));
+        % encirclements of -1: winding of 1 + L over -w_max..w_max
+        ph = unwrap(angle(1 + [conj(flipud(L)); L]));
+        N_enc(i) = round((ph(end) - ph(1))/(2*pi));
+        if abs(L(1)) > 0.5
+            warning('nyquistcheck:lowfreq', '%s: |L| = %.2f at the first FRF frequency (%.1f Hz): the encirclement count assumes L small below it.', ...
+                labels(i), abs(L(1)), w(1)/2/pi);
+        end
         for a = ax
             plot(a, real(L), imag(L), 'Color', col(i, :), 'DisplayName', labels(i));
             plot(a, [-1 real(L(k))], [0 imag(L(k))], '--', 'Color', col(i, :), 'HandleVisibility', 'off');
@@ -76,8 +103,12 @@ end
     legend(ax(1), 'Location', 'best');
     if strlength(opts.name) > 0, title(tl, opts.name, 'Interpreter', 'none'); end
 
-    T = table(f_c, m_c, -mag2db(m_c), a_c, ...
-        'VariableNames', {'f_Hz', 'min_1pL', 'peak_S_dB', 'angL_deg'}, 'RowNames', cellstr(labels));
+    % stable K (P = 0): stable closed loop iff no net encirclement of -1.
+    % unstable K: |N_enc| = P required (direction not checked here)
+    CL_stable = abs(N_enc) == P;
+    if P > 0, warning('nyquistcheck:Kunstable', 'K has %d unstable poles: check the direction of the encirclements.', P); end
+    T = table(f_c, m_c, -mag2db(m_c), a_c, N_enc, CL_stable, ...
+        'VariableNames', {'f_Hz', 'min_1pL', 'peak_S_dB', 'angL_deg', 'N_enc', 'CL_stable'}, 'RowNames', cellstr(labels));
     disp(T)
     if strlength(opts.file) > 0
         [d, ~] = fileparts(opts.file);
