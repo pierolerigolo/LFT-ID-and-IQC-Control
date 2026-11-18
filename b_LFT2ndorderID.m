@@ -20,7 +20,7 @@
 clear; close all; clc
 
 %% Config
-expname = '1028_etfe';
+expname = '1110_etfe';   % GFRF_iddata_<expname>.mat from a_MultimodelFRFID (0 kg from 2026-11-10)
 fmin_dm = 25;            % band (Hz) used to fit G_dm
 fmax_dm = 75;
 f_dist  = 80;            % disturbance frequency (Hz) targeted by W1: a grid point
@@ -101,9 +101,13 @@ for i = 1:nOP
     GLTI(1, i) = GFRF_w(i)/Gdm(i); %#ok<SAGROW>
 end
 GLTImean  = frd(mean(GLTI.ResponseData, 2), w_lft, Ts);
-GLTIarray = stack(1, GLTI(1, 1), GLTI(1, 2), GLTI(1, 3), GLTI(1, 4));
+GLTIcell  = arrayfun(@(i) GLTI(1, i), 1:nOP, 'UniformOutput', false);
+GLTIarray = stack(1, GLTIcell{:});
 
-figure; bode(GLTIarray, GLTImean)
+figure;
+bode(GLTIarray, GLTImean,bo)
+xlim([10 500])
+legend('location','best') 
 exportgraphics(gcf, fullfile('plots', 'GLTIbode.jpg'), 'Resolution', 300)
 
 %% 4. Multiplicative uncertainty weight W2

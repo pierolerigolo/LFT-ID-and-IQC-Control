@@ -14,8 +14,9 @@
 %   The objective may oscillate (no step is rejected). Open-loop (OL) stability
 %   of the controller is tracked at every iteration:
 %     - solver failure in stage 2 -> best (lowest objective) OL-stable stage-2 controller
-%     - end of stage 2 (convergence, max_iter_stage2 or max_iter) on an OL-unstable
-%       controller -> best OL-stable stage-2 controller (stage-1 one as fallback)
+%     - end of stage 2 (convergence, max_iter_stage2 or max_iter) -> best (lowest
+%       objective) OL-stable stage-2 controller, even when the last one is stable
+%       (stage-1 one as fallback)
 %
 %   Output: Data/controller/ELLI_<expname>_controller_... .mat and the run diary.
 %
@@ -23,7 +24,7 @@ close all; clc; clear; clear("yalmip");
 
 %% Config
 idname        = 'LFT_GFRF_GdmGLTIW2opt_1028_etfe';  % only its frequency grid and measured FRFs are used
-orderK_list   = 10:2:20;     % controller orders to synthesise
+orderK_list   = 18; %10:2:20;     % controller orders to synthesise
 Ts            = 0.001;
 seed          = 22;
 
@@ -41,8 +42,8 @@ beta_PI         = 0.5;
 % Optimisation
 solver          = 'mosek';
 mosek_near_rel  = 1e6;       % MOSEK default 1e3
-max_iter        = 30;
-max_iter_stage2 = 20;        % stage 2 ends after this many iterations even if the
+max_iter        = 60;        % was 30: order 18 stopped on max_iter_stage2 (iter 22) while still improving
+max_iter_stage2 = 50;        % was 20;        % stage 2 ends after this many iterations even if the
                              % objective still oscillates (Inf = only on convergence)
 obj_err         = [5e-3, 1e-3];   % convergence tolerance per stage
 
@@ -55,6 +56,10 @@ addpath(genpath("C:\Users\admin\Documents\MATLAB\tbxmanager"))
 
 %% Load the measured FRFs and the frequency grid
 load(fullfile('Data', sprintf('%s.mat', idname)), 'GLFT', 'GFRF')
+realmass = [];
+if ismember('realmass', who('-file', fullfile('Data', sprintf('%s.mat', idname))))
+    load(fullfile('Data', sprintf('%s.mat', idname)), 'realmass')
+end
 W_lft   = GLFT.Frequency;
 nOP     = size(GFRF, 2);
 GFRF_w  = interp(GFRF, W_lft);
@@ -71,6 +76,12 @@ A_set = model_elliptical.UncertaintySet.A{1};          % one 2x2 matrix per freq
 [ny, nu] = size(G_hat);
 
 bad = cellfun(@(x) any(~isfinite(x(:))), A_set) | ~isfinite(squeeze(G_hat.ResponseData));
+% every measured FRF must lie in its ellipse: ||A [Re; Im](G_i - G_hat)|| <= 1
+Zc  = squeeze(frdmodels.ResponseData);  if size(Zc, 1) ~= numel(W_lft), Zc = Zc.'; end
+dZ  = Zc - squeeze(G_hat.ResponseData);
+inE = arrayfun(@(k) max(vecnorm(real(A_set{k})*[real(dZ(k, :)); imag(dZ(k, :))])), (1:numel(W_lft)).');
+fprintf('Ellipse containment: max ||A d|| = %.3f (median %.3f), %d / %d frequencies > 1.01\n', ...
+    max(inE), median(inE), nnz(inE > 1.01), numel(W_lft));
 if any(bad)
     error('Elliptical set / nominal model not finite at %s Hz.', mat2str(W_lft(bad).'/2/pi, 4));
 end
@@ -78,14 +89,51 @@ end
 % FRFs, nominal model and |G_hat| +/- largest semi-axis of the ellipse
 r    = cellfun(@(x) 1/min(svd(x)), A_set);
 Gmag = abs(squeeze(G_hat.ResponseData));
-figure; hold on
+figure('Position',[635,928,560,291]); hold on
 for i = 1:nOP
     utils.magplot(GFRF_w(i), 'Color', [0.7 0.7 0.7], 'LineWidth', 0.5, 'HandleVisibility', 'off');
 end
 utils.magplot(G_hat, 'Color', 'b', 'LineWidth', 2, 'DisplayName', 'Nominal G\_hat');
 plot(W_lft/2/pi, mag2db(Gmag + r), 'r--', 'DisplayName', 'Elliptical bound')
-plot(W_lft/2/pi, mag2db(max(Gmag - r, eps)), 'r--', 'HandleVisibility', 'off')
+plot(W_lft/2/pi, mag2db(max(Gmag - r, 0.01)), 'r--', 'HandleVisibility', 'off')
+plot(W_lft/2/pi, mag2db(r), 'm', 'DisplayName', 'largest semi-axis')
 title('Measured FRFs, nominal model and elliptical set')
+exportgraphics(gcf,fullfile('plots','ellibode.pdf'),'ContentType','vector')
+
+% Nyquist: operating points and ellipses at a few frequencies
+%   ellipse ||A [Re d; Im d]|| <= 1 around G_hat (utils.plot_ellipse, EPFL)
+Z = squeeze(frdmodels.ResponseData);           % nw x nOP
+if isvector(Z), Z = Z(:); end
+if size(Z, 1) ~= numel(W_lft), Z = Z.'; end
+figure('Position',[635,928,560,291]); hold on; axis equal; grid on
+plot(real(squeeze(G_hat.ResponseData)), imag(squeeze(G_hat.ResponseData)), 'b', 'DisplayName', 'G\_hat')
+for k = round(linspace(1, numel(W_lft), 8))
+    plot(real(Z(k, :)), imag(Z(k, :)), 'k.', 'MarkerSize', 12, 'HandleVisibility', 'off')
+    [hc, he] = utils.plot_ellipse(G_hat.ResponseData(1, 1, k), real(A_set{k})/1.1, ...
+        'Color', 'r', 'LineStyle', '-', 'LineWidth', 1);   % EPFL plot function
+    set([hc, he], 'HandleVisibility', 'off')
+end
+xlabel('Re'); ylabel('Im'); title('Elliptical set (8 frequencies)')
+exportgraphics(gcf,fullfile('plots','ellinyquist.pdf'),'ContentType','vector')
+
+%% Nyquist zoom: 70-120 Hz only, 8 ellipses spread over that band
+f_zoom = [70 120];
+kz  = find(W_lft/2/pi >= f_zoom(1) & W_lft/2/pi <= f_zoom(2));
+Gz  = squeeze(G_hat.ResponseData);
+figure('Position',[1162,936,398,302]); hold on; axis equal; grid on
+for i = 1:size(Z, 2)
+    plot(real(Z(kz, i)), imag(Z(kz, i)), 'Color', [0.7 0.7 0.7], 'HandleVisibility', 'off')
+end
+plot(real(Gz(kz)), imag(Gz(kz)), 'b', 'DisplayName', 'G\_hat')
+for k = kz(round(linspace(1, numel(kz), 3))).'
+    plot(real(Z(k, :)), imag(Z(k, :)), 'k.', 'MarkerSize', 12, 'HandleVisibility', 'off')
+    [hc, he] = utils.plot_ellipse(Gz(k), real(A_set{k})/1.1, ...
+        'Color', 'r', 'LineStyle', '-', 'LineWidth', 1);
+    set([hc, he], 'HandleVisibility', 'off')
+    text(real(Gz(k)), imag(Gz(k)), sprintf(' %.0f Hz', W_lft(k)/2/pi), 'FontSize', 7)
+end
+xlabel('Re'); ylabel('Im'); title(sprintf('Elliptical set (8 frequencies, %g-%g Hz)', f_zoom))
+exportgraphics(gcf,fullfile('plots','ellinyquistzoom.pdf'),'ContentType','vector')
 
 %% Performance weight W1 (prewarped at omega_d so the discrete peak stays there)
 W1_ct  = floor_gain + tf(peak_extra*[2*zeta_n*omega_d, 0], [1, 2*zeta_d*omega_d, omega_d^2]);
@@ -222,12 +270,13 @@ for orderK = orderK_list
         end
     end
 
-    % ----- Final controller: best OL-stable stage-2 one if the last is unstable -----
-    if STAGE == 2 && ~isstable(ss(K))
+    % ----- Final controller: best (lowest objective) OL-stable stage-2 one,
+    %       also when the last one is stable -----
+    if STAGE == 2
         [ok, idx] = select_stable(hist_stage, hist_stable, hist_obj, 2, 'best');
         if ok
             K.setstate(hist_state{idx});
-            fprintf('Final controller OL unstable: best OL stable stage-2 controller (iter %d, obj = %.6f)\n', ...
+            fprintf('Final controller: best OL stable stage-2 controller (iter %d, obj = %.6f)\n', ...
                 idx, hist_obj(idx));
         elseif ~isempty(K_stage_state{1}) && isstable(K_stage{1})
             K.setstate(K_stage_state{1});
@@ -255,6 +304,14 @@ for orderK = orderK_list
 end
 
 %% Analysis (last synthesised order)
+% open a saved cont
+savecont=load(fullfile('data','controller','ELLI_1028_etfe_controller_order18_80hz_-34db_nperfhinf.mat'));
+K_final=savecont.K_final;
+K_stage=savecont.K_stage;
+orderK=savecont.orderK;
+W1_frd=savecont.W1_frd;
+G_hat=savecont.model_elliptical.NominalModel;
+
 colors = lines(max(3, nOP));
 
 % Sensitivity of the stage controllers on the nominal plant
@@ -268,16 +325,29 @@ for s = 1:2
 end
 utils.magplot(inv(W1_frd), 'Color', [0 0 1 .3], 'DisplayName', 'W_1^{-1}');
 title(sprintf('Nominal sensitivity (elliptical set), order %d', orderK))
-
+%%
 % Final controller on every measured operating point
 figure; hold on
+utils.magplot(inv(W1_frd), 'Color', 'c', 'DisplayName', 'W_1^{-1}');
 for i = 1:nOP
     utils.magplot(inv(1 + K_final*GFRF(i)), 'Color', colors(i, :), 'DisplayName', 'S OP'+string(i));
 end
 utils.magplot(inv(1 + K_final*G_hat), 'Color', 'k', 'DisplayName', 'S nominal');
-utils.magplot(inv(W1_frd), 'Color', 'c', 'DisplayName', 'W_1^{-1}');
 title(sprintf('Elliptical set: sensitivity on the measured FRFs, order %d', orderK))
+ylim([-35 10])
+exportgraphics(gcf,fullfile('plots','ellisensbode.pdf'))
 
+% Performance table at the disturbance frequency (tab separated in the clipboard
+% -> paste in Keynote), Ellipse controller and the saved Disk controller
+other_file = fullfile('data', 'controller', 'DISK_1028_etfe_controller_order18_80hz_-34db_nperfhinf.mat');
+Ks_tab = {K_final};   names_tab = "Ellipse";
+if exist(other_file, 'file')
+    other = load(other_file, 'K_final');
+    Ks_tab{end+1} = other.K_final;   names_tab(end+1) = "Disk";
+end
+perf_table = utils.perftable(Ks_tab, names_tab, GFRF, omega_d, 'realmass', realmass, ...
+    'G_hat', G_hat, 'file', fullfile('plots', 'elli_perf_table.csv'));
+%%
 figure; utils.magplot(K_final, 'DisplayName', 'K final'); title('Controller')
 figure; pzplot(K_final); title('Controller poles/zeros')
 
