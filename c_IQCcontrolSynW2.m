@@ -364,7 +364,7 @@ end
 %% Analysis (last synthesised order)
 colors = lines(max(3, nOP));
 % use a loaded K_final
-savedcont=load(fullfile('data','controller/','LFT_GFRF_GdmGLTIW2opt_1110_etfe_80hz_fmin10_hyb_controller_order18_80hz_-34db_nperfoptiIQC_notconv_etai0.35_etaf0.40_multi_freq.mat'))
+savedcont=load(fullfile('data','controller/','LFT_GFRF_GdmGLTIW2opt_1110_etfe_80hz_fmin10_hyb_controller_order18_80hz_-34db_nperfoptiIQC_notconv_etai0.35_etaf0.36_multi_freq.mat'))
 K_final=savedcont.K_final;
 orderK=savedcont.orderK;
 eta=savedcont.eta;
