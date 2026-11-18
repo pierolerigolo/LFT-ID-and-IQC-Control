@@ -1,0 +1,296 @@
+Iter   1 | Stage 1
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 0.000000 | eta = 0.3537 | K OL stable | time = 2.16 s
+
+Iter   2 | Stage 1
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 0.000000 | eta = 0.3537 | K OL stable | time = 1.48 s
+
+  --> Saved K_stage{1}
+  --> Advancing to Stage 2
+Iter   3 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 1240.451074 | eta = 0.3537 | K OL stable | time = 3.34 s
+
+Iter   4 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 987.359271 | eta = 0.3537 | K OL stable | time = 3.56 s
+
+Iter   5 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 587.370584 | eta = 0.3537 | K OL unstable | time = 4.10 s
+
+Iter   6 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 226.240748 | eta = 0.3537 | K OL unstable | time = 4.18 s
+
+Iter   7 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 53.948082 | eta = 0.3537 | K OL unstable | time = 3.95 s
+
+Iter   8 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 15.029913 | eta = 0.3537 | K OL stable | time = 4.57 s
+
+Iter   9 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  !! Solver failed (code 4: Numerical problems (<a href="yalmip.github.io/inside/debuggingnumerics">learn to debug</a>) (MOSEK-SDP))
+  --> back to the best OL stable controller of stage 2 (iter 8, obj = 15.029913)
+  --> Advancing to Stage 3
+Iter  10 | Stage 3
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 0.01 -> true (slack = 0)
+    D = 2.489
+    E = -3.676e-16-7.264e-09i
+D warm-start:
+    2.4888
+
+E warm-start:
+  -3.6765e-16 - 7.2638e-09i
+
+  [expand] eta = 0.3537 -> true (slack = 0)
+    D = 2.408
+    E = 1.062e-14-1.319e-06i
+D warm-start:
+    2.4078
+
+E warm-start:
+   1.0616e-14 - 1.3195e-06i
+
+  [expand] eta = 0.7074 -> false (slack = 0)
+D warm-start:
+    2.4078
+
+E warm-start:
+   1.0616e-14 - 1.3195e-06i
+
+  [bisect  1] eta = 0.530526 -> false (slack = 0)
+D warm-start:
+    2.4078
+
+E warm-start:
+   1.0616e-14 - 1.3195e-06i
+
+  [bisect  2] eta = 0.442105 -> false (slack = 0)
+D warm-start:
+    2.4078
+
+E warm-start:
+   1.0616e-14 - 1.3195e-06i
+
+  [bisect  3] eta = 0.397895 -> true (slack = 0)
+    D = 4.914
+    E = 7.478e-16-3.489e-06i
+D warm-start:
+    4.9140
+
+E warm-start:
+   7.4781e-16 - 3.4893e-06i
+
+  [bisect  4] eta = 0.42 -> false (slack = 0)
+D warm-start:
+    4.9140
+
+E warm-start:
+   7.4781e-16 - 3.4893e-06i
+
+  [bisect  5] eta = 0.408947 -> false (slack = 0)
+D warm-start:
+    4.9140
+
+E warm-start:
+   7.4781e-16 - 3.4893e-06i
+
+  [bisect  6] eta = 0.403421 -> false (slack = 0)
+D warm-start:
+    4.9140
+
+E warm-start:
+   7.4781e-16 - 3.4893e-06i
+
+  [bisect  7] eta = 0.400658 -> false (slack = 0)
+IQC_reduced_combinedPI_eta_bisection: converged, eta = 0.397895
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -5.4164
+
+max:     0
+
+  !! Solver failed (code 4: Numerical problems (<a href="yalmip.github.io/inside/debuggingnumerics">learn to debug</a>) (MOSEK-SDP))
+  --> no OL stable controller in stage 3: back to the last solved one
+D warm-start:
+    4.9140
+
+E warm-start:
+   7.4781e-16 - 3.4893e-06i
+
+  [etaLower] eta = 0.01 -> true (slack = 0)
+    D = 4.094
+    E = 1.448e-15-1.397e-06i
+D warm-start:
+    4.0940
+
+E warm-start:
+   1.4479e-15 - 1.3973e-06i
+
+  [expand] eta = 0.3979 -> true (slack = 0)
+    D = 3.585
+    E = 2.94e-15+3.559e-07i
+D warm-start:
+    3.5851
+
+E warm-start:
+   2.9398e-15 + 3.5587e-07i
+
+  [expand] eta = 0.7958 -> false (slack = 0)
+D warm-start:
+    3.5851
+
+E warm-start:
+   2.9398e-15 + 3.5587e-07i
+
+  [bisect  1] eta = 0.596842 -> false (slack = 0)
+D warm-start:
+    3.5851
+
+E warm-start:
+   2.9398e-15 + 3.5587e-07i
+
+  [bisect  2] eta = 0.497368 -> false (slack = 0)
+D warm-start:
+    3.5851
+
+E warm-start:
+   2.9398e-15 + 3.5587e-07i
+
+  [bisect  3] eta = 0.447631 -> false (slack = 0)
+D warm-start:
+    3.5851
+
+E warm-start:
+   2.9398e-15 + 3.5587e-07i
+
+  [bisect  4] eta = 0.422763 -> false (slack = 0)
+D warm-start:
+    3.5851
+
+E warm-start:
+   2.9398e-15 + 3.5587e-07i
+
+  [bisect  5] eta = 0.410329 -> false (slack = 0)
+D warm-start:
+    3.5851
+
+E warm-start:
+   2.9398e-15 + 3.5587e-07i
+
+  [bisect  6] eta = 0.404112 -> false (slack = 0)
+D warm-start:
+    3.5851
+
+E warm-start:
+   2.9398e-15 + 3.5587e-07i
+
+  [bisect  7] eta = 0.401003 -> false (slack = 0)
+IQC_reduced_combinedPI_eta_bisection: converged, eta = 0.397895
+Order 18: ||W1 S||_inf = 3.835, certified eta = 0.3979 (dm_bound = 0.3537), K OL stable: 1

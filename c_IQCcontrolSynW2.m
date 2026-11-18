@@ -38,7 +38,8 @@ close all; clc; clear; clear("yalmip");
 % idname = 'LFT_GFRF_GdmGLTIW2opthpf75fl40_1028_etfe';
 % idname ='LFT_GFRF_GdmGLTIW2opthpf75fl40_1028_etfe_50hz';
 % idname='LFT_GFRF_GdmGLTIW2opt_1028_etfe_80hz_fmin10';
-idname='LFT_GFRF_GdmGLTIW2opt_1028_etfe_80hz_fmin10';
+% idname='LFT_GFRF_GdmGLTIW2opt_1028_etfe_80hz_fmin10';
+idname='LFT_GFRF_GdmGLTIW2opt_1110_etfe_80hz_fmin10_hyb';
 orderK_list   = 18;     % controller orders to synthesise
 Ts            = 0.001;
 seed          = 22;
@@ -351,7 +352,7 @@ end
 %% Analysis (last synthesised order)
 colors = lines(max(3, nOP));
 % use a loaded K_final
-savedcont=load(fullfile('data','controller/','LFT_GFRF_GdmGLTIW2opt_1028_etfe_80hz_fmin10_controller_order18_80hz_-34db_nperfoptiIQC_notconv_etai0.36_etaf0.45_multi_freq.mat'))
+savedcont=load(fullfile('data','controller/','LFT_GFRF_GdmGLTIW2opt_1110_etfe_80hz_fmin10_hyb_controller_order18_80hz_-34db_nperfoptiIQC_notconv_etai0.35_etaf0.40_multi_freq.mat'))
 K_final=savedcont.K_final;
 orderK=savedcont.orderK;
 eta=savedcont.eta;
