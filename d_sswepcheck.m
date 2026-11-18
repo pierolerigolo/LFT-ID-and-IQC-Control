@@ -84,14 +84,16 @@ for i = 1:nr
     figure(figS)
     semilogx(fw, mag2db(abs(Sm(f >= 10 & w <= max(w_id)))), 'Color', col(i, :), ...
         'DisplayName', sprintf('%s measured', name));
-    semilogx(fw, mag2db(abs(1./(1 + r.gain*KGw))), '--', 'Color', col(i, :), ...
-        'DisplayName', sprintf('1/(1 + %.3g K G)', r.gain));
+    % dashed: loop gain from the measured S (g_S), NOT the command ratio g_cmd,
+    % which misses the plant-side scaling (g_plant)
+    semilogx(fw, mag2db(abs(1./(1 + gS_med*KGw))), '--', 'Color', col(i, :), ...
+        'DisplayName', sprintf('1/(1 + %.2g K G)  (g_S, set %.3g)', gS_med, g_set));
     fprintf('%s:\n', name); disp(r.table)
 end
 semilogx(fw, mag2db(abs(1./(1 + KGw))), 'k:', 'LineWidth', 1.5, 'DisplayName', 'as designed 1/(1 + K G) (last K)');
 set(gca, 'XScale', 'log'); grid on; xlim([10 500]);
 xlabel('Frequency (Hz)'); ylabel('|S| (dB)'); legend('Location', 'best', 'Interpreter', 'none')
-title(sprintf('Sweeps: measured S vs 1/(1 + g K G), G = GFRF(%d)', iOP))
+title(sprintf('Sweeps: measured S vs 1/(1 + g_S K G), G = GFRF(%d)', iOP))
 
 disp(res)
 fprintf(['g_cmd     : recorded command / designed K (lsim; lag 0 and residual ~0 = pure gain)\n' ...
