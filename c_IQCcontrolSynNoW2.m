@@ -353,6 +353,14 @@ end
 
 %% Analysis (last synthesised order)
 colors = lines(max(3, nOP));
+% open a saved controller
+fn='NOW2_LFT_GFRF_GdmGLTIW2opt_1110_etfe_80hz_fmin10_hyb_controller_order18_80hz_-34db_nperfoptiIQC_notconv_etai0.35_etaf0.92_multi_freq';
+opensave=load(fullfile('data','controller',[fn,'.mat']));
+K_final=opensave.K_itr{7};
+orderK=opensave.orderK;
+eta=opensave.eta;
+K_stage=opensave.K_stage;
+W1_frd=opensave.W1_frd;
 
 % Sensitivity of the stage controllers on the nominal plant
 figure; hold on
