@@ -20,12 +20,14 @@ clear; close all; clc;
 
 %% Config
 expdir  = fullfile('data', 'Experiments');
-contdir = fullfile('data', 'finalrepportcont');
-% {experiment file, controller file, controller variable, index (Inf = end), gain set in the build}
+contdir = 'data';                                  % controller files relative to this folder
+soa     = fullfile('finalrepportcont', 'controller_ellips_sus_7nm_order20_82hz_-30db_nomperf.mat');
+% {experiment file, controller file (in contdir), controller variable, index (Inf = end; ignored if not a cell), gain set in the build}
 runs = {
-    fullfile('Old Experiments', 'gfrf0_ellips_80hz_sswep_order20.mat'),                           'controller_ellips_sus_7nm_order20_82hz_-30db_nomperf.mat', 'K_itr', 5,   1
-    'gfrf0_K_final_''controller_ellips_sus_7nm_order20_82hz_-30db_nomperf.mat',                    'controller_ellips_sus_7nm_order20_82hz_-30db_nomperf.mat', 'K_itr', Inf, 1
-    'gfrf0_K_final_''controller_ellips_sus_7nm_order20_82hz_-30db_nomperf_stbgain5.6.mat',         'controller_ellips_sus_7nm_order20_82hz_-30db_nomperf.mat', 'K_itr', Inf, 5.6
+    fullfile('Old Experiments', 'gfrf0_ellips_80hz_sswep_order20.mat'),                           soa, 'K_itr', 5,   1
+    'gfrf0_K_final_''controller_ellips_sus_7nm_order20_82hz_-30db_nomperf.mat',                    soa, 'K_itr', Inf, 1
+    'gfrf0_K_final_''controller_ellips_sus_7nm_order20_82hz_-30db_nomperf_stbgain5.6.mat',         soa, 'K_itr', Inf, 5.6
+    'gfrf0_K_final_DISK_1028_etfe_controller_order18_80hz_-34db_nperfhinf_stbg_4.5.mat', fullfile('controller', 'DISK_1028_etfe_controller_order18_80hz_-34db_nperfhinf.mat'), 'K_final', Inf, 4.5
     };
 idfile  = fullfile('data', 'GFRF_iddata_1028_etfe.mat');   % identification FRFs
 iOP     = 1;                                               % operating point of the runs (gfrf0)
