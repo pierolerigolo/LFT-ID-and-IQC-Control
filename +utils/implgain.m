@@ -1,4 +1,4 @@
-function r = implgain(path, K, lags)
+function r = implgain(path, K, lags, skip)
 %IMPLGAIN Gain (and delay) between the designed controller and the one that ran
 %
 %   r = utils.implgain(path, K)          lags -3..3 samples
