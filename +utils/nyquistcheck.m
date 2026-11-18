@@ -12,7 +12,7 @@ function T = nyquistcheck(K, GFRF, opts)
 %     min_1pL     min |1 + L|  (modulus margin; 1/min_1pL = peak |S|)
 %     peak_S_dB   -20 log10(min_1pL)
 %     angL_deg    phase of L at that point
-%   Only the measured frequency grid is used (no extrapolation).
+%   Only the measured positive frequencies are drawn (no mirror, no extrapolation).
 %
 arguments
     K
@@ -49,7 +49,6 @@ end
         f_c(i) = w(k)/2/pi;   a_c(i) = rad2deg(angle(L(k)));
         for a = ax
             plot(a, real(L), imag(L), 'Color', col(i, :), 'DisplayName', labels(i));
-            plot(a, real(L), -imag(L), ':', 'Color', col(i, :), 'HandleVisibility', 'off');
             plot(a, [-1 real(L(k))], [0 imag(L(k))], '--', 'Color', col(i, :), 'HandleVisibility', 'off');
             plot(a, real(L(k)), imag(L(k)), 'o', 'Color', col(i, :), 'MarkerFaceColor', col(i, :), ...
                 'HandleVisibility', 'off');
