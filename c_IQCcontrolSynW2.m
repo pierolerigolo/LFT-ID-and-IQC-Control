@@ -105,7 +105,11 @@ utils.magplot(G_hat, 'Color', 'b', 'LineWidth', 2, 'DisplayName', 'Nominal G\_ha
 title('Measured FRFs and nominal model')
 
 %% robustness: [p; y] = GLFT [q; u]
-G_robustness  = mktito(GLFT, ny, nu);
+% y = -G(dm, Delta) u: same NEGATIVE feedback convention as G_performance
+% (y = r - G u) and as the ellipse/disk scripts. mktito(GLFT) alone gave
+% y = +G u, i.e. robust stability was certified for the POSITIVE feedback loop
+% (stage-1 controllers stable for 1 - G K, encircling -1 for 1 + G K).
+G_robustness  = mktito(blkdiag(eye(np), -eye(ny))*GLFT, ny, nu);
 
 %% Stage names and diary initialization
 stage_tags = {'rob', 'nperfhinf', 'nperfoptiIQC'};
