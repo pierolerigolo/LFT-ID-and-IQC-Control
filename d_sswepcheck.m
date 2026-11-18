@@ -68,7 +68,7 @@ for i = 1:nr
     KGw = squeeze(freqresp(K, ww)).*squeeze(interp(G, ww).ResponseData);
     figure(figS)
     semilogx(fw, mag2db(abs(Sm(f >= 10 & w <= max(w_id)))), 'Color', col(i, :), ...
-        'DisplayName', sprintf('%s measured', name), 'Interpreter', 'none');
+        'DisplayName', sprintf('%s measured', name));
     semilogx(fw, mag2db(abs(1./(1 + r.gain*KGw))), '--', 'Color', col(i, :), ...
         'DisplayName', sprintf('1/(1 + %.3g K G)', r.gain));
     fprintf('%s:\n', name); disp(r.table)
