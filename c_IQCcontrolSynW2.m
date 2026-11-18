@@ -39,14 +39,14 @@ close all; clc; clear; clear("yalmip");
 % idname ='LFT_GFRF_GdmGLTIW2opthpf75fl40_1028_etfe_50hz';
 % idname='LFT_GFRF_GdmGLTIW2opt_1028_etfe_80hz_fmin10';
 idname='LFT_GFRF_GdmGLTIW2opt_1028_etfe_80hz_fmin10';
-orderK_list   = 14:2:22;     % controller orders to synthesise
+orderK_list   = 18;     % controller orders to synthesise
 Ts            = 0.001;
 seed          = 22;
 
 % Performance weight W1 = floor_gain + peak_extra * band-pass at omega_d
 omega_d       = 80*2*pi;   % disturbance frequency (rad/s)
 floor_gain    = 0.5;
-peak_extra_list    = [125 250 500 1000];
+peak_extra_list    = [ 500 ];
 zeta_d        = 0.001;
 zeta_n        = 0.0001;
 
@@ -64,7 +64,7 @@ multiplier_type = "frequency";   % "frequency" or "constant" D, E
 
 % Optimisation
 solver          = 'mosek';
-mosek_near_rel  = 1e6;       % controller steps only (MOSEK default 1e3); the eta
+mosek_near_rel  = 1e3;       % controller steps only (MOSEK default 1e3); the eta
                              % bisection always runs at the MOSEK defaults
 max_iter        = 30;
 max_iter_stage2 = 20;        % stage 2 ends after this many iterations even if the
@@ -72,15 +72,20 @@ max_iter_stage2 = 20;        % stage 2 ends after this many iterations even if t
 obj_err         = [5e-3, 1e-3, 1e-3];   % convergence tolerance per stage
 
 % Solver paths (machine specific)
-addpath(genpath("C:\Users\admin\mosek"))
-addpath(genpath("C:\Program Files\Mosek\10.1"))
-addpath(genpath("C:\Users\admin\Documents\MATLAB\tbxmanager"))
+% addpath(genpath("C:\Users\admin\mosek"))
+% addpath(genpath("C:\Program Files\Mosek\10.1"))
+% addpath(genpath("C:\Users\admin\Documents\MATLAB\tbxmanager"))
+
+addpath(genpath("C:\Users\pgr\mosek"))
+addpath(genpath("C:\Users\pgr\OneDrive - CSEM S.A\Documents\MATLAB\tbxmanager"))
+addpath(genpath("C:\Program Files\Mosek\11.2"))
+
 % addpath(genpath("/Users/pierre/mosek"))
 % addpath(genpath("/Users/pierre/Documents/MATLAB/tbxmanager"))
 
 %% Load the LFT plant
 load(fullfile('Data', sprintf('%s.mat', idname)), 'GLFT', 'Delta', 'dm_bound', 'GFRF')
-eta0_list           = dm_bound./[2 1.5 1];      % initial bound on dm (mass units)
+eta0_list           = dm_bound./[ 1];      % initial bound on dm (mass units)
 W_lft = GLFT.Frequency;
 [nout_lft, nin_lft] = size(GLFT);
 [nq, np] = size(Delta);          % Delta: p (plant outputs, np) -> q (plant inputs, nq)
@@ -346,7 +351,7 @@ end
 %% Analysis (last synthesised order)
 colors = lines(max(3, nOP));
 % use a loaded K_final
-savedcont=load(fullfile('data','controller/','LFT_GFRF_GdmGLTIW2opt_1028_etfe_80hz_fmin10_controller_order18_80hz_-40db_nperfoptiIQC_notconv_etai0.36_etaf0.51_multi_freq.mat'))
+savedcont=load(fullfile('data','controller/','LFT_GFRF_GdmGLTIW2opt_1028_etfe_80hz_fmin10_controller_order18_80hz_-34db_nperfoptiIQC_notconv_etai0.36_etaf0.45_multi_freq.mat'))
 K_final=savedcont.K_final;
 orderK=savedcont.orderK;
 eta=savedcont.eta;
