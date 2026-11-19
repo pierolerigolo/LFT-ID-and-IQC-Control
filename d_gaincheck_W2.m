@@ -24,6 +24,16 @@ g_block = 0.1;        % factor inside the controller block
 f_newid = [20 300];   % band where the new id is reliable (Hz)
 f_band  = [20 200];   % band for g_S (Hz)
 
+% FRF frequency vector (rad/s), as in a_MultimodelFRFID: log f_lo..f_split, linear above
+Ts      = 0.001;
+f_lo    = 10;          % lowest frequency (Hz)
+f_split = 20;          % log below, linear above (Hz)
+n_log   = 50;          % points f_lo..f_split
+n_lin   = 1000;        % points f_split..Nyquist (~0.5 Hz spacing)
+n_etfe  = 2000;        % etfe frequency points (0..Nyquist, ~0.25 Hz)
+w_lin = linspace(2*pi*f_split, pi/Ts, n_lin + 1);
+w   = [logspace(log10(2*pi*f_lo), log10(2*pi*f_split), n_log), w_lin(2:end)];
+
 %% Controller and identifications
 K   = getfield(load(fullfile('data', 'controller', [contfn, '.mat']), 'K_final'), 'K_final');
 idd = load(idfile, 'GFRF_cell', 'realmass');
@@ -33,10 +43,9 @@ G_old = interp(idd.GFRF_cell{iOP}, wf(wf <= max(idd.GFRF_cell{iOP}.Frequency)));
 [y, ~, u] = utils.loadexp(newidfile);                       % new id: x_command -> Payload_acc1
 seg = find(sqrt(movmean(u.^2, 500)) > 0.05*max(sqrt(movmean(u.^2, 500))));
 d_new = detrend(iddata(y(seg(1):seg(end)), u(seg(1):seg(end)), K.Ts));   % as in a_MultimodelFRFID
-G_new = etfe(d_new, 1000, 2000);                           % lag 1000, 2000 points (0.25 Hz), as in a_MultimodelFRFID
-w_id  = idd.GFRF_cell{iOP}.Frequency;                       % same frequency grid as the old id (a_MultimodelFRFID w)
-G_new = interp(frd(G_new.ResponseData, G_new.Frequency, K.Ts), ...
-    w_id(w_id >= 2*pi*f_newid(1) & w_id <= 2*pi*f_newid(2)));   % reliable band only
+G_new = etfe(d_new, 1000, n_etfe);                         % lag 1000, as in a_MultimodelFRFID
+G_new = interp(frd(G_new.ResponseData, G_new.Frequency, Ts), ...
+    w(w >= 2*pi*f_newid(1) & w <= 2*pi*f_newid(2)));        % grid w, reliable band only
 
 %% Plant: old id vs new id (the new id contains the actuator-side factor ~2)
 bo = bodeoptions;  bo.FreqUnits = 'Hz';  bo.XLim = [10 500];  bo.Grid = 'on';
@@ -53,8 +62,8 @@ for i = 1:size(runs, 1)
     fn = fullfile(expdir, runs{i, 1});
     g_cmd(i) = utils.implgain(fn, K).gain;
     S{i} = utils.sweepS(fn);
-    w  = S{i}.Frequency(S{i}.Frequency >= 2*pi*f_band(1) & S{i}.Frequency <= 2*pi*f_band(2));
-    gs = (1./squeeze(interp(S{i}, w).ResponseData) - 1)./squeeze(freqresp(K*interp(idd.GFRF_cell{iOP}, w), w));
+    ws  = S{i}.Frequency(S{i}.Frequency >= 2*pi*f_band(1) & S{i}.Frequency <= 2*pi*f_band(2));
+    gs = (1./squeeze(interp(S{i}, ws).ResponseData) - 1)./squeeze(freqresp(K*interp(idd.GFRF_cell{iOP}, ws), ws));
     g_S(i) = median(abs(gs));
 end
 disp(table(string(runs(:, 1)), [runs{:, 2}].', g_cmd, g_S, [runs{:, 2}].'./g_S, ...
@@ -82,12 +91,10 @@ exportgraphics(gcf, fullfile('plots', 'd_gaincheck_W2_bode.pdf'), 'ContentType',
 xlim([40 120])
 exportgraphics(gcf, fullfile('plots', 'd_gaincheck_W2_bode_zoomed.pdf'), 'ContentType', 'vector')
 
-%% Nyquist (utils.nyquistcheck: closest point to -1 marked, table, pdf + csv)
-% old id (gain 1, every operating point), new id (gain 1), new id with the gain correction
-nyq_old = utils.nyquistcheck(K, [idd.GFRF_cell{:}], 'realmass', idd.realmass, ...
+%% Nyquist (utils.nyquistcheck on the grid w, refined at K's narrow peaks)
+% old id (gain 1, every operating point); new id with and without the gain of g_ref
+nyq_old = utils.nyquistcheck(K, [idd.GFRF_cell{:}], 'realmass', idd.realmass, 'w', w, ...
     'name', 'L = K G, old id (gain 1)', 'file', fullfile('plots', 'd_gaincheck_W2_nyq_oldid'));
-nyq_new = utils.nyquistcheck(K, G_new, 'realmass', 0, 'f_range', f_newid, ...
-    'name', sprintf('L = K G, new id (gain 1, %g-%g Hz)', f_newid), 'file', fullfile('plots', 'd_gaincheck_W2_nyq_newid'));
-nyq_cor = utils.nyquistcheck(g_block*g_ref*K, G_new, 'realmass', 0, 'f_range', f_newid, ...
-    'name', sprintf('L = %g K G, new id (build gain %g, %g-%g Hz)', g_block*g_ref, g_ref, f_newid), ...
-    'file', fullfile('plots', 'd_gaincheck_W2_nyq_newid_corr'));
+nyq_new = utils.nyquistcheck(K, [G_new, g_block*g_ref*G_new], 'w', w, 'f_range', f_newid, ...
+    'labels', ["new id, K G (gain 1)"; sprintf("new id, %g K G (build gain %g)", g_block*g_ref, g_ref)], ...
+    'name', sprintf('L = K G, new id (%g-%g Hz)', f_newid), 'file', fullfile('plots', 'd_gaincheck_W2_nyq_newid'));

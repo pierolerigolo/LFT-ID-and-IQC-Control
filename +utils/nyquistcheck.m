@@ -23,7 +23,9 @@ function T = nyquistcheck(K, GFRF, opts)
 %   'f_range', [f1 f2] restricts the check to f1..f2 Hz (unreliable FRF ends).
 %   Only positive frequencies are drawn. The FRFs are interpolated (interp, linear)
 %   on n_interp points between their first and last measured frequency (no
-%   extrapolation); K is evaluated exactly on that grid. 'n_interp', 0 = measured grid.
+%   extrapolation); K is evaluated exactly on that grid. 'n_interp', 0 = measured grid;
+%   'w', w uses the grid w (rad/s). The grid is always refined around K's narrow poles.
+%   'labels' names the curves (one per channel of GFRF).
 %
 arguments
     K
@@ -33,6 +35,8 @@ arguments
     opts.name string = ""
     opts.zoom (1,1) double = 1.5      % half-width of the zoom window around -1
     opts.n_interp (1,1) double = 5000  % FRFs interpolated on this many linear points (0 = measured grid)
+    opts.w double = []                 % explicit frequency grid (rad/s), replaces n_interp
+    opts.labels string = strings(0)    % curve names (default OP<i> (<mass> kg))
     opts.f_range (1,2) double = [0 Inf]  % only this band of the FRFs (Hz), e.g. where they are reliable
     opts.file string = ""            % if given: <file>.pdf (figure) and <file>.csv (table)
 end
@@ -41,6 +45,7 @@ end
     if numel(opts.realmass) == nOP
         labels = labels + " (" + compose("%.2f", opts.realmass(:)) + " kg)";
     end
+    if numel(opts.labels) == nOP, labels = opts.labels(:); end
     Gs = cell(nOP, 1);
     for i = 1:nOP, Gs{i} = GFRF(i); end
     if ~isempty(opts.G_hat)
@@ -68,12 +73,13 @@ end
     for a = ax, hold(a, 'on'); grid(a, 'on'); axis(a, 'equal'); end
     for i = 1:n
         Gi = Gs{i};
-        if opts.n_interp > 0
-            w0 = max(min(Gi.Frequency), 2*pi*opts.f_range(1));   w1 = min(max(Gi.Frequency), 2*pi*opts.f_range(2));
-            wg = linspace(w0, w1, opts.n_interp).';
-            wg = unique([wg; w_K(w_K >= w0 & w_K <= w1)]);
-            Gi = interp(Gi, wg);
+        w0 = max(min(Gi.Frequency), 2*pi*opts.f_range(1));   w1 = min(max(Gi.Frequency), 2*pi*opts.f_range(2));
+        if ~isempty(opts.w),       wg = opts.w(:);
+        elseif opts.n_interp > 0,  wg = linspace(w0, w1, opts.n_interp).';
+        else,                      wg = Gi.Frequency;
         end
+        wg = unique([wg(wg >= w0 & wg <= w1); w_K(w_K >= w0 & w_K <= w1)]);   % + K's narrow peaks
+        Gi = interp(Gi, wg);
         w = Gi.Frequency;
         L = squeeze(freqresp(K, w)).*squeeze(Gi.ResponseData);
         ok = isfinite(L);   w = w(ok);   L = L(ok);
