@@ -11,7 +11,9 @@
 %     "elliptical" nominal of find_elliptical_uncertainty (same as c_IQCcontrolSynElli)
 %   Radius r(jw): ucover(..., 'Additive') around G_hat; disk_radius = "pointwise"
 %   uses its pointwise bound W1opt = max_i |G_i - G_hat|, "fitted" the rational
-%   weight of order nWdisk (always >= W1opt).
+%   weight of order nWdisk (always >= W1opt), "filter" the rational ADDITIVE
+%   uncertainty filter W_add = W1/disk_margin itself (Hindi et al.: G = G_hat + W_add delta,
+%   |delta| <= 1); W_add is used directly in the H-inf robustness plant.
 %   The disk is the elliptical set with A(jw) = I/r(jw): same IQC, multiplier
 %   PI = diag(1, -1/r^2). Same frequency grid, measured FRFs, W1 and stages as
 %   c_IQCcontrolSynElli:
@@ -42,8 +44,9 @@ cl_check      = true;        % accept a controller only if K is OL stable AND L 
 
 % Disk uncertainty
 nominal_type  = "chebyshev"; % "chebyshev" | "mean" | "elliptical"
-disk_radius   = "pointwise"; % "pointwise" (ucover W1opt) | "fitted" (ucover rational fit)
-nWdisk        = 4;           % order of the ucover fit
+disk_radius   = "filter";    % "filter" (additive filter W_add of order nWdisk, Hindi et al.)
+                             % | "pointwise" (ucover W1opt) | "fitted" (max(|W1|, W1opt))
+nWdisk        = 4;           % order of the ucover fit (additive filter)
 disk_margin   = 1.1;         % as cone(A*x + b, 1.1) in the EPFL find_elliptical_uncertainty:
                              % the FRFs lie at disk_margin*r, i.e. r = r_fit/disk_margin
                              % (1 = disks through the farthest FRF)
@@ -125,7 +128,18 @@ switch disk_radius
     case "fitted"
         if isempty(W_disk), error('disk_radius = "fitted" needs the ucover fit.'); end
         r = max(abs(squeeze(freqresp(W_disk, W_lft))), r_opt(:));
+    case "filter"
+        if isempty(W_disk), error('disk_radius = "filter" needs the ucover fit (W_add).'); end
+        r = abs(squeeze(freqresp(W_disk, W_lft)));
+        under = r < r_opt(:)*(1 - 1e-3);
+        if any(under)
+            warning('c:Wadd', ['The additive filter is below the pointwise radius at %d of %d frequencies ' ...
+                '(worst %.1f %% at %.1f Hz): increase nWdisk.'], nnz(under), numel(r), ...
+                100*max(1 - r(under)./r_opt(under)), W_lft(find(under & (1 - r./r_opt(:)) == max(1 - r(under)./r_opt(under)), 1))/2/pi);
+        end
 end
+W_add = [];
+if ~isempty(W_disk), W_add = W_disk/disk_margin; end   % additive uncertainty filter (Hindi et al.)
 r = r/disk_margin;                              % IQC radius (same convention as the EPFL ellipses)
 r = max(r, 1e-6*max(r));                        % no zero radius (PI = diag(1, -1/r^2))
 bad = ~isfinite(r) | ~isfinite(squeeze(G_hat.ResponseData));
@@ -134,7 +148,7 @@ if any(bad)
 end
 model_disk = struct('NominalModel', G_hat, 'Radius', frd(reshape(r, 1, 1, []), W_lft, Ts), ...
     'RadiusPointwise', r_opt(:), 'Weight', W_disk, 'nominal_type', nominal_type, ...
-    'disk_radius', disk_radius, 'disk_margin', disk_margin);
+    'disk_radius', disk_radius, 'disk_margin', disk_margin, 'W_add', W_add);
 
 % FRFs, nominal model and |G_hat| +/- r
 Gmag = abs(squeeze(G_hat.ResponseData));
@@ -145,7 +159,7 @@ end
 utils.magplot(G_hat, 'Color', 'b', 'LineWidth', 2, 'DisplayName', 'Nominal G\_hat (' + nominal_type + ')');
 plot(W_lft/2/pi, mag2db(Gmag + r), 'r--', 'DisplayName', '|G\_hat| \pm r')
 plot(W_lft/2/pi, mag2db(max(Gmag - r, 0.01)), 'r--', 'HandleVisibility', 'off')
-plot(W_lft/2/pi, mag2db(r), 'm', 'DisplayName', 'radius r')
+plot(W_lft/2/pi, mag2db(r), 'm', 'DisplayName', ifelse_str(disk_radius == "filter", '|W_{add}| (additive filter)', 'radius r'))
 title('Measured FRFs, nominal model and disk set')
 legend('location','southwest')
 exportgraphics(gcf,fullfile('plots','diskbode.pdf'),'ContentType','vector')
@@ -192,7 +206,12 @@ G_robustness = mktito([zeros(ny*nu), eye(nu);
                        -eye(ny),     -G_hat], ny, nu);
 
 % robustness, H-inf (Hindi et al.): z = r u, y = -w - G_hat u  ->  T_zw = -r K/(1 + G_hat K)
-r_frd = frd(reshape(r, 1, 1, []), W_lft, G_hat.Ts);
+if disk_radius == "filter"
+    r_frd = frd(W_add, W_lft);                   % rational additive filter (Hindi et al.)
+    r_frd.Ts = G_hat.Ts;
+else
+    r_frd = frd(reshape(r, 1, 1, []), W_lft, G_hat.Ts);
+end
 G_robust_hinf = mktito([zeros(ny*nu), r_frd;
                         -eye(ny),     -G_hat], ny, nu);
 
