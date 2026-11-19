@@ -37,10 +37,10 @@ G_old = interp(idd.GFRF_cell{iOP}, wf(wf <= max(idd.GFRF_cell{iOP}.Frequency)));
 
 [y, ~, u] = utils.loadexp(newidfile);                       % new id: x_command -> Payload_acc1
 seg = find(sqrt(movmean(u.^2, 500)) > 0.05*max(sqrt(movmean(u.^2, 500))));
-seg = seg(1):seg(end);
-[H, f] = tfestimate(u(seg), y(seg), hann(4096), 2048, 4096, 1/K.Ts);
-k = f >= f_newid(1) & f <= f_newid(2);
-G_new = frd(H(k), 2*pi*f(k), K.Ts);
+d_new = detrend(iddata(y(seg(1):seg(end)), u(seg(1):seg(end)), K.Ts));   % as in a_MultimodelFRFID
+G_new = etfe(d_new, 1000, 2000);                           % lag 1000, 2000 points (0.25 Hz), as in a_MultimodelFRFID
+G_new = frd(G_new.ResponseData, G_new.Frequency, K.Ts);
+G_new = fselect(G_new, 2*pi*f_newid(1), 2*pi*f_newid(2));   % reliable band
 
 %% Gain of each run
 S = cell(size(runs, 1), 1);   g_cmd = zeros(size(runs, 1), 1);   g_S = g_cmd;
