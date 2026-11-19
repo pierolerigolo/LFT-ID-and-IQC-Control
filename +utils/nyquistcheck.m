@@ -20,6 +20,7 @@ function T = nyquistcheck(K, GFRF, opts)
 %   so narrow controller peaks between FRF points are not missed.
 %   Below the first FRF frequency L is assumed small (warning if |L| > 0.5 there).
 %   'file', 'plots/x' saves plots/x.pdf and plots/x.csv.
+%   'f_range', [f1 f2] restricts the check to f1..f2 Hz (unreliable FRF ends).
 %   Only positive frequencies are drawn. The FRFs are interpolated (interp, linear)
 %   on n_interp points between their first and last measured frequency (no
 %   extrapolation); K is evaluated exactly on that grid. 'n_interp', 0 = measured grid.
@@ -32,6 +33,7 @@ arguments
     opts.name string = ""
     opts.zoom (1,1) double = 1.5      % half-width of the zoom window around -1
     opts.n_interp (1,1) double = 5000  % FRFs interpolated on this many linear points (0 = measured grid)
+    opts.f_range (1,2) double = [0 Inf]  % only this band of the FRFs (Hz), e.g. where they are reliable
     opts.file string = ""            % if given: <file>.pdf (figure) and <file>.csv (table)
 end
     nOP = size(GFRF, 2);
@@ -67,8 +69,9 @@ end
     for i = 1:n
         Gi = Gs{i};
         if opts.n_interp > 0
-            wg = linspace(min(Gi.Frequency), max(Gi.Frequency), opts.n_interp).';
-            wg = unique([wg; w_K(w_K >= min(Gi.Frequency) & w_K <= max(Gi.Frequency))]);
+            w0 = max(min(Gi.Frequency), 2*pi*opts.f_range(1));   w1 = min(max(Gi.Frequency), 2*pi*opts.f_range(2));
+            wg = linspace(w0, w1, opts.n_interp).';
+            wg = unique([wg; w_K(w_K >= w0 & w_K <= w1)]);
             Gi = interp(Gi, wg);
         end
         w = Gi.Frequency;
@@ -82,6 +85,10 @@ end
         if abs(L(1)) > 0.5
             warning('nyquistcheck:lowfreq', '%s: |L| = %.2f at the first FRF frequency (%.1f Hz): the encirclement count assumes L small below it.', ...
                 labels(i), abs(L(1)), w(1)/2/pi);
+        end
+        if isfinite(opts.f_range(2)) && abs(L(end)) > 0.5
+            warning('nyquistcheck:highfreq', '%s: |L| = %.2f at the upper band limit (%.1f Hz): the encirclement count is only indicative.', ...
+                labels(i), abs(L(end)), w(end)/2/pi);
         end
         for a = ax
             plot(a, real(L), imag(L), 'Color', col(i, :), 'DisplayName', labels(i));

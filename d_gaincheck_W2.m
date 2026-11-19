@@ -37,6 +37,7 @@ g_ref   = 4.8;                     % build gain giving the designed loop with th
 g_block = 0.1;                     % factor inside the controller block (logged acc. -> logged command)
 newidfile = fullfile('data', 'MIVIDA 261118 sswp new simulink', 'gfrf0_ssweep_id.mat');  % sweep through x_command
 Ts_exp  = 0.001;
+f_newid = [20 300];                % band where the new id is reliable (coherence; sweep start below 16 Hz)
 
 %% Controller and identification
 cs  = load(fullfile('data', 'controller', [contfn, '.mat']), 'K_final');
@@ -115,7 +116,9 @@ m_id  = sqrt(movmean(u_id.^2, 500));   act = find(m_id > 0.05*max(m_id));
 seg   = act(1):act(end);                                % sweep part
 nwin  = 4096;
 [H_new, f_new] = tfestimate(u_id(seg), y_id(seg), hann(nwin), nwin/2, nwin, 1/Ts_exp);
-keep  = f_new >= 5 & f_new <= 1/(2*Ts_exp);
+Cxy   = mscohere(u_id(seg), y_id(seg), hann(nwin), nwin/2, nwin, 1/Ts_exp);
+keep  = f_new >= f_newid(1) & f_new <= f_newid(2);
+fprintf('new id: coherence %d-%d Hz: median %.3f, min %.3f\n', f_newid, median(Cxy(keep)), min(Cxy(keep)));
 G_new = frd(reshape(H_new(keep), 1, 1, []), 2*pi*f_new(keep), Ts_exp);
 wcmp  = w_id(w_id >= min(G_new.Frequency) & w_id <= max(G_new.Frequency));
 r_new = squeeze(interp(G_new, wcmp).ResponseData)./squeeze(interp(G, wcmp).ResponseData);
@@ -167,9 +170,9 @@ exportgraphics(fig, fullfile('plots', 'd_gaincheck_W2_bode_oldnew.pdf'), 'Conten
 %% Nyquist: design with the old id, new id, new id with the gain correction
 nyq_old = utils.nyquistcheck(K, idd.GFRF, 'realmass', idd.realmass, ...
     'name', 'W2: L = K G_{old} (gain 1, old id)', 'file', fullfile('plots', 'd_gaincheck_W2_nyq_oldid'));
-nyq_new = utils.nyquistcheck(K, G_new, 'realmass', 0, ...
+nyq_new = utils.nyquistcheck(K, G_new, 'realmass', 0, 'f_range', f_newid, ...
     'name', 'W2: L = K G_{new} (gain 1, new id)', 'file', fullfile('plots', 'd_gaincheck_W2_nyq_newid'));
-nyq_cor = utils.nyquistcheck(g_block*g_ref*K, G_new, 'realmass', 0, ...
+nyq_cor = utils.nyquistcheck(g_block*g_ref*K, G_new, 'realmass', 0, 'f_range', f_newid, ...
     'name', sprintf('W2: L = %.3g K G_{new} (new id, build gain %.3g)', g_block*g_ref, g_ref), ...
     'file', fullfile('plots', 'd_gaincheck_W2_nyq_newid_corr'));
 writetable(res, fullfile('plots', 'd_gaincheck_W2.csv'));
