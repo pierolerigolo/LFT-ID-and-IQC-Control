@@ -64,16 +64,16 @@ fprintf('80 Hz sine (build gain 1): attenuation %.1f dB, predicted %.1f dB (old 
     mag2db(abs(1/(1 + squeeze(freqresp(K*interp(idd.GFRF_cell{iOP}, 2*pi*80)/g_ref, 2*pi*80))))), g_ref);
 
 %% Sensitivity: measured vs old id and new id (semilogx: line widths and ylim are kept)
-th = {feedback(1, K*G_old/g_ref),  'k--', sprintf('old id, 1/(1+K G/%g)  (build gain 1)', g_ref)
-      feedback(1, K*G_old),        'k-',  sprintf('old id, 1/(1+K G)  (build gain %g)', g_ref)
-      feedback(1, g_block*K*G_new),       'm--', sprintf('new id, 1/(1+%g K G)  (build gain 1)', g_block)
-      feedback(1, g_block*g_ref*K*G_new), 'm-',  sprintf('new id, 1/(1+%g K G)  (build gain %g)', g_block*g_ref, g_ref)};
+th = {feedback(1, K*G_old/g_ref),  'r--', sprintf('old id, 1/(1+K G/%g)  (build gain 1)', g_ref)
+      feedback(1, K*G_old),        'r-',  sprintf('old id, 1/(1+K G)  (build gain %g)', g_ref)
+      feedback(1, g_block*K*G_new),       'b--', sprintf('new id, 1/(1+%g K G)  (build gain 1)', g_block)
+      feedback(1, g_block*g_ref*K*G_new), 'b-',  sprintf('new id, 1/(1+%g K G)  (build gain %g)', g_block*g_ref, g_ref)};
 fHz = @(sys) sys.Frequency/2/pi;   dB = @(sys) mag2db(abs(squeeze(sys.ResponseData)));
 figure; hold on
 semilogx(fHz(S{2}), dB(S{2}), 'Color', [0.85 0.33 0.10 0.6], 'DisplayName', sprintf('measured, build gain %g', runs{2, 2}))
 semilogx(fHz(S{1}), dB(S{1}), 'Color', [0 0.45 0.74 0.6],    'DisplayName', sprintf('measured, build gain %g', runs{1, 2}))
 for i = 1:size(th, 1)
-    semilogx(fHz(th{i, 1}), dB(th{i, 1}), th{i, 2}, 'LineWidth', 2, 'DisplayName', th{i, 3})
+    semilogx(fHz(th{i, 1}), dB(th{i, 1}), th{i, 2}, 'LineWidth', 1.5, 'DisplayName', th{i, 3})
 end
 set(gca, 'XScale', 'log'); grid on; xlim([10 500]); ylim([-60 30])
 xlabel('Frequency (Hz)'); ylabel('|S| (dB)'); title('W2 controller, 0 kg: sensitivity')
