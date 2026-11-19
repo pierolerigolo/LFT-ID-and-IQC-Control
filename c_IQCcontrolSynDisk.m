@@ -22,7 +22,7 @@
 %   Output: Data/controller/DISK_<expname>_controller_... .mat and the run diary.
 %
 close all; clc; clear; clear("yalmip");
-
+l
 %% Config
 idname        = 'LFT_GFRF_GdmGLTIW2opt_1028_etfe';  % only its frequency grid and measured FRFs are used
 orderK_list   = 18 %10:2:20;     % controller orders to synthesise

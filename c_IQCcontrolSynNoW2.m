@@ -88,7 +88,7 @@ GLFT_noW2     = usubs(GLFT_delta, 'd', 0);
 if size(Delta, 1) ~= 1
     error('Expected only the dm block after removing W2 (got %d channels).', size(Delta, 1));
 end
-eta0_list           = dm_bound/[1.5];      % initial bound on dm (mass units)
+eta0_list           = dm_bound/[1];      % initial bound on dm (mass units)
 W_lft = GLFT.Frequency;
 [nout_lft, nin_lft] = size(GLFT);
 [nq, np] = size(Delta);          % Delta: p (plant outputs, np) -> q (plant inputs, nq)
