@@ -24,8 +24,6 @@ g_block = 0.1;        % factor inside the controller block
 f_newid = [20 300];   % band where the new id is reliable (Hz)
 f_band  = [20 200];   % band for g_S (Hz)
 
-bo = bodeoptions;     bo.FreqUnits = 'Hz';  bo.XLim = [10 500];  bo.Grid = 'on';
-bo.Title.String = 'W2 controller, 0 kg: sensitivity';
 no = nyquistoptions;  no.FreqUnits = 'Hz';  no.ShowFullContour = 'off';  no.Grid = 'on';
 no.XLim = [-3 1];     no.YLim = [-2 2];     % zoom around -1
 
@@ -58,19 +56,25 @@ fprintf('80 Hz sine (build gain 1): attenuation %.1f dB, predicted %.1f dB (old 
     utils.sineatt(fullfile(expdir, sinefn)), ...
     mag2db(abs(1/(1 + squeeze(freqresp(K*interp(idd.GFRF_cell{iOP}, 2*pi*80)/g_ref, 2*pi*80))))), g_ref);
 
-%% Sensitivity: measured vs old id and new id
-figure
-bodemag(S{2},S{1}, ...
-    feedback(1, K*G_old/g_ref), feedback(1, K*G_old), ...
-    feedback(1, g_block*K*G_new), feedback(1, g_block*g_ref*K*G_new), bo)
-legend(sprintf('measured, build gain %g', runs{2, 2}), sprintf('measured, build gain %g', runs{1, 2}), ...
-    sprintf('old id, 1/(1+K G/%g)  (build gain 1)', g_ref), 'old id, 1/(1+K G)  (build gain 4.8)', ...
-    sprintf('new id, 1/(1+K G)  (build gain 1)', g_block), sprintf('new id, 1/(1+%g K G)  (build gain %g)', g_block*g_ref, g_ref), ...
-    'Location', 'southwest')
-ylim([-60 30])
+%% Sensitivity: measured vs old id and new id (semilogx: line widths and ylim are kept)
+th = {feedback(1, K*G_old/g_ref),  'k--', sprintf('old id, 1/(1+K G/%g)  (build gain 1)', g_ref)
+      feedback(1, K*G_old),        'k-',  sprintf('old id, 1/(1+K G)  (build gain %g)', g_ref)
+      feedback(1, g_block*K*G_new),       'm--', sprintf('new id, 1/(1+%g K G)  (build gain 1)', g_block)
+      feedback(1, g_block*g_ref*K*G_new), 'm-',  sprintf('new id, 1/(1+%g K G)  (build gain %g)', g_block*g_ref, g_ref)};
+fHz = @(sys) sys.Frequency/2/pi;   dB = @(sys) mag2db(abs(squeeze(sys.ResponseData)));
+figure; hold on
+semilogx(fHz(S{2}), dB(S{2}), 'Color', [0.85 0.33 0.10 0.6], 'DisplayName', sprintf('measured, build gain %g', runs{2, 2}))
+semilogx(fHz(S{1}), dB(S{1}), 'Color', [0 0.45 0.74 0.6],    'DisplayName', sprintf('measured, build gain %g', runs{1, 2}))
+for i = 1:size(th, 1)
+    semilogx(fHz(th{i, 1}), dB(th{i, 1}), th{i, 2}, 'LineWidth', 2, 'DisplayName', th{i, 3})
+end
+set(gca, 'XScale', 'log'); grid on; xlim([10 500]); ylim([-60 30])
+xlabel('Frequency (Hz)'); ylabel('|S| (dB)'); title('W2 controller, 0 kg: sensitivity')
+legend('Location', 'southwest')
 exportgraphics(gcf, fullfile('plots', 'd_gaincheck_W2_bode.pdf'), 'ContentType', 'vector')
 xlim([40 120])
 exportgraphics(gcf, fullfile('plots', 'd_gaincheck_W2_bode_zoomed.pdf'), 'ContentType', 'vector')
+
 %% Nyquist: old id (gain 1, every operating point), new id, new id with the gain correction
 L_old = cellfun(@(Gi) K*interp(Gi, wf(wf <= max(Gi.Frequency))), idd.GFRF_cell, 'UniformOutput', false);
 L_new = {K*G_new, g_block*g_ref*K*G_new};
