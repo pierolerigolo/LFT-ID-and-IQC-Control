@@ -1,0 +1,33 @@
+Iter   1 | Stage 1
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+{Operation terminated by user during <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('sdpvar/plus', '/Users/pierre/Documents/MATLAB/tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/plus.m', 225)" style="font-weight:bold"> + </a> (<a href="matlab: opentoline('/Users/pierre/Documents/MATLAB/tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/plus.m',225,0)">line 225</a>)
+
+
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('datadriven.Objective.IQC_reduced', '/Users/pierre/GitHub_local/LFT-ID-and-IQC-Control/+datadriven/+Objective/IQC_reduced.m', 158)" style="font-weight:bold">datadriven.Objective.IQC_reduced</a> (<a href="matlab: opentoline('/Users/pierre/GitHub_local/LFT-ID-and-IQC-Control/+datadriven/+Objective/IQC_reduced.m',158,0)">line 158</a>)
+        M = M + slack * eye(size(M));
+              ^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('c_IQCcontrolSynW2', '/Users/pierre/GitHub_local/LFT-ID-and-IQC-Control/c_IQCcontrolSynW2.m', 183)" style="font-weight:bold">c_IQCcontrolSynW2</a> (<a href="matlab: opentoline('/Users/pierre/GitHub_local/LFT-ID-and-IQC-Control/c_IQCcontrolSynW2.m',183,0)">line 183</a>)
+                        [LMIs, OBJ] = datadriven.Objective.IQC_reduced( ...
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+} 
+c_IQCcontrolSynW2
+                <strong>f_Hz</strong>     <strong>min_1pL</strong>     <strong>peak_S_dB</strong>    <strong>angL_deg</strong>    <strong>N_enc</strong>    <strong>CL_stable</strong>
+               <strong>______</strong>    <strong>________</strong>    <strong>_________</strong>    <strong>________</strong>    <strong>_____</strong>    <strong>_________</strong>
+
+    <strong>OP1    </strong>    62.539    0.052487     25.599       178.34       0        true   
+    <strong>OP2    </strong>    284.06     0.56817     4.9104       158.63       0        true   
+    <strong>OP3    </strong>    251.82      0.4968     6.0764       168.46       0        true   
+    <strong>OP4    </strong>    406.75     0.59114     4.5662      -157.97       0        true   
+    <strong>Nominal</strong>      29.8     0.82612     1.6592       126.99       0        true   
+
+Nyquist check saved: plots/W2_nyquist_order18.pdf / .csv

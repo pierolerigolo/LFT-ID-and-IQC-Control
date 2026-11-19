@@ -40,6 +40,9 @@ close all; clc; clear; clear("yalmip");
 % idname='LFT_GFRF_GdmGLTIW2opt_1028_etfe_80hz_fmin10';
 % idname='LFT_GFRF_GdmGLTIW2opt_1028_etfe_80hz_fmin10';
 idname='LFT_GFRF_GdmGLTIW2opt_1110_etfe_80hz_fmin10_hyb';
+
+usesavedcont=true;
+
 orderK_list   = 18;     % controller orders to synthesise
 Ts            = 0.001;
 seed          = 22;
@@ -104,6 +107,9 @@ end
 utils.magplot(G_hat, 'Color', 'b', 'LineWidth', 2, 'DisplayName', 'Nominal G\_hat');
 title('Measured FRFs and nominal model')
 
+
+%% If used save controller skip synthesis part
+if ~usesavedcont
 %% robustness: [p; y] = GLFT [q; u]
 % y = -G(dm, Delta) u: same NEGATIVE feedback convention as G_performance
 % (y = r - G u) and as the ellipse/disk scripts. mktito(GLFT) alone gave
@@ -360,17 +366,18 @@ for orderK = orderK_list
         end
     end
 end
-
+end
 %% Analysis (last synthesised order)
 colors = lines(max(3, nOP));
 % use a loaded K_final
-savedcont=load(fullfile('data','controller/','LFT_GFRF_GdmGLTIW2opt_1110_etfe_80hz_fmin10_hyb_controller_order18_80hz_-34db_nperfoptiIQC_notconv_etai0.35_etaf0.36_multi_freq.mat'))
-K_final=savedcont.K_final;
-orderK=savedcont.orderK;
-eta=savedcont.eta;
-K_stage=savedcont.K_stage;
-W1_frd=savedcont.W1_frd;
-
+if usesavedcont
+    savedcont=load(fullfile('data','controller/','LFT_GFRF_GdmGLTIW2opt_1110_etfe_80hz_fmin10_hyb_controller_order18_80hz_-34db_nperfoptiIQC_notconv_etai0.35_etaf0.36_multi_freq.mat'));
+    K_final=savedcont.K_final;
+    orderK=savedcont.orderK;
+    eta=savedcont.eta;
+    K_stage=savedcont.K_stage;
+    W1_frd=savedcont.W1_frd;
+end 
 % Sensitivity of the stage controllers on the nominal plant
 figure; hold on
 stage_names = {'Stage 1 (robust stab.)', 'Stage 2 (nom. H_\infty, \eta_0)', 'Stage 3 (nom. H_\infty, opt. IQC)'};
