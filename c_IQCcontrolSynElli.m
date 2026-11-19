@@ -27,6 +27,8 @@ idname        = 'LFT_GFRF_GdmGLTIW2opt_1028_etfe';  % only its frequency grid an
 orderK_list   = 18; %10:2:20;     % controller orders to synthesise
 Ts            = 0.001;
 seed          = 22;
+cl_check      = true;        % accept a controller only if K is OL stable AND L = G K does not
+                             % encircle -1 on any measured FRF (utils.encirclements)
 
 % Performance weight W1 = floor_gain + peak_extra * band-pass at omega_d
 omega_d       = 80*2*pi;   % disturbance frequency (rad/s)
@@ -167,6 +169,9 @@ for dir_ = {fullfile('Data', 'diaries'), fullfile('Data', 'controller')}
     if ~exist(dir_{1}, 'dir'), mkdir(dir_{1}); end
 end
 
+% acceptance test of a controller (used for every fallback below)
+K_ok = @(Kss) isstable(Kss) && (~cl_check || all(utils.encirclements(Kss, GFRF) == 0));
+
 %% Synthesis
 for orderK = orderK_list
     fprintf('\n===== Controller order %d =====\n', orderK);
@@ -224,7 +229,7 @@ for orderK = orderK_list
             [ok, idx] = select_stable(hist_stage, hist_stable, hist_obj, STAGE, 'best');
             if STAGE == 2 && ok
                 K.setstate(hist_state{idx});
-                fprintf('  --> back to the best OL stable controller of stage 2 (iter %d, obj = %.6f)\n', ...
+                fprintf('  --> back to the best accepted controller (OL stable, no encirclement) of stage 2 (iter %d, obj = %.6f)\n', ...
                     idx, hist_obj(idx));
             else
                 K.setstate(K_good_state);
@@ -236,13 +241,16 @@ for orderK = orderK_list
         % ----- Solved iteration (oscillations of the objective are allowed) -----
         obj_val      = value(OBJ);
         K_good_state = K.getstate();
-        K_is_stable  = isstable(ss(K));
+        N_enc_it     = utils.encirclements(ss(K), GFRF);
+        K_is_stable  = isstable(ss(K)) && (~cl_check || all(N_enc_it == 0));   % 'stable' = accepted
         hist_state{iter}  = K_good_state;
         hist_obj(iter)    = obj_val;
         hist_stable(iter) = K_is_stable;
         hist_stage(iter)  = STAGE;
         iter_in_stage     = iter_in_stage + 1;
-        if K_is_stable, stab = 'stable'; else, stab = 'unstable'; end
+        if isstable(ss(K)), stab = 'stable'; else, stab = 'unstable'; end
+        stab = sprintf('%s | N_enc [%s] -> %s', stab, num2str(N_enc_it.'), ...
+            string(ifelse_str(K_is_stable, 'accepted', 'REJECTED')));
         fprintf('  obj = %.6f | K OL %s | time = %.2f s\n\n', obj_val, stab, elapsed);
 
         err = abs(prev_obj - obj_val);
@@ -276,13 +284,13 @@ for orderK = orderK_list
         [ok, idx] = select_stable(hist_stage, hist_stable, hist_obj, 2, 'best');
         if ok
             K.setstate(hist_state{idx});
-            fprintf('Final controller: best OL stable stage-2 controller (iter %d, obj = %.6f)\n', ...
+            fprintf('Final controller: best accepted stage-2 controller (iter %d, obj = %.6f)\n', ...
                 idx, hist_obj(idx));
-        elseif ~isempty(K_stage_state{1}) && isstable(K_stage{1})
+        elseif ~isempty(K_stage_state{1}) && K_ok(K_stage{1})
             K.setstate(K_stage_state{1});
-            fprintf('No OL stable stage-2 controller: back to the stage-1 controller\n');
+            fprintf('No accepted stage-2 controller: back to the stage-1 controller\n');
         else
-            warning('No open-loop stable controller found: the final controller is OL unstable.');
+            warning('No accepted controller found: the final controller is not accepted.');
         end
     end
     K_final = ss(K);
@@ -290,7 +298,7 @@ for orderK = orderK_list
 
     %% Nominal closed loop and save
     norminf_W1S = norm(W1_frd*frd(feedback(1, G_hat*K_final), W_lft), inf);
-    fprintf('Order %d: ||W1 S||_inf = %.3f, K OL stable: %d\n', orderK, norminf_W1S, isstable(K_final));
+    fprintf('Order %d: ||W1 S||_inf = %.3f, K OL stable: %d, N_enc [%s]\n', orderK, norminf_W1S, isstable(K_final), num2str(utils.encirclements(K_final, GFRF).'));
 
     tag = stage_tags{STAGE};
     if ~converged, tag = [tag, '_notconv']; end %#ok<AGROW>
@@ -351,7 +359,17 @@ perf_table = utils.perftable(Ks_tab, names_tab, GFRF, omega_d, 'realmass', realm
 figure; utils.magplot(K_final, 'DisplayName', 'K final'); title('Controller')
 figure; pzplot(K_final); title('Controller poles/zeros')
 
+%% Nyquist check: L = G K_final on every operating point, closest point to -1
+if ~exist('realmass', 'var'), realmass = []; end
+nyq_table = utils.nyquistcheck(K_final, GFRF, 'G_hat', G_hat, 'realmass', realmass, ...
+    'name', sprintf('ellipse: L = G K_final, order %d', orderK), ...
+    'file', fullfile('plots', sprintf('%s_nyquist_order%d', 'elli', orderK)));
+
 %% Local functions
+function s = ifelse_str(c, a, b)
+    if c, s = a; else, s = b; end
+end
+
 function [ok, idx] = select_stable(hist_stage, hist_stable, hist_obj, stage, mode)
 %SELECT_STABLE OL-stable solved iteration of a stage: 'best' = lowest objective,
 %   'last' = most recent.

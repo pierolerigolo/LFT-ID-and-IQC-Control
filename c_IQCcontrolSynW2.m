@@ -38,15 +38,18 @@ close all; clc; clear; clear("yalmip");
 % idname = 'LFT_GFRF_GdmGLTIW2opthpf75fl40_1028_etfe';
 % idname ='LFT_GFRF_GdmGLTIW2opthpf75fl40_1028_etfe_50hz';
 % idname='LFT_GFRF_GdmGLTIW2opt_1028_etfe_80hz_fmin10';
-idname='LFT_GFRF_GdmGLTIW2opt_1028_etfe_80hz_fmin10';
-orderK_list   = 14:2:22;     % controller orders to synthesise
+% idname='LFT_GFRF_GdmGLTIW2opt_1028_etfe_80hz_fmin10';
+idname='LFT_GFRF_GdmGLTIW2opt_1110_etfe_80hz_fmin10_hyb';
+orderK_list   = 18;     % controller orders to synthesise
 Ts            = 0.001;
 seed          = 22;
+cl_check      = true;        % accept a controller only if K is OL stable AND L = G K does not
+                             % encircle -1 on any measured FRF (utils.encirclements)
 
 % Performance weight W1 = floor_gain + peak_extra * band-pass at omega_d
 omega_d       = 80*2*pi;   % disturbance frequency (rad/s)
 floor_gain    = 0.5;
-peak_extra_list    = [125 250 500 1000];
+peak_extra_list    = [ 500 ];
 zeta_d        = 0.001;
 zeta_n        = 0.0001;
 
@@ -64,7 +67,7 @@ multiplier_type = "frequency";   % "frequency" or "constant" D, E
 
 % Optimisation
 solver          = 'mosek';
-mosek_near_rel  = 1e6;       % controller steps only (MOSEK default 1e3); the eta
+mosek_near_rel  = 1e3;       % controller steps only (MOSEK default 1e3); the eta
                              % bisection always runs at the MOSEK defaults
 max_iter        = 30;
 max_iter_stage2 = 20;        % stage 2 ends after this many iterations even if the
@@ -72,15 +75,20 @@ max_iter_stage2 = 20;        % stage 2 ends after this many iterations even if t
 obj_err         = [5e-3, 1e-3, 1e-3];   % convergence tolerance per stage
 
 % Solver paths (machine specific)
-addpath(genpath("C:\Users\admin\mosek"))
-addpath(genpath("C:\Program Files\Mosek\10.1"))
-addpath(genpath("C:\Users\admin\Documents\MATLAB\tbxmanager"))
+% addpath(genpath("C:\Users\admin\mosek"))
+% addpath(genpath("C:\Program Files\Mosek\10.1"))
+% addpath(genpath("C:\Users\admin\Documents\MATLAB\tbxmanager"))
+
+addpath(genpath("C:\Users\pgr\mosek"))
+addpath(genpath("C:\Users\pgr\OneDrive - CSEM S.A\Documents\MATLAB\tbxmanager"))
+addpath(genpath("C:\Program Files\Mosek\11.2"))
+
 % addpath(genpath("/Users/pierre/mosek"))
 % addpath(genpath("/Users/pierre/Documents/MATLAB/tbxmanager"))
 
 %% Load the LFT plant
 load(fullfile('Data', sprintf('%s.mat', idname)), 'GLFT', 'Delta', 'dm_bound', 'GFRF')
-eta0_list           = dm_bound./[2 1.5 1];      % initial bound on dm (mass units)
+eta0_list           = dm_bound./[ 1];      % initial bound on dm (mass units)
 W_lft = GLFT.Frequency;
 [nout_lft, nin_lft] = size(GLFT);
 [nq, np] = size(Delta);          % Delta: p (plant outputs, np) -> q (plant inputs, nq)
@@ -97,13 +105,20 @@ utils.magplot(G_hat, 'Color', 'b', 'LineWidth', 2, 'DisplayName', 'Nominal G\_ha
 title('Measured FRFs and nominal model')
 
 %% robustness: [p; y] = GLFT [q; u]
-G_robustness  = mktito(GLFT, ny, nu);
+% y = -G(dm, Delta) u: same NEGATIVE feedback convention as G_performance
+% (y = r - G u) and as the ellipse/disk scripts. mktito(GLFT) alone gave
+% y = +G u, i.e. robust stability was certified for the POSITIVE feedback loop
+% (stage-1 controllers stable for 1 - G K, encircling -1 for 1 + G K).
+G_robustness  = mktito(blkdiag(eye(np), -eye(ny))*GLFT, ny, nu);
 
 %% Stage names and diary initialization
 stage_tags = {'rob', 'nperfhinf', 'nperfoptiIQC'};
 for dir_ = {fullfile('Data', 'diaries'), fullfile('Data', 'controller')}
     if ~exist(dir_{1}, 'dir'), mkdir(dir_{1}); end
 end
+
+% acceptance test of a controller (used for every fallback below)
+K_ok = @(Kss) isstable(Kss) && (~cl_check || all(utils.encirclements(Kss, GFRF) == 0));
 
 %% Synthesis
 for orderK = orderK_list
@@ -204,14 +219,14 @@ for orderK = orderK_list
                     if ok
                         K.setstate(hist_state{idx});
                         eta = eta_itr{idx};
-                        fprintf('  --> back to the best OL stable controller of stage %d (iter %d, obj = %.6f)\n', ...
+                        fprintf('  --> back to the best accepted controller (OL stable, no encirclement) of stage %d (iter %d, obj = %.6f)\n', ...
                             STAGE, idx, hist_obj(idx));
-                    elseif STAGE == 2 && ~isempty(K_stage_state{1}) && isstable(K_stage{1})
+                    elseif STAGE == 2 && ~isempty(K_stage_state{1}) && K_ok(K_stage{1})
                         K.setstate(K_stage_state{1});
-                        fprintf('  --> no OL stable controller in stage 2: back to the stage-1 controller\n');
+                        fprintf('  --> no accepted controller (OL stable, no encirclement) in stage 2: back to the stage-1 controller\n');
                     else
                         K.setstate(K_good_state);
-                        fprintf('  --> no OL stable controller in stage %d: back to the last solved one\n', STAGE);
+                        fprintf('  --> no accepted controller (OL stable, no encirclement) in stage %d: back to the last solved one\n', STAGE);
                     end
                     K_good_state = K.getstate();
                     if STAGE == 3, break, end
@@ -226,13 +241,16 @@ for orderK = orderK_list
                 % ----- Solved iteration (oscillations of the objective are allowed) -----
                 obj_val      = value(OBJ);
                 K_good_state = K.getstate();
-                K_is_stable  = isstable(ss(K));
+                N_enc_it     = utils.encirclements(ss(K), GFRF);
+                K_is_stable  = isstable(ss(K)) && (~cl_check || all(N_enc_it == 0));   % 'stable' = accepted
                 hist_state{iter}  = K_good_state;
                 hist_obj(iter)    = obj_val;
                 hist_stable(iter) = K_is_stable;
                 hist_stage(iter)  = STAGE;
                 iter_in_stage     = iter_in_stage + 1;
-                if K_is_stable, stab = 'stable'; else, stab = 'unstable'; end
+                if isstable(ss(K)), stab = 'stable'; else, stab = 'unstable'; end
+                stab = sprintf('%s | N_enc [%s] -> %s', stab, num2str(N_enc_it.'), ...
+                    string(ifelse_str(K_is_stable, 'accepted', 'REJECTED')));
                 fprintf('  obj = %.6f | eta = %.4g | K OL %s | time = %.2f s\n\n', obj_val, eta, stab, elapsed);
         
                 err = abs(prev_obj - obj_val);
@@ -248,13 +266,13 @@ for orderK = orderK_list
                         [ok, idx] = select_stable(hist_stage, hist_stable, hist_obj, 2, 'best');
                         if ok
                             K.setstate(hist_state{idx});
-                            fprintf('  --> Stage 2: best OL stable controller (iter %d, obj = %.6f; last iter %d, obj = %.6f)\n', ...
+                            fprintf('  --> Stage 2: best accepted controller (OL stable, no encirclement) (iter %d, obj = %.6f; last iter %d, obj = %.6f)\n', ...
                                 idx, hist_obj(idx), iter, obj_val);
-                        elseif ~isempty(K_stage_state{1}) && isstable(K_stage{1})
+                        elseif ~isempty(K_stage_state{1}) && K_ok(K_stage{1})
                             K.setstate(K_stage_state{1});
-                            fprintf('  --> No OL stable controller in stage 2: back to the stage-1 controller\n');
+                            fprintf('  --> No accepted controller (OL stable, no encirclement) in stage 2: back to the stage-1 controller\n');
                         else
-                            warning('No open-loop stable controller found in stage 2: stage 3 starts from an unstable one.');
+                            warning('No accepted controller found in stage 2: stage 3 starts from an unstable one.');
                         end
                         K_good_state = K.getstate();
                     end
@@ -282,27 +300,27 @@ for orderK = orderK_list
                 [ok, idx] = select_stable(hist_stage, hist_stable, hist_obj, 2, 'best');
                 if ok
                     K.setstate(hist_state{idx});
-                    fprintf('Final controller: best OL stable stage-2 controller (iter %d, obj = %.6f)\n', ...
+                    fprintf('Final controller: best accepted stage-2 controller (iter %d, obj = %.6f)\n', ...
                         idx, hist_obj(idx));
-                elseif ~isempty(K_stage_state{1}) && isstable(K_stage{1})
+                elseif ~isempty(K_stage_state{1}) && K_ok(K_stage{1})
                     K.setstate(K_stage_state{1});
-                    fprintf('No OL stable stage-2 controller: back to the stage-1 controller\n');
+                    fprintf('No accepted stage-2 controller: back to the stage-1 controller\n');
                 else
-                    warning('No open-loop stable controller found: the final controller is OL unstable.');
+                    warning('No accepted controller found: the final controller is not accepted.');
                 end
             end
             % Stage 3: the last OL-stable stage-3 controller (objective NOT compared,
             % it may be higher than earlier ones). Its eta is recomputed below.
-            if STAGE == 3 && ~isstable(ss(K))
+            if STAGE == 3 && ~K_ok(ss(K))
                 [ok, idx] = select_stable(hist_stage, hist_stable, hist_obj, 3, 'last');
                 if ok
                     K.setstate(hist_state{idx});
-                    fprintf('Final controller OL unstable: last OL stable stage-3 controller (iter %d)\n', idx);
-                elseif ~isempty(K_stage_state{2}) && isstable(K_stage{2})
+                    fprintf('Final controller rejected: last accepted stage-3 controller (iter %d)\n', idx);
+                elseif ~isempty(K_stage_state{2}) && K_ok(K_stage{2})
                     K.setstate(K_stage_state{2});
-                    fprintf('No OL stable stage-3 controller: back to the controller stage 3 started from\n');
+                    fprintf('No accepted stage-3 controller: back to the controller stage 3 started from\n');
                 else
-                    warning('No open-loop stable controller found: the final controller is OL unstable.');
+                    warning('No accepted controller found: the final controller is not accepted.');
                 end
             end
             % Certified eta of the final controller (bisection at default MOSEK tolerances)
@@ -319,8 +337,8 @@ for orderK = orderK_list
         
             %% Nominal closed loop and save
             norminf_W1S = norm(W1_frd*frd(feedback(1, G_hat*K_final), W_lft), inf);
-            fprintf('Order %d: ||W1 S||_inf = %.3f, certified eta = %.4g (dm_bound = %.4g), K OL stable: %d\n', ...
-                orderK, norminf_W1S, eta, dm_bound, isstable(K_final));
+            fprintf('Order %d: ||W1 S||_inf = %.3f, certified eta = %.4g (dm_bound = %.4g), K OL stable: %d, N_enc [%s]\n', ...
+                orderK, norminf_W1S, eta, dm_bound, isstable(K_final), num2str(utils.encirclements(K_final, GFRF).'));
         
             tag = stage_tags{STAGE};
             if ~converged, tag = [tag, '_notconv']; end %#ok<AGROW>
@@ -346,7 +364,7 @@ end
 %% Analysis (last synthesised order)
 colors = lines(max(3, nOP));
 % use a loaded K_final
-savedcont=load(fullfile('data','controller/','LFT_GFRF_GdmGLTIW2opt_1028_etfe_80hz_fmin10_controller_order18_80hz_-40db_nperfoptiIQC_notconv_etai0.36_etaf0.51_multi_freq.mat'))
+savedcont=load(fullfile('data','controller/','LFT_GFRF_GdmGLTIW2opt_1110_etfe_80hz_fmin10_hyb_controller_order18_80hz_-34db_nperfoptiIQC_notconv_etai0.35_etaf0.36_multi_freq.mat'))
 K_final=savedcont.K_final;
 orderK=savedcont.orderK;
 eta=savedcont.eta;
@@ -505,7 +523,17 @@ figure; utils.magplot(K_A, 'DisplayName', 'K A')
 utils.magplot(K_B, 'DisplayName', 'K B');title('Controller')
 
 %}
+%% Nyquist check: L = G K_final on every operating point, closest point to -1
+if ~exist('realmass', 'var'), realmass = []; end
+nyq_table = utils.nyquistcheck(K_final, GFRF, 'G_hat', G_hat, 'realmass', realmass, ...
+    'name', sprintf('W2: L = G K_final, order %d', orderK), ...
+    'file', fullfile('plots', sprintf('%s_nyquist_order%d', 'W2', orderK)));
+
 %% Local functions
+function s = ifelse_str(c, a, b)
+    if c, s = a; else, s = b; end
+end
+
 function [eta, D_val, E_val, PI_matrix] = multiplier_bisection(G_robustness, PILTI, K, eta, D_val, E_val, ...
         alpha_PI, beta_PI, W_lft, dm_bound, multiplier_type)
 %MULTIPLIER_BISECTION Largest eta (and D(w), E(w)) certified for the frozen controller K,

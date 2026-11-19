@@ -105,6 +105,8 @@ GLTIcell  = arrayfun(@(i) GLTI(1, i), 1:nOP, 'UniformOutput', false);
 GLTIarray = stack(1, GLTIcell{:});
 
 figure;
+bo=bodeoptions;
+bo.freqUnits='Hz';
 bode(GLTIarray, GLTImean,bo)
 xlim([10 500])
 legend('location','best') 
