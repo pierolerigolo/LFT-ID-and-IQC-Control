@@ -24,9 +24,6 @@ g_block = 0.1;        % factor inside the controller block
 f_newid = [20 300];   % band where the new id is reliable (Hz)
 f_band  = [20 200];   % band for g_S (Hz)
 
-no = nyquistoptions;  no.FreqUnits = 'Hz';  no.ShowFullContour = 'off';  no.Grid = 'on';
-no.XLim = [-3 1];     no.YLim = [-2 2];     % zoom around -1
-
 %% Controller and identifications
 K   = getfield(load(fullfile('data', 'controller', [contfn, '.mat']), 'K_final'), 'K_final');
 idd = load(idfile, 'GFRF_cell', 'realmass');
@@ -37,8 +34,9 @@ G_old = interp(idd.GFRF_cell{iOP}, wf(wf <= max(idd.GFRF_cell{iOP}.Frequency)));
 seg = find(sqrt(movmean(u.^2, 500)) > 0.05*max(sqrt(movmean(u.^2, 500))));
 d_new = detrend(iddata(y(seg(1):seg(end)), u(seg(1):seg(end)), K.Ts));   % as in a_MultimodelFRFID
 G_new = etfe(d_new, 1000, 2000);                           % lag 1000, 2000 points (0.25 Hz), as in a_MultimodelFRFID
-G_new = frd(G_new.ResponseData, G_new.Frequency, K.Ts);
-G_new = fselect(G_new, 2*pi*f_newid(1), 2*pi*f_newid(2));   % reliable band
+w_id  = idd.GFRF_cell{iOP}.Frequency;                       % same frequency grid as the old id (a_MultimodelFRFID w)
+G_new = interp(frd(G_new.ResponseData, G_new.Frequency, K.Ts), ...
+    w_id(w_id >= 2*pi*f_newid(1) & w_id <= 2*pi*f_newid(2)));   % reliable band only
 
 %% Plant: old id vs new id (the new id contains the actuator-side factor ~2)
 bo = bodeoptions;  bo.FreqUnits = 'Hz';  bo.XLim = [10 500];  bo.Grid = 'on';
@@ -84,19 +82,12 @@ exportgraphics(gcf, fullfile('plots', 'd_gaincheck_W2_bode.pdf'), 'ContentType',
 xlim([40 120])
 exportgraphics(gcf, fullfile('plots', 'd_gaincheck_W2_bode_zoomed.pdf'), 'ContentType', 'vector')
 
-%% Nyquist: old id (gain 1, every operating point), new id, new id with the gain correction
-L_old = cellfun(@(Gi) K*interp(Gi, wf(wf <= max(Gi.Frequency))), idd.GFRF_cell, 'UniformOutput', false);
-L_new = {K*G_new, g_block*g_ref*K*G_new};
-figure; nyquistplot(L_old{:}, no); title('L = K G, old id (gain 1)')
-legend(compose('%.1f kg', idd.realmass), 'Location', 'best')
-exportgraphics(gcf, fullfile('plots', 'd_gaincheck_W2_nyq_oldid.pdf'), 'ContentType', 'vector')
-figure; nyquistplot(L_new{:}, no); title(sprintf('L = K G, new id (%g-%g Hz)', f_newid))
-legend('new id, gain 1', sprintf('new id, %g K G (build gain %g)', g_block*g_ref, g_ref), 'Location', 'best')
-exportgraphics(gcf, fullfile('plots', 'd_gaincheck_W2_nyq_newid.pdf'), 'ContentType', 'vector')
-
-% closest point to -1
-L_all = [L_old(:); L_new(:)];
-names = [compose('old id, %.1f kg', idd.realmass(:)); "new id, gain 1"; sprintf("new id, build gain %g", g_ref)];
-[m1pL, kmin] = cellfun(@(L) min(abs(1 + squeeze(L.ResponseData))), L_all);
-f_min = cellfun(@(L, k) L.Frequency(k)/2/pi, L_all, num2cell(kmin));
-disp(table(names, f_min, m1pL, -mag2db(m1pL), 'VariableNames', {'loop', 'f_Hz', 'min_1pL', 'peak_S_dB'}))
+%% Nyquist (utils.nyquistcheck: closest point to -1 marked, table, pdf + csv)
+% old id (gain 1, every operating point), new id (gain 1), new id with the gain correction
+nyq_old = utils.nyquistcheck(K, [idd.GFRF_cell{:}], 'realmass', idd.realmass, ...
+    'name', 'L = K G, old id (gain 1)', 'file', fullfile('plots', 'd_gaincheck_W2_nyq_oldid'));
+nyq_new = utils.nyquistcheck(K, G_new, 'realmass', 0, 'f_range', f_newid, ...
+    'name', sprintf('L = K G, new id (gain 1, %g-%g Hz)', f_newid), 'file', fullfile('plots', 'd_gaincheck_W2_nyq_newid'));
+nyq_cor = utils.nyquistcheck(g_block*g_ref*K, G_new, 'realmass', 0, 'f_range', f_newid, ...
+    'name', sprintf('L = %g K G, new id (build gain %g, %g-%g Hz)', g_block*g_ref, g_ref, f_newid), ...
+    'file', fullfile('plots', 'd_gaincheck_W2_nyq_newid_corr'));
