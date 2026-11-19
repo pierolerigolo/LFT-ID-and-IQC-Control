@@ -40,6 +40,15 @@ G_new = etfe(d_new, 1000, 2000);                           % lag 1000, 2000 poin
 G_new = frd(G_new.ResponseData, G_new.Frequency, K.Ts);
 G_new = fselect(G_new, 2*pi*f_newid(1), 2*pi*f_newid(2));   % reliable band
 
+%% Plant: old id vs new id (the new id contains the actuator-side factor ~2)
+bo = bodeoptions;  bo.FreqUnits = 'Hz';  bo.XLim = [10 500];  bo.Grid = 'on';
+bo.Title.String = sprintf('Plant at 0 kg: old id vs new id (new id on %g-%g Hz)', f_newid);
+figure
+bodemag(G_old, 'k', G_new, 'm', 2*G_old, 'k:', bo)
+legend('old id G_{old} (Out1 command \rightarrow Wilcoxon1)', 'new id G_{new} (x\_command \rightarrow Payload\_acc1)', ...
+    '2 G_{old}', 'Location', 'southeast')
+exportgraphics(gcf, fullfile('plots', 'd_gaincheck_W2_plant_oldnew.pdf'), 'ContentType', 'vector')
+
 %% Gain of each run
 S = cell(size(runs, 1), 1);   g_cmd = zeros(size(runs, 1), 1);   g_S = g_cmd;
 for i = 1:size(runs, 1)
