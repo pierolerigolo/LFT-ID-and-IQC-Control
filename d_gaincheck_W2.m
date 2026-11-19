@@ -10,7 +10,12 @@
 %     g_S     loop / designed loop from the measured S: (1/S - 1)/(K G)   (should be 1)
 %   For the sine: attenuation (utils.sineatt) against 1/|1 + g K G| at the tone, with
 %     g = 1 (design) and g = r*g_set, r = mean(g_S/g_set) of the sweeps.
-%   Then the Nyquist check of the loop as it runs (r*g_set*K) and as designed (K).
+%   New identification (sweep sent through x_command with the controller Simulink model):
+%     G_new, compared with the old id; it contains the actuator-side factor, so the loop
+%     at build gain g is g_block*g*K*G_new (g_block = 0.1, inside the controller block).
+%   Plots (magnitude): measured S vs theory with the old id; measured S vs theory with
+%   the old and the new id. Nyquist: K G_old (gain 1, old id), K G_new (gain 1, new id),
+%   g_block*g_ref*K G_new (new id with the gain correction).
 %
 clear; close all; clc;
 
@@ -28,6 +33,10 @@ iOP     = 1;                       % 0 kg
 f_band  = [20 200];                % band for g_plant and g_S (Hz)
 f_notch = 80;                      % excluded +/- 3 Hz (S ~ 0)
 trans   = 3000;                    % sineatt transients
+g_ref   = 4.8;                     % build gain giving the designed loop with the old id
+g_block = 0.1;                     % factor inside the controller block (logged acc. -> logged command)
+newidfile = fullfile('data', 'MIVIDA 261118 sswp new simulink', 'gfrf0_ssweep_id.mat');  % sweep through x_command
+Ts_exp  = 0.001;
 
 %% Controller and identification
 cs  = load(fullfile('data', 'controller', [contfn, '.mat']), 'K_final');
@@ -99,42 +108,68 @@ set(gca, 'XScale', 'log'); grid on; xlim([10 500]); legend('Location', 'best', '
 xlabel('Frequency (Hz)'); ylabel('|S| (dB)'); title(sprintf('W2 controller, GFRF(%d) of %s', iOP, idfile), 'Interpreter', 'none')
 exportgraphics(gcf, fullfile('plots', 'd_gaincheck_W2_sens.pdf'), 'ContentType', 'vector')
 
-%% Bode: measured sensitivities against the theory at the design gain and at 1/g_ref
+%% New identification: plant seen from x_command (controller Simulink model)
+% open-loop sweep sent through x_command -> includes the actuator-side factor (~2)
+[y_id, ~, u_id] = utils.loadexp(newidfile);
+m_id  = sqrt(movmean(u_id.^2, 500));   act = find(m_id > 0.05*max(m_id));
+seg   = act(1):act(end);                                % sweep part
+nwin  = 4096;
+[H_new, f_new] = tfestimate(u_id(seg), y_id(seg), hann(nwin), nwin/2, nwin, 1/Ts_exp);
+keep  = f_new >= 5 & f_new <= 1/(2*Ts_exp);
+G_new = frd(reshape(H_new(keep), 1, 1, []), 2*pi*f_new(keep), Ts_exp);
+wcmp  = w_id(w_id >= min(G_new.Frequency) & w_id <= max(G_new.Frequency));
+r_new = squeeze(interp(G_new, wcmp).ResponseData)./squeeze(interp(G, wcmp).ResponseData);
+bd    = wcmp/2/pi >= f_band(1) & wcmp/2/pi <= f_band(2);
+fprintf('new id / old id GFRF(%d): |ratio| median %.3f, phase %+.1f deg (20-200 Hz)\n', ...
+    iOP, median(abs(r_new(bd))), rad2deg(median(angle(r_new(bd)))));
+
+%% Bode (magnitude): measured sensitivities against the theory (old id)
 % g_ref = build gain that gives the designed loop (4.8 here): the run at build gain 1
 % then has the loop K/g_ref, the run at g_ref the designed loop K.
-g_ref = 4.8;
-wb = linspace(2*pi*10, max(w_id), 4000).';
-Gb = squeeze(interp(G, wb).ResponseData);
-KGb = squeeze(freqresp(K, wb)).*Gb;
-S_th  = 1./(1 + KGb);            % design (normal gain)
-S_thd = 1./(1 + KGb/g_ref);      % build gain 1: loop divided by g_ref
-fig = figure('Name', 'Bode: measured vs theoretical S');
-tl = tiledlayout(fig, 2, 1, 'TileSpacing', 'compact');
-axm = nexttile(tl); hold(axm, 'on'); axp = nexttile(tl); hold(axp, 'on');
+wb  = linspace(2*pi*10, max(w_id), 4000).';
+KGb = squeeze(freqresp(K, wb)).*squeeze(interp(G, wb).ResponseData);
+fig = figure('Name', 'Bode: measured vs theoretical S (old id)'); hold on
 cs = lines(2);   k = 0;
 for i = find(isw).'
     k = k + 1;   S = Sm{i};   w = S.Frequency;   f = w/2/pi;   m = f >= 10 & w <= max(w_id);
-    Sv = squeeze(S.ResponseData(1, 1, m));
-    semilogx(axm, f(m), mag2db(abs(Sv)), 'Color', [cs(k, :) .6], ...
+    semilogx(f(m), mag2db(abs(squeeze(S.ResponseData(1, 1, m)))), 'Color', [cs(k, :) .6], ...
         'DisplayName', sprintf('measured, build gain %.3g', res.g_set(i)));
-    semilogx(axp, f(m), rad2deg(angle(Sv)), '.', 'Color', [cs(k, :) .6], 'MarkerSize', 2, 'HandleVisibility', 'off');
 end
-semilogx(axm, wb/2/pi, mag2db(abs(S_th)),  'k',   'LineWidth', 1.5, 'DisplayName', '1/(1 + K G)  (design gain)');
-semilogx(axm, wb/2/pi, mag2db(abs(S_thd)), 'k--', 'LineWidth', 1.5, 'DisplayName', sprintf('1/(1 + K G/%.3g)  (build gain 1)', g_ref));
-semilogx(axp, wb/2/pi, rad2deg(angle(S_th)),  'k',   'LineWidth', 1.2);
-semilogx(axp, wb/2/pi, rad2deg(angle(S_thd)), 'k--', 'LineWidth', 1.2);
-set([axm axp], 'XScale', 'log', 'XLim', [10 500]); grid(axm, 'on'); grid(axp, 'on');
-ylabel(axm, '|S| (dB)'); ylabel(axp, 'phase (deg)'); xlabel(axp, 'Frequency (Hz)');
-legend(axm, 'Location', 'southwest');
-title(tl, sprintf('W2 controller, 0 kg: measured S and theory with GFRF(%d)', iOP));
+semilogx(wb/2/pi, mag2db(abs(1./(1 + KGb))),       'k',   'LineWidth', 1.5, 'DisplayName', '1/(1 + K G)  (design gain)');
+semilogx(wb/2/pi, mag2db(abs(1./(1 + KGb/g_ref))), 'k--', 'LineWidth', 1.5, 'DisplayName', sprintf('1/(1 + K G/%.3g)  (build gain 1)', g_ref));
+set(gca, 'XScale', 'log'); xlim([10 500]); grid on; legend('Location', 'southwest')
+xlabel('Frequency (Hz)'); ylabel('|S| (dB)'); title(sprintf('W2 controller, 0 kg: measured S and theory, old id GFRF(%d)', iOP))
 exportgraphics(fig, fullfile('plots', 'd_gaincheck_W2_bode.pdf'), 'ContentType', 'vector')
 
-%% Nyquist of the loop as designed and as it ran with each build gain
-nyq_design = utils.nyquistcheck(K, idd.GFRF, 'realmass', idd.realmass, ...
-    'name', 'W2: L = G K (design)', 'file', fullfile('plots', 'd_gaincheck_W2_nyq_design'));
-for gset = unique(res.g_set).'
-    utils.nyquistcheck(rr*gset*K, idd.GFRF, 'realmass', idd.realmass, ...
-        'name', sprintf('W2: L = %.2f G K (build gain %.3g)', rr*gset, gset), ...
-        'file', fullfile('plots', sprintf('d_gaincheck_W2_nyq_stbg%.3g', gset)));
+%% Bode (magnitude): old id vs new id
+% old id: loop = (build gain/g_ref) K G_old;  new id: loop = g_block * build gain * K G_new
+wn   = linspace(max(2*pi*10, min(G_new.Frequency)), min(max(w_id), max(G_new.Frequency)), 4000).';
+KGn  = squeeze(freqresp(K, wn)).*squeeze(interp(G_new, wn).ResponseData);
+KGo  = squeeze(freqresp(K, wn)).*squeeze(interp(G, wn).ResponseData);
+fig = figure('Name', 'Bode: old id vs new id'); hold on
+k = 0;
+for i = find(isw).'
+    k = k + 1;   S = Sm{i};   w = S.Frequency;   f = w/2/pi;   m = f >= 10 & w <= max(w_id);
+    semilogx(f(m), mag2db(abs(squeeze(S.ResponseData(1, 1, m)))), 'Color', [cs(k, :) .5], ...
+        'DisplayName', sprintf('measured, build gain %.3g', res.g_set(i)));
 end
+for gset = [1 g_ref]
+    if gset == 1, ls = '--'; else, ls = '-'; end
+    semilogx(wn/2/pi, mag2db(abs(1./(1 + gset/g_ref*KGo))), ['k', ls], 'LineWidth', 1.3, ...
+        'DisplayName', sprintf('old id: 1/(1 + %.3g K G_{old})  (build gain %.3g)', gset/g_ref, gset));
+    semilogx(wn/2/pi, mag2db(abs(1./(1 + g_block*gset*KGn))), ['r', ls], 'LineWidth', 1.3, ...
+        'DisplayName', sprintf('new id: 1/(1 + %.3g K G_{new})  (build gain %.3g)', g_block*gset, gset));
+end
+set(gca, 'XScale', 'log'); xlim([10 500]); grid on; legend('Location', 'southwest')
+xlabel('Frequency (Hz)'); ylabel('|S| (dB)'); title('W2 controller, 0 kg: measured S, theory with the old and the new id')
+exportgraphics(fig, fullfile('plots', 'd_gaincheck_W2_bode_oldnew.pdf'), 'ContentType', 'vector')
+
+%% Nyquist: design with the old id, new id, new id with the gain correction
+nyq_old = utils.nyquistcheck(K, idd.GFRF, 'realmass', idd.realmass, ...
+    'name', 'W2: L = K G_{old} (gain 1, old id)', 'file', fullfile('plots', 'd_gaincheck_W2_nyq_oldid'));
+nyq_new = utils.nyquistcheck(K, G_new, 'realmass', 0, ...
+    'name', 'W2: L = K G_{new} (gain 1, new id)', 'file', fullfile('plots', 'd_gaincheck_W2_nyq_newid'));
+nyq_cor = utils.nyquistcheck(g_block*g_ref*K, G_new, 'realmass', 0, ...
+    'name', sprintf('W2: L = %.3g K G_{new} (new id, build gain %.3g)', g_block*g_ref, g_ref), ...
+    'file', fullfile('plots', 'd_gaincheck_W2_nyq_newid_corr'));
 writetable(res, fullfile('plots', 'd_gaincheck_W2.csv'));
