@@ -99,6 +99,36 @@ set(gca, 'XScale', 'log'); grid on; xlim([10 500]); legend('Location', 'best', '
 xlabel('Frequency (Hz)'); ylabel('|S| (dB)'); title(sprintf('W2 controller, GFRF(%d) of %s', iOP, idfile), 'Interpreter', 'none')
 exportgraphics(gcf, fullfile('plots', 'd_gaincheck_W2_sens.pdf'), 'ContentType', 'vector')
 
+%% Bode: measured sensitivities against the theory at the design gain and at 1/g_ref
+% g_ref = build gain that gives the designed loop (4.8 here): the run at build gain 1
+% then has the loop K/g_ref, the run at g_ref the designed loop K.
+g_ref = 4.8;
+wb = linspace(2*pi*10, max(w_id), 4000).';
+Gb = squeeze(interp(G, wb).ResponseData);
+KGb = squeeze(freqresp(K, wb)).*Gb;
+S_th  = 1./(1 + KGb);            % design (normal gain)
+S_thd = 1./(1 + KGb/g_ref);      % build gain 1: loop divided by g_ref
+fig = figure('Name', 'Bode: measured vs theoretical S');
+tl = tiledlayout(fig, 2, 1, 'TileSpacing', 'compact');
+axm = nexttile(tl); hold(axm, 'on'); axp = nexttile(tl); hold(axp, 'on');
+cs = lines(2);   k = 0;
+for i = find(isw).'
+    k = k + 1;   S = Sm{i};   w = S.Frequency;   f = w/2/pi;   m = f >= 10 & w <= max(w_id);
+    Sv = squeeze(S.ResponseData(1, 1, m));
+    semilogx(axm, f(m), mag2db(abs(Sv)), 'Color', [cs(k, :) .6], ...
+        'DisplayName', sprintf('measured, build gain %.3g', res.g_set(i)));
+    semilogx(axp, f(m), rad2deg(angle(Sv)), '.', 'Color', [cs(k, :) .6], 'MarkerSize', 2, 'HandleVisibility', 'off');
+end
+semilogx(axm, wb/2/pi, mag2db(abs(S_th)),  'k',   'LineWidth', 1.5, 'DisplayName', '1/(1 + K G)  (design gain)');
+semilogx(axm, wb/2/pi, mag2db(abs(S_thd)), 'k--', 'LineWidth', 1.5, 'DisplayName', sprintf('1/(1 + K G/%.3g)  (build gain 1)', g_ref));
+semilogx(axp, wb/2/pi, rad2deg(angle(S_th)),  'k',   'LineWidth', 1.2);
+semilogx(axp, wb/2/pi, rad2deg(angle(S_thd)), 'k--', 'LineWidth', 1.2);
+set([axm axp], 'XScale', 'log', 'XLim', [10 500]); grid(axm, 'on'); grid(axp, 'on');
+ylabel(axm, '|S| (dB)'); ylabel(axp, 'phase (deg)'); xlabel(axp, 'Frequency (Hz)');
+legend(axm, 'Location', 'southwest');
+title(tl, sprintf('W2 controller, 0 kg: measured S and theory with GFRF(%d)', iOP));
+exportgraphics(fig, fullfile('plots', 'd_gaincheck_W2_bode.pdf'), 'ContentType', 'vector')
+
 %% Nyquist of the loop as designed and as it ran with each build gain
 nyq_design = utils.nyquistcheck(K, idd.GFRF, 'realmass', idd.realmass, ...
     'name', 'W2: L = G K (design)', 'file', fullfile('plots', 'd_gaincheck_W2_nyq_design'));
