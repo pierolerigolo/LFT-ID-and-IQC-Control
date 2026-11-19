@@ -19,15 +19,24 @@
 %     2  min nominal H-inf  s.t. robust stability
 %   with the same open-loop-stable fallbacks (final = best OL-stable stage-2 controller).
 %
-%   Output: Data/controller/DISK_<expname>_controller_... .mat and the run diary.
+%   robust_method = "hinf": full Hindi et al. version, H-inf framework only (no IQC).
+%     Additive disk |G - G_hat| <= r  ->  robust stability by small gain:
+%         || r K/(1 + G_hat K) ||_inf <= 1      (generalised plant [0, r; -1, -G_hat])
+%     stage 1  min || r K S ||_inf (until <= 1, robustly stable)
+%     stage 2  min || W1 S ||_inf  s.t.  || r K S ||_inf <= 1
+%   robust_method = "iqc": same disk through the IQC multiplier diag(1, -1/r^2).
+%   For a SISO disk both describe the same set; "hinf" uses only datadriven.Objective.Hinf.
+%
+%   Output: Data/controller/DISK[HINF]_<expname>_controller_... .mat and the run diary.
 %
 close all; clc; clear; clear("yalmip");
-l
+
 %% Config
 idname        = 'LFT_GFRF_GdmGLTIW2opt_1028_etfe';  % only its frequency grid and measured FRFs are used
 orderK_list   = 18 %10:2:20;     % controller orders to synthesise
 Ts            = 0.001;
 seed          = 22;
+robust_method = "hinf";      % "hinf" (Hindi et al., small gain in H-inf) | "iqc"
 cl_check      = true;        % accept a controller only if K is OL stable AND L = G K does not
                              % encircle -1 on any measured FRF (utils.encirclements)
 
@@ -74,7 +83,8 @@ end
 W_lft   = GLFT.Frequency;
 nOP     = size(GFRF, 2);
 GFRF_w  = interp(GFRF, W_lft);
-diskname = ['DISK_', regexprep(idname, '^.*?_(\d{4}_.*)$', '$1')];   % e.g. DISK_1028_etfe
+diskname = ['DISK_', regexprep(idname, '^.*?_(\d{4}_.*)$', '$1')];
+if robust_method == "hinf", diskname = ['DISKHINF_', diskname(6:end)]; end   % e.g. DISK_1028_etfe
 
 %% Nominal model and disk uncertainty (ucover, Hindi et al. 2002)
 clear frdmodels
@@ -181,6 +191,11 @@ G_performance = mktito([W1_frd, -W1_frd*G_hat;
 G_robustness = mktito([zeros(ny*nu), eye(nu);
                        -eye(ny),     -G_hat], ny, nu);
 
+% robustness, H-inf (Hindi et al.): z = r u, y = -w - G_hat u  ->  T_zw = -r K/(1 + G_hat K)
+r_frd = frd(reshape(r, 1, 1, []), W_lft, G_hat.Ts);
+G_robust_hinf = mktito([zeros(ny*nu), r_frd;
+                        -eye(ny),     -G_hat], ny, nu);
+
 %% IQC multiplier PI = diag(1, -1/r^2)  (elliptical set with A = I/r)
 PI = frd(cat(3, reshape([ones(1, numel(r)); zeros(2, numel(r)); -1./r(:).'.^2], 2, 2, [])), W_lft, Ts);
 PI = PI/norm(PI, inf);
@@ -226,14 +241,24 @@ for orderK = orderK_list
         tic;
         switch STAGE
             case 1
-                [LMIs, OBJ] = datadriven.Objective.IQC_reduced( ...
-                    G_robustness, K, PI, alpha_PI, beta_PI, W_lft, ...
-                    "addSlack", true, "epsNormalisation", 1e-6, "pinorm", true);
+                if robust_method == "hinf"
+                    % min gamma >= || r K S ||_inf^2
+                    [LMIs, OBJ] = datadriven.Objective.Hinf(G_robust_hinf, K, W_lft);
+                else
+                    [LMIs, OBJ] = datadriven.Objective.IQC_reduced( ...
+                        G_robustness, K, PI, alpha_PI, beta_PI, W_lft, ...
+                        "addSlack", true, "epsNormalisation", 1e-6, "pinorm", true);
+                end
             case 2
                 [LMIs, OBJ] = datadriven.Objective.Hinf(G_performance, K, W_lft);
-                LMIs_rob = datadriven.Objective.IQC_reduced( ...
-                    G_robustness, K, PI, alpha_PI, beta_PI, W_lft, ...
-                    "addSlack", false, "pinorm", true);
+                if robust_method == "hinf"
+                    [LMIs_rob, OBJ_rob] = datadriven.Objective.Hinf(G_robust_hinf, K, W_lft);
+                    LMIs_rob = [LMIs_rob, OBJ_rob <= 1];          % || r K S ||_inf <= 1
+                else
+                    LMIs_rob = datadriven.Objective.IQC_reduced( ...
+                        G_robustness, K, PI, alpha_PI, beta_PI, W_lft, ...
+                        "addSlack", false, "pinorm", true);
+                end
                 LMIs = [LMIs, LMIs_rob];
         end
 
@@ -275,6 +300,13 @@ for orderK = orderK_list
         fprintf('  obj = %.6f | K OL %s | time = %.2f s\n\n', obj_val, stab, elapsed);
 
         err = abs(prev_obj - obj_val);
+        if STAGE == 1 && robust_method == "hinf"
+            fprintf('  || r K S ||_inf = %.4f (robustly stable if <= 1)\n', sqrt(obj_val));
+            if obj_val <= 1 && K_is_stable
+                fprintf('  --> Stage 1: robust stability reached\n');
+                nextstage = true;
+            end
+        end
         if STAGE == 2 && iter_in_stage >= max_iter_stage2
             fprintf('  --> Stage 2: %d iterations reached (max_iter_stage2)\n', iter_in_stage);
             nextstage = true;
@@ -285,6 +317,9 @@ for orderK = orderK_list
             K_stage_state{STAGE} = K.getstate();
             fprintf('  --> Saved K_stage{%d}\n', STAGE);
             if STAGE < 2
+                if robust_method == "hinf" && obj_val > 1
+                    warning('c:robust', 'Stage 1 ended with || r K S ||_inf = %.3f > 1: no robustly stable controller, stage 2 is likely infeasible.', sqrt(obj_val));
+                end
                 STAGE    = STAGE + 1;
                 prev_obj = Inf;
                 iter_in_stage = 0;
@@ -319,6 +354,8 @@ for orderK = orderK_list
 
     %% Nominal closed loop and save
     norminf_W1S = norm(W1_frd*frd(feedback(1, G_hat*K_final), W_lft), inf);
+    norminf_rKS = norm(r_frd*frd(feedback(K_final, G_hat), W_lft), inf);   % <= 1: robustly stable (disk)
+    fprintf('Order %d: || r K S ||_inf = %.3f (robust stability on the disk if <= 1)\n', orderK, norminf_rKS);
     fprintf('Order %d: ||W1 S||_inf = %.3f, K OL stable: %d, N_enc [%s]\n', orderK, norminf_W1S, isstable(K_final), num2str(utils.encirclements(K_final, GFRF).'));
 
     tag = stage_tags{STAGE};
@@ -327,7 +364,7 @@ for orderK = orderK_list
         diskname, orderK, omega_d/2/pi, mag2db(min(abs(1./W1_frd.ResponseData))), tag);
     save(fullfile('Data', 'controller', sprintf('%s.mat', expname)), ...
         'K_final', 'K_stage', 'K_itr', 'hist_obj', 'hist_stable', 'hist_stage', ...
-        'model_disk', 'W1_frd', 'orderK', 'idname', 'STAGE', 'converged', 'norminf_W1S')
+        'model_disk', 'W1_frd', 'orderK', 'idname', 'STAGE', 'converged', 'norminf_W1S', 'norminf_rKS', 'robust_method')
     diary off
     movefile(diaryfile, fullfile('Data', 'diaries', sprintf('%s.txt', expname)))
 end
