@@ -200,7 +200,7 @@ function MVEE = MVEE_optimizer(d, N, solver, verbosity)
 
     constraints = [...
         A >= 0;
-        splitapply(@(x) cone(A*x + b, 1.1), P, 1:N);
+        splitapply(@(x) cone(A*x + b, 1), P, 1:N);
         ];
 
     objective =  - log(det(A));

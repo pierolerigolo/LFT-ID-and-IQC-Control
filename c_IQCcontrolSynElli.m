@@ -23,7 +23,7 @@
 close all; clc; clear; clear("yalmip");
 
 %% Config
-idname        = 'LFT_GFRF_GdmGLTIW2opt_1028_etfe';  % only its frequency grid and measured FRFs are used
+idname        = 'LFT_GFRF_GdmGLTIW2opt_1110_etfe_80hz_fmin10_hyb';  % only its frequency grid and measured FRFs are used
 orderK_list   = 18; %10:2:20;     % controller orders to synthesise
 Ts            = 0.001;
 seed          = 22;
@@ -43,18 +43,18 @@ beta_PI         = 0.5;
 
 % Optimisation
 solver          = 'mosek';
-mosek_near_rel  = 1e6;       % MOSEK default 1e3
+mosek_near_rel  = 1e3;       % MOSEK default 1e3
 max_iter        = 60;        % was 30: order 18 stopped on max_iter_stage2 (iter 22) while still improving
 max_iter_stage2 = 50;        % was 20;        % stage 2 ends after this many iterations even if the
                              % objective still oscillates (Inf = only on convergence)
-obj_err         = [5e-3, 1e-3];   % convergence tolerance per stage
+obj_err         = [5e-3, 1e-5];   % convergence tolerance per stage
 
 % Solver paths (machine specific)
-addpath(genpath("C:\Users\admin\mosek"))
-addpath(genpath("C:\Program Files\Mosek\10.1"))
-addpath(genpath("C:\Users\admin\Documents\MATLAB\tbxmanager"))
-% addpath(genpath("/Users/pierre/mosek"))
-% addpath(genpath("/Users/pierre/Documents/MATLAB/tbxmanager"))
+% addpath(genpath("C:\Users\admin\mosek"))
+% addpath(genpath("C:\Program Files\Mosek\10.1"))
+% addpath(genpath("C:\Users\admin\Documents\MATLAB\tbxmanager"))
+addpath(genpath("/Users/pierre/mosek"))
+addpath(genpath("/Users/pierre/Documents/MATLAB/tbxmanager"))
 
 %% Load the measured FRFs and the frequency grid
 load(fullfile('Data', sprintf('%s.mat', idname)), 'GLFT', 'GFRF')
@@ -111,7 +111,7 @@ figure('Position',[635,928,560,291]); hold on; axis equal; grid on
 plot(real(squeeze(G_hat.ResponseData)), imag(squeeze(G_hat.ResponseData)), 'b', 'DisplayName', 'G\_hat')
 for k = round(linspace(1, numel(W_lft), 8))
     plot(real(Z(k, :)), imag(Z(k, :)), 'k.', 'MarkerSize', 12, 'HandleVisibility', 'off')
-    [hc, he] = utils.plot_ellipse(G_hat.ResponseData(1, 1, k), real(A_set{k})/1.1, ...
+    [hc, he] = utils.plot_ellipse(G_hat.ResponseData(1, 1, k), real(A_set{k})/1, ...
         'Color', 'r', 'LineStyle', '-', 'LineWidth', 1);   % EPFL plot function
     set([hc, he], 'HandleVisibility', 'off')
 end
@@ -129,7 +129,7 @@ end
 plot(real(Gz(kz)), imag(Gz(kz)), 'b', 'DisplayName', 'G\_hat')
 for k = kz(round(linspace(1, numel(kz), 3))).'
     plot(real(Z(k, :)), imag(Z(k, :)), 'k.', 'MarkerSize', 12, 'HandleVisibility', 'off')
-    [hc, he] = utils.plot_ellipse(Gz(k), real(A_set{k})/1.1, ...
+    [hc, he] = utils.plot_ellipse(Gz(k), real(A_set{k})/1, ...
         'Color', 'r', 'LineStyle', '-', 'LineWidth', 1);
     set([hc, he], 'HandleVisibility', 'off')
     text(real(Gz(k)), imag(Gz(k)), sprintf(' %.0f Hz', W_lft(k)/2/pi), 'FontSize', 7)
@@ -313,12 +313,12 @@ end
 
 %% Analysis (last synthesised order)
 % open a saved cont
-savecont=load(fullfile('data','controller','ELLI_1028_etfe_controller_order18_80hz_-34db_nperfhinf.mat'));
-K_final=savecont.K_final;
-K_stage=savecont.K_stage;
-orderK=savecont.orderK;
-W1_frd=savecont.W1_frd;
-G_hat=savecont.model_elliptical.NominalModel;
+% savecont=load(fullfile('data','controller','ELLI_1028_etfe_controller_order18_80hz_-34db_nperfhinf.mat'));
+% K_final=savecont.K_final;
+% K_stage=savecont.K_stage;
+% orderK=savecont.orderK;
+% W1_frd=savecont.W1_frd;
+% G_hat=savecont.model_elliptical.NominalModel;
 
 colors = lines(max(3, nOP));
 
@@ -327,7 +327,7 @@ figure; hold on
 stage_names = {'Stage 1 (robust stab.)', 'Stage 2 (nom. H_\infty + robust stab.)'};
 for s = 1:2
     if ~isempty(K_stage{s})
-        utils.magplot(frd(feedback(1, G_hat*K_stage{s}), W_lft), 'Color', colors(s, :), ...
+        utils.magplot(interp(feedback(1, G_hat*K_stage{s}), W_lft), 'Color', colors(s, :), ...
             'DisplayName', stage_names{s});
     end
 end

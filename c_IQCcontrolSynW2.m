@@ -101,12 +101,13 @@ G_hat = GLFT(np+1:end, nq+1:end);   % nominal plant (dm = 0, Delta = 0)
 nOP   = size(GFRF, 2);
 
 figure; hold on
-for i = 1:nOP
+utils.magplot(GFRF(1), 'Color', [0.7 0.7 0.7], 'LineWidth', 0.5, 'DisplayName', 'GFRFs');
+for i = 2:nOP
     utils.magplot(GFRF(i), 'Color', [0.7 0.7 0.7], 'LineWidth', 0.5, 'HandleVisibility', 'off');
 end
 utils.magplot(G_hat, 'Color', 'b', 'LineWidth', 2, 'DisplayName', 'Nominal G\_hat');
 title('Measured FRFs and nominal model')
-
+exportgraphics(gcf,fullfile('plots','w2glft.pdf'),'ContentType','vector')
 
 %% If used save controller skip synthesis part
 if ~usesavedcont
@@ -389,7 +390,7 @@ for s = 1:3
 end
 utils.magplot(inv(W1_frd), 'Color', [0 0 1 .3], 'DisplayName', 'W_1^{-1}');
 title(sprintf('Nominal sensitivity, order %d', orderK))
-
+exportgraphics(gcf,fullfile('plots','w2sensstaeg.pdf'),'ContentType','vector')
 % Final controller on every measured operating point
 
 figure; hold on
@@ -411,8 +412,10 @@ end
 utils.magplot(inv(1 + K_final*G_hat), 'Color', 'k', 'DisplayName', 'S nominal');
 utils.magplot(inv(W1_frd), 'Color', 'c', 'DisplayName', 'W_1^{-1}');
 title(sprintf('Sensitivity on the measured FRFs, order %d, \\eta = %.3g', orderK, eta))
+exportgraphics(gcf,fullfile('plots','w2sensgfrf.pdf'),'ContentType','vector')
 
 figure; utils.magplot(K_final, 'DisplayName', 'K final'); title('Controller')
+exportgraphics(gcf,fullfile('plots','w2cont.pdf'),'ContentType','vector')
 figure; pzplot(K_final); title('Controller poles/zeros')
 
 
