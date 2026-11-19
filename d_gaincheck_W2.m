@@ -1,178 +1,87 @@
-%% d_gaincheck_W2  -  W2 controller (1110, order 18): gain on the setup and attenuation
+%% d_gaincheck_W2  -  W2 controller (1110, order 18): gain on the setup, sensitivity, Nyquist
 %
-%   Runs with the W2 controller after the sign fix (etaf 0.36), 0 kg:
-%     sweep, build gain 1      sweep, build gain 4.8      80 Hz sine, build gain 1
-%   For every run:
-%     g_cmd   recorded command / lsim(K, -y)         -> scaling inside the controller block
-%   For the sweeps (open-loop + closed-loop sweep):
-%     g_plant |G_cl / GFRF(iOP)|, G_cl = (Y_cl - Y_ol)/U_cl  -> logged command -> logged acc.
-%             against the identification (should be 1)
-%     g_S     loop / designed loop from the measured S: (1/S - 1)/(K G)   (should be 1)
-%   For the sine: attenuation (utils.sineatt) against 1/|1 + g K G| at the tone, with
-%     g = 1 (design) and g = r*g_set, r = mean(g_S/g_set) of the sweeps.
-%   New identification (sweep sent through x_command with the controller Simulink model):
-%     G_new, compared with the old id; it contains the actuator-side factor, so the loop
-%     at build gain g is g_block*g*K*G_new (g_block = 0.1, inside the controller block).
-%   Plots (magnitude): measured S vs theory with the old id; measured S vs theory with
-%   the old and the new id. Nyquist: K G_old (gain 1, old id), K G_new (gain 1, new id),
-%   g_block*g_ref*K G_new (new id with the gain correction).
+%   Runs at 0 kg with the W2 controller (etaf 0.36): sweeps at build gain 1 and 4.8,
+%   80 Hz sine at build gain 1.
+%     g_cmd : recorded command / lsim(K, -y)  -> factor inside the controller block (0.1)
+%     g_S   : loop / designed loop from the measured S, (1/S - 1)/(K G_old)  (sweeps)
+%     att   : attenuation of the 80 Hz sine (utils.sineatt)
+%   Old id: GFRF_cell{iOP} of idfile (designed loop K G_old, built with build gain g_ref).
+%   New id: sweep sent through x_command with the controller model; it contains the
+%   actuator-side factor (~2), so the loop at build gain g is g_block*g*K*G_new.
 %
 clear; close all; clc;
 
 %% Config
 contfn  = 'LFT_GFRF_GdmGLTIW2opt_1110_etfe_80hz_fmin10_hyb_controller_order18_80hz_-34db_nperfoptiIQC_notconv_etai0.35_etaf0.36_multi_freq';
 expdir  = fullfile('data', 'Experiments', [contfn, '_K_final']);
-% {file, 'sweep' | 'sine', build gain}
-runs = {
-    'gftf0_ssweep_stbg1.mat',   'sweep', 1
-    'gftf0_ssweep_stbg4.8.mat', 'sweep', 4.8
-    'gfrf0_80hz_stbg1.mat',     'sine',  1
-    };
-idfile  = fullfile('data', 'GFRF_iddata_1110_etfe.mat');   % identification of the controller (1110)
-iOP     = 1;                       % 0 kg
-f_band  = [20 200];                % band for g_plant and g_S (Hz)
-f_notch = 80;                      % excluded +/- 3 Hz (S ~ 0)
-trans   = 3000;                    % sineatt transients
-g_ref   = 4.8;                     % build gain giving the designed loop with the old id
-g_block = 0.1;                     % factor inside the controller block (logged acc. -> logged command)
-newidfile = fullfile('data', 'MIVIDA 261118 sswp new simulink', 'gfrf0_ssweep_id.mat');  % sweep through x_command
-Ts_exp  = 0.001;
-f_newid = [20 300];                % band where the new id is reliable (coherence; sweep start below 16 Hz)
+runs    = {'gftf0_ssweep_stbg1.mat', 1;  'gftf0_ssweep_stbg4.8.mat', 4.8};   % sweeps {file, build gain}
+sinefn  = 'gfrf0_80hz_stbg1.mat';                                        % 80 Hz sine, build gain 1
+idfile  = fullfile('data', 'GFRF_iddata_1110_etfe.mat');                 % old id
+newidfile = fullfile('data', 'MIVIDA 261118 sswp new simulink', 'gfrf0_ssweep_id.mat');
+iOP     = 1;          % 0 kg
+g_ref   = 4.8;        % build gain giving the designed loop (old id)
+g_block = 0.1;        % factor inside the controller block
+f_newid = [20 300];   % band where the new id is reliable (Hz)
+f_band  = [20 200];   % band for g_S (Hz)
 
-%% Controller and identification
-cs  = load(fullfile('data', 'controller', [contfn, '.mat']), 'K_final');
-K   = cs.K_final;
-idd = load(idfile, 'GFRF', 'realmass');
-G   = idd.GFRF(iOP);
-w_id = idd.GFRF.Frequency;
+bo = bodeoptions;     bo.FreqUnits = 'Hz';  bo.XLim = [10 500];  bo.Grid = 'on';
+bo.Title.String = 'W2 controller, 0 kg: sensitivity';
+no = nyquistoptions;  no.FreqUnits = 'Hz';  no.ShowFullContour = 'off';  no.Grid = 'on';
+no.XLim = [-3 1];     no.YLim = [-2 2];     % zoom around -1
 
-%% Runs
-nr  = size(runs, 1);
-res = table('Size', [nr 9], 'VariableTypes', {'string', 'string', 'double', 'double', 'double', 'double', 'double', 'double', 'double'}, ...
-    'VariableNames', {'run', 'type', 'g_set', 'g_cmd', 'cmd_resid_pct', 'g_plant', 'g_S', 'S80_dB', 'att_dB'});
-res{:, 4:end} = NaN;
-Sm = cell(nr, 1);
-for i = 1:nr
-    f_exp = fullfile(expdir, runs{i, 1});
-    r = utils.implgain(f_exp, K);
-    res.run(i) = string(runs{i, 1});   res.type(i) = runs{i, 2};   res.g_set(i) = runs{i, 3};
-    res.g_cmd(i) = r.gain;   res.cmd_resid_pct(i) = 100*r.residual;
+%% Controller and identifications
+K   = getfield(load(fullfile('data', 'controller', [contfn, '.mat']), 'K_final'), 'K_final');
+idd = load(idfile, 'GFRF_cell', 'realmass');
+wf  = 2*pi*linspace(10, 500, 5000).';                       % fine grid for the plots
+G_old = interp(idd.GFRF_cell{iOP}, wf(wf <= max(idd.GFRF_cell{iOP}.Frequency)));
 
-    switch runs{i, 2}
-        case 'sweep'
-            [S, Ufrd, Ycfrd, Yofrd] = utils.sweepS(f_exp);
-            w = S.Frequency;   f = w/2/pi;
-            sel = f >= f_band(1) & f <= f_band(2) & abs(f - f_notch) > 3 & w <= max(w_id);
-            Ss  = squeeze(S.ResponseData);
-            Gw  = squeeze(interp(G, w(sel)).ResponseData);
-            KG  = squeeze(freqresp(K, w(sel))).*Gw;
-            res.g_S(i) = median(abs((1./Ss(sel) - 1)./KG));
-            Uc  = squeeze(Ufrd.ResponseData);  Yc = squeeze(Ycfrd.ResponseData);  Yo = squeeze(Yofrd.ResponseData);
-            Gcl = movsum((Yc - Yo).*conj(Uc), 61)./movsum(abs(Uc).^2, 61);
-            res.g_plant(i) = median(abs(Gcl(sel)./Gw));
-            [~, k80] = min(abs(f - f_notch));
-            res.S80_dB(i) = mag2db(abs(Ss(k80)));
-            Sm{i} = S;
-        case 'sine'
-            res.att_dB(i) = utils.sineatt(f_exp, trans);
-    end
+[y, ~, u] = utils.loadexp(newidfile);                       % new id: x_command -> Payload_acc1
+seg = find(sqrt(movmean(u.^2, 500)) > 0.05*max(sqrt(movmean(u.^2, 500))));
+seg = seg(1):seg(end);
+[H, f] = tfestimate(u(seg), y(seg), hann(4096), 2048, 4096, 1/K.Ts);
+k = f >= f_newid(1) & f <= f_newid(2);
+G_new = frd(H(k), 2*pi*f(k), K.Ts);
+
+%% Gain of each run
+S = cell(size(runs, 1), 1);   g_cmd = zeros(size(runs, 1), 1);   g_S = g_cmd;
+for i = 1:size(runs, 1)
+    fn = fullfile(expdir, runs{i, 1});
+    g_cmd(i) = utils.implgain(fn, K).gain;
+    S{i} = utils.sweepS(fn);
+    w  = S{i}.Frequency(S{i}.Frequency >= 2*pi*f_band(1) & S{i}.Frequency <= 2*pi*f_band(2));
+    gs = (1./squeeze(interp(S{i}, w).ResponseData) - 1)./squeeze(freqresp(K*interp(idd.GFRF_cell{iOP}, w), w));
+    g_S(i) = median(abs(gs));
 end
+disp(table(string(runs(:, 1)), [runs{:, 2}].', g_cmd, g_S, [runs{:, 2}].'./g_S, ...
+    'VariableNames', {'run', 'build_gain', 'g_cmd', 'g_S', 'build_gain_for_design'}))
+fprintf('80 Hz sine (build gain 1): attenuation %.1f dB, predicted %.1f dB (old id, K/%.3g)\n', ...
+    utils.sineatt(fullfile(expdir, sinefn)), ...
+    mag2db(abs(1/(1 + squeeze(freqresp(K*interp(idd.GFRF_cell{iOP}, 2*pi*80)/g_ref, 2*pi*80))))), g_ref);
 
-% loop gain per unit of build gain, from the sweeps
-isw = res.type == "sweep";
-rr  = mean(res.g_S(isw)./res.g_set(isw));
-fprintf('loop / designed loop = %.3f x build gain  ->  build gain for the designed loop: %.2f\n', rr, 1/rr);
+%% Sensitivity: measured vs old id and new id
+figure
+bodemag(S{1}, 'b', S{2}, 'r', ...
+    feedback(1, K*G_old/g_ref), 'k--', feedback(1, K*G_old), 'k', ...
+    feedback(1, g_block*K*G_new), 'm--', feedback(1, g_block*g_ref*K*G_new), 'm', bo)
+legend(sprintf('measured, build gain %g', runs{1, 2}), sprintf('measured, build gain %g', runs{2, 2}), ...
+    sprintf('old id, 1/(1+K G/%g)  (build gain 1)', g_ref), 'old id, 1/(1+K G)  (build gain 4.8)', ...
+    sprintf('new id, 1/(1+%g K G)  (build gain 1)', g_block), sprintf('new id, 1/(1+%g K G)  (build gain %g)', g_block*g_ref, g_ref), ...
+    'Location', 'southwest')
+exportgraphics(gcf, fullfile('plots', 'd_gaincheck_W2_bode.pdf'), 'ContentType', 'vector')
 
-% predicted attenuation of the sine runs
-w80 = 2*pi*f_notch;
-KG80 = squeeze(freqresp(K, w80))*squeeze(interp(G, w80).ResponseData);
-res.att_pred_design_dB = NaN(nr, 1);   res.att_pred_asrun_dB = NaN(nr, 1);
-for i = find(res.type == "sine").'
-    res.att_pred_design_dB(i) = mag2db(abs(1/(1 + KG80)));
-    res.att_pred_asrun_dB(i)  = mag2db(abs(1/(1 + rr*res.g_set(i)*KG80)));
-end
-disp(res)
+%% Nyquist: old id (gain 1, every operating point), new id, new id with the gain correction
+L_old = cellfun(@(Gi) K*interp(Gi, wf(wf <= max(Gi.Frequency))), idd.GFRF_cell, 'UniformOutput', false);
+L_new = {K*G_new, g_block*g_ref*K*G_new};
+figure; nyquistplot(L_old{:}, no); title('L = K G, old id (gain 1)')
+legend(compose('%.1f kg', idd.realmass), 'Location', 'best')
+exportgraphics(gcf, fullfile('plots', 'd_gaincheck_W2_nyq_oldid.pdf'), 'ContentType', 'vector')
+figure; nyquistplot(L_new{:}, no); title(sprintf('L = K G, new id (%g-%g Hz)', f_newid))
+legend('new id, gain 1', sprintf('new id, %g K G (build gain %g)', g_block*g_ref, g_ref), 'Location', 'best')
+exportgraphics(gcf, fullfile('plots', 'd_gaincheck_W2_nyq_newid.pdf'), 'ContentType', 'vector')
 
-%% Sensitivities: measured vs 1/(1 + g_S K G) and the design
-figure('Name', 'W2 controller: measured S'); hold on
-col = lines(nr);
-for i = find(isw).'
-    S = Sm{i};   w = S.Frequency;   f = w/2/pi;   m = f >= 10 & w <= max(w_id);
-    KGw = squeeze(freqresp(K, w(m))).*squeeze(interp(G, w(m)).ResponseData);
-    semilogx(f(m), mag2db(abs(squeeze(S.ResponseData(1, 1, m)))), 'Color', col(i, :), ...
-        'DisplayName', sprintf('%s measured', res.run(i)));
-    semilogx(f(m), mag2db(abs(1./(1 + res.g_S(i)*KGw))), '--', 'Color', col(i, :), ...
-        'DisplayName', sprintf('1/(1 + %.2f K G)', res.g_S(i)));
-end
-semilogx(f(m), mag2db(abs(1./(1 + KGw))), 'k:', 'LineWidth', 1.5, 'DisplayName', 'design 1/(1 + K G)');
-set(gca, 'XScale', 'log'); grid on; xlim([10 500]); legend('Location', 'best', 'Interpreter', 'none')
-xlabel('Frequency (Hz)'); ylabel('|S| (dB)'); title(sprintf('W2 controller, GFRF(%d) of %s', iOP, idfile), 'Interpreter', 'none')
-exportgraphics(gcf, fullfile('plots', 'd_gaincheck_W2_sens.pdf'), 'ContentType', 'vector')
-
-%% New identification: plant seen from x_command (controller Simulink model)
-% open-loop sweep sent through x_command -> includes the actuator-side factor (~2)
-[y_id, ~, u_id] = utils.loadexp(newidfile);
-m_id  = sqrt(movmean(u_id.^2, 500));   act = find(m_id > 0.05*max(m_id));
-seg   = act(1):act(end);                                % sweep part
-nwin  = 4096;
-[H_new, f_new] = tfestimate(u_id(seg), y_id(seg), hann(nwin), nwin/2, nwin, 1/Ts_exp);
-Cxy   = mscohere(u_id(seg), y_id(seg), hann(nwin), nwin/2, nwin, 1/Ts_exp);
-keep  = f_new >= f_newid(1) & f_new <= f_newid(2);
-fprintf('new id: coherence %d-%d Hz: median %.3f, min %.3f\n', f_newid, median(Cxy(keep)), min(Cxy(keep)));
-G_new = frd(reshape(H_new(keep), 1, 1, []), 2*pi*f_new(keep), Ts_exp);
-wcmp  = w_id(w_id >= min(G_new.Frequency) & w_id <= max(G_new.Frequency));
-r_new = squeeze(interp(G_new, wcmp).ResponseData)./squeeze(interp(G, wcmp).ResponseData);
-bd    = wcmp/2/pi >= f_band(1) & wcmp/2/pi <= f_band(2);
-fprintf('new id / old id GFRF(%d): |ratio| median %.3f, phase %+.1f deg (20-200 Hz)\n', ...
-    iOP, median(abs(r_new(bd))), rad2deg(median(angle(r_new(bd)))));
-
-%% Bode (magnitude): measured sensitivities against the theory (old id)
-% g_ref = build gain that gives the designed loop (4.8 here): the run at build gain 1
-% then has the loop K/g_ref, the run at g_ref the designed loop K.
-wb  = linspace(2*pi*10, max(w_id), 4000).';
-KGb = squeeze(freqresp(K, wb)).*squeeze(interp(G, wb).ResponseData);
-fig = figure('Name', 'Bode: measured vs theoretical S (old id)'); hold on
-cs = lines(2);   k = 0;
-for i = find(isw).'
-    k = k + 1;   S = Sm{i};   w = S.Frequency;   f = w/2/pi;   m = f >= 10 & w <= max(w_id);
-    semilogx(f(m), mag2db(abs(squeeze(S.ResponseData(1, 1, m)))), 'Color', [cs(k, :) .6], ...
-        'DisplayName', sprintf('measured, build gain %.3g', res.g_set(i)));
-end
-semilogx(wb/2/pi, mag2db(abs(1./(1 + KGb))),       'k',   'LineWidth', 1.5, 'DisplayName', '1/(1 + K G)  (design gain)');
-semilogx(wb/2/pi, mag2db(abs(1./(1 + KGb/g_ref))), 'k--', 'LineWidth', 1.5, 'DisplayName', sprintf('1/(1 + K G/%.3g)  (build gain 1)', g_ref));
-set(gca, 'XScale', 'log'); xlim([10 500]); grid on; legend('Location', 'southwest')
-xlabel('Frequency (Hz)'); ylabel('|S| (dB)'); title(sprintf('W2 controller, 0 kg: measured S and theory, old id GFRF(%d)', iOP))
-exportgraphics(fig, fullfile('plots', 'd_gaincheck_W2_bode.pdf'), 'ContentType', 'vector')
-
-%% Bode (magnitude): old id vs new id
-% old id: loop = (build gain/g_ref) K G_old;  new id: loop = g_block * build gain * K G_new
-wn   = linspace(max(2*pi*10, min(G_new.Frequency)), min(max(w_id), max(G_new.Frequency)), 4000).';
-KGn  = squeeze(freqresp(K, wn)).*squeeze(interp(G_new, wn).ResponseData);
-KGo  = squeeze(freqresp(K, wn)).*squeeze(interp(G, wn).ResponseData);
-fig = figure('Name', 'Bode: old id vs new id'); hold on
-k = 0;
-for i = find(isw).'
-    k = k + 1;   S = Sm{i};   w = S.Frequency;   f = w/2/pi;   m = f >= 10 & w <= max(w_id);
-    semilogx(f(m), mag2db(abs(squeeze(S.ResponseData(1, 1, m)))), 'Color', [cs(k, :) .5], ...
-        'DisplayName', sprintf('measured, build gain %.3g', res.g_set(i)));
-end
-for gset = [1 g_ref]
-    if gset == 1, ls = '--'; else, ls = '-'; end
-    semilogx(wn/2/pi, mag2db(abs(1./(1 + gset/g_ref*KGo))), ['k', ls], 'LineWidth', 1.3, ...
-        'DisplayName', sprintf('old id: 1/(1 + %.3g K G_{old})  (build gain %.3g)', gset/g_ref, gset));
-    semilogx(wn/2/pi, mag2db(abs(1./(1 + g_block*gset*KGn))), ['r', ls], 'LineWidth', 1.3, ...
-        'DisplayName', sprintf('new id: 1/(1 + %.3g K G_{new})  (build gain %.3g)', g_block*gset, gset));
-end
-set(gca, 'XScale', 'log'); xlim([10 500]); grid on; legend('Location', 'southwest')
-xlabel('Frequency (Hz)'); ylabel('|S| (dB)'); title('W2 controller, 0 kg: measured S, theory with the old and the new id')
-exportgraphics(fig, fullfile('plots', 'd_gaincheck_W2_bode_oldnew.pdf'), 'ContentType', 'vector')
-
-%% Nyquist: design with the old id, new id, new id with the gain correction
-nyq_old = utils.nyquistcheck(K, idd.GFRF, 'realmass', idd.realmass, ...
-    'name', 'W2: L = K G_{old} (gain 1, old id)', 'file', fullfile('plots', 'd_gaincheck_W2_nyq_oldid'));
-nyq_new = utils.nyquistcheck(K, G_new, 'realmass', 0, 'f_range', f_newid, ...
-    'name', 'W2: L = K G_{new} (gain 1, new id)', 'file', fullfile('plots', 'd_gaincheck_W2_nyq_newid'));
-nyq_cor = utils.nyquistcheck(g_block*g_ref*K, G_new, 'realmass', 0, 'f_range', f_newid, ...
-    'name', sprintf('W2: L = %.3g K G_{new} (new id, build gain %.3g)', g_block*g_ref, g_ref), ...
-    'file', fullfile('plots', 'd_gaincheck_W2_nyq_newid_corr'));
-writetable(res, fullfile('plots', 'd_gaincheck_W2.csv'));
+% closest point to -1
+L_all = [L_old(:); L_new(:)];
+names = [compose('old id, %.1f kg', idd.realmass(:)); "new id, gain 1"; sprintf("new id, build gain %g", g_ref)];
+[m1pL, kmin] = cellfun(@(L) min(abs(1 + squeeze(L.ResponseData))), L_all);
+f_min = cellfun(@(L, k) L.Frequency(k)/2/pi, L_all, num2cell(kmin));
+disp(table(names, f_min, m1pL, -mag2db(m1pL), 'VariableNames', {'loop', 'f_Hz', 'min_1pL', 'peak_S_dB'}))
