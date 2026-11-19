@@ -27,6 +27,10 @@ idname        = 'LFT_GFRF_GdmGLTIW2opt_1110_etfe_80hz_fmin10_hyb';  % only its f
 orderK_list   = 18; %10:2:20;     % controller orders to synthesise
 Ts            = 0.001;
 seed          = 22;
+ell_kappa_max = 1e3;         % max axis ratio (long/short) of an ellipse; thinner ones are
+                             % "collapsed" (e.g. collinear FRFs at Nyquist, where they are
+                             % all real) and their short axis is widened to long/ell_kappa_max
+ell_contain   = 1.05;        % tolerance of the containment check ||A d|| <= ell_contain
 cl_check      = true;        % accept a controller only if K is OL stable AND L = G K does not
                              % encircle -1 on any measured FRF (utils.encirclements)
 
@@ -77,15 +81,60 @@ G_hat = model_elliptical.NominalModel;
 A_set = model_elliptical.UncertaintySet.A{1};          % one 2x2 matrix per frequency
 [ny, nu] = size(G_hat);
 
-bad = cellfun(@(x) any(~isfinite(x(:))), A_set) | ~isfinite(squeeze(G_hat.ResponseData));
-% every measured FRF must lie in its ellipse: ||A [Re; Im](G_i - G_hat)|| <= 1
-Zc  = squeeze(frdmodels.ResponseData);  if size(Zc, 1) ~= numel(W_lft), Zc = Zc.'; end
-dZ  = Zc - squeeze(G_hat.ResponseData);
-inE = arrayfun(@(k) max(vecnorm(real(A_set{k})*[real(dZ(k, :)); imag(dZ(k, :))])), (1:numel(W_lft)).');
-fprintf('Ellipse containment: max ||A d|| = %.3f (median %.3f), %d / %d frequencies > 1.01\n', ...
-    max(inE), median(inE), nnz(inE > 1.01), numel(W_lft));
-if any(bad)
-    error('Elliptical set / nominal model not finite at %s Hz.', mat2str(W_lft(bad).'/2/pi, 4));
+% ----- Check / repair of the ellipses (instead of a plain isfinite check) -----
+% For each frequency, from the eigenvalues lmin <= lmax of A (semi-axes 1/lmin, 1/lmax):
+%   invalid    : non-finite A or G_hat, lmin <= 0          -> replaced by a disk around
+%                the mean of the FRFs, radius = largest distance to them
+%   collapsed  : lmax/lmin > ell_kappa_max (FRFs (nearly) collinear, e.g. all real at
+%                Nyquist) -> short axis widened to long/ell_kappa_max (only enlarges)
+%   noise      : entries below 1e-12*||A|| (the 1e-32 values) are set to 0
+% then every FRF must lie in its ellipse: ||A [Re; Im](G_i - G_hat)|| <= ell_contain.
+Zc = squeeze(frdmodels.ResponseData);  if size(Zc, 1) ~= numel(W_lft), Zc = Zc.'; end
+Gc = squeeze(G_hat.ResponseData);
+nw = numel(W_lft);
+ell = table('Size', [nw 5], 'VariableTypes', {'double', 'double', 'double', 'double', 'string'}, ...
+    'VariableNames', {'f_Hz', 'long_axis', 'short_axis', 'ratio', 'status'});
+for k = 1:nw
+    Ak = real(A_set{k});   Ak = (Ak + Ak')/2;
+    status = "ok";
+    if all(isfinite(Ak(:))) && isfinite(Gc(k))
+        Ak(abs(Ak) < 1e-12*norm(Ak)) = 0;                  % numerical noise
+        [V, D] = eig(Ak);   lam = diag(D);
+        if min(lam) <= 0
+            status = "invalid";
+        elseif max(lam)/min(lam) > ell_kappa_max
+            lam = min(lam, ell_kappa_max*min(lam));        % widen the short axis
+            Ak  = V*diag(lam)*V';
+            status = "collapsed";
+        end
+    else
+        status = "invalid";
+    end
+    if status == "invalid"                                 % disk around the mean
+        Gc(k) = mean(Zc(k, :));
+        rk    = max(abs(Zc(k, :) - Gc(k)));
+        rk    = max(rk, 1e-6*max(abs(Zc(k, :))) + eps);
+        Ak    = eye(2)/rk;
+    end
+    A_set{k} = Ak;
+    s_ax = sort(1./eig(Ak), 'descend');
+    ell(k, :) = {W_lft(k)/2/pi, s_ax(1), s_ax(2), s_ax(1)/s_ax(2), status};
+end
+model_elliptical.UncertaintySet.A{1} = A_set;              % repaired set used below (PI)
+G_hat.ResponseData(1, 1, :) = Gc;   model_elliptical.NominalModel = G_hat;
+
+dZ  = Zc - Gc;
+inE = arrayfun(@(k) max(vecnorm(A_set{k}*[real(dZ(k, :)); imag(dZ(k, :))])), (1:nw).');
+ell.contain = inE;
+fprintf(['Ellipses: %d collapsed (widened), %d invalid (disk), long/short axis ratio up to %.3g, ' ...
+    'containment max ||A d|| = %.3f (median %.3f)\n'], nnz(ell.status == "collapsed"), ...
+    nnz(ell.status == "invalid"), max(ell.ratio), max(inE), median(inE));
+if any(ell.status ~= "ok")
+    disp(ell(ell.status ~= "ok", :))
+end
+if any(inE > ell_contain)
+    warning('c:ellipse', 'FRFs outside their ellipse (||A d|| > %.2f) at %s Hz.', ell_contain, ...
+        mat2str(W_lft(inE > ell_contain).'/2/pi, 4));
 end
 
 % FRFs, nominal model and |G_hat| +/- largest semi-axis of the ellipse
