@@ -520,13 +520,25 @@ for i = 1:nOP
     if comparewithnormperf
         NPsave=load(fullfile('data','controller','LFT_GFRF_GdmGLTIW2opt_1110gc_etfe_80hz_fmin10_hyb_controller_order18_80hz_-34db_nperfoptiIQC_notconv_etai1.00_etaf1.06_multi_freq.mat'));
         KNP=NPsave.K_final;
-        utils.magplot(inv(1 + KNP*GFRF(i)), 'Color', [colors(i, :) .3],'linestyle',':', 'DisplayName', 'S W2 nom. perf. OP'+string(i));
+        utils.magplot(inv(1 + KNP*GFRF(i)), 'Color', [colors(i, :) .3],'linestyle',':', 'DisplayName', sprintf('S W2 nom. perf. (\\eta = %.3g) OP%d', NPsave.eta, i));
     end
 end
 utils.magplot(inv(1 + K_final*G_hat), 'Color', 'k', 'DisplayName', 'S nominal');
 utils.magplot(inv(W1_frd), 'Color', 'c', 'DisplayName', 'W_1^{-1}');
 title(sprintf('Sensitivity on the measured FRFs, order %d, \\eta = %.3g', orderK, eta))
 exportgraphics(gcf,fullfile('plots','w2rp_sensgfrf.pdf'),'ContentType','vector')
+
+% Performance table at the disturbance frequency: this controller and the compared ones
+% (|S| in dB per operating point, tab separated in the clipboard for Keynote)
+if ~exist('realmass', 'var')
+    realmass = getfield(load(fullfile('Data', sprintf('%s.mat', idname)), 'realmass'), 'realmass');
+end
+Ks_tab = {K_final};   names_tab = sprintf("W2 rob. perf. (eta %.3g)", eta);
+if comparewithnormperf, Ks_tab{end+1} = KNP;  names_tab(end+1) = sprintf("W2 nom. perf. (eta %.3g)", NPsave.eta); end
+if comparewitholdLPV,   Ks_tab{end+1} = KLPV; names_tab(end+1) = "old LPV"; end
+if comparewithELI,      Ks_tab{end+1} = KSOA; names_tab(end+1) = "SOA ellipses"; end
+perf_table = utils.perftable(Ks_tab, names_tab, GFRF, omega_d, 'realmass', realmass, ...
+    'G_hat', G_hat, 'file', fullfile('plots', sprintf('w2rp_perf_table_order%d.csv', orderK)));
 
 figure; utils.magplot(K_final, 'DisplayName', 'K final'); title('Controller')
 exportgraphics(gcf,fullfile('plots','w2rp_cont.pdf'),'ContentType','vector')
