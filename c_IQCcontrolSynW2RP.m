@@ -1,0 +1,640 @@
+%% c_IQCcontrolSynW2RP  -  Step 3 (variant): robust PERFORMANCE synthesis (IQC)
+%
+%   Same plant, multipliers, sweep and acceptance checks as c_IQCcontrolSynW2, but
+%   the performance is robust instead of nominal (pdm controllersyn_lpv_robperf_pi_opti):
+%     || W1 S ||_inf^2 <= gamma for EVERY plant of the LFT set (W2 block + mass at eta).
+%   Three-port plant (q, w, u -> p, z, y): robustness channels of the LFT, performance
+%   z = W1 (w + y_plant) on the output disturbance w, measurement y = w + y_plant.
+%
+%   Stages:
+%     1  robust stability only, fixed multiplier at eta0 (slack minimised)   [as W2]
+%     2  min gamma s.t. robust performance, fixed multiplier at eta0 (IQC_performance)
+%     3  per iteration: (a) largest eta and D(w), E(w) for which the current K keeps
+%        the robust performance level 1.05*gamma (bisection, IQC_performance_combinedPI),
+%        (b) min gamma s.t. robust performance with that multiplier
+%   Objective = gamma (squared robust performance level); sqrt(gamma) <= 1 means the
+%   performance weight is met for all plants of the set.
+%   The final eta is the robust-performance eta of the final controller at its gamma
+%   (eta_rs: robust stability only, for comparison).
+%
+%   Output: Data/controller/RP_<idname>_controller_... .mat and the run diary.
+%
+close all; clc; clear; clear("yalmip");
+
+%% Config
+% idname        = 'LFT_GFRF_GdmGLTIW2opt_1028_etfe';          % file written by b_LFT2ndorderID (pointwise W2, no floor, no hpf)
+% idname        = 'LFT_GFRF_GdmGLTIW2optfl40_1028_etfe';      % file written by b_LFT2ndorderID (pointwise W2, -40 dB floor)
+% idname        = 'LFT_GFRF_GdmGLTIW2n25hpf100fl40_1028_etfe'; % file written by b_LFT2ndorderID (W2: high-pass + -40 dB floor)
+% idname      = 'LFT_GFRF_GdmGLTIW2n25hpf100_1028_etfe';     % high-pass, no floor (w2_floor_db = -Inf in b)
+% idname      = 'LFT_GFRF_GdmGLTIW2n25_1028_etfe';         % without high-pass (use_hpf = false in b)
+% idname = 'LFT_GFRF_GdmGLTIW2opthpf75fl40_1028_etfe';
+% idname ='LFT_GFRF_GdmGLTIW2opthpf75fl40_1028_etfe_50hz';
+% idname='LFT_GFRF_GdmGLTIW2opt_1028_etfe_80hz_fmin10';
+% idname='LFT_GFRF_GdmGLTIW2opt_1028_etfe_80hz_fmin10';
+idname='LFT_GFRF_GdmGLTIW2opt_1110gc_etfe_80hz_fmin10_hyb';   % gain-corrected id
+
+usesavedcont=false;
+
+orderK_list   = 18;     % controller orders to synthesise
+Ts            = 0.001;
+seed          = 22;
+gainfile      = '';          % optional: gain_corr file applied to the LFT output (with an
+                             % uncorrected idname only), e.g. fullfile('Data', 'GFRF_iddata_1110gc_etfe.mat')
+slack_tol     = 1e-6;        % stage 1 is feasible (robustly stable) only if its slack <= slack_tol
+cl_check      = true;        % accept a controller only if K is OL stable AND L = G K does not
+                             % encircle -1 on any measured FRF (utils.encirclements)
+
+% Performance weight W1 = floor_gain + peak_extra * band-pass at omega_d
+omega_d       = 80*2*pi;   % disturbance frequency (rad/s)
+floor_gain    = 0.5;
+peak_extra_list    = [ 500 ];
+zeta_d        = 0.001;
+zeta_n        = 0.0001;
+
+% % Performance weight W1 = floor_gain + peak_extra * band-pass at omega_d
+% omega_d       = 50*2*pi;   % disturbance frequency (rad/s)
+% floor_gain    = 0.5;
+% peak_extra    = 500;
+% zeta_d        = 0.001;
+% zeta_n        = 0.0001;
+
+% IQC
+alpha_PI        = 0;         % split of the multiplier (Gupta et al. 2024, Cor. 1)
+beta_PI         = 0.5;
+beta_perf       = 1e-2;      % beta of the performance channel (IQC_performance)
+multiplier_type = "frequency";   % "frequency" or "constant" D, E
+
+% Optimisation
+solver          = 'mosek';
+mosek_near_rel  = 1e3;       % controller steps only (MOSEK default 1e3); the eta
+                             % bisection always runs at the MOSEK defaults
+max_iter        = 30;
+max_iter_stage2 = 20;        % stage 2 ends after this many iterations even if the
+                             % objective still oscillates (Inf = only on convergence)
+obj_err         = [1e-6, 1e-3, 1e-3];   % convergence tolerance per stage
+
+% Solver paths (machine specific)
+addpath(genpath("C:\Users\admin\mosek"))
+addpath(genpath("C:\Program Files\Mosek\10.1"))
+addpath(genpath("C:\Users\admin\Documents\MATLAB\tbxmanager"))
+
+% addpath(genpath("C:\Users\pgr\mosek"))
+% addpath(genpath("C:\Users\pgr\OneDrive - CSEM S.A\Documents\MATLAB\tbxmanager"))
+% addpath(genpath("C:\Program Files\Mosek\11.2"))
+
+% addpath(genpath("/Users/pierre/mosek"))
+% addpath(genpath("/Users/pierre/Documents/MATLAB/tbxmanager"))
+
+%% Load the LFT plant
+load(fullfile('Data', sprintf('%s.mat', idname)), 'GLFT', 'Delta', 'dm_bound', 'GFRF')
+eta0_list           = 1./[1];      % initial bound on the NORMALISED mass uncertainty: lftdata returns
+                                   % delta in [-1, 1] (= dm in [-dm_bound, dm_bound]); 1 = whole identified range
+W_lft = GLFT.Frequency;
+[nout_lft, nin_lft] = size(GLFT);
+[nq, np] = size(Delta);          % Delta: p (plant outputs, np) -> q (plant inputs, nq)
+ny    = nout_lft - np;
+nu    = nin_lft - nq;
+% optional gain correction applied to the OUTPUT of the LFT (G -> plant_gain*G), for an
+% uncorrected idname. Equivalent to using the corrected id (1110gc): the mass channel of
+% GLFT is normalised (delta in [-1, 1]), so the masses scaling with the correction
+% (dm_bound 0.35 -> 1.81 kg) does not change the robust problem; only K scales by 1/gain.
+if ~isempty(gainfile)
+    plant_gain = getfield(load(gainfile, 'gain_corr'), 'gain_corr');
+    GLFT = blkdiag(eye(np), plant_gain*eye(ny))*GLFT;
+    GFRF = plant_gain*GFRF;
+    fprintf('plant gain correction %.4f (from %s)\n', plant_gain, gainfile);
+end
+G_hat = GLFT(np+1:end, nq+1:end);   % nominal plant (dm = 0, Delta = 0)
+nOP   = size(GFRF, 2);
+
+figure; hold on
+utils.magplot(GFRF(1), 'Color', [0.7 0.7 0.7], 'LineWidth', 0.5, 'DisplayName', 'GFRFs');
+for i = 2:nOP
+    utils.magplot(GFRF(i), 'Color', [0.7 0.7 0.7], 'LineWidth', 0.5, 'HandleVisibility', 'off');
+end
+utils.magplot(G_hat, 'Color', 'b', 'LineWidth', 2, 'DisplayName', 'Nominal G\_hat');
+title('Measured FRFs and nominal model')
+exportgraphics(gcf,fullfile('plots','w2rp_glft.pdf'),'ContentType','vector')
+
+%% If used save controller skip synthesis part
+if ~usesavedcont
+%% robustness: [p; y] = GLFT [q; u]
+% y = -G(dm, Delta) u: same NEGATIVE feedback convention as G_performance
+% (y = r - G u) and as the ellipse/disk scripts. mktito(GLFT) alone gave
+% y = +G u, i.e. robust stability was certified for the POSITIVE feedback loop
+% (stage-1 controllers stable for 1 - G K, encircling -1 for 1 + G K).
+G_robustness  = mktito(blkdiag(eye(np), -eye(ny))*GLFT, ny, nu);
+
+%% Stage names and diary initialization
+stage_tags = {'rob', 'rperf', 'rperfoptiIQC'};
+for dir_ = {fullfile('Data', 'diaries'), fullfile('Data', 'controller')}
+    if ~exist(dir_{1}, 'dir'), mkdir(dir_{1}); end
+end
+
+% acceptance test of a controller (used for every fallback below)
+K_ok = @(Kss) isstable(Kss) && (~cl_check || all(utils.encirclements(Kss, GFRF) == 0));
+
+%% Synthesis
+for orderK = orderK_list
+    for peak_extra = peak_extra_list
+        for eta0 = eta0_list
+        
+            % Performance weight W1 (prewarped at omega_d so the discrete peak stays there)
+            W1_ct  = floor_gain + tf(peak_extra*[2*zeta_n*omega_d, 0], [1, 2*zeta_d*omega_d, omega_d^2]);
+            W1_frd = frd(c2d(W1_ct, Ts, c2dOptions('Method', 'tustin', 'PrewarpFrequency', omega_d)), W_lft);
+    
+            % Generalised plants
+            % performance: z = W1*(r - G u), y = r - G u
+            G_performance = mktito([W1_frd, -W1_frd*G_hat;
+                eye(ny), -G_hat], ny, nu);
+
+            % three-port plant for robust performance (pdm convention):
+            %   [p; z; y] = [G11, 0, G12; W1 G21, W1, W1 G22; G21, I, G22] [q; w; u]
+            % with G21, G22 the (negative-feedback) y rows of G_robustness
+            Gr11 = G_robustness(G_robustness.OutputGroup.Y1, G_robustness.InputGroup.U1);
+            Gr12 = G_robustness(G_robustness.OutputGroup.Y1, G_robustness.InputGroup.U2);
+            Gr21 = G_robustness(G_robustness.OutputGroup.Y2, G_robustness.InputGroup.U1);
+            Gr22 = G_robustness(G_robustness.OutputGroup.Y2, G_robustness.InputGroup.U2);
+            O_pw = frd(zeros(np, ny, numel(W_lft)), W_lft, Ts);
+            I_y  = frd(repmat(eye(ny), [1 1 numel(W_lft)]), W_lft, Ts);
+            G_combined = [Gr11,          O_pw,          Gr12;
+                          W1_frd*Gr21,   W1_frd*I_y,    W1_frd*Gr22;
+                          Gr21,          I_y,           Gr22];
+            G_combined.InputGroup  = struct('U1', 1:nq, 'U2', nq + (1:ny), 'U3', nq + ny + (1:nu));
+            G_combined.OutputGroup = struct('Y1', 1:np, 'Y2', np + (1:ny), 'Y3', np + ny + (1:ny));
+
+            % IQC multipliers, ordering (p1, p2, q1, q2)
+            N     = length(W_lft);
+            PILTI = frd(repmat(diag([1, -1]), [1 1 N]), W_lft, Ts);          % W2 block
+            D0 = 1;   % D of the mass multiplier in stages 1-2
+            PI0   = frd(repmat(diag([1, eta0^2*D0, -1, -D0]), [1 1 N]), W_lft, Ts); % W2 block + dm at eta0, D = D0
+            fprintf('dm multiplier: D0 = %.4g (eta0 = %.4g)\n', D0, eta0);
+
+            % Create a temp diary with reset if exist already
+            diaryfile = fullfile('Data', 'diaries', 'diary_temp.txt');
+            if exist(diaryfile, 'file'),diary off; delete(diaryfile); end
+            diary(diaryfile)
+
+            fprintf('\n===== Controller order %d, peak_extra %g, eta0 %.3g =====\n', orderK, peak_extra, eta0);
+            try
+            yalmip('clear');     % YALMIP numbering restarts, as in a fresh session
+            rng(seed);
+        
+            K       = datadriven.Controller.SS(orderK, ny, nu, Ts, "right");
+            K0      = ss(K);   % initial controller: zero gain (C, D = 0) on a random stable pole basis (rng(seed))
+            fprintf('Initial controller: ||K0||_inf = %.3g, max |pole| = %.3f\n', norm(K0, inf), max(abs(pole(K0))));
+            K_stage = cell(3, 1);     % controller at the end of each stage
+            K_itr = {}; D_itr = {}; E_itr = {}; eta_itr = {};
+            hist_gamma = nan(max_iter, 1);   gamma_val = NaN;
+        
+            % history of the solved iterations (to fall back on OL-stable controllers)
+            hist_state  = cell(max_iter, 1);   % K.getstate() after the iteration
+            hist_obj    = nan(max_iter, 1);
+            hist_stable = false(max_iter, 1);  % controller open-loop stable
+            hist_stage  = zeros(max_iter, 1);  % 0 = solver failed
+        
+            PI    = PI0;
+            eta   = eta0;
+            D_val = repmat({D0}, N, 1);   E_val = repmat({0}, N, 1);   % warm start of the bisection
+            STAGE = 1;
+            converged = false;
+            nextstage = false;
+            prev_obj  = Inf;          % for the convergence test
+            iter_in_stage = 0;        % solved iterations in the current stage
+            K_good_state  = K.getstate();   % last solved controller (rollback on failure)
+            K_stage_state = cell(3, 1);     % parameters of K_stage{s} (for fallbacks)
+        
+        
+            for iter = 1:max_iter
+                fprintf('Iter %3d | Stage %d\n', iter, STAGE);
+                tic;
+                switch STAGE
+                    case 1
+                        [LMIs, OBJ] = datadriven.Objective.IQC_reduced( ...
+                            G_robustness, K, PI, alpha_PI, beta_PI, W_lft, ...
+                            "addSlack", true, "epsNormalisation", 1e-6, "pinorm", true);
+                    case 2
+                        % min gamma s.t. robust performance, fixed multiplier at eta0
+                        [LMIs, OBJ, ~, gamma_var] = datadriven.Objective.IQC_performance( ...
+                            G_combined, K, PI, alpha_PI, beta_PI, W_lft, ...
+                            "pinorm", false, "beta_performance", beta_perf);
+                    case 3
+                        % (a) multiplier for the current (frozen) controller at its robust
+                        %     performance level gamma_val (relaxed by 1.05 in the bisection)
+                        [eta, D_val, E_val, PI_matrix] = multiplier_bisection_rp(G_combined, PILTI, K, eta, D_val, E_val, ...
+                            alpha_PI, beta_PI, W_lft, multiplier_type, D0, gamma_val, beta_perf);
+                        PI = frd(PI_matrix, W_lft, Ts);
+                        % (b) controller step: min gamma s.t. robust performance with that multiplier
+                        [LMIs, OBJ, ~, gamma_var] = datadriven.Objective.IQC_performance( ...
+                            G_combined, K, PI, alpha_PI, beta_PI, W_lft, ...
+                            "pinorm", false, "beta_performance", beta_perf);
+                end
+        
+                opts_sdp = sdpsettings('solver', solver, 'verbose', 0, ...
+                    'mosek.MSK_DPAR_INTPNT_CO_TOL_NEAR_REL', mosek_near_rel);
+                JOB = optimize(LMIs, OBJ, opts_sdp);
+                elapsed = toc;
+        
+                K_itr{iter}   = ss(K);    % raw solver output
+                D_itr{iter}   = D_val;
+                E_itr{iter}   = E_val;
+                eta_itr{iter} = eta;      % multiplier bound used in this K-step
+        
+                % ----- Solver failure: best OL-stable controller of the stage -----
+                if JOB.problem ~= 0
+                    fprintf('  !! Solver failed (code %d: %s)\n', JOB.problem, JOB.info);
+                    if STAGE == 1
+                        K.setstate(K_good_state);
+                        break
+                    end
+                    [ok, idx] = select_stable(hist_stage, hist_stable, hist_obj, STAGE, 'best');
+                    if ok
+                        K.setstate(hist_state{idx});   gamma_val = hist_gamma(idx);
+                        eta = eta_itr{idx};   gamma_val = hist_gamma(idx);
+                        fprintf('  --> back to the best accepted controller (OL stable, no encirclement) of stage %d (iter %d, obj = %.6f)\n', ...
+                            STAGE, idx, hist_obj(idx));
+                    elseif STAGE == 2 && ~isempty(K_stage_state{1}) && K_ok(K_stage{1})
+                        K.setstate(K_stage_state{1});
+                        fprintf('  --> no accepted controller (OL stable, no encirclement) in stage 2: back to the stage-1 controller\n');
+                    else
+                        K.setstate(K_good_state);
+                        fprintf('  --> no accepted controller (OL stable, no encirclement) in stage %d: back to the last solved one\n', STAGE);
+                    end
+                    K_good_state = K.getstate();
+                    if STAGE == 3, break, end
+                    K_stage{2}       = ss(K);   % stage 2: end the stage, go on with stage 3
+                    K_stage_state{2} = K.getstate();
+                    STAGE      = 3;
+                    prev_obj   = Inf;
+                    fprintf('  --> Advancing to Stage 3\n');
+                    continue
+                end
+        
+                % ----- Solved iteration (oscillations of the objective are allowed) -----
+                obj_val      = value(OBJ);
+                if STAGE >= 2, gamma_val = value(gamma_var); hist_gamma(iter) = gamma_val; end
+                K_good_state = K.getstate();
+                N_enc_it     = utils.encirclements(ss(K), GFRF);
+                stage1_feas  = obj_val <= slack_tol;
+                K_is_stable  = (STAGE == 1 && stage1_feas) || (STAGE > 1 && isstable(ss(K)) && (~cl_check || all(N_enc_it == 0)));   % accepted
+                % stage 1: accepted = feasible (slack <= slack_tol), no stability / encirclement test
+                hist_state{iter}  = K_good_state;
+                hist_obj(iter)    = obj_val;
+                hist_stable(iter) = K_is_stable;
+                hist_stage(iter)  = STAGE;
+                iter_in_stage     = iter_in_stage + 1;
+                if isstable(ss(K)), stab = 'stable'; else, stab = 'unstable'; end
+                stab = sprintf('%s | N_enc [%s] -> %s', stab, num2str(N_enc_it.'), ...
+                    string(ifelse_str(STAGE == 1, ifelse_str(stage1_feas, 'stage 1 FEASIBLE', 'stage 1 not feasible yet'), ifelse_str(K_is_stable, 'accepted', 'REJECTED'))));
+                if STAGE >= 2
+                    fprintf('  gamma = %.6f (robust perf. level sqrt(gamma) = %.4f) | eta = %.4g | K OL %s | time = %.2f s\n\n', ...
+                        obj_val, sqrt(obj_val), eta, stab, elapsed);
+                else
+                    fprintf('  slack = %.6f | eta = %.4g | K OL %s | time = %.2f s\n\n', obj_val, eta, stab, elapsed);
+                end
+        
+                err = abs(prev_obj - obj_val);
+                if STAGE == 2 && iter_in_stage >= max_iter_stage2
+                    fprintf('  --> Stage 2: %d iterations reached (max_iter_stage2)\n', iter_in_stage);
+                    nextstage = true;
+                end
+                if err < obj_err(STAGE) || err/prev_obj < obj_err(STAGE) || nextstage
+                    nextstage = false;
+                    if STAGE == 2
+                        % Stage 2 -> 3 from the best (lowest objective) OL-stable
+                        % controller, also when the last one is stable
+                        [ok, idx] = select_stable(hist_stage, hist_stable, hist_obj, 2, 'best');
+                        if ok
+                            K.setstate(hist_state{idx});   gamma_val = hist_gamma(idx);
+                            fprintf('  --> Stage 2: best accepted controller (OL stable, no encirclement) (iter %d, obj = %.6f; last iter %d, obj = %.6f)\n', ...
+                                idx, hist_obj(idx), iter, obj_val);
+                        elseif ~isempty(K_stage_state{1}) && K_ok(K_stage{1})
+                            K.setstate(K_stage_state{1});
+                            fprintf('  --> No accepted controller (OL stable, no encirclement) in stage 2: back to the stage-1 controller\n');
+                        else
+                            warning('No accepted controller found in stage 2: stage 3 starts from an unstable one.');
+                        end
+                        K_good_state = K.getstate();
+                    end
+                    K_stage{STAGE}       = ss(K);
+                    K_stage_state{STAGE} = K.getstate();
+                    fprintf('  --> Saved K_stage{%d}\n', STAGE);
+                    if STAGE < 3
+                        STAGE    = STAGE + 1;
+                        prev_obj = Inf;
+                        iter_in_stage = 0;
+                        if STAGE == 2 && ~any(hist_stage == 1 & hist_stable)
+                            warning('c:stage1', 'Stage 1 never reached a feasible controller (last slack/objective %.3g): stage 2 is likely infeasible.', obj_val);
+                        end
+                        fprintf('  --> Advancing to Stage %d\n', STAGE);
+                    else
+                        converged = true;
+                        fprintf('  --> Converged.\n');
+                        break
+                    end
+                else
+                    prev_obj = obj_val;
+                end
+            end
+        
+            % ----- Final controller -----
+            % Run ended in stage 2 (max_iter reached): best OL-stable stage-2 controller.
+            if STAGE == 2
+                [ok, idx] = select_stable(hist_stage, hist_stable, hist_obj, 2, 'best');
+                if ok
+                    K.setstate(hist_state{idx});   gamma_val = hist_gamma(idx);
+                    fprintf('Final controller: best accepted stage-2 controller (iter %d, obj = %.6f)\n', ...
+                        idx, hist_obj(idx));
+                elseif ~isempty(K_stage_state{1}) && K_ok(K_stage{1})
+                    K.setstate(K_stage_state{1});
+                    fprintf('No accepted stage-2 controller: back to the stage-1 controller\n');
+                else
+                    warning('No accepted controller found: the final controller is not accepted.');
+                end
+            end
+            % Stage 3: the last OL-stable stage-3 controller (objective NOT compared,
+            % it may be higher than earlier ones). Its eta is recomputed below.
+            if STAGE == 3 && ~K_ok(ss(K))
+                [ok, idx] = select_stable(hist_stage, hist_stable, hist_obj, 3, 'last');
+                if ok
+                    K.setstate(hist_state{idx});   gamma_val = hist_gamma(idx);
+                    fprintf('Final controller rejected: last accepted stage-3 controller (iter %d)\n', idx);
+                elseif ~isempty(K_stage_state{2}) && K_ok(K_stage{2})
+                    K.setstate(K_stage_state{2});
+                    fprintf('No accepted stage-3 controller: back to the controller stage 3 started from\n');
+                else
+                    warning('No accepted controller found: the final controller is not accepted.');
+                end
+            end
+            % Certified eta of the final controller (bisection at default MOSEK tolerances)
+            eta_rs = NaN;
+            if STAGE >= 2
+                % gamma_val: robust performance level of the final controller (kept in sync
+                % with every fallback to an earlier iteration)
+                try
+                    [eta, D_val, E_val] = multiplier_bisection_rp(G_combined, PILTI, K, eta, D_val, E_val, ...
+                        alpha_PI, beta_PI, W_lft, multiplier_type, D0, gamma_val, beta_perf);
+                catch ME
+                    warning('Final robust-performance eta bisection failed (%s): eta kept at %.4g.', ME.message, eta);
+                end
+                try
+                    eta_rs = multiplier_bisection(G_robustness, PILTI, K, eta, D_val, E_val, ...
+                        alpha_PI, beta_PI, W_lft, dm_bound, multiplier_type, D0);
+                catch ME
+                    warning('Final robust-stability eta bisection failed (%s).', ME.message);
+                end
+            end
+            K_final = ss(K);
+            K_stage{STAGE} = K_final;
+        
+            %% Nominal closed loop and save
+            norminf_W1S = norm(W1_frd*frd(feedback(1, G_hat*K_final), W_lft), inf);
+            fprintf('Robust performance: gamma = %.4f (level %.4f) certified up to eta = %.4g; robust stability up to eta_rs = %.4g\n', ...
+                gamma_val, sqrt(gamma_val), eta, eta_rs);
+            fprintf('Order %d: ||W1 S||_inf = %.3f, certified eta = %.4g (normalised: 1 = whole mass range, dm = eta*%.4g kg), K OL stable: %d, N_enc [%s]\n', ...
+                orderK, norminf_W1S, eta, dm_bound, isstable(K_final), num2str(utils.encirclements(K_final, GFRF).'));
+        
+            tag = stage_tags{STAGE};
+            if ~isempty(gainfile), tag = ['gc_', tag]; end %#ok<AGROW>   gain-corrected plant
+            if ~converged, tag = [tag, '_notconv']; end %#ok<AGROW>
+            expname = sprintf('RP_%s_controller_order%d_%.0fhz_%.0fdb_%s_etai%.2f_etaf%.2f_multi_%s', ...
+                idname, orderK, omega_d/2/pi, mag2db(min(abs(1./W1_frd.ResponseData))), ...
+                tag, eta0, eta, extractBefore(multiplier_type, 5));
+            save(fullfile('Data', 'controller', sprintf('%s.mat', expname)), ...
+                'K_final', 'K_stage', 'K_itr', 'D_itr', 'E_itr', 'eta_itr', ...
+                'hist_obj', 'hist_stable', 'hist_stage', 'D_val', 'E_val', ...
+                'eta', 'eta0', 'eta_rs', 'gamma_val', 'hist_gamma', 'beta_perf', 'dm_bound', 'W1_frd', 'orderK', 'idname', 'STAGE', 'converged', 'norminf_W1S')
+            diary off
+            movefile(diaryfile, fullfile('Data', 'diaries', sprintf('%s.txt', expname)))
+            catch ME
+                % one failed run must not stop the sweep
+                diary off
+                warning('c:run', 'order %d, peak_extra %g, eta0 %.3g failed: %s', ...
+                    orderK, peak_extra, eta0, ME.message);
+            end
+        end
+    end
+end
+end
+%% Analysis (last synthesised order)
+colors = lines(max(3, nOP));
+% use a loaded K_final
+if usesavedcont
+    savedcont=load(fullfile('data','controller/','LFT_GFRF_GdmGLTIW2opt_1110_etfe_80hz_fmin10_hyb_controller_order18_80hz_-34db_nperfoptiIQC_notconv_etai0.35_etaf0.36_multi_freq.mat'));
+    K_final=savedcont.K_final;
+    orderK=savedcont.orderK;
+    eta=savedcont.eta;
+    K_stage=savedcont.K_stage;
+    W1_frd=savedcont.W1_frd;
+    if isfield(savedcont, 'D_val'), D_val = savedcont.D_val; E_val = savedcont.E_val; end
+end 
+% Sensitivity of the stage controllers on the nominal plant
+figure; hold on
+stage_names = {'Stage 1 (robust stab.)', 'Stage 2 (nom. H_\infty, \eta_0)', 'Stage 3 (nom. H_\infty, opt. IQC)'};
+for s = 1:3
+    if ~isempty(K_stage{s})
+        utils.magplot(frd(feedback(1, G_hat*K_stage{s}), W_lft), 'Color', colors(s, :), ...
+            'DisplayName', stage_names{s});
+    end
+end
+utils.magplot(inv(W1_frd), 'Color', [0 0 1 .3], 'DisplayName', 'W_1^{-1}');
+title(sprintf('Nominal sensitivity, order %d', orderK))
+exportgraphics(gcf,fullfile('plots','w2rp_sensstage.pdf'),'ContentType','vector')
+% Final controller on every measured operating point
+
+figure; hold on
+comparewithELI=false;
+comparewitholdLPV=true;
+for i = 1:nOP
+    utils.magplot(inv(1 + K_final*GFRF(i)), 'Color', colors(i, :), 'DisplayName', 'S OP'+string(i));
+    if comparewitholdLPV
+        LPVsave=load(fullfile('data','finalrepportcont','controller_sus_7nm_order18_82hz_-34db_nperfhinfnperfoptiIQC_eta9.139390e-01.mat'));
+        KLPV=LPVsave.K_itr{26};
+        utils.magplot(inv(1 + KLPV*GFRF(i)), 'Color', [colors(i, :) .3],'linestyle','--', 'DisplayName', 'S Old LPV OP'+string(i));
+    end
+    if comparewithELI
+        SOAsave=load(fullfile('data','finalrepportcont','controller_ellips_sus_7nm_order20_82hz_-30db_nomperf.mat'));
+        KSOA=SOAsave.K_itr{end};
+        utils.magplot(inv(1 + KSOA*GFRF(i)), 'Color', [colors(i, :) .3],'linestyle','--', 'DisplayName', 'S SOA ELI OP'+string(i));
+    end
+end
+utils.magplot(inv(1 + K_final*G_hat), 'Color', 'k', 'DisplayName', 'S nominal');
+utils.magplot(inv(W1_frd), 'Color', 'c', 'DisplayName', 'W_1^{-1}');
+title(sprintf('Sensitivity on the measured FRFs, order %d, \\eta = %.3g', orderK, eta))
+exportgraphics(gcf,fullfile('plots','w2rp_sensgfrf.pdf'),'ContentType','vector')
+
+figure; utils.magplot(K_final, 'DisplayName', 'K final'); title('Controller')
+exportgraphics(gcf,fullfile('plots','w2rp_cont.pdf'),'ContentType','vector')
+figure; pzplot(K_final); title('Controller poles/zeros')
+
+
+
+%% old results comparaison:
+%{
+%% 80hz chosen controller on every measured operating point vs SOA
+% opensave=load(fullfile('data','controller','LFT_GFRF_GdmGLTIW2n25hpf100fl40_1028_etfe_controller_order18_80hz_-34db_nperfhinf_notconv_etai0.18_etaf0.42_multi_freq.mat'))
+% iteration=18;
+% K_chosen=opensave.K_final;
+% opensave=load(fullfile('data','controller','LFT_GFRF_GdmGLTIW2n25hpf100_1028_etfe_controller_order18_80hz_-34db_nperfoptiIQC_etai0.18_etaf0.88_multi_freq.mat'));
+% iteration=26;
+% K_chosen=opensave.K_itr{iteration};
+% opensave=load(fullfile('data','controller','LFT_GFRF_GdmGLTIW2n25hpf100fl40_1028_etfe_controller_order16_80hz_-34db_nperfhinf_notconv_etai0.18_etaf0.33_multi_freq.mat'));
+% K_chosen=opensave.K_final;
+% opensave=load(fullfile('data','controller','LFT_GFRF_GdmGLTIW2opthpf75fl40_1028_etfe_controller_order18_80hz_-34db_nperfoptiIQC_notconv_etai0.24_etaf0.37_multi_freq.mat'));
+% K_chosen=opensave.K_final;
+fn='LFT_GFRF_GdmGLTIW2opt_1028_etfe_80hz_fmin10_hyb_controller_order18_80hz_-34db_nperfoptiIQC_notconv_etai0.24_etaf0.60_multi_freq';
+opensave=load(fullfile('data','controller',[fn,'.mat']));
+iteration=24;
+K_chosen=opensave.K_final;
+% fn='LFT_GFRF_GdmGLTIW2opt_1028_etfe_80hz_fmin10_hyb_controller_order18_80hz_-34db_nperfoptiIQC_notconv_etai0.24_etaf0.60_multi_freq';
+% opensave=load(fullfile('data','controller',[fn,'.mat']));
+% K_chosen=opensave.K_final;
+SOAsave=load(fullfile('data','finalrepportcont','controller_ellips_sus_7nm_order20_82hz_-30db_nomperf.mat'));
+KSOA=SOAsave.K_itr{end};
+if isstable(K_chosen), fprintf('K chosen is OL stable\n'); else, fprintf('K chosen is OL unstable\n'); end
+figure; hold on
+% GFRF=interp(GFRF,W_lft)
+for i = 1:nOP
+    utils.magplot(inv(1 + K_chosen*GFRF(i)), 'Color', colors(i, :), 'DisplayName', 'S OP'+string(i));
+    utils.magplot(inv(1 + KSOA*GFRF(i)), 'Color', [colors(i, :) .3],'linestyle','--', 'DisplayName', 'S SOA OP'+string(i));
+end
+utils.magplot(inv(1 + K_chosen*G_hat), 'Color', 'k', 'DisplayName', 'S nominal');
+utils.magplot(inv(1 + KSOA*G_hat), 'Color', [0 0 0 .3],'linestyle','--', 'DisplayName', 'S SOA nominal');
+utils.magplot(inv(opensave.W1_frd), 'Color', 'c', 'DisplayName', 'W_1^{-1}');
+title(sprintf('Sensitivity on the measured FRFs, order %d, \\eta = %.3g (dm_{bound}=%.3f), compared to ellipses SOA', opensave.orderK, opensave.eta,opensave.dm_bound))
+
+figure; utils.magplot(K_chosen, 'DisplayName', 'K chosen')
+utils.magplot(KSOA, 'DisplayName', 'K SOA');title('Controller')
+%% nyquist plot
+oldid=load('Data\GFRF_iddata_0729_spa.mat');
+w_nyquist=linspace(2*pi*10,pi*1/GFRF.Ts,2000);
+GFRF_wny=interp(GFRF,w_nyquist);
+GFRF2907=oldid.GFRF(1);
+L_chosen=K_chosen*GFRF(1);
+L_chosenwny=K_chosen*GFRF_wny(1);
+L_chosen2907=K_chosen*GFRF2907;
+figure
+nyquistplot(L_chosen)
+hold on
+nyquistplot(L_chosenwny)
+hold on
+nyquistplot(L_chosen2907)
+for i=1%:length(GFRF)
+    [mm, k] = min(abs(1 + L_chosen(i).ResponseData));
+    fprintf('OP%d: min|1+L| = %.3f at %.2f Hz\n', i, mm, L_chosen.Frequency(k)/2/pi);
+    [mm, k] = min(abs(1 + L_chosenwny(i).ResponseData));
+    fprintf('wny OP%d: min|1+L| = %.3f at %.2f Hz\n', i, mm, L_chosenwny.Frequency(k)/2/pi);
+    [mm, k] = min(abs(1 + L_chosen2907(i).ResponseData));
+    fprintf('old id OP%d: min|1+L| = %.3f at %.2f Hz\n', i, mm, L_chosen2907.Frequency(k)/2/pi);
+end
+%%
+L_chosen=0.1*K_chosen*GFRF(1);
+L_chosenwny=0.1*K_chosen*GFRF_wny(1);
+L_chosen2907=0.1*K_chosen*GFRF2907;
+figure
+nyquistplot(L_chosen)
+hold on
+nyquistplot(L_chosenwny)
+% nyquistplot(L_chosen2907)
+for i=1%:length(GFRF)
+    [mm, k] = min(abs(1 + L_chosen(i).ResponseData));
+    fprintf('with 0.1 gain OP%d: min|1+L| = %.3f at %.2f Hz\n', i, mm, L_chosen.Frequency(k)/2/pi);
+    [mm, k] = min(abs(1 + L_chosenwny(i).ResponseData));
+    fprintf('with 0.1 gain wny OP%d: min|1+L| = %.3f at %.2f Hz\n', i, mm, L_chosenwny.Frequency(k)/2/pi);
+    [mm, k] = min(abs(1 + L_chosen2907(i).ResponseData));
+    fprintf('with 0.1 gain old id OP%d: min|1+L| = %.3f at %.2f Hz\n', i, mm, L_chosen2907.Frequency(k)/2/pi);
+end
+%% 50hz chosen controller on every measured operating point
+% % -30db
+% opensave_A=load(fullfile('data','controller','LFT_GFRF_GdmGLTIW2opthpf75fl40_1028_etfe_50hz_controller_order16_50hz_-30db_nperfoptiIQC_etai0.24_etaf0.82_multi_freq.mat'));
+% K_A=opensave_A.K_final;
+% opensave_B=load(fullfile('data','controller','LFT_GFRF_GdmGLTIW2opthpf75fl40_1028_etfe_50hz_controller_order18_50hz_-30db_nperfoptiIQC_etai0.24_etaf1.63_multi_freq.mat'));
+% K_B=opensave_B.K_final;
+
+% -34db
+fn_A='LFT_GFRF_GdmGLTIW2opthpf75fl40_1028_etfe_50hz_controller_order20_50hz_-34db_nperfoptiIQC_etai0.24_etaf1.72_multi_freq';
+opensave_A=load(fullfile('data','controller',[fn_A,'.mat']));
+K_A=opensave_A.K_final;
+% fn_B='LFT_GFRF_GdmGLTIW2opthpf75fl40_1028_etfe_50hz_controller_order16_50hz_-34db_nperfoptiIQC_etai0.24_etaf1.50_multi_freq';
+fn_B='LFT_GFRF_GdmGLTIW2opthpf75fl40_1028_etfe_50hz_controller_order22_50hz_-34db_nperfoptiIQC_notconv_etai0.24_etaf0.80_multi_freq'
+opensave_B=load(fullfile('data','controller',[fn_B,'.mat']));
+K_B=opensave_B.K_final;
+
+if isstable(K_A), fprintf('K A is OL stable\n'); else, fprintf('K A is OL unstable\n'); end
+if isstable(K_B), fprintf('K B is OL stable\n'); else, fprintf('K B is OL unstable\n'); end
+figure; hold on
+GFRF=interp(GFRF,W_lft);
+for i = 1:nOP
+    utils.magplot(inv(1 + K_A*GFRF(i)), 'Color', colors(i, :), 'DisplayName', ...
+        'S A OP'+string(i));
+    utils.magplot(inv(1 + K_B*GFRF(i)), 'Color', [colors(i, :) .3],'linestyle','--', ...
+        'DisplayName', 'S B OP'+string(i));
+end
+utils.magplot(inv(1 + K_A*G_hat), 'Color', 'k', 'DisplayName', 'S B nominal');
+utils.magplot(inv(1 + K_B*G_hat), 'Color', [0 0 0 .3],'linestyle','--', 'DisplayName', ...
+    'S A nominal');
+utils.magplot(inv(opensave_A.W1_frd), 'Color', 'c', 'DisplayName', 'W_1^{-1}');
+title(sprintf(['Sensitivity on the measured FRFs, K A order %d, \\eta = %.3g' ...
+    ' compared to K B order %d, \\eta = %.3g (dm_{bound}=%.3f)'], opensave_A.orderK, ...
+    opensave_A.eta,opensave_B.orderK, opensave_B.eta,opensave_A.dm_bound))
+
+figure; utils.magplot(K_A, 'DisplayName', 'K A')
+utils.magplot(K_B, 'DisplayName', 'K B');title('Controller')
+
+%}
+%% Nyquist check: L = G K_final on every operating point, closest point to -1
+if ~exist('realmass', 'var'), realmass = []; end
+nyq_table = utils.nyquistcheck(K_final, GFRF, 'G_hat', G_hat, 'realmass', realmass, ...
+    'name', sprintf('W2: L = G K_final, order %d', orderK), ...
+    'file', fullfile('plots', sprintf('%s_nyquist_order%d', 'W2RP', orderK)));
+
+%% Mass multiplier D(w), E(w) of the final controller (stage-3 bisection)
+utils.plotDE(D_val, E_val, W_lft, eta, sprintf('W2 RP, order %d', orderK), ...
+    fullfile('plots', sprintf('W2RP_multiplier_DE_order%d.pdf', orderK)));
+
+%% Local functions
+function s = ifelse_str(c, a, b)
+    if c, s = a; else, s = b; end
+end
+
+function [eta, D_val, E_val, PI_matrix] = multiplier_bisection(G_robustness, PILTI, K, eta, D_val, E_val, ...
+        alpha_PI, beta_PI, W_lft, dm_bound, multiplier_type, D0)
+%MULTIPLIER_BISECTION Largest eta (and D(w), E(w)) certified for the frozen controller K,
+%   warm-started from the previous D(w), E(w) when available.
+    warm = {};
+    if ~isempty(D_val), warm = {"D0", D_val, "E0", E_val}; end
+    [eta, D_val, E_val, PI_matrix] = ...
+        datadriven.Objective.IQC_reduced_combinedPI_par_fix_eta_bisection( ...
+        G_robustness, PILTI, datadriven.Controller.Fixed(K), alpha_PI, beta_PI, W_lft, ...
+        "etaUpperInit", eta, "etaLower", 1e-2, "etaHardCap", 100, ...
+        "multiplier", multiplier_type, "epsD", 1e-2*D0, warm{:});   % D >= epsD scaled with D0
+end
+
+function [eta, D_val, E_val, PI_matrix] = multiplier_bisection_rp(G_combined, PILTI, K, eta, D_val, E_val, ...
+        alpha_PI, beta_PI, W_lft, multiplier_type, D0, gamma_val, beta_perf)
+%MULTIPLIER_BISECTION_RP Largest eta (and D(w), E(w)) for which the frozen controller K
+%   keeps the robust performance level gamma_val (relaxed by 1.05), warm-started.
+    warm = {};
+    if ~isempty(D_val), warm = {"D0", D_val, "E0", E_val}; end
+    [eta, D_val, E_val, PI_matrix] = ...
+        datadriven.Objective.IQC_reduced_combinedPI_par_fix_eta_bisection( ...
+        G_combined, PILTI, datadriven.Controller.Fixed(K), alpha_PI, beta_PI, W_lft, ...
+        "etaUpperInit", eta, "etaLower", 1e-2, "etaHardCap", 100, ...
+        "multiplier", multiplier_type, "epsD", 1e-2*D0, ...
+        "gamma", gamma_val, "gammaRelax", 1.05, "betaPerformance", beta_perf, warm{:});
+end
+
+function [ok, idx] = select_stable(hist_stage, hist_stable, hist_obj, stage, mode)
+%SELECT_STABLE OL-stable solved iteration of a stage: 'best' = lowest objective,
+%   'last' = most recent.
+    cand = find(hist_stage == stage & hist_stable);
+    ok   = ~isempty(cand);
+    idx  = [];
+    if ~ok, return, end
+    if mode == "best"
+        [~, k] = min(hist_obj(cand));
+        idx = cand(k);
+    else
+        idx = cand(end);
+    end
+end
