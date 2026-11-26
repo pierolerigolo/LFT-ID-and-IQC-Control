@@ -39,15 +39,15 @@ close all; clc; clear; clear("yalmip");
 % idname ='LFT_GFRF_GdmGLTIW2opthpf75fl40_1028_etfe_50hz';
 % idname='LFT_GFRF_GdmGLTIW2opt_1028_etfe_80hz_fmin10';
 % idname='LFT_GFRF_GdmGLTIW2opt_1028_etfe_80hz_fmin10';
-idname='LFT_GFRF_GdmGLTIW2opt_1110_etfe_80hz_fmin10_hyb';   % original id (gain via gainfile)
+idname='LFT_GFRF_GdmGLTIW2opt_1110gc_etfe_80hz_fmin10_hyb';   % gain-corrected id
 
 usesavedcont=false;
 
 orderK_list   = 18;     % controller orders to synthesise
 Ts            = 0.001;
 seed          = 22;
-gainfile      = fullfile('Data', 'GFRF_iddata_1110gc_etfe.mat');  % gain_corr applied to the LFT output
-                             % ('' = none); use it with the ORIGINAL 1110 idname, not 1110gc
+gainfile      = '';          % optional: gain_corr file applied to the LFT output (with an
+                             % uncorrected idname only), e.g. fullfile('Data', 'GFRF_iddata_1110gc_etfe.mat')
 cl_check      = true;        % accept a controller only if K is OL stable AND L = G K does not
                              % encircle -1 on any measured FRF (utils.encirclements)
 
@@ -68,6 +68,13 @@ zeta_n        = 0.0001;
 % IQC
 alpha_PI        = 0;         % split of the multiplier (Gupta et al. 2024, Cor. 1)
 beta_PI         = 0.5;
+% Scale of the dm multiplier [eta^2 D, E; E', -D]: in stages 1-2 D is FIXED (= D0) and the
+% alpha/beta split is not scale invariant, so D0 must follow the units of dm. Scaling the
+% FRFs by c (1110gc) multiplies the grey-box masses (and eta) by 1/c: the same multiplier
+% as in the uncorrected id is D0 = (dm_ref/dm_bound)^2, dm_ref = dm_bound of the uncorrected
+% id (0.3537), whatever eta0. [] -> D0 = 1 (previous behaviour). D0 also warm-starts and
+% scales D in the stage-3 bisection.
+dm_ref          = 0.3537;
 multiplier_type = "frequency";   % "frequency" or "constant" D, E
 
 % Optimisation
@@ -157,7 +164,9 @@ for orderK = orderK_list
             % IQC multipliers, ordering (p1, p2, q1, q2)
             N     = length(W_lft);
             PILTI = frd(repmat(diag([1, -1]), [1 1 N]), W_lft, Ts);          % W2 block
-            PI0   = frd(repmat(diag([1, eta0^2, -1, -1]), [1 1 N]), W_lft, Ts); % W2 block + dm at eta0
+            if isempty(dm_ref), D0 = 1; else, D0 = (dm_ref/dm_bound)^2; end   % unit change of dm
+            PI0   = frd(repmat(diag([1, eta0^2*D0, -1, -D0]), [1 1 N]), W_lft, Ts); % W2 block + dm at eta0, D = D0
+            fprintf('dm multiplier: D0 = %.4g (eta0 = %.4g)\n', D0, eta0);
 
             % Create a temp diary with reset if exist already
             diaryfile = fullfile('Data', 'diaries', 'diary_temp.txt');
@@ -183,7 +192,7 @@ for orderK = orderK_list
         
             PI    = PI0;
             eta   = eta0;
-            D_val = []; E_val = [];
+            D_val = repmat({D0}, N, 1);   E_val = repmat({0}, N, 1);   % warm start of the bisection
             STAGE = 1;
             converged = false;
             nextstage = false;
@@ -213,7 +222,7 @@ for orderK = orderK_list
                         % (a) multiplier for the current (frozen) controller,
                         %     warm-started from the previous D(w), E(w)
                         [eta, D_val, E_val, PI_matrix] = multiplier_bisection(G_robustness, PILTI, K, eta, D_val, E_val, ...
-                            alpha_PI, beta_PI, W_lft, dm_bound, multiplier_type);
+                            alpha_PI, beta_PI, W_lft, dm_bound, multiplier_type, D0);
                         PI = frd(PI_matrix, W_lft, Ts);
                         % (b) controller step with that multiplier
                         LMIs_rob = datadriven.Objective.IQC_reduced( ...
@@ -352,7 +361,7 @@ for orderK = orderK_list
             if STAGE >= 2
                 try
                     [eta, D_val, E_val] = multiplier_bisection(G_robustness, PILTI, K, eta, D_val, E_val, ...
-                        alpha_PI, beta_PI, W_lft, dm_bound, multiplier_type);
+                        alpha_PI, beta_PI, W_lft, dm_bound, multiplier_type, D0);
                 catch ME
                     warning('Final eta bisection failed (%s): eta kept at %.4g.', ME.message, eta);
                 end
@@ -564,7 +573,7 @@ function s = ifelse_str(c, a, b)
 end
 
 function [eta, D_val, E_val, PI_matrix] = multiplier_bisection(G_robustness, PILTI, K, eta, D_val, E_val, ...
-        alpha_PI, beta_PI, W_lft, dm_bound, multiplier_type)
+        alpha_PI, beta_PI, W_lft, dm_bound, multiplier_type, D0)
 %MULTIPLIER_BISECTION Largest eta (and D(w), E(w)) certified for the frozen controller K,
 %   warm-started from the previous D(w), E(w) when available.
     warm = {};
@@ -573,7 +582,7 @@ function [eta, D_val, E_val, PI_matrix] = multiplier_bisection(G_robustness, PIL
         datadriven.Objective.IQC_reduced_combinedPI_par_fix_eta_bisection( ...
         G_robustness, PILTI, datadriven.Controller.Fixed(K), alpha_PI, beta_PI, W_lft, ...
         "etaUpperInit", eta, "etaLower", 1e-2, "etaHardCap", 100*dm_bound, ...
-        "multiplier", multiplier_type, warm{:});
+        "multiplier", multiplier_type, "epsD", 1e-2*D0, warm{:});   % D >= epsD scaled with D0
 end
 
 function [ok, idx] = select_stable(hist_stage, hist_stable, hist_obj, stage, mode)
