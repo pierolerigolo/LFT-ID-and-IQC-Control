@@ -33,7 +33,7 @@ close all; clc; clear; clear("yalmip");
 % idname='LFT_GFRF_GdmGLTIW2opt_1028_etfe_80hz_fmin10';
 idname='LFT_GFRF_GdmGLTIW2opt_1110gc_etfe_80hz_fmin10_hyb';   % gain-corrected id
 
-usesavedcont=false;
+usesavedcont=true;
 % Initial controller of the robust-performance stages: a controller that already meets
 % roughly the performance (gamma of order 1) keeps the robust-performance LMIs well
 % conditioned; from the stage-1 (robust-stability-only) controller ||W1 S|| ~ 57 and
@@ -479,7 +479,7 @@ end
 colors = lines(max(3, nOP));
 % use a loaded K_final
 if usesavedcont
-    savedcont=load(fullfile('data','controller/','LFT_GFRF_GdmGLTIW2opt_1110_etfe_80hz_fmin10_hyb_controller_order18_80hz_-34db_nperfoptiIQC_notconv_etai0.35_etaf0.36_multi_freq.mat'));
+    savedcont=load(fullfile('data','controller/','RP_LFT_GFRF_GdmGLTIW2opt_1110gc_etfe_80hz_fmin10_hyb_controller_order18_80hz_-34db_rperfoptiIQC_notconv_etai1.00_etaf1.19_multi_freq.mat'));
     K_final=savedcont.K_final;
     orderK=savedcont.orderK;
     eta=savedcont.eta;
