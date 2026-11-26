@@ -1,0 +1,135 @@
+
+===== Controller order 18, peak_extra 100, eta0 1 =====
+Initial controller: ||K0||_inf = 0, max |pole| = 0.978
+Iter   1 | Stage 1
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  slack = 0.000000 | eta = 1 | K OL stable | N_enc [0  0  0  0] -> stage 1 FEASIBLE | time = 2.40 s
+
+Iter   2 | Stage 1
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  slack = 0.000000 | eta = 1 | K OL stable | N_enc [0  0  0  0] -> stage 1 FEASIBLE | time = 2.13 s
+
+  --> Saved K_stage{1}
+  --> Advancing to Stage 2
+Iter   3 | Stage 2
+gamma warm 14268.460690
+Pi scaler: 1.000e+00 not used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  !! Solver failed (code 1: Infeasible problem (<a href="yalmip.github.io/debugginginfeasible">learn to debug</a>) (MOSEK-SDP))
+  --> no accepted controller (OL stable, no encirclement) in stage 2: back to the stage-1 controller
+  --> Advancing to Stage 3
+Iter   4 | Stage 3
+  !! no robust-performance level: stage 2 found no controller with slack <= 1e-06, stopping
+No robust-performance level available: final robust-performance eta not computed.
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 0.01 -> true (slack = 0)
+    D = 1.394
+    E = 9.667e-16+1.674e-08i
+D warm-start:
+    1.3939
+
+E warm-start:
+   9.6673e-16 + 1.6738e-08i
+
+  [expand] eta = 1 -> true (slack = 0)
+    D = 1.351
+    E = -9.514e-15-6.626e-05i
+D warm-start:
+    1.3514
+
+E warm-start:
+  -9.5142e-15 - 6.6258e-05i
+
+  [expand] eta = 2 -> false (slack = 0)
+D warm-start:
+    1.3514
+
+E warm-start:
+  -9.5142e-15 - 6.6258e-05i
+
+  [bisect  1] eta = 1.5 -> false (slack = 0)
+D warm-start:
+    1.3514
+
+E warm-start:
+  -9.5142e-15 - 6.6258e-05i
+
+  [bisect  2] eta = 1.25 -> false (slack = 0)
+D warm-start:
+    1.3514
+
+E warm-start:
+  -9.5142e-15 - 6.6258e-05i
+
+  [bisect  3] eta = 1.125 -> true (slack = 0)
+    D = 1.151
+    E = 3.816e-15-0.0001968i
+D warm-start:
+    1.1505
+
+E warm-start:
+   3.8157e-15 - 1.9679e-04i
+
+  [bisect  4] eta = 1.1875 -> true (slack = 0)
+    D = 1.218
+    E = -1.51e-15-0.0002207i
+D warm-start:
+    1.2182
+
+E warm-start:
+  -1.5105e-15 - 2.2071e-04i
+
+  [bisect  5] eta = 1.21875 -> false (slack = 0)
+D warm-start:
+    1.2182
+
+E warm-start:
+  -1.5105e-15 - 2.2071e-04i
+
+  [bisect  6] eta = 1.20312 -> false (slack = 0)
+D warm-start:
+    1.2182
+
+E warm-start:
+  -1.5105e-15 - 2.2071e-04i
+
+  [bisect  7] eta = 1.19531 -> true (slack = 0)
+    D = 1.235
+    E = 4.016e-15-0.0002728i
+IQC_reduced_combinedPI_eta_bisection: converged, eta = 1.19531
+Robust performance: gamma = NaN (level NaN) certified up to eta = 1; robust stability up to eta_rs = 1.195
+Order 18: ||W1 S||_inf = 11.945, certified eta = 1 (normalised: 1 = whole mass range, dm = eta*1.81 kg), K OL stable: 1, N_enc [0  0  0  0]
