@@ -75,16 +75,16 @@ mosek_near_rel  = 1e3;       % controller steps only (MOSEK default 1e3); the et
 max_iter        = 30;
 max_iter_stage2 = 20;        % stage 2 ends after this many iterations even if the
                              % objective still oscillates (Inf = only on convergence)
-obj_err         = [5e-3, 1e-3, 1e-3];   % convergence tolerance per stage
+obj_err         = [1e-6, 1e-3, 1e-3];   % convergence tolerance per stage
 
 % Solver paths (machine specific)
-% addpath(genpath("C:\Users\admin\mosek"))
-% addpath(genpath("C:\Program Files\Mosek\10.1"))
-% addpath(genpath("C:\Users\admin\Documents\MATLAB\tbxmanager"))
+addpath(genpath("C:\Users\admin\mosek"))
+addpath(genpath("C:\Program Files\Mosek\10.1"))
+addpath(genpath("C:\Users\admin\Documents\MATLAB\tbxmanager"))
 
-addpath(genpath("C:\Users\pgr\mosek"))
-addpath(genpath("C:\Users\pgr\OneDrive - CSEM S.A\Documents\MATLAB\tbxmanager"))
-addpath(genpath("C:\Program Files\Mosek\11.2"))
+% addpath(genpath("C:\Users\pgr\mosek"))
+% addpath(genpath("C:\Users\pgr\OneDrive - CSEM S.A\Documents\MATLAB\tbxmanager"))
+% addpath(genpath("C:\Program Files\Mosek\11.2"))
 
 % addpath(genpath("/Users/pierre/mosek"))
 % addpath(genpath("/Users/pierre/Documents/MATLAB/tbxmanager"))
@@ -146,6 +146,11 @@ for orderK = orderK_list
             PILTI = frd(repmat(diag([1, -1]), [1 1 N]), W_lft, Ts);          % W2 block
             PI0   = frd(repmat(diag([1, eta0^2, -1, -1]), [1 1 N]), W_lft, Ts); % W2 block + dm at eta0
 
+            % Create a temp diary with reset if exist already
+            diaryfile = fullfile('Data', 'diaries', 'diary_temp.txt');
+            if exist(diaryfile, 'file'),diary off; delete(diaryfile); end
+            diary(diaryfile)
+
             fprintf('\n===== Controller order %d, peak_extra %g, eta0 %.3g =====\n', orderK, peak_extra, eta0);
             try
             yalmip('clear');     % YALMIP numbering restarts, as in a fresh session
@@ -172,9 +177,6 @@ for orderK = orderK_list
             K_good_state  = K.getstate();   % last solved controller (rollback on failure)
             K_stage_state = cell(3, 1);     % parameters of K_stage{s} (for fallbacks)
         
-            diaryfile = fullfile('Data', 'diaries', 'diary_temp.txt');
-            if exist(diaryfile, 'file'),diary off; delete(diaryfile); end
-            diary(diaryfile)
         
             for iter = 1:max_iter
                 fprintf('Iter %3d | Stage %d\n', iter, STAGE);
