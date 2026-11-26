@@ -1,0 +1,11 @@
+
+
+
+
+
+-- Type definitions for arrays
+typedef Pierre_Controller_LTI_ArrayDT0_3 flt(64,IEEE)[3]
+typedef Pierre_Controller_LTI_ArrayDT0_324 flt(64,IEEE)[324]
+typedef Pierre_Controller_LTI_ArrayDT0_18 flt(64,IEEE)[18]
+
+

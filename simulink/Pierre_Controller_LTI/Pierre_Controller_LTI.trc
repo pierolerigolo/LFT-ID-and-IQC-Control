@@ -1,0 +1,2720 @@
+-- ****************************************************************************
+-- 
+--  Trace file: Pierre_Controller_LTI.trc
+-- 
+--  RTI1202 25.2 (02-Nov-2025)
+--  Wed Nov 18 15:35:18 2026
+-- 
+--  Copyright 2026, dSPACE GmbH. All rights reserved.
+-- 
+-- ****************************************************************************
+-- 
+--  Used options:
+--    TRCGenerateVirtualBlocks      = 0
+--    TRCGenerateLabels             = 0
+--    TRCGenerateStates             = 0
+--    TRCGenerateDerivatives        = 0
+--    TRCGenerateParamValues        = 1
+--    TRCGenerateApplicationKeyword = 0
+--    TRCOnlyGlobals                = 0
+--    TRCIsOmitVdOn                 = 0
+-- 
+--  Trace file format: 3
+-- ******** Keywords **********************************************************
+-- _application "Pierre_Controller_LTI.map"
+_author      "RTI1202 25.2 (02-Nov-2025)"
+_description ""
+_gendate     "11/18/2026 03:35:20"
+_genname     "RTI"
+_genversion  "25.2"
+_model       "Pierre_Controller_LTI"
+
+_floating_point_type(64,IEEE)
+_integer_type(32)
+
+sampling_period[0]
+{
+    alias:     "HostService"
+    increment: 0.001
+    unit:      "s"
+    value:     0.001
+}
+
+typedef Pierre_Controller_LTI_ArrayDT0_3 float(64,IEEE) [3]
+
+typedef Pierre_Controller_LTI_ArrayDT0_324 float(64,IEEE) [324]
+
+typedef Pierre_Controller_LTI_ArrayDT0_18 float(64,IEEE) [18]
+
+currentTime
+{
+    addr:  0x4818ac90
+    alias: "currentTime"
+    desc:  "Current simulation time. Increments with execution of Timer Task 1."
+    flags: READONLY
+    type:  float(64,IEEE)*
+    unit:  "s"
+}
+
+p_msg_last_error_no
+{
+    addr:  0x480458ec
+    alias: "errorNumber"
+    desc:  "Error number of last error message (zero if no error)."
+    flags: READONLY
+    type:  uint(32)*
+    unit:  "-"
+}
+
+finalTime
+{
+    addr:  0x4818ac94
+    alias: "finalTime"
+    desc:  "Simulation stop time. When reached, simState switches to STOP."
+    flags: READONLY
+    type:  float(64,IEEE)*
+    unit:  "s"
+}
+
+modelStepSize
+{
+    addr:  0x4818ac98
+    alias: "modelStepSize"
+    desc:  "Fixed step size of the model, sample time of Timer Task 1."
+    flags: READONLY
+    type:  float(64,IEEE)
+    unit:  "s"
+}
+
+simState
+{
+    addr:  0x4818a308
+    alias: "simState"
+    desc:  "Simulation state: STOP=0 RUN=2"
+    type:  int(32)
+    unit:  "-"
+    value: 2
+}
+
+p_dsts_sum_of_reset_time
+{
+    addr:  0x480458e8
+    alias: "sumOfResetTime"
+    desc:  "Internal variable for summing up reset time."
+    flags: HIDDEN|READONLY
+    type:  float(64,IEEE)*
+    unit:  "s"
+}
+
+group "Model Root"
+
+    group "Clock"
+
+        p_0_Pierre_Controller_LTI_real_T_0[1]
+        {
+            addr:  0x4818ac78
+            alias: "Timestamp"
+            flags: OUTPUT|READONLY
+            type:  float(64,IEEE)*
+        }
+
+        group "Clock"
+        {
+            block: "Clock"
+        }
+
+            p_0_Pierre_Controller_LTI_real_T_0[1]
+            {
+                addr:  0x4818ac78
+                alias: "Out1"
+                flags: OUTPUT|READONLY
+                type:  float(64,IEEE)*
+            }
+
+        endgroup
+
+    endgroup
+
+    group "Controller"
+
+        p_0_Pierre_Controller_LTI_real_T_0[36]
+        {
+            addr:  0x4818ac78
+            alias: "x_command"
+            flags: OUTPUT|READONLY
+            type:  float(64,IEEE)*
+        }
+
+        p_0_Pierre_Controller_LTI_real_T_0[26]
+        {
+            addr:  0x4818ac78
+            alias: "y_command"
+            flags: OUTPUT|READONLY
+            type:  float(64,IEEE)*
+        }
+
+        p_0_Pierre_Controller_LTI_real_T_0[38]
+        {
+            addr:  0x4818ac78
+            alias: "z_command"
+            flags: OUTPUT|READONLY
+            type:  float(64,IEEE)*
+        }
+
+        group "Add"
+        {
+            block: "Sum"
+        }
+
+            p_0_Pierre_Controller_LTI_real_T_0[36]
+            {
+                addr:  0x4818ac78
+                alias: "Out1"
+                flags: OUTPUT|READONLY
+                type:  float(64,IEEE)*
+            }
+
+        endgroup
+
+        group "Controller K"
+        {
+            block: "DiscreteStateSpace"
+        }
+
+            p_1_Pierre_Controller_LTI_real_T_0[29]
+            {
+                addr:  0x4818ac7c
+                alias: "A"
+                flags: PARAM
+                type:  Pierre_Controller_LTI_ArrayDT0_324*
+                value: [-0.8392516753360341, -1.990755554399382, -14.111326916001, -0.0756183268433933, 7.108478231060312, -2.7195230380489837, 6.925316921841412, -0.11748198928850233, -61.10042740305187, 292.32997630788554, -0.8232192006026666, 3.606544359510773, -77.60866687816714, -839.4453901159147, -3388.1483187063222, -462.24690396323035, -4079.9896177553474, -32036.51353742737, 0.31013201467056617, -6.662253325846698, -42.65653826855527, -0.22858346858520998, 21.487920696570924, -8.220732127835138, 20.934250057195733, -0.3551313779194332, -184.69791928553605, 883.6720243001059, -2.4884747935432676, 10.902071676496234, -234.59998399627895, -2537.524261254192, -10241.891444847539, -1397.3067781507084, -12333.229490115857, -96841.83307742616, -0.1569362780729934, 3.0451762855637856, 21.1763914351851, 0.6690821427123754, -10.873544613669111, 4.159941709171661, -10.593370348157904, 0.17970733120478108, 93.46279213156366, -447.1650522059056, 1.2592443014694208, -5.516781471309026, 118.71476204566785, 1284.0648312434605, 5182.710096825591, 707.0799360139396, 6240.991065868702, 49004.9273406399, 0.01833458447609277, -0.35576249505735896, -3.075208663853355, -0.42263419709390926, 1.2703367552858211, -0.4859985442432567, 1.2376044973138736, -0.020994885856888006, -10.919090721079998, 52.2414926943299, -0.14711525789206611, 0.6445157051246833, -13.86923316910311, -150.01499596073594, -605.4867443788313, -82.60688336299201, -729.1238158361876, -5725.157950119422, -0.21306410155748906, 4.134275116847393, 29.305510465911123, 0.15703935440762656, -14.963436546640214, 4.906509792959334, -14.382059797838542, 0.2439791585259337, 126.88949985996146, -607.0923897650054, 1.709609524505098, -7.489843024866126, 161.17276659961806, 1743.3070477382344, 7036.291952199023, 959.9651090620727, 8473.064167223038, 66531.40334363682, 0.16209183708831965, -3.1452142515782078, -22.294623981735445, -0.11947013722641432, 11.971978071112455, -4.49760009247894, 10.941376218258462, -0.18561094866588926, -96.53316532052975, 461.85500053746165, -1.3006120998564779, 5.698014853413087, -122.61469499445477, -1326.24801602564, -5352.968803681654, -730.3084232919254, -6446.015666612989, -50614.80236793558, 0.44589957261347796, -8.652191965671808, -61.33043763096687, -0.3286512392373303, 30.89476159090206, -11.819550284949893, 29.850166735780615, 0.14586456734441677, -265.5537621922121, 1270.5201634357436, -3.5778629564542874, 15.674709063219266, -337.30162527782926, -3648.384978221216, -14725.519462614131, -2009.0105687706985, -17732.389751597402, -139236.61517563526, 0.7449072371212869, -14.454107624315698, -102.45689759098467, -0.5490354816037941, 51.61191647552633, -19.74540700986538, 49.62558988269779, -1.1015332917861365, -443.62661785557594, 2122.495114998006, -5.97707684281912, 26.18572642383764, -563.4865723005018, -6094.888941365687, -24600.0370751198, -3356.1963366753216, -29623.229688247036, -232604.75830621438, 0.21240594257454165, -4.121504263915159, -29.21498519759043, -0.15655425691337901, 14.716836165303258, -5.630287341087461, 14.337633346925223, -0.24322550235550425, -126.4303925883264, 604.927165567317, -1.7043285088029663, 7.4667067600911246, -160.67490091802927, -1737.9219397584422, -7014.556715145348, -956.9997589386742, -8446.89071400411, -66325.88659802542, -0.2545491575948006, 4.93924711185895, 35.011496293619, 0.18761600420475721, -17.63678644265786, 6.747386077428234, -17.182346435915452, 0.29148359024106935, 151.88566867420013, -725.2303389129528, 2.0424823379334023, -8.948167328800547, 192.5542203743151, 2082.741002294615, 8406.306721454275, 1146.876963533055, 10122.828436358452, 79485.52830310134, 0.016322075375510867, -0.3167119640850181, -2.2449898750933484, -0.012030220768425595, 1.1308973104404794, -0.43265255789518964, 1.1017579327509859, -0.018690366825776662, -9.720548726582836, 46.5071669662277, 0.8468055039229876, 0.573769966451264, -12.34686662693751, -133.5484899982797, -539.0250481820605, -73.53947827641882, -649.0910058897884, -5096.731792335038, 0.2949521922010461, -5.723223668194296, -40.56865747118331, -0.21739514777841928, 20.43616594058562, -7.8183574990739855, 19.90959544442276, -0.33774900197898333, -175.6576348498181, 840.4195259586953, -2.3666730968497225, 11.214995181691574, -223.11717686913155, -2413.3217733593024, -9740.588494715068, -1328.9137460726893, -11729.56322775118, -92101.78121499668, 0.15110048378984617, -2.931939100531252, -20.782838482590577, -0.11136893663259828, 10.469203627167046, -4.005251128110995, 10.199447853779086, -0.17302477807581823, -89.98730746539444, 430.53688128628744, -1.2124183490138447, 5.311635776719126, -113.55040827480363, -1236.315908601905, -4989.987099150084, -680.7866334137656, -6008.915089360392, -47182.6420262938, 0.2539765769591868, -4.928136812860184, -34.93274174188128, -0.1871939824155125, 17.597114410399175, -6.732208566548014, 17.143696617009844, -0.2908279296176038, -151.2547660113486, 723.6660043779624, -2.0378879961318646, 8.928039399935587, -192.12109060506415, -2077.6925968397627, -8387.264328731051, -1144.2971885813108, -10100.058235132617, -79306.73425503641, 0.2633555001922208, -5.110124527645127, -36.22274850958867, -0.19410673796085218, 18.2469459309042, -6.980817584318083, 17.77678418920434, -0.30156771065790045, -156.8403473906855, 750.3897597048484, -2.1131437354684635, 9.257736717523086, -199.21579587987864, -2154.9285025875915, -8696.766479710477, -1186.5541384779362, -10473.036215900129, -82235.39713153522, -0.581378500076152, 11.281011905641742, 79.96463784416679, 0.4285062741730744, -40.28160432775001, 15.410717655465003, -39.24368437550619, 0.6657350355915144, 346.23771233509564, -1656.5458957617607, 4.664935171186001, -20.43720022177261, 439.78493145419367, 4756.88409815377, 19199.615661972977, 2620.004257811185, 23120.071849644595, 181541.2695106145, 0.3167225735745433, -6.145654032290343, -43.56302458663919, -0.23344105420334255, 21.944556581857295, -8.395429407572173, 21.379119988663756, -0.36267821008803375, -188.62290109622194, 902.450777387345, -2.541356917710069, 11.133749614150146, -239.58542548654864, -2591.44872671717, -10459.540012755331, -1427.000689751905, -12594.830837399635, -98899.80121703878, -0.06943360717999794, 1.3472829647924895, 9.550117955231253, 0.05117618954123789, -4.810802413757555, 1.840490688787526, -4.686844396323234, 0.07950824624778598, 41.35091563590191, -197.8400594223797, 0.5571297806056789, -2.4407998091977157, 52.523191294953385, 568.1111734072119, 2292.995994357809, 312.8346812151049, 2761.213196861045, 21681.695277905554]
+            }
+
+            p_1_Pierre_Controller_LTI_real_T_0[353]
+            {
+                addr:  0x4818ac7c
+                alias: "B"
+                flags: PARAM
+                type:  Pierre_Controller_LTI_ArrayDT0_18*
+                value: [-0.3611755634501652, -1.091782462109171, 0.5524752942735895, -0.06454469978638083, 0.7500665470883783, -0.5706248197951036, -1.569735822851098, -2.622356347993004, -0.7477495775371216, 0.8961096980003037, -0.05745990351604287, -1.0383437225847874, -0.5319310822947486, -0.8940939967294415, -0.9271113680903821, 2.0466730946971774, -1.1149837321699319, 0.2444326642014806]
+            }
+
+            p_1_Pierre_Controller_LTI_real_T_0[371]
+            {
+                addr:  0x4818ac7c
+                alias: "C"
+                flags: PARAM
+                type:  Pierre_Controller_LTI_ArrayDT0_18*
+                value: [0.027625921013206992, -0.6978571338302362, -5.577894482862983, 0.5498185060931469, 3.472367356949896, -0.7328018165146877, 2.919263035240504, -0.3838939200119671, -26.365545456273285, 96.8288985080498, 2.077708995190731, 1.1075627944209412, -33.75921680214618, -225.71270529848593, -1215.5561821780661, -193.51177435460315, -1589.4814237095557, -11558.669438913083]
+            }
+
+            p_1_Pierre_Controller_LTI_real_T_0[389]
+            {
+                addr:  0x4818ac7c
+                alias: "D"
+                flags: PARAM
+                type:  float(64,IEEE)*
+                value: -0.16429007669683904
+            }
+
+            p_1_Pierre_Controller_LTI_real_T_0[390]
+            {
+                addr:  0x4818ac7c
+                alias: "InitialCondition"
+                flags: PARAM
+                type:  float(64,IEEE)*
+                value: 0
+            }
+
+            p_0_Pierre_Controller_LTI_real_T_0[17]
+            {
+                addr:  0x4818ac78
+                alias: "Out1"
+                flags: OUTPUT|READONLY
+                type:  Pierre_Controller_LTI_ArrayDT0_3*
+            }
+
+        endgroup
+
+        group "dSpace Conversion"
+        {
+            block: "Gain"
+        }
+
+            p_1_Pierre_Controller_LTI_real_T_0[391]
+            {
+                addr:  0x4818ac7c
+                alias: "Gain"
+                flags: PARAM
+                type:  float(64,IEEE)*
+                value: 0.1
+            }
+
+            p_0_Pierre_Controller_LTI_real_T_0[20]
+            {
+                addr:  0x4818ac78
+                alias: "Out1"
+                flags: OUTPUT|READONLY
+                type:  Pierre_Controller_LTI_ArrayDT0_3*
+            }
+
+        endgroup
+
+        group "Gain"
+        {
+            block: "Gain"
+        }
+
+            p_1_Pierre_Controller_LTI_real_T_0[396]
+            {
+                addr:  0x4818ac7c
+                alias: "Gain"
+                flags: PARAM
+                type:  float(64,IEEE)*
+                value: 1
+            }
+
+            p_0_Pierre_Controller_LTI_real_T_0[40]
+            {
+                addr:  0x4818ac78
+                alias: "Out1"
+                flags: OUTPUT|READONLY
+                type:  float(64,IEEE)*
+            }
+
+        endgroup
+
+        group "Gain1"
+        {
+            block: "Gain"
+        }
+
+            p_1_Pierre_Controller_LTI_real_T_0[397]
+            {
+                addr:  0x4818ac7c
+                alias: "Gain"
+                flags: PARAM
+                type:  float(64,IEEE)*
+                value: 1
+            }
+
+            p_0_Pierre_Controller_LTI_real_T_0[41]
+            {
+                addr:  0x4818ac78
+                alias: "Out1"
+                flags: OUTPUT|READONLY
+                type:  float(64,IEEE)*
+            }
+
+        endgroup
+
+        group "Gain2"
+        {
+            block: "Gain"
+        }
+
+            p_1_Pierre_Controller_LTI_real_T_0[398]
+            {
+                addr:  0x4818ac7c
+                alias: "Gain"
+                flags: PARAM
+                type:  float(64,IEEE)*
+                value: 1
+            }
+
+            p_0_Pierre_Controller_LTI_real_T_0[42]
+            {
+                addr:  0x4818ac78
+                alias: "Out1"
+                flags: OUTPUT|READONLY
+                type:  float(64,IEEE)*
+            }
+
+        endgroup
+
+        group "Gain3"
+        {
+            block: "Gain"
+        }
+
+            p_0_Pierre_Controller_LTI_real_T_0[35]
+            {
+                addr:  0x4818ac78
+                alias: "Out1"
+                flags: OUTPUT|READONLY
+                type:  float(64,IEEE)*
+            }
+
+            trcref0_Gain
+            {
+                alias:    "Gain"
+                flags:    DEPRECATED|HIDDEN
+                refgroup: "/Tunable Parameters"
+                refvar:   "Px"
+            }
+
+            trcref0_Px
+            {
+                alias:    "Px"
+                refgroup: "/Tunable Parameters"
+                refvar:   "Px"
+            }
+
+        endgroup
+
+        group "Gain4"
+        {
+            block: "Gain"
+        }
+
+            p_0_Pierre_Controller_LTI_real_T_0[26]
+            {
+                addr:  0x4818ac78
+                alias: "Out1"
+                flags: OUTPUT|READONLY
+                type:  float(64,IEEE)*
+            }
+
+            trcref0_Gain
+            {
+                alias:    "Gain"
+                flags:    DEPRECATED|HIDDEN
+                refgroup: "/Tunable Parameters"
+                refvar:   "Py"
+            }
+
+            trcref0_Py
+            {
+                alias:    "Py"
+                refgroup: "/Tunable Parameters"
+                refvar:   "Py"
+            }
+
+        endgroup
+
+        group "Gain5"
+        {
+            block: "Gain"
+        }
+
+            p_0_Pierre_Controller_LTI_real_T_0[38]
+            {
+                addr:  0x4818ac78
+                alias: "Out1"
+                flags: OUTPUT|READONLY
+                type:  float(64,IEEE)*
+            }
+
+            trcref0_Gain
+            {
+                alias:    "Gain"
+                flags:    DEPRECATED|HIDDEN
+                refgroup: "/Tunable Parameters"
+                refvar:   "Pz"
+            }
+
+            trcref0_Pz
+            {
+                alias:    "Pz"
+                refgroup: "/Tunable Parameters"
+                refvar:   "Pz"
+            }
+
+        endgroup
+
+        group "Multiport\nSwitch2"
+        {
+            block: "MultiPortSwitch"
+        }
+
+            p_0_Pierre_Controller_LTI_real_T_0[14]
+            {
+                addr:  0x4818ac78
+                alias: "Out1"
+                flags: OUTPUT|READONLY
+                type:  Pierre_Controller_LTI_ArrayDT0_3*
+            }
+
+        endgroup
+
+        group "Stability Gain"
+        {
+            block: "Gain"
+        }
+
+            p_1_Pierre_Controller_LTI_real_T_0[392]
+            {
+                addr:  0x4818ac7c
+                alias: "Gain"
+                flags: PARAM
+                type:  float(64,IEEE)*
+                value: 1
+            }
+
+            p_0_Pierre_Controller_LTI_real_T_0[23]
+            {
+                addr:  0x4818ac78
+                alias: "Out1"
+                flags: OUTPUT|READONLY
+                type:  Pierre_Controller_LTI_ArrayDT0_3*
+            }
+
+        endgroup
+
+        group "Switch_Controller"
+        {
+            block: "Constant"
+        }
+
+            p_1_Pierre_Controller_LTI_real_T_0[19]
+            {
+                addr:  0x4818ac7c
+                alias: "Value"
+                flags: PARAM
+                type:  float(64,IEEE)*
+                value: 2
+            }
+
+        endgroup
+
+        group "Zero_command"
+        {
+            block: "Constant"
+        }
+
+            p_1_Pierre_Controller_LTI_real_T_0[17]
+            {
+                addr:  0x4818ac7c
+                alias: "Value"
+                flags: PARAM
+                type:  float(64,IEEE)*
+                value: 0
+            }
+
+        endgroup
+
+    endgroup
+
+    group "Current monitoring"
+
+        p_0_Pierre_Controller_LTI_real_T_0[45]
+        {
+            addr:  0x4818ac78
+            alias: "PMA1_current"
+            flags: OUTPUT|READONLY
+            type:  float(64,IEEE)*
+        }
+
+        p_0_Pierre_Controller_LTI_real_T_0[48]
+        {
+            addr:  0x4818ac78
+            alias: "PMA2_current"
+            flags: OUTPUT|READONLY
+            type:  float(64,IEEE)*
+        }
+
+        p_0_Pierre_Controller_LTI_real_T_0[51]
+        {
+            addr:  0x4818ac78
+            alias: "PMA3_current"
+            flags: OUTPUT|READONLY
+            type:  float(64,IEEE)*
+        }
+
+        p_0_Pierre_Controller_LTI_real_T_0[54]
+        {
+            addr:  0x4818ac78
+            alias: "PMA4_current"
+            flags: OUTPUT|READONLY
+            type:  float(64,IEEE)*
+        }
+
+        p_0_Pierre_Controller_LTI_real_T_0[57]
+        {
+            addr:  0x4818ac78
+            alias: "PMA5_current"
+            flags: OUTPUT|READONLY
+            type:  float(64,IEEE)*
+        }
+
+        p_0_Pierre_Controller_LTI_real_T_0[60]
+        {
+            addr:  0x4818ac78
+            alias: "PMA6_current"
+            flags: OUTPUT|READONLY
+            type:  float(64,IEEE)*
+        }
+
+        group "GainADC_Ch1"
+        {
+            block: "Gain"
+        }
+
+            p_1_Pierre_Controller_LTI_real_T_0[399]
+            {
+                addr:  0x4818ac7c
+                alias: "Gain"
+                flags: PARAM
+                type:  float(64,IEEE)*
+                value: 10
+            }
+
+            p_0_Pierre_Controller_LTI_real_T_0[44]
+            {
+                addr:  0x4818ac78
+                alias: "Out1"
+                flags: OUTPUT|READONLY
+                type:  float(64,IEEE)*
+            }
+
+        endgroup
+
+        group "GainADC_Ch2"
+        {
+            block: "Gain"
+        }
+
+            p_1_Pierre_Controller_LTI_real_T_0[401]
+            {
+                addr:  0x4818ac7c
+                alias: "Gain"
+                flags: PARAM
+                type:  float(64,IEEE)*
+                value: 10
+            }
+
+            p_0_Pierre_Controller_LTI_real_T_0[47]
+            {
+                addr:  0x4818ac78
+                alias: "Out1"
+                flags: OUTPUT|READONLY
+                type:  float(64,IEEE)*
+            }
+
+        endgroup
+
+        group "GainADC_Ch3"
+        {
+            block: "Gain"
+        }
+
+            p_1_Pierre_Controller_LTI_real_T_0[403]
+            {
+                addr:  0x4818ac7c
+                alias: "Gain"
+                flags: PARAM
+                type:  float(64,IEEE)*
+                value: 10
+            }
+
+            p_0_Pierre_Controller_LTI_real_T_0[50]
+            {
+                addr:  0x4818ac78
+                alias: "Out1"
+                flags: OUTPUT|READONLY
+                type:  float(64,IEEE)*
+            }
+
+        endgroup
+
+        group "GainADC_Ch4"
+        {
+            block: "Gain"
+        }
+
+            p_1_Pierre_Controller_LTI_real_T_0[405]
+            {
+                addr:  0x4818ac7c
+                alias: "Gain"
+                flags: PARAM
+                type:  float(64,IEEE)*
+                value: 10
+            }
+
+            p_0_Pierre_Controller_LTI_real_T_0[53]
+            {
+                addr:  0x4818ac78
+                alias: "Out1"
+                flags: OUTPUT|READONLY
+                type:  float(64,IEEE)*
+            }
+
+        endgroup
+
+        group "GainADC_Ch5"
+        {
+            block: "Gain"
+        }
+
+            p_1_Pierre_Controller_LTI_real_T_0[407]
+            {
+                addr:  0x4818ac7c
+                alias: "Gain"
+                flags: PARAM
+                type:  float(64,IEEE)*
+                value: 10
+            }
+
+            p_0_Pierre_Controller_LTI_real_T_0[56]
+            {
+                addr:  0x4818ac78
+                alias: "Out1"
+                flags: OUTPUT|READONLY
+                type:  float(64,IEEE)*
+            }
+
+        endgroup
+
+        group "GainADC_Ch6"
+        {
+            block: "Gain"
+        }
+
+            p_1_Pierre_Controller_LTI_real_T_0[409]
+            {
+                addr:  0x4818ac7c
+                alias: "Gain"
+                flags: PARAM
+                type:  float(64,IEEE)*
+                value: 10
+            }
+
+            p_0_Pierre_Controller_LTI_real_T_0[59]
+            {
+                addr:  0x4818ac78
+                alias: "Out1"
+                flags: OUTPUT|READONLY
+                type:  float(64,IEEE)*
+            }
+
+        endgroup
+
+        group "PMA1_monitoring"
+
+            p_0_Pierre_Controller_LTI_real_T_0[43]
+            {
+                addr:  0x4818ac78
+                alias: "ADC"
+                flags: OUTPUT|READONLY
+                type:  float(64,IEEE)*
+            }
+
+        endgroup
+
+        group "PMA2_monitoring"
+
+            p_0_Pierre_Controller_LTI_real_T_0[46]
+            {
+                addr:  0x4818ac78
+                alias: "ADC"
+                flags: OUTPUT|READONLY
+                type:  float(64,IEEE)*
+            }
+
+        endgroup
+
+        group "PMA3_monitoring"
+
+            p_0_Pierre_Controller_LTI_real_T_0[49]
+            {
+                addr:  0x4818ac78
+                alias: "ADC"
+                flags: OUTPUT|READONLY
+                type:  float(64,IEEE)*
+            }
+
+        endgroup
+
+        group "PMA4_monitoring"
+
+            p_0_Pierre_Controller_LTI_real_T_0[52]
+            {
+                addr:  0x4818ac78
+                alias: "ADC"
+                flags: OUTPUT|READONLY
+                type:  float(64,IEEE)*
+            }
+
+        endgroup
+
+        group "PMA5_monitoring"
+
+            p_0_Pierre_Controller_LTI_real_T_0[55]
+            {
+                addr:  0x4818ac78
+                alias: "ADC"
+                flags: OUTPUT|READONLY
+                type:  float(64,IEEE)*
+            }
+
+        endgroup
+
+        group "PMA6_monitoring"
+
+            p_0_Pierre_Controller_LTI_real_T_0[58]
+            {
+                addr:  0x4818ac78
+                alias: "ADC"
+                flags: OUTPUT|READONLY
+                type:  float(64,IEEE)*
+            }
+
+        endgroup
+
+        group "Subsystem"
+
+            p_0_Pierre_Controller_LTI_real_T_0[45]
+            {
+                addr:  0x4818ac78
+                alias: "PMA1_monitoring (A)"
+                flags: OUTPUT|READONLY
+                type:  float(64,IEEE)*
+            }
+
+            group "V2A_PMA_monitoring"
+            {
+                block: "Gain"
+            }
+
+                p_1_Pierre_Controller_LTI_real_T_0[400]
+                {
+                    addr:  0x4818ac7c
+                    alias: "Gain"
+                    flags: PARAM
+                    type:  float(64,IEEE)*
+                    value: 0.2
+                }
+
+                p_0_Pierre_Controller_LTI_real_T_0[45]
+                {
+                    addr:  0x4818ac78
+                    alias: "Out1"
+                    flags: OUTPUT|READONLY
+                    type:  float(64,IEEE)*
+                }
+
+            endgroup
+
+        endgroup
+
+        group "Subsystem1"
+
+            p_0_Pierre_Controller_LTI_real_T_0[48]
+            {
+                addr:  0x4818ac78
+                alias: "PMA2_monitoring (A)"
+                flags: OUTPUT|READONLY
+                type:  float(64,IEEE)*
+            }
+
+            group "V2A_PMA_monitoring"
+            {
+                block: "Gain"
+            }
+
+                p_1_Pierre_Controller_LTI_real_T_0[402]
+                {
+                    addr:  0x4818ac7c
+                    alias: "Gain"
+                    flags: PARAM
+                    type:  float(64,IEEE)*
+                    value: 0.2
+                }
+
+                p_0_Pierre_Controller_LTI_real_T_0[48]
+                {
+                    addr:  0x4818ac78
+                    alias: "Out1"
+                    flags: OUTPUT|READONLY
+                    type:  float(64,IEEE)*
+                }
+
+            endgroup
+
+        endgroup
+
+        group "Subsystem2"
+
+            p_0_Pierre_Controller_LTI_real_T_0[51]
+            {
+                addr:  0x4818ac78
+                alias: "PMA3_monitoring (A)"
+                flags: OUTPUT|READONLY
+                type:  float(64,IEEE)*
+            }
+
+            group "V2A_PMA_monitoring"
+            {
+                block: "Gain"
+            }
+
+                p_1_Pierre_Controller_LTI_real_T_0[404]
+                {
+                    addr:  0x4818ac7c
+                    alias: "Gain"
+                    flags: PARAM
+                    type:  float(64,IEEE)*
+                    value: 0.2
+                }
+
+                p_0_Pierre_Controller_LTI_real_T_0[51]
+                {
+                    addr:  0x4818ac78
+                    alias: "Out1"
+                    flags: OUTPUT|READONLY
+                    type:  float(64,IEEE)*
+                }
+
+            endgroup
+
+        endgroup
+
+        group "Subsystem3"
+
+            p_0_Pierre_Controller_LTI_real_T_0[54]
+            {
+                addr:  0x4818ac78
+                alias: "PMA4_monitoring (A)"
+                flags: OUTPUT|READONLY
+                type:  float(64,IEEE)*
+            }
+
+            group "V2A_PMA_monitoring"
+            {
+                block: "Gain"
+            }
+
+                p_1_Pierre_Controller_LTI_real_T_0[406]
+                {
+                    addr:  0x4818ac7c
+                    alias: "Gain"
+                    flags: PARAM
+                    type:  float(64,IEEE)*
+                    value: 0.2
+                }
+
+                p_0_Pierre_Controller_LTI_real_T_0[54]
+                {
+                    addr:  0x4818ac78
+                    alias: "Out1"
+                    flags: OUTPUT|READONLY
+                    type:  float(64,IEEE)*
+                }
+
+            endgroup
+
+        endgroup
+
+        group "Subsystem4"
+
+            p_0_Pierre_Controller_LTI_real_T_0[57]
+            {
+                addr:  0x4818ac78
+                alias: "PMA5_monitoring (A)"
+                flags: OUTPUT|READONLY
+                type:  float(64,IEEE)*
+            }
+
+            group "V2A_PMA_monitoring"
+            {
+                block: "Gain"
+            }
+
+                p_1_Pierre_Controller_LTI_real_T_0[408]
+                {
+                    addr:  0x4818ac7c
+                    alias: "Gain"
+                    flags: PARAM
+                    type:  float(64,IEEE)*
+                    value: 0.2
+                }
+
+                p_0_Pierre_Controller_LTI_real_T_0[57]
+                {
+                    addr:  0x4818ac78
+                    alias: "Out1"
+                    flags: OUTPUT|READONLY
+                    type:  float(64,IEEE)*
+                }
+
+            endgroup
+
+        endgroup
+
+        group "Subsystem5"
+
+            p_0_Pierre_Controller_LTI_real_T_0[60]
+            {
+                addr:  0x4818ac78
+                alias: "PMA6_monitoring (A)"
+                flags: OUTPUT|READONLY
+                type:  float(64,IEEE)*
+            }
+
+            group "V2A_PMA_monitoring"
+            {
+                block: "Gain"
+            }
+
+                p_1_Pierre_Controller_LTI_real_T_0[410]
+                {
+                    addr:  0x4818ac7c
+                    alias: "Gain"
+                    flags: PARAM
+                    type:  float(64,IEEE)*
+                    value: 0.2
+                }
+
+                p_0_Pierre_Controller_LTI_real_T_0[60]
+                {
+                    addr:  0x4818ac78
+                    alias: "Out1"
+                    flags: OUTPUT|READONLY
+                    type:  float(64,IEEE)*
+                }
+
+            endgroup
+
+        endgroup
+
+    endgroup
+
+    group "F_shaker"
+    {
+        block: "Outport"
+    }
+
+        p_3_Pierre_Controller_LTI_real_T_0[0]
+        {
+            addr:  0x4818ac88
+            alias: "In1"
+            flags: READONLY
+            type:  float(64,IEEE)*
+        }
+
+    endgroup
+
+    group "Force_measure"
+
+        p_3_Pierre_Controller_LTI_real_T_0[0]
+        {
+            addr:  0x4818ac88
+            alias: "Excitation [N]"
+            flags: OUTPUT|READONLY
+            type:  float(64,IEEE)*
+        }
+
+        group "GainADC_Ch1"
+        {
+            block: "Gain"
+        }
+
+            p_1_Pierre_Controller_LTI_real_T_0[18]
+            {
+                addr:  0x4818ac7c
+                alias: "Gain"
+                flags: PARAM
+                type:  float(64,IEEE)*
+                value: 50
+            }
+
+            p_3_Pierre_Controller_LTI_real_T_0[0]
+            {
+                addr:  0x4818ac88
+                alias: "Out1"
+                flags: OUTPUT|READONLY
+                type:  float(64,IEEE)*
+            }
+
+        endgroup
+
+    endgroup
+
+    group "Id on or dist"
+    {
+        block: "Constant"
+    }
+
+        p_1_Pierre_Controller_LTI_real_T_0[395]
+        {
+            addr:  0x4818ac7c
+            alias: "Value"
+            flags: PARAM
+            type:  float(64,IEEE)*
+            value: 0
+        }
+
+    endgroup
+
+    group "IMU"
+
+        p_0_Pierre_Controller_LTI_real_T_0[64]
+        {
+            addr:  0x4818ac78
+            alias: "Acc_X (m/s^2)"
+            flags: OUTPUT|READONLY
+            type:  float(64,IEEE)*
+        }
+
+        p_0_Pierre_Controller_LTI_real_T_0[68]
+        {
+            addr:  0x4818ac78
+            alias: "Acc_Y (m/s^2)"
+            flags: OUTPUT|READONLY
+            type:  float(64,IEEE)*
+        }
+
+        p_0_Pierre_Controller_LTI_real_T_0[72]
+        {
+            addr:  0x4818ac78
+            alias: "Acc_Z (m/s^2)"
+            flags: OUTPUT|READONLY
+            type:  float(64,IEEE)*
+        }
+
+        p_0_Pierre_Controller_LTI_real_T_0[75]
+        {
+            addr:  0x4818ac78
+            alias: "Gyro_X (rad/s)"
+            flags: OUTPUT|READONLY
+            type:  float(64,IEEE)*
+        }
+
+        p_0_Pierre_Controller_LTI_real_T_0[78]
+        {
+            addr:  0x4818ac78
+            alias: "Gyro_Y (rad/s)"
+            flags: OUTPUT|READONLY
+            type:  float(64,IEEE)*
+        }
+
+        p_0_Pierre_Controller_LTI_real_T_0[81]
+        {
+            addr:  0x4818ac78
+            alias: "Gyro_Z (rad/s)"
+            flags: OUTPUT|READONLY
+            type:  float(64,IEEE)*
+        }
+
+        group "ACCE_X"
+
+            p_0_Pierre_Controller_LTI_real_T_0[61]
+            {
+                addr:  0x4818ac78
+                alias: "ADC"
+                flags: OUTPUT|READONLY
+                type:  float(64,IEEE)*
+            }
+
+        endgroup
+
+        group "ACCE_Y"
+
+            p_0_Pierre_Controller_LTI_real_T_0[65]
+            {
+                addr:  0x4818ac78
+                alias: "ADC"
+                flags: OUTPUT|READONLY
+                type:  float(64,IEEE)*
+            }
+
+        endgroup
+
+        group "ACCE_Z"
+
+            p_0_Pierre_Controller_LTI_real_T_0[69]
+            {
+                addr:  0x4818ac78
+                alias: "ADC"
+                flags: OUTPUT|READONLY
+                type:  float(64,IEEE)*
+            }
+
+        endgroup
+
+        group "GainADC_ACCE_X"
+        {
+            block: "Gain"
+        }
+
+            p_1_Pierre_Controller_LTI_real_T_0[411]
+            {
+                addr:  0x4818ac7c
+                alias: "Gain"
+                flags: PARAM
+                type:  float(64,IEEE)*
+                value: 10
+            }
+
+            p_0_Pierre_Controller_LTI_real_T_0[62]
+            {
+                addr:  0x4818ac78
+                alias: "Out1"
+                flags: OUTPUT|READONLY
+                type:  float(64,IEEE)*
+            }
+
+        endgroup
+
+        group "GainADC_ACCE_Y"
+        {
+            block: "Gain"
+        }
+
+            p_1_Pierre_Controller_LTI_real_T_0[413]
+            {
+                addr:  0x4818ac7c
+                alias: "Gain"
+                flags: PARAM
+                type:  float(64,IEEE)*
+                value: 10
+            }
+
+            p_0_Pierre_Controller_LTI_real_T_0[66]
+            {
+                addr:  0x4818ac78
+                alias: "Out1"
+                flags: OUTPUT|READONLY
+                type:  float(64,IEEE)*
+            }
+
+        endgroup
+
+        group "GainADC_ACCE_Z"
+        {
+            block: "Gain"
+        }
+
+            p_1_Pierre_Controller_LTI_real_T_0[415]
+            {
+                addr:  0x4818ac7c
+                alias: "Gain"
+                flags: PARAM
+                type:  float(64,IEEE)*
+                value: 10
+            }
+
+            p_0_Pierre_Controller_LTI_real_T_0[70]
+            {
+                addr:  0x4818ac78
+                alias: "Out1"
+                flags: OUTPUT|READONLY
+                type:  float(64,IEEE)*
+            }
+
+        endgroup
+
+        group "GainADC_GIRO_X"
+        {
+            block: "Gain"
+        }
+
+            p_1_Pierre_Controller_LTI_real_T_0[417]
+            {
+                addr:  0x4818ac7c
+                alias: "Gain"
+                flags: PARAM
+                type:  float(64,IEEE)*
+                value: 10
+            }
+
+            p_0_Pierre_Controller_LTI_real_T_0[74]
+            {
+                addr:  0x4818ac78
+                alias: "Out1"
+                flags: OUTPUT|READONLY
+                type:  float(64,IEEE)*
+            }
+
+        endgroup
+
+        group "GainADC_GIRO_Y"
+        {
+            block: "Gain"
+        }
+
+            p_1_Pierre_Controller_LTI_real_T_0[418]
+            {
+                addr:  0x4818ac7c
+                alias: "Gain"
+                flags: PARAM
+                type:  float(64,IEEE)*
+                value: 10
+            }
+
+            p_0_Pierre_Controller_LTI_real_T_0[77]
+            {
+                addr:  0x4818ac78
+                alias: "Out1"
+                flags: OUTPUT|READONLY
+                type:  float(64,IEEE)*
+            }
+
+        endgroup
+
+        group "GainADC_GIRO_Z"
+        {
+            block: "Gain"
+        }
+
+            p_1_Pierre_Controller_LTI_real_T_0[419]
+            {
+                addr:  0x4818ac7c
+                alias: "Gain"
+                flags: PARAM
+                type:  float(64,IEEE)*
+                value: 10
+            }
+
+            p_0_Pierre_Controller_LTI_real_T_0[80]
+            {
+                addr:  0x4818ac78
+                alias: "Out1"
+                flags: OUTPUT|READONLY
+                type:  float(64,IEEE)*
+            }
+
+        endgroup
+
+        group "GIRO_X"
+
+            p_0_Pierre_Controller_LTI_real_T_0[73]
+            {
+                addr:  0x4818ac78
+                alias: "ADC"
+                flags: OUTPUT|READONLY
+                type:  float(64,IEEE)*
+            }
+
+        endgroup
+
+        group "GIRO_Y"
+
+            p_0_Pierre_Controller_LTI_real_T_0[76]
+            {
+                addr:  0x4818ac78
+                alias: "ADC"
+                flags: OUTPUT|READONLY
+                type:  float(64,IEEE)*
+            }
+
+        endgroup
+
+        group "GIRO_Z"
+
+            p_0_Pierre_Controller_LTI_real_T_0[79]
+            {
+                addr:  0x4818ac78
+                alias: "ADC"
+                flags: OUTPUT|READONLY
+                type:  float(64,IEEE)*
+            }
+
+        endgroup
+
+        group "Subsystem1"
+
+            p_0_Pierre_Controller_LTI_real_T_0[75]
+            {
+                addr:  0x4818ac78
+                alias: "Gyro_X (rad/s)"
+                flags: OUTPUT|READONLY
+                type:  float(64,IEEE)*
+            }
+
+        endgroup
+
+        group "Subsystem12"
+
+            p_0_Pierre_Controller_LTI_real_T_0[64]
+            {
+                addr:  0x4818ac78
+                alias: "Acc_X (m/s^2)"
+                flags: OUTPUT|READONLY
+                type:  float(64,IEEE)*
+            }
+
+            group "g2ms^2_Wilcoxon"
+            {
+                block: "Gain"
+            }
+
+                p_1_Pierre_Controller_LTI_real_T_0[412]
+                {
+                    addr:  0x4818ac7c
+                    alias: "Gain"
+                    flags: PARAM
+                    type:  float(64,IEEE)*
+                    value: 9.80655
+                }
+
+                p_0_Pierre_Controller_LTI_real_T_0[64]
+                {
+                    addr:  0x4818ac78
+                    alias: "Out1"
+                    flags: OUTPUT|READONLY
+                    type:  float(64,IEEE)*
+                }
+
+            endgroup
+
+        endgroup
+
+        group "Subsystem13"
+
+            p_0_Pierre_Controller_LTI_real_T_0[68]
+            {
+                addr:  0x4818ac78
+                alias: "Acc_Y (m/s^2)"
+                flags: OUTPUT|READONLY
+                type:  float(64,IEEE)*
+            }
+
+            group "g2ms^2_Wilcoxon"
+            {
+                block: "Gain"
+            }
+
+                p_1_Pierre_Controller_LTI_real_T_0[414]
+                {
+                    addr:  0x4818ac7c
+                    alias: "Gain"
+                    flags: PARAM
+                    type:  float(64,IEEE)*
+                    value: 9.80655
+                }
+
+                p_0_Pierre_Controller_LTI_real_T_0[68]
+                {
+                    addr:  0x4818ac78
+                    alias: "Out1"
+                    flags: OUTPUT|READONLY
+                    type:  float(64,IEEE)*
+                }
+
+            endgroup
+
+        endgroup
+
+        group "Subsystem14"
+
+            p_0_Pierre_Controller_LTI_real_T_0[72]
+            {
+                addr:  0x4818ac78
+                alias: "Acc_Z (m/s^2)"
+                flags: OUTPUT|READONLY
+                type:  float(64,IEEE)*
+            }
+
+            group "g2ms^2_Wilcoxon"
+            {
+                block: "Gain"
+            }
+
+                p_1_Pierre_Controller_LTI_real_T_0[416]
+                {
+                    addr:  0x4818ac7c
+                    alias: "Gain"
+                    flags: PARAM
+                    type:  float(64,IEEE)*
+                    value: 9.80655
+                }
+
+                p_0_Pierre_Controller_LTI_real_T_0[72]
+                {
+                    addr:  0x4818ac78
+                    alias: "Out1"
+                    flags: OUTPUT|READONLY
+                    type:  float(64,IEEE)*
+                }
+
+            endgroup
+
+        endgroup
+
+        group "Subsystem2"
+
+            p_0_Pierre_Controller_LTI_real_T_0[78]
+            {
+                addr:  0x4818ac78
+                alias: "Gyro_Y (rad/s)"
+                flags: OUTPUT|READONLY
+                type:  float(64,IEEE)*
+            }
+
+        endgroup
+
+        group "Subsystem3"
+
+            p_0_Pierre_Controller_LTI_real_T_0[81]
+            {
+                addr:  0x4818ac78
+                alias: "Gyro_Z (rad/s)"
+                flags: OUTPUT|READONLY
+                type:  float(64,IEEE)*
+            }
+
+        endgroup
+
+        group "V2g_Wilcoxon"
+        {
+            block: "Gain"
+        }
+
+            p_0_Pierre_Controller_LTI_real_T_0[63]
+            {
+                addr:  0x4818ac78
+                alias: "Out1"
+                flags: OUTPUT|READONLY
+                type:  float(64,IEEE)*
+            }
+
+            trcref0_Sen_AX
+            {
+                alias:    "Sen_AX"
+                refgroup: "/Tunable Parameters"
+                refvar:   "Sen_AX"
+            }
+
+        endgroup
+
+        group "V2g_Wilcoxon1"
+        {
+            block: "Gain"
+        }
+
+            p_0_Pierre_Controller_LTI_real_T_0[67]
+            {
+                addr:  0x4818ac78
+                alias: "Out1"
+                flags: OUTPUT|READONLY
+                type:  float(64,IEEE)*
+            }
+
+            trcref0_Sen_AY
+            {
+                alias:    "Sen_AY"
+                refgroup: "/Tunable Parameters"
+                refvar:   "Sen_AY"
+            }
+
+        endgroup
+
+        group "V2g_Wilcoxon2"
+        {
+            block: "Gain"
+        }
+
+            p_0_Pierre_Controller_LTI_real_T_0[71]
+            {
+                addr:  0x4818ac78
+                alias: "Out1"
+                flags: OUTPUT|READONLY
+                type:  float(64,IEEE)*
+            }
+
+            trcref0_Sen_AZ
+            {
+                alias:    "Sen_AZ"
+                refgroup: "/Tunable Parameters"
+                refvar:   "Sen_AZ"
+            }
+
+        endgroup
+
+        group "V2g_Wilcoxon3"
+        {
+            block: "Gain"
+        }
+
+            p_0_Pierre_Controller_LTI_real_T_0[75]
+            {
+                addr:  0x4818ac78
+                alias: "Out1"
+                flags: OUTPUT|READONLY
+                type:  float(64,IEEE)*
+            }
+
+            trcref0_Sen_GX
+            {
+                alias:    "Sen_GX"
+                refgroup: "/Tunable Parameters"
+                refvar:   "Sen_GX"
+            }
+
+        endgroup
+
+        group "V2g_Wilcoxon4"
+        {
+            block: "Gain"
+        }
+
+            p_0_Pierre_Controller_LTI_real_T_0[78]
+            {
+                addr:  0x4818ac78
+                alias: "Out1"
+                flags: OUTPUT|READONLY
+                type:  float(64,IEEE)*
+            }
+
+            trcref0_Sen_GY
+            {
+                alias:    "Sen_GY"
+                refgroup: "/Tunable Parameters"
+                refvar:   "Sen_GY"
+            }
+
+        endgroup
+
+        group "V2g_Wilcoxon5"
+        {
+            block: "Gain"
+        }
+
+            p_0_Pierre_Controller_LTI_real_T_0[81]
+            {
+                addr:  0x4818ac78
+                alias: "Out1"
+                flags: OUTPUT|READONLY
+                type:  float(64,IEEE)*
+            }
+
+            trcref0_Sen_GZ
+            {
+                alias:    "Sen_GZ"
+                refgroup: "/Tunable Parameters"
+                refvar:   "Sen_GZ"
+            }
+
+        endgroup
+
+    endgroup
+
+    group "MATLAB Function"
+
+        p_0_Pierre_Controller_LTI_real_T_0[83]
+        {
+            addr:  0x4818ac78
+            alias: "u_exc_cmd"
+            flags: OUTPUT|READONLY
+            type:  float(64,IEEE)*
+        }
+
+        p_0_Pierre_Controller_LTI_real_T_0[84]
+        {
+            addr:  0x4818ac78
+            alias: "u_exc_dist"
+            flags: OUTPUT|READONLY
+            type:  float(64,IEEE)*
+        }
+
+    endgroup
+
+    group "Micromega PMA1"
+
+    endgroup
+
+    group "Micromega PMA2"
+
+    endgroup
+
+    group "Micromega PMA3"
+
+    endgroup
+
+    group "Micromega PMA4"
+
+    endgroup
+
+    group "Micromega PMA5"
+
+    endgroup
+
+    group "Micromega PMA6"
+
+    endgroup
+
+    group "Multiport\nSwitch2"
+    {
+        block: "MultiPortSwitch"
+    }
+
+        p_0_Pierre_Controller_LTI_real_T_0[32]
+        {
+            addr:  0x4818ac78
+            alias: "Out1"
+            flags: OUTPUT|READONLY
+            type:  float(64,IEEE)*
+        }
+
+    endgroup
+
+    group "OFF_TMS"
+    {
+        block: "Constant"
+    }
+
+        p_1_Pierre_Controller_LTI_real_T_0[393]
+        {
+            addr:  0x4818ac7c
+            alias: "Value"
+            flags: PARAM
+            type:  float(64,IEEE)*
+            value: 0
+        }
+
+    endgroup
+
+    group "Payload Accelerometers"
+
+        p_0_Pierre_Controller_LTI_real_T_0[4]
+        {
+            addr:  0x4818ac78
+            alias: "Payload_acc1"
+            flags: OUTPUT|READONLY
+            type:  float(64,IEEE)*
+        }
+
+        p_0_Pierre_Controller_LTI_real_T_0[8]
+        {
+            addr:  0x4818ac78
+            alias: "Payload_acc2"
+            flags: OUTPUT|READONLY
+            type:  float(64,IEEE)*
+        }
+
+        p_0_Pierre_Controller_LTI_real_T_0[12]
+        {
+            addr:  0x4818ac78
+            alias: "Payload_acc3"
+            flags: OUTPUT|READONLY
+            type:  float(64,IEEE)*
+        }
+
+        group "Accelerometer_Wilcoxon#4546"
+
+            p_0_Pierre_Controller_LTI_real_T_0[2]
+            {
+                addr:  0x4818ac78
+                alias: "ADC"
+                flags: OUTPUT|READONLY
+                type:  float(64,IEEE)*
+            }
+
+        endgroup
+
+        group "Accelerometer_Wilcoxon#4786"
+
+            p_0_Pierre_Controller_LTI_real_T_0[6]
+            {
+                addr:  0x4818ac78
+                alias: "ADC"
+                flags: OUTPUT|READONLY
+                type:  float(64,IEEE)*
+            }
+
+        endgroup
+
+        group "Accelerometer_Wilcoxon#4787"
+
+            p_0_Pierre_Controller_LTI_real_T_0[10]
+            {
+                addr:  0x4818ac78
+                alias: "ADC"
+                flags: OUTPUT|READONLY
+                type:  float(64,IEEE)*
+            }
+
+        endgroup
+
+        group "DocBlock"
+
+            group "EmptySubsystem"
+
+            endgroup
+
+        endgroup
+
+        group "GainADC_Ch14"
+        {
+            block: "Gain"
+        }
+
+            p_1_Pierre_Controller_LTI_real_T_0[21]
+            {
+                addr:  0x4818ac7c
+                alias: "Gain"
+                flags: PARAM
+                type:  float(64,IEEE)*
+                value: 0.5
+            }
+
+            p_0_Pierre_Controller_LTI_real_T_0[3]
+            {
+                addr:  0x4818ac78
+                alias: "Out1"
+                flags: OUTPUT|READONLY
+                type:  float(64,IEEE)*
+            }
+
+        endgroup
+
+        group "GainADC_Ch15"
+        {
+            block: "Gain"
+        }
+
+            p_1_Pierre_Controller_LTI_real_T_0[24]
+            {
+                addr:  0x4818ac7c
+                alias: "Gain"
+                flags: PARAM
+                type:  float(64,IEEE)*
+                value: 0.5
+            }
+
+            p_0_Pierre_Controller_LTI_real_T_0[7]
+            {
+                addr:  0x4818ac78
+                alias: "Out1"
+                flags: OUTPUT|READONLY
+                type:  float(64,IEEE)*
+            }
+
+        endgroup
+
+        group "GainADC_Ch16"
+        {
+            block: "Gain"
+        }
+
+            p_1_Pierre_Controller_LTI_real_T_0[27]
+            {
+                addr:  0x4818ac7c
+                alias: "Gain"
+                flags: PARAM
+                type:  float(64,IEEE)*
+                value: 0.5
+            }
+
+            p_0_Pierre_Controller_LTI_real_T_0[11]
+            {
+                addr:  0x4818ac78
+                alias: "Out1"
+                flags: OUTPUT|READONLY
+                type:  float(64,IEEE)*
+            }
+
+        endgroup
+
+        group "Subsystem12"
+
+            p_0_Pierre_Controller_LTI_real_T_0[4]
+            {
+                addr:  0x4818ac78
+                alias: "g2ms^2_Wilcoxon1"
+                flags: OUTPUT|READONLY
+                type:  float(64,IEEE)*
+            }
+
+            group "g2ms^2_Wilcoxon"
+            {
+                block: "Gain"
+            }
+
+                p_1_Pierre_Controller_LTI_real_T_0[22]
+                {
+                    addr:  0x4818ac7c
+                    alias: "Gain"
+                    flags: PARAM
+                    type:  float(64,IEEE)*
+                    value: 9.80655
+                }
+
+                p_0_Pierre_Controller_LTI_real_T_0[4]
+                {
+                    addr:  0x4818ac78
+                    alias: "Out1"
+                    flags: OUTPUT|READONLY
+                    type:  float(64,IEEE)*
+                }
+
+            endgroup
+
+        endgroup
+
+        group "Subsystem13"
+
+            p_0_Pierre_Controller_LTI_real_T_0[8]
+            {
+                addr:  0x4818ac78
+                alias: "g2ms^2_Wilcoxon2"
+                flags: OUTPUT|READONLY
+                type:  float(64,IEEE)*
+            }
+
+            group "g2ms^2_Wilcoxon"
+            {
+                block: "Gain"
+            }
+
+                p_1_Pierre_Controller_LTI_real_T_0[25]
+                {
+                    addr:  0x4818ac7c
+                    alias: "Gain"
+                    flags: PARAM
+                    type:  float(64,IEEE)*
+                    value: 9.80655
+                }
+
+                p_0_Pierre_Controller_LTI_real_T_0[8]
+                {
+                    addr:  0x4818ac78
+                    alias: "Out1"
+                    flags: OUTPUT|READONLY
+                    type:  float(64,IEEE)*
+                }
+
+            endgroup
+
+        endgroup
+
+        group "Subsystem14"
+
+            p_0_Pierre_Controller_LTI_real_T_0[12]
+            {
+                addr:  0x4818ac78
+                alias: "g2ms^2_Wilcoxon3"
+                flags: OUTPUT|READONLY
+                type:  float(64,IEEE)*
+            }
+
+            group "g2ms^2_Wilcoxon"
+            {
+                block: "Gain"
+            }
+
+                p_1_Pierre_Controller_LTI_real_T_0[28]
+                {
+                    addr:  0x4818ac7c
+                    alias: "Gain"
+                    flags: PARAM
+                    type:  float(64,IEEE)*
+                    value: 9.80655
+                }
+
+                p_0_Pierre_Controller_LTI_real_T_0[12]
+                {
+                    addr:  0x4818ac78
+                    alias: "Out1"
+                    flags: OUTPUT|READONLY
+                    type:  float(64,IEEE)*
+                }
+
+            endgroup
+
+        endgroup
+
+    endgroup
+
+    group "PCB208C01"
+
+        p_0_Pierre_Controller_LTI_real_T_0[0]
+        {
+            addr:  0x4818ac78
+            alias: "ADC"
+            flags: OUTPUT|READONLY
+            type:  float(64,IEEE)*
+        }
+
+    endgroup
+
+    group "PRBS_TMS"
+    {
+        block: "FromWorkspace"
+    }
+
+        p_0_Pierre_Controller_LTI_real_T_0[31]
+        {
+            addr:  0x4818ac78
+            alias: "Out1"
+            flags: OUTPUT|READONLY
+            type:  float(64,IEEE)*
+        }
+
+    endgroup
+
+    group "Reference_x"
+    {
+        block: "Constant"
+    }
+
+        p_1_Pierre_Controller_LTI_real_T_0[20]
+        {
+            addr:  0x4818ac7c
+            alias: "Value"
+            flags: PARAM
+            type:  float(64,IEEE)*
+            value: 0
+        }
+
+    endgroup
+
+    group "Reference_y"
+    {
+        block: "Constant"
+    }
+
+        p_1_Pierre_Controller_LTI_real_T_0[23]
+        {
+            addr:  0x4818ac7c
+            alias: "Value"
+            flags: PARAM
+            type:  float(64,IEEE)*
+            value: 0
+        }
+
+    endgroup
+
+    group "Reference_z"
+    {
+        block: "Constant"
+    }
+
+        p_1_Pierre_Controller_LTI_real_T_0[26]
+        {
+            addr:  0x4818ac7c
+            alias: "Value"
+            flags: PARAM
+            type:  float(64,IEEE)*
+            value: 0
+        }
+
+    endgroup
+
+    group "RTI Data"
+
+    endgroup
+
+    group "Saturation"
+    {
+        block: "Saturate"
+    }
+
+        p_0_Pierre_Controller_LTI_real_T_0[37]
+        {
+            addr:  0x4818ac78
+            alias: "Out1"
+            flags: OUTPUT|READONLY
+            type:  float(64,IEEE)*
+        }
+
+        trcref0_UpperLimit
+        {
+            alias:    "UpperLimit"
+            flags:    DEPRECATED|HIDDEN
+            refgroup: "/Tunable Parameters"
+            refvar:   "V_sat"
+        }
+
+        trcref0_V_sat
+        {
+            alias:    "V_sat"
+            refgroup: "/Tunable Parameters"
+            refvar:   "V_sat"
+        }
+
+    endgroup
+
+    group "Saturation_TMS"
+    {
+        block: "Saturate"
+    }
+
+        p_0_Pierre_Controller_LTI_real_T_0[33]
+        {
+            addr:  0x4818ac78
+            alias: "Out1"
+            flags: OUTPUT|READONLY
+            type:  float(64,IEEE)*
+        }
+
+        trcref0_UpperLimit
+        {
+            alias:    "UpperLimit"
+            flags:    DEPRECATED|HIDDEN
+            refgroup: "/Tunable Parameters"
+            refvar:   "V_sat_TMS"
+        }
+
+        trcref0_V_sat_TMS
+        {
+            alias:    "V_sat_TMS"
+            refgroup: "/Tunable Parameters"
+            refvar:   "V_sat_TMS"
+        }
+
+    endgroup
+
+    group "Saturation1"
+    {
+        block: "Saturate"
+    }
+
+        p_0_Pierre_Controller_LTI_real_T_0[27]
+        {
+            addr:  0x4818ac78
+            alias: "Out1"
+            flags: OUTPUT|READONLY
+            type:  float(64,IEEE)*
+        }
+
+        trcref0_UpperLimit
+        {
+            alias:    "UpperLimit"
+            flags:    DEPRECATED|HIDDEN
+            refgroup: "/Tunable Parameters"
+            refvar:   "V_sat"
+        }
+
+        trcref0_V_sat
+        {
+            alias:    "V_sat"
+            refgroup: "/Tunable Parameters"
+            refvar:   "V_sat"
+        }
+
+    endgroup
+
+    group "Saturation2"
+    {
+        block: "Saturate"
+    }
+
+        p_0_Pierre_Controller_LTI_real_T_0[39]
+        {
+            addr:  0x4818ac78
+            alias: "Out1"
+            flags: OUTPUT|READONLY
+            type:  float(64,IEEE)*
+        }
+
+        trcref0_UpperLimit
+        {
+            alias:    "UpperLimit"
+            flags:    DEPRECATED|HIDDEN
+            refgroup: "/Tunable Parameters"
+            refvar:   "V_sat"
+        }
+
+        trcref0_V_sat
+        {
+            alias:    "V_sat"
+            refgroup: "/Tunable Parameters"
+            refvar:   "V_sat"
+        }
+
+    endgroup
+
+    group "Shaker TMS_2007E"
+
+    endgroup
+
+    group "SineSweep_TMS"
+
+        p_0_Pierre_Controller_LTI_real_T_0[30]
+        {
+            addr:  0x4818ac78
+            alias: "Signal"
+            flags: OUTPUT|READONLY
+            type:  float(64,IEEE)*
+        }
+
+        group "Amplitude (Sweep)"
+        {
+            block: "Constant"
+        }
+
+            trcref0_Sweep_amp
+            {
+                alias:    "Sweep_amp"
+                refgroup: "/Tunable Parameters"
+                refvar:   "Sweep_amp"
+            }
+
+            trcref0_Value
+            {
+                alias:    "Value"
+                flags:    DEPRECATED|HIDDEN
+                refgroup: "/Tunable Parameters"
+                refvar:   "Sweep_amp"
+            }
+
+        endgroup
+
+        group "Product"
+        {
+            block: "Product"
+        }
+
+            p_0_Pierre_Controller_LTI_real_T_0[30]
+            {
+                addr:  0x4818ac78
+                alias: "Out1"
+                flags: OUTPUT|READONLY
+                type:  float(64,IEEE)*
+            }
+
+        endgroup
+
+        group "SineSweep"
+        {
+            block: "FromWorkspace"
+        }
+
+            p_0_Pierre_Controller_LTI_real_T_0[29]
+            {
+                addr:  0x4818ac78
+                alias: "Out1"
+                flags: OUTPUT|READONLY
+                type:  float(64,IEEE)*
+            }
+
+        endgroup
+
+    endgroup
+
+    group "Sinus_TMS"
+
+        p_0_Pierre_Controller_LTI_real_T_0[82]
+        {
+            addr:  0x4818ac78
+            alias: "Signal"
+            flags: OUTPUT|READONLY
+            type:  float(64,IEEE)*
+        }
+
+        group "Amplitude (Sinus)"
+        {
+            block: "Constant"
+        }
+
+            trcref0_TMS_amp
+            {
+                alias:    "TMS_amp"
+                refgroup: "/Tunable Parameters"
+                refvar:   "TMS_amp"
+            }
+
+            trcref0_Value
+            {
+                alias:    "Value"
+                flags:    DEPRECATED|HIDDEN
+                refgroup: "/Tunable Parameters"
+                refvar:   "TMS_amp"
+            }
+
+        endgroup
+
+        group "Clock"
+        {
+            block: "Clock"
+        }
+
+            p_0_Pierre_Controller_LTI_real_T_0[28]
+            {
+                addr:  0x4818ac78
+                alias: "Out1"
+                flags: OUTPUT|READONLY
+                type:  float(64,IEEE)*
+            }
+
+        endgroup
+
+        group "Frequency 1"
+        {
+            block: "Constant"
+        }
+
+            trcref0_TMS_freq1
+            {
+                alias:    "TMS_freq1"
+                refgroup: "/Tunable Parameters"
+                refvar:   "TMS_freq1"
+            }
+
+            trcref0_Value
+            {
+                alias:    "Value"
+                flags:    DEPRECATED|HIDDEN
+                refgroup: "/Tunable Parameters"
+                refvar:   "TMS_freq1"
+            }
+
+        endgroup
+
+        group "Frequency 2"
+        {
+            block: "Constant"
+        }
+
+            trcref0_TMS_freq2
+            {
+                alias:    "TMS_freq2"
+                refgroup: "/Tunable Parameters"
+                refvar:   "TMS_freq2"
+            }
+
+            trcref0_Value
+            {
+                alias:    "Value"
+                flags:    DEPRECATED|HIDDEN
+                refgroup: "/Tunable Parameters"
+                refvar:   "TMS_freq2"
+            }
+
+        endgroup
+
+        group "Frequency 3"
+        {
+            block: "Constant"
+        }
+
+            trcref0_TMS_freq3
+            {
+                alias:    "TMS_freq3"
+                refgroup: "/Tunable Parameters"
+                refvar:   "TMS_freq3"
+            }
+
+            trcref0_Value
+            {
+                alias:    "Value"
+                flags:    DEPRECATED|HIDDEN
+                refgroup: "/Tunable Parameters"
+                refvar:   "TMS_freq3"
+            }
+
+        endgroup
+
+        group "MATLAB Function"
+
+            p_0_Pierre_Controller_LTI_real_T_0[82]
+            {
+                addr:  0x4818ac78
+                alias: "signal"
+                flags: OUTPUT|READONLY
+                type:  float(64,IEEE)*
+            }
+
+        endgroup
+
+    endgroup
+
+    group "Sum"
+    {
+        block: "Sum"
+    }
+
+        p_0_Pierre_Controller_LTI_real_T_0[5]
+        {
+            addr:  0x4818ac78
+            alias: "Out1"
+            flags: OUTPUT|READONLY
+            type:  float(64,IEEE)*
+        }
+
+    endgroup
+
+    group "Sum1"
+    {
+        block: "Sum"
+    }
+
+        p_0_Pierre_Controller_LTI_real_T_0[9]
+        {
+            addr:  0x4818ac78
+            alias: "Out1"
+            flags: OUTPUT|READONLY
+            type:  float(64,IEEE)*
+        }
+
+    endgroup
+
+    group "Sum2"
+    {
+        block: "Sum"
+    }
+
+        p_0_Pierre_Controller_LTI_real_T_0[13]
+        {
+            addr:  0x4818ac78
+            alias: "Out1"
+            flags: OUTPUT|READONLY
+            type:  float(64,IEEE)*
+        }
+
+    endgroup
+
+    group "Switch Excitation_TMS"
+    {
+        block: "Constant"
+    }
+
+        trcref0_Switch_excit
+        {
+            alias:    "Switch_excit"
+            refgroup: "/Tunable Parameters"
+            refvar:   "Switch_excit"
+        }
+
+        trcref0_Value
+        {
+            alias:    "Value"
+            flags:    DEPRECATED|HIDDEN
+            refgroup: "/Tunable Parameters"
+            refvar:   "Switch_excit"
+        }
+
+    endgroup
+
+    group "TMS_Command"
+
+        p_0_Pierre_Controller_LTI_real_T_0[34]
+        {
+            addr:  0x4818ac78
+            alias: "Command (V)"
+            flags: OUTPUT|READONLY
+            type:  float(64,IEEE)*
+        }
+
+        group "GainDAC_Ch1"
+        {
+            block: "Gain"
+        }
+
+            p_1_Pierre_Controller_LTI_real_T_0[394]
+            {
+                addr:  0x4818ac7c
+                alias: "Gain"
+                flags: PARAM
+                type:  float(64,IEEE)*
+                value: 0.1
+            }
+
+            p_0_Pierre_Controller_LTI_real_T_0[34]
+            {
+                addr:  0x4818ac78
+                alias: "Out1"
+                flags: OUTPUT|READONLY
+                type:  float(64,IEEE)*
+            }
+
+        endgroup
+
+    endgroup
+
+endgroup
+
+group "RTT Dynamic Variables"
+
+endgroup
+
+group "State Machine Data"
+
+endgroup
+
+group "Task Info"
+
+    group "Timer Task 1"
+
+        pRti_TIMERA_OType
+        {
+            addr:  0x4818ad0c
+            alias: "overrunCheckType"
+            flags: READONLY
+            type:  int(32)*
+        }
+
+        pRti_TIMERA_OCnt
+        {
+            addr:  0x4818ad18
+            alias: "overrunCount"
+            flags: READONLY
+            type:  int(32)*
+        }
+
+        pRti_TIMERA_ORpt
+        {
+            addr:  0x4818ad14
+            alias: "overrunQueueCount"
+            flags: READONLY
+            type:  int(32)*
+        }
+
+        pRti_TIMERA_OMax
+        {
+            addr:  0x4818ad10
+            alias: "overrunQueueMax"
+            flags: READONLY
+            type:  int(32)*
+        }
+
+        pRti_TIMERA_Prio
+        {
+            addr:  0x4818ad20
+            alias: "priority"
+            flags: READONLY
+            type:  int(32)*
+        }
+
+        pRti_TIMERA_STime
+        {
+            addr:  0x4818ad00
+            alias: "sampleTime"
+            flags: READONLY
+            type:  float(64,IEEE)*
+        }
+
+        pRti_TIMERA_TState
+        {
+            addr:  0x4818ad08
+            alias: "state"
+            flags: READONLY
+            type:  int(32)*
+        }
+
+        pRti_TIMERA_TCnt
+        {
+            addr:  0x4818ad1c
+            alias: "taskCallCount"
+            flags: READONLY
+            type:  float(64,IEEE)*
+        }
+
+        pRti_TIMERA_TTime
+        {
+            addr:  0x4818ad04
+            alias: "turnaroundTime"
+            flags: READONLY
+            type:  float(64,IEEE)*
+        }
+
+    endgroup
+
+endgroup
+
+group "Tunable Parameters"
+
+    p_1_Pierre_Controller_LTI_real_T_0[0]
+    {
+        addr:  0x4818ac7c
+        alias: "Px"
+        flags: PARAM
+        type:  float(64,IEEE)*
+        value: 1
+    }
+
+    p_1_Pierre_Controller_LTI_real_T_0[1]
+    {
+        addr:  0x4818ac7c
+        alias: "Py"
+        flags: PARAM
+        type:  float(64,IEEE)*
+        value: 1
+    }
+
+    p_1_Pierre_Controller_LTI_real_T_0[2]
+    {
+        addr:  0x4818ac7c
+        alias: "Pz"
+        flags: PARAM
+        type:  float(64,IEEE)*
+        value: 1
+    }
+
+    p_1_Pierre_Controller_LTI_real_T_0[3]
+    {
+        addr:  0x4818ac7c
+        alias: "Sen_AX"
+        flags: PARAM
+        type:  float(64,IEEE)*
+        value: 0.5424
+    }
+
+    p_1_Pierre_Controller_LTI_real_T_0[4]
+    {
+        addr:  0x4818ac7c
+        alias: "Sen_AY"
+        flags: PARAM
+        type:  float(64,IEEE)*
+        value: 0.53845
+    }
+
+    p_1_Pierre_Controller_LTI_real_T_0[5]
+    {
+        addr:  0x4818ac7c
+        alias: "Sen_AZ"
+        flags: PARAM
+        type:  float(64,IEEE)*
+        value: 0.54161
+    }
+
+    p_1_Pierre_Controller_LTI_real_T_0[6]
+    {
+        addr:  0x4818ac7c
+        alias: "Sen_GX"
+        flags: PARAM
+        type:  float(64,IEEE)*
+        value: 0.18811
+    }
+
+    p_1_Pierre_Controller_LTI_real_T_0[7]
+    {
+        addr:  0x4818ac7c
+        alias: "Sen_GY"
+        flags: PARAM
+        type:  float(64,IEEE)*
+        value: 0.18991
+    }
+
+    p_1_Pierre_Controller_LTI_real_T_0[8]
+    {
+        addr:  0x4818ac7c
+        alias: "Sen_GZ"
+        flags: PARAM
+        type:  float(64,IEEE)*
+        value: 0.18764
+    }
+
+    p_1_Pierre_Controller_LTI_real_T_0[9]
+    {
+        addr:  0x4818ac7c
+        alias: "Sweep_amp"
+        flags: PARAM
+        type:  float(64,IEEE)*
+        value: 0.5
+    }
+
+    p_1_Pierre_Controller_LTI_real_T_0[10]
+    {
+        addr:  0x4818ac7c
+        alias: "Switch_excit"
+        flags: PARAM
+        type:  float(64,IEEE)*
+        value: 4
+    }
+
+    p_1_Pierre_Controller_LTI_real_T_0[11]
+    {
+        addr:  0x4818ac7c
+        alias: "TMS_amp"
+        flags: PARAM
+        type:  float(64,IEEE)*
+        value: 2
+    }
+
+    p_1_Pierre_Controller_LTI_real_T_0[12]
+    {
+        addr:  0x4818ac7c
+        alias: "TMS_freq1"
+        flags: PARAM
+        type:  float(64,IEEE)*
+        value: 80
+    }
+
+    p_1_Pierre_Controller_LTI_real_T_0[13]
+    {
+        addr:  0x4818ac7c
+        alias: "TMS_freq2"
+        flags: PARAM
+        type:  float(64,IEEE)*
+        value: 0
+    }
+
+    p_1_Pierre_Controller_LTI_real_T_0[14]
+    {
+        addr:  0x4818ac7c
+        alias: "TMS_freq3"
+        flags: PARAM
+        type:  float(64,IEEE)*
+        value: 0
+    }
+
+    p_1_Pierre_Controller_LTI_real_T_0[15]
+    {
+        addr:  0x4818ac7c
+        alias: "V_sat"
+        flags: PARAM
+        type:  float(64,IEEE)*
+        value: 0.2
+    }
+
+    p_1_Pierre_Controller_LTI_real_T_0[16]
+    {
+        addr:  0x4818ac7c
+        alias: "V_sat_TMS"
+        flags: PARAM
+        type:  float(64,IEEE)*
+        value: 5
+    }
+
+endgroup
+
+group "XIL API"
+
+    group "EESPort"
+
+        p_xilapi_eesport_activeerrorset_uint32_T
+        {
+            addr:  0x4818a324
+            alias: "Active ErrorSet"
+            desc:  "Index of active ErrorSet or 0 if no ErrorSet is active."
+            flags: OUTPUT|READONLY
+            range: < 0 ; 4294967295 >
+            type:  uint(32)*
+        }
+
+        p_xilapi_eesport_erroractivated_uint32_T
+        {
+            addr:  0x4818a320
+            alias: "Error Activated"
+            desc:  "0 - no error is activated on hardware, 1 - at least one error is activated on hardware."
+            flags: OUTPUT|READONLY
+            range: < 0 ; 1 >
+            type:  uint(32)*
+        }
+
+        p_xilapi_eesport_errorswitching_uint32_T
+        {
+            addr:  0x4818a31c
+            alias: "Error Switching"
+            desc:  "0 - no switching operation running on hardware, 1 -  switching operation running on hardware."
+            flags: OUTPUT|READONLY
+            range: < 0 ; 1 >
+            type:  uint(32)*
+        }
+
+        xilapi_eesport_flags_uint32_T
+        {
+            addr:  0x4818ad30
+            alias: "Flags"
+            flags: OUTPUT|READONLY
+            range: < 0 ; 4294967295 >
+            type:  uint(32)
+        }
+
+        xilapi_eesport_trigger_uint32_T
+        {
+            addr:  0x4818ad2c
+            alias: "Trigger"
+            flags: OUTPUT|READONLY
+            range: < 0 ; 4294967295 >
+            type:  uint(32)
+        }
+
+    endgroup
+
+endgroup
+
+
