@@ -23,7 +23,7 @@
 close all; clc; clear; clear("yalmip");
 
 %% Config
-idname        = 'LFT_GFRF_GdmGLTIW2opt_1110_etfe_80hz_fmin10_hyb';  % only its frequency grid and measured FRFs are used
+idname        = 'LFT_GFRF_GdmGLTIW2opt_1110gc_etfe_80hz_fmin10_hyb';  % only its frequency grid and measured FRFs are used
 orderK_list   = 18; %10:2:20;     % controller orders to synthesise
 Ts            = 0.001;
 seed          = 22;
