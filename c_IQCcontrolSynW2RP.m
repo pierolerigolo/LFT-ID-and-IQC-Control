@@ -503,7 +503,7 @@ exportgraphics(gcf,fullfile('plots','w2rp_sensstage.pdf'),'ContentType','vector'
 
 figure; hold on
 comparewithELI=false;
-comparewitholdLPV=true;
+comparewitholdLPV=false;
 comparewithnormperf=true;   % W2 nominal-performance controller (same id, 1110gc)
 for i = 1:nOP
     utils.magplot(inv(1 + K_final*GFRF(i)), 'Color', colors(i, :), 'DisplayName', 'S OP'+string(i));
