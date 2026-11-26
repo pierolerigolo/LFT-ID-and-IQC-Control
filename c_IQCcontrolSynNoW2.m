@@ -44,6 +44,8 @@ idname='LFT_GFRF_GdmGLTIW2opt_1110_etfe_80hz_fmin10_hyb';
 orderK_list   = 18;     % controller orders to synthesise
 Ts            = 0.001;
 seed          = 22;
+gainfile      = fullfile('Data', 'GFRF_iddata_1110gc_etfe.mat');  % gain_corr applied to the LFT output
+                             % ('' = none); use it with the ORIGINAL 1110 idname, not 1110gc
 cl_check      = true;        % accept a controller only if K is OL stable AND L = G K does not
                              % encircle -1 on any measured FRF (utils.encirclements)
 
@@ -96,6 +98,17 @@ W_lft = GLFT.Frequency;
 [nq, np] = size(Delta);          % Delta: p (plant outputs, np) -> q (plant inputs, nq)
 ny    = nout_lft - np;
 nu    = nin_lft - nq;
+% gain correction applied to the OUTPUT of the LFT (G -> plant_gain*G): the mass, W2 and
+% dm range stay those of the original id, so the robust problem is the same as without
+% correction (only K scales by 1/plant_gain). Scaling the FRFs before b instead (1110gc)
+% rescales the grey-box masses (dm_bound 0.35 -> 1.81 kg) and with it the dm multiplier,
+% and the alpha/beta split of the IQC is not scale invariant: stage 1 stops reaching 0.
+if ~isempty(gainfile)
+    plant_gain = getfield(load(gainfile, 'gain_corr'), 'gain_corr');
+    GLFT = blkdiag(eye(np), plant_gain*eye(ny))*GLFT;
+    GFRF = plant_gain*GFRF;
+    fprintf('plant gain correction %.4f (from %s)\n', plant_gain, gainfile);
+end
 G_hat = GLFT(np+1:end, nq+1:end);   % nominal plant (dm = 0, Delta = 0)
 nOP   = size(GFRF, 2);
 
@@ -346,6 +359,7 @@ for orderK = orderK_list
                 orderK, norminf_W1S, eta, dm_bound, isstable(K_final), num2str(utils.encirclements(K_final, GFRF).'));
         
             tag = stage_tags{STAGE};
+            if ~isempty(gainfile), tag = ['gc_', tag]; end %#ok<AGROW>   gain-corrected plant
             if ~converged, tag = [tag, '_notconv']; end %#ok<AGROW>
             expname = sprintf('NOW2_%s_controller_order%d_%.0fhz_%.0fdb_%s_etai%.2f_etaf%.2f_multi_%s', ...
                 idname, orderK, omega_d/2/pi, mag2db(min(abs(1./W1_frd.ResponseData))), ...
