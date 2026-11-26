@@ -8,7 +8,7 @@ function N = encirclements(K, GFRF, n_interp)
 %   clockwise > 0). With K and the plant stable, the closed loop on FRF i is
 %   stable iff N(i) = 0. Same computation as utils.nyquistcheck: the FRFs are
 %   interpolated on n_interp linear points plus dense points around the
-%   lightly damped poles of K (zeta < 0.05), between their first and last
+%   lightly damped poles of K (zeta < 0.05; at least +/- 2 Hz around each), between their first and last
 %   measured frequency (L assumed small below the first one).
 %
 arguments
@@ -21,7 +21,7 @@ end
     wn = abs(sK);   zK = -real(sK)./max(wn, eps);
     w_K = [];
     for q = find(imag(sK) > 0 & zK < 0.05).'
-        w_K = [w_K; wn(q)*linspace(1 - 30*max(zK(q), 1e-4), 1 + 30*max(zK(q), 1e-4), 2000).']; %#ok<AGROW>
+        w_K = [w_K; wn(q) + max(30*max(zK(q), 1e-4)*wn(q), 2*pi*2)*linspace(-1, 1, 4001).']; %#ok<AGROW>
     end
     nOP = size(GFRF, 2);
     N = zeros(nOP, 1);

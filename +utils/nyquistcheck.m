@@ -16,7 +16,7 @@ function T = nyquistcheck(K, GFRF, opts)
 %                 of 1 + L over -w_max..w_max (positive frequencies and their mirror)
 %     CL_stable   Nyquist: with K and G stable, closed loop stable iff N_enc = 0
 %                 (K unstable: |N_enc| must equal its number of unstable poles)
-%   The frequency grid is refined around the lightly damped poles of K (zeta < 0.05),
+%   The frequency grid is refined around the lightly damped poles of K (zeta < 0.05; at least +/- 2 Hz around each),
 %   so narrow controller peaks between FRF points are not missed.
 %   Below the first FRF frequency L is assumed small (warning if |L| > 0.5 there).
 %   'file', 'plots/x' saves plots/x.pdf and plots/x.csv.
@@ -64,7 +64,7 @@ end
     sel = imag(sK) > 0 & zK < 0.05;
     w_K = [];
     for q = find(sel).'
-        w_K = [w_K; wn(q)*linspace(1 - 30*max(zK(q), 1e-4), 1 + 30*max(zK(q), 1e-4), 2000).']; %#ok<AGROW>
+        w_K = [w_K; wn(q) + max(30*max(zK(q), 1e-4)*wn(q), 2*pi*2)*linspace(-1, 1, 4001).']; %#ok<AGROW>
     end
     if K.Ts > 0, P = sum(abs(pK) > 1); else, P = sum(real(pK) > 0); end
     fig = figure('Name', 'Nyquist L = G K');
