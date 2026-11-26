@@ -67,12 +67,10 @@ zeta_n        = 0.0001;
 % IQC
 alpha_PI        = 0;         % split of the multiplier (Gupta et al. 2024, Cor. 1)
 beta_PI         = 0.5;
-% Scale of the dm multiplier [eta^2 D, E; E', -D]: in stages 1-2 D is FIXED (= D0) and the
-% alpha/beta split is not scale invariant, so D0 must follow the units of dm. Scaling the
-% FRFs by c (1110gc) multiplies the grey-box masses (and eta) by 1/c: the same multiplier
-% as in the uncorrected id is D0 = (dm_ref/dm_bound)^2, dm_ref = dm_bound of the uncorrected
-% id (0.3537), whatever eta0. [] -> D0 = 1 (previous behaviour). D0 also warm-starts and
-% scales D in the stage-3 bisection.
+% Units of dm for the synthesis: dm_ref = dm_bound of the reference (uncorrected 1110) id.
+% Scaling the FRFs by c (1110gc) multiplies the grey-box masses and dm_bound by 1/c; the dm
+% channel of the LFT is rescaled so that the synthesis runs in the reference units (see
+% below). [] -> no rescaling.
 dm_ref          = 0.3537;
 multiplier_type = "frequency";   % "frequency" or "constant" D, E
 
@@ -117,6 +115,22 @@ if ~isempty(gainfile)
     GFRF = plant_gain*GFRF;
     fprintf('plant gain correction %.4f (from %s)\n', plant_gain, gainfile);
 end
+% ----- dm channel in the units of the reference id -----
+% The IQC synthesis is NOT unit invariant (fixed D in stages 1-2, beta split, normalisations):
+% on the gain-corrected id (masses x 1/c) stage 1 no longer reaches zero slack, even with D
+% rescaled. So the dm channel is rescaled to the units of the reference id: with
+% k_dm = dm_bound/dm_ref, q_dm -> k_dm*q_dm in the LFT and dm in [-dm_ref, dm_ref]; the plant
+% is unchanged and the synthesis is the same problem as on the reference id. eta (and the
+% file names) are in the reference units: physical dm range = k_dm*eta.
+k_dm = 1;
+if ~isempty(dm_ref)
+    k_dm = dm_bound/dm_ref;
+    idm  = nq;                                  % dm = last Delta channel (W2 block first)
+    GLFT(:, idm) = k_dm*GLFT(:, idm);
+    dm_bound  = dm_ref;
+    eta0_list = eta0_list/k_dm;
+    fprintf('dm channel rescaled by k_dm = %.4g (eta in the units of the reference id, physical = k_dm*eta)\n', k_dm);
+end
 G_hat = GLFT(np+1:end, nq+1:end);   % nominal plant (dm = 0, Delta = 0)
 nOP   = size(GFRF, 2);
 
@@ -160,7 +174,7 @@ for orderK = orderK_list
             % IQC multipliers, ordering (p1, p2, q1, q2)
             N     = length(W_lft);
             PILTI = zeros(0);                                             % no LTI (W2) block
-            if isempty(dm_ref), D0 = 1; else, D0 = (dm_ref/dm_bound)^2; end   % unit change of dm
+            D0 = 1;   % D of the dm multiplier in stages 1-2 (dm channel already in reference units)
             PI0   = frd(repmat(diag([eta0^2*D0, -D0]), [1 1 N]), W_lft, Ts);  % dm at eta0, D = D0
 
             fprintf('\n===== Controller order %d, peak_extra %g, eta0 %.3g =====\n', orderK, peak_extra, eta0);
@@ -380,7 +394,7 @@ for orderK = orderK_list
             save(fullfile('Data', 'controller', sprintf('%s.mat', expname)), ...
                 'K_final', 'K_stage', 'K_itr', 'D_itr', 'E_itr', 'eta_itr', ...
                 'hist_obj', 'hist_stable', 'hist_stage', 'D_val', 'E_val', ...
-                'eta', 'eta0', 'dm_bound', 'W1_frd', 'orderK', 'idname', 'STAGE', 'converged', 'norminf_W1S')
+                'eta', 'eta0', 'dm_bound', 'k_dm', 'W1_frd', 'orderK', 'idname', 'STAGE', 'converged', 'norminf_W1S')
             diary off
             movefile(diaryfile, fullfile('Data', 'diaries', sprintf('%s.txt', expname)))
             catch ME
