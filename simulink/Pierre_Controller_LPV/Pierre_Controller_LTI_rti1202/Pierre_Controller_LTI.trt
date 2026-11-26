@@ -1,0 +1,2644 @@
+-- ****************************************************************************
+--
+--  Trace file: Pierre_Controller_LTI.trc
+--
+--  RTI1202 25.2 (02-Nov-2025)
+--  Wed Nov 18 15:35:18 2026
+--
+--  Copyright 2026, dSPACE GmbH. All rights reserved.
+--
+-- ****************************************************************************
+--
+--  Used options:
+--    TRCGenerateVirtualBlocks      = 0
+--    TRCGenerateLabels             = 0
+--    TRCGenerateStates             = 0
+--    TRCGenerateDerivatives        = 0
+--    TRCGenerateParamValues        = 1
+--    TRCGenerateApplicationKeyword = 0
+--    TRCOnlyGlobals                = 0
+--    TRCIsOmitVdOn                 = 0
+--
+--  Trace file format: 3
+
+-- ******** Keywords **********************************************************
+-- _application "Pierre_Controller_LTI.map"
+
+_genname     "RTI"
+_genversion  "25.2"
+_gendate     "11/18/2026 03:35:20"
+_description ""
+_author      "RTI1202 25.2 (02-Nov-2025)"
+_model       "Pierre_Controller_LTI"
+
+-- Default data type formats
+_floating_point_type(64,IEEE)
+_integer_type(32)
+
+-- No Data Capture blocks within model: use base sample time as sampling period
+sampling_period[0]
+{
+  value:       0.001
+  alias:       "HostService"
+  increment:   0.001
+  unit:        "s"
+}
+
+
+
+
+
+
+-- Type definitions for arrays
+typedef Pierre_Controller_LTI_ArrayDT0_3 flt(64,IEEE)[3]
+typedef Pierre_Controller_LTI_ArrayDT0_324 flt(64,IEEE)[324]
+typedef Pierre_Controller_LTI_ArrayDT0_18 flt(64,IEEE)[18]
+
+
+-- ******** Simulation control variables **************************************
+
+finalTime
+{
+ type:  flt(64,IEEE)*
+ alias: "finalTime"
+ desc:  "Simulation stop time. When reached, simState switches to STOP."
+ flags:  READONLY
+ unit:  "s"
+}
+
+currentTime
+{
+ type:  flt(64,IEEE)*
+ alias: "currentTime"
+ desc:  "Current simulation time. Increments with execution of Timer Task 1."
+ flags: READONLY
+ unit:  "s"
+}
+
+modelStepSize
+{
+ type:  flt(64,IEEE)
+ alias: "modelStepSize"
+ desc:  "Fixed step size of the model, sample time of Timer Task 1."
+ flags: READONLY
+ unit:  "s"
+}
+
+simState
+{
+ type:  int(32)
+ alias: "simState"
+ desc:  "Simulation state: STOP=0 RUN=2"
+ value: 2
+ unit:  "-"
+}
+
+p_msg_last_error_no
+{
+ type:  uint(32)*
+ alias: "errorNumber"
+ desc:  "Error number of last error message (zero if no error)."
+ unit:  "-"
+ flags: READONLY
+}
+
+p_dsts_sum_of_reset_time
+{
+ type:  flt(64,IEEE)*
+ alias: "sumOfResetTime"
+ desc:  "Internal variable for summing up reset time."
+ unit:  "s"
+ flags: READONLY|HIDDEN
+}
+
+
+-- ******** Task Information variables ****************************************
+group "Task Info"
+{
+ 
+}
+  group "Timer Task 1"
+  {
+   
+  }
+
+  pRti_TIMERA_STime
+  {
+   type:  flt(64,IEEE)*
+   alias: "sampleTime"
+   flags: READONLY
+  }
+  pRti_TIMERA_TTime
+  {
+   type:  flt(64,IEEE)*
+   alias: "turnaroundTime"
+   flags: READONLY
+  }
+  pRti_TIMERA_TState
+  {
+   type:  int(32)*
+   alias: "state"
+   flags: READONLY
+  }
+  pRti_TIMERA_OType
+  {
+   type:  int(32)*
+   alias: "overrunCheckType"
+   flags: READONLY
+  }
+  pRti_TIMERA_OMax
+  {
+   type:  int(32)*
+   alias: "overrunQueueMax"
+   flags: READONLY
+  }
+  pRti_TIMERA_ORpt
+  {
+   type:  int(32)*
+   alias: "overrunQueueCount"
+   flags: READONLY
+  }
+  pRti_TIMERA_OCnt
+  {
+   type:  int(32)*
+   alias: "overrunCount"
+   flags: READONLY
+  }
+  pRti_TIMERA_TCnt
+  {
+   type:  flt(64,IEEE)*
+   alias: "taskCallCount"
+   flags: READONLY
+  }
+  pRti_TIMERA_Prio
+  {
+   type:  int(32)*
+   alias: "priority"
+   flags: READONLY
+  }
+  endgroup
+
+
+endgroup
+
+
+-- ******** Model variables ***************************************************
+
+group "Model Root"
+	group "F_shaker" -- block-group
+	{
+	 block: "Outport"
+	}
+		p_3_Pierre_Controller_LTI_real_T_0[0]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "In1"
+		 flags:   READONLY
+		}
+
+
+
+	endgroup -- block-group "F_shaker"
+
+	group "Id on or dist" -- block-group
+	{
+	 block: "Constant"
+	}
+		-- Skipping output Out1
+		p_1_Pierre_Controller_LTI_real_T_0[395]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "Value"
+		 value:   0.0
+		 flags:   PARAM
+		}
+
+
+	endgroup -- block-group "Id on or dist"
+
+	group "OFF_TMS" -- block-group
+	{
+	 block: "Constant"
+	}
+		-- Skipping output Out1
+		p_1_Pierre_Controller_LTI_real_T_0[393]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "Value"
+		 value:   0.0
+		 flags:   PARAM
+		}
+
+
+	endgroup -- block-group "OFF_TMS"
+
+	group "Reference_x" -- block-group
+	{
+	 block: "Constant"
+	}
+		-- Skipping output Out1
+		p_1_Pierre_Controller_LTI_real_T_0[20]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "Value"
+		 value:   0.0
+		 flags:   PARAM
+		}
+
+
+	endgroup -- block-group "Reference_x"
+
+	group "Reference_y" -- block-group
+	{
+	 block: "Constant"
+	}
+		-- Skipping output Out1
+		p_1_Pierre_Controller_LTI_real_T_0[23]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "Value"
+		 value:   0.0
+		 flags:   PARAM
+		}
+
+
+	endgroup -- block-group "Reference_y"
+
+	group "Reference_z" -- block-group
+	{
+	 block: "Constant"
+	}
+		-- Skipping output Out1
+		p_1_Pierre_Controller_LTI_real_T_0[26]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "Value"
+		 value:   0.0
+		 flags:   PARAM
+		}
+
+
+	endgroup -- block-group "Reference_z"
+
+	group "Switch Excitation_TMS" -- block-group
+	{
+	 block: "Constant"
+	}
+		-- Skipping output Out1
+		trcref0_Switch_excit
+		{
+		 refgroup: "/Tunable Parameters"
+		 refvar:   "Switch_excit"
+		 alias:    "Switch_excit"
+		}
+		trcref0_Value
+		{
+		 refgroup: "/Tunable Parameters"
+		 refvar:   "Switch_excit"
+		 alias:    "Value"
+		 flags:    DEPRECATED|HIDDEN
+		}
+
+
+	endgroup -- block-group "Switch Excitation_TMS"
+
+	group "PRBS_TMS" -- block-group
+	{
+	 block: "FromWorkspace"
+	}
+		p_0_Pierre_Controller_LTI_real_T_0[31]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "Out1"
+		 flags:   OUTPUT|READONLY
+		}
+
+
+	endgroup -- block-group "PRBS_TMS"
+
+	group "Multiport\nSwitch2" -- block-group
+	{
+	 block: "MultiPortSwitch"
+	}
+		p_0_Pierre_Controller_LTI_real_T_0[32]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "Out1"
+		 flags:   OUTPUT|READONLY
+		}
+
+
+	endgroup -- block-group "Multiport\nSwitch2"
+
+	group "Saturation" -- block-group
+	{
+	 block: "Saturate"
+	}
+		p_0_Pierre_Controller_LTI_real_T_0[37]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "Out1"
+		 flags:   OUTPUT|READONLY
+		}
+		trcref0_V_sat
+		{
+		 refgroup: "/Tunable Parameters"
+		 refvar:   "V_sat"
+		 alias:    "V_sat"
+		}
+		-- Skipping parameter "V_sat"
+		trcref0_UpperLimit
+		{
+		 refgroup: "/Tunable Parameters"
+		 refvar:   "V_sat"
+		 alias:    "UpperLimit"
+		 flags:    DEPRECATED|HIDDEN
+		}
+		-- Skipping parameter "LowerLimit"
+
+
+	endgroup -- block-group "Saturation"
+
+	group "Saturation1" -- block-group
+	{
+	 block: "Saturate"
+	}
+		p_0_Pierre_Controller_LTI_real_T_0[27]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "Out1"
+		 flags:   OUTPUT|READONLY
+		}
+		trcref0_V_sat
+		{
+		 refgroup: "/Tunable Parameters"
+		 refvar:   "V_sat"
+		 alias:    "V_sat"
+		}
+		-- Skipping parameter "V_sat"
+		trcref0_UpperLimit
+		{
+		 refgroup: "/Tunable Parameters"
+		 refvar:   "V_sat"
+		 alias:    "UpperLimit"
+		 flags:    DEPRECATED|HIDDEN
+		}
+		-- Skipping parameter "LowerLimit"
+
+
+	endgroup -- block-group "Saturation1"
+
+	group "Saturation2" -- block-group
+	{
+	 block: "Saturate"
+	}
+		p_0_Pierre_Controller_LTI_real_T_0[39]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "Out1"
+		 flags:   OUTPUT|READONLY
+		}
+		trcref0_V_sat
+		{
+		 refgroup: "/Tunable Parameters"
+		 refvar:   "V_sat"
+		 alias:    "V_sat"
+		}
+		-- Skipping parameter "V_sat"
+		trcref0_UpperLimit
+		{
+		 refgroup: "/Tunable Parameters"
+		 refvar:   "V_sat"
+		 alias:    "UpperLimit"
+		 flags:    DEPRECATED|HIDDEN
+		}
+		-- Skipping parameter "LowerLimit"
+
+
+	endgroup -- block-group "Saturation2"
+
+	group "Saturation_TMS" -- block-group
+	{
+	 block: "Saturate"
+	}
+		p_0_Pierre_Controller_LTI_real_T_0[33]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "Out1"
+		 flags:   OUTPUT|READONLY
+		}
+		trcref0_V_sat_TMS
+		{
+		 refgroup: "/Tunable Parameters"
+		 refvar:   "V_sat_TMS"
+		 alias:    "V_sat_TMS"
+		}
+		-- Skipping parameter "V_sat_TMS"
+		trcref0_UpperLimit
+		{
+		 refgroup: "/Tunable Parameters"
+		 refvar:   "V_sat_TMS"
+		 alias:    "UpperLimit"
+		 flags:    DEPRECATED|HIDDEN
+		}
+		-- Skipping parameter "LowerLimit"
+
+
+	endgroup -- block-group "Saturation_TMS"
+
+	group "Sum" -- block-group
+	{
+	 block: "Sum"
+	}
+		p_0_Pierre_Controller_LTI_real_T_0[5]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "Out1"
+		 flags:   OUTPUT|READONLY
+		}
+
+
+	endgroup -- block-group "Sum"
+
+	group "Sum1" -- block-group
+	{
+	 block: "Sum"
+	}
+		p_0_Pierre_Controller_LTI_real_T_0[9]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "Out1"
+		 flags:   OUTPUT|READONLY
+		}
+
+
+	endgroup -- block-group "Sum1"
+
+	group "Sum2" -- block-group
+	{
+	 block: "Sum"
+	}
+		p_0_Pierre_Controller_LTI_real_T_0[13]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "Out1"
+		 flags:   OUTPUT|READONLY
+		}
+
+
+	endgroup -- block-group "Sum2"
+
+  
+  
+	group "Clock" -- subsystem-group
+
+		p_0_Pierre_Controller_LTI_real_T_0[1]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "Timestamp"
+		 flags:   OUTPUT|READONLY
+		}
+
+
+		group "Clock" -- block-group
+		{
+		 block: "Clock"
+		}
+			p_0_Pierre_Controller_LTI_real_T_0[1]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "Out1"
+			 flags:   OUTPUT|READONLY
+			}
+
+
+		endgroup -- block-group "Clock"
+
+
+
+	endgroup -- subsystem-group "Clock"
+  
+  
+	group "Controller" -- subsystem-group
+
+		p_0_Pierre_Controller_LTI_real_T_0[36]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "x_command"
+		 flags:   OUTPUT|READONLY
+		}
+		p_0_Pierre_Controller_LTI_real_T_0[26]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "y_command"
+		 flags:   OUTPUT|READONLY
+		}
+		p_0_Pierre_Controller_LTI_real_T_0[38]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "z_command"
+		 flags:   OUTPUT|READONLY
+		}
+
+
+		group "Switch_Controller" -- block-group
+		{
+		 block: "Constant"
+		}
+			-- Skipping output Out1
+			p_1_Pierre_Controller_LTI_real_T_0[19]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "Value"
+			 value:   2.0
+			 flags:   PARAM
+			}
+
+
+		endgroup -- block-group "Switch_Controller"
+
+		group "Zero_command" -- block-group
+		{
+		 block: "Constant"
+		}
+			-- Skipping output Out1
+			p_1_Pierre_Controller_LTI_real_T_0[17]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "Value"
+			 value:   0.0
+			 flags:   PARAM
+			}
+
+
+		endgroup -- block-group "Zero_command"
+
+		group "Controller K" -- block-group
+		{
+		 block: "DiscreteStateSpace"
+		}
+			p_0_Pierre_Controller_LTI_real_T_0[17]
+			{
+			 type:    Pierre_Controller_LTI_ArrayDT0_3*
+			 alias:   "Out1"
+			 flags:   OUTPUT|READONLY
+			}
+			p_1_Pierre_Controller_LTI_real_T_0[29]
+			{
+			 type:    Pierre_Controller_LTI_ArrayDT0_324*
+			 alias:   "A"
+			 value:   [-0.83925167533603406, -1.990755554399382, -14.111326916001, -0.0756183268433933, 7.1084782310603121, -2.7195230380489837, 6.9253169218414117, -0.11748198928850233, -61.100427403051867, 292.32997630788554, -0.82321920060266662, 3.6065443595107731, -77.608666878167142, -839.44539011591473, -3388.1483187063222, -462.24690396323035, -4079.9896177553474, -32036.51353742737, 0.31013201467056617, -6.6622533258466978, -42.656538268555273, -0.22858346858520998, 21.487920696570924, -8.220732127835138, 20.934250057195733, -0.35513137791943322, -184.69791928553605, 883.67202430010593, -2.4884747935432676, 10.902071676496234, -234.59998399627895, -2537.524261254192, -10241.891444847539, -1397.3067781507084, -12333.229490115857, -96841.833077426156, -0.1569362780729934, 3.0451762855637856, 21.1763914351851, 0.66908214271237543, -10.873544613669111, 4.1599417091716608, -10.593370348157904, 0.17970733120478108, 93.46279213156366, -447.16505220590562, 1.2592443014694208, -5.5167814713090264, 118.71476204566785, 1284.0648312434605, 5182.7100968255909, 707.07993601393957, 6240.9910658687022, 49004.9273406399, 0.01833458447609277, -0.35576249505735896, -3.0752086638533549, -0.42263419709390926, 1.2703367552858211, -0.48599854424325672, 1.2376044973138736, -0.020994885856888006, -10.919090721079998, 52.2414926943299, -0.14711525789206611, 0.64451570512468326, -13.86923316910311, -150.01499596073594, -605.4867443788313, -82.606883362992008, -729.12381583618765, -5725.1579501194219, -0.21306410155748906, 4.1342751168473928, 29.305510465911123, 0.15703935440762656, -14.963436546640214, 4.9065097929593344, -14.382059797838542, 0.24397915852593369, 126.88949985996146, -607.09238976500535, 1.709609524505098, -7.4898430248661256, 161.17276659961806, 1743.3070477382344, 7036.2919521990234, 959.96510906207266, 8473.0641672230377, 66531.403343636819, 0.16209183708831965, -3.1452142515782078, -22.294623981735445, -0.11947013722641432, 11.971978071112455, -4.49760009247894, 10.941376218258462, -0.18561094866588926, -96.533165320529747, 461.85500053746165, -1.3006120998564779, 5.6980148534130874, -122.61469499445477, -1326.24801602564, -5352.9688036816542, -730.30842329192535, -6446.0156666129888, -50614.802367935583, 0.44589957261347796, -8.6521919656718076, -61.33043763096687, -0.32865123923733031, 30.894761590902061, -11.819550284949893, 29.850166735780615, 0.14586456734441677, -265.5537621922121, 1270.5201634357436, -3.5778629564542874, 15.674709063219266, -337.30162527782926, -3648.384978221216, -14725.519462614131, -2009.0105687706985, -17732.389751597402, -139236.61517563526, 0.74490723712128692, -14.454107624315698, -102.45689759098467, -0.54903548160379412, 51.611916475526328, -19.745407009865382, 49.625589882697788, -1.1015332917861365, -443.62661785557594, 2122.4951149980061, -5.97707684281912, 26.185726423837639, -563.48657230050185, -6094.8889413656871, -24600.0370751198, -3356.1963366753216, -29623.229688247036, -232604.75830621438, 0.21240594257454165, -4.1215042639151589, -29.21498519759043, -0.15655425691337901, 14.716836165303258, -5.6302873410874614, 14.337633346925223, -0.24322550235550425, -126.4303925883264, 604.927165567317, -1.7043285088029663, 7.4667067600911246, -160.67490091802927, -1737.9219397584422, -7014.5567151453479, -956.99975893867418, -8446.89071400411, -66325.88659802542, -0.25454915759480062, 4.93924711185895, 35.011496293619, 0.18761600420475721, -17.636786442657861, 6.7473860774282342, -17.182346435915452, 0.29148359024106935, 151.88566867420013, -725.23033891295279, 2.0424823379334023, -8.9481673288005474, 192.55422037431509, 2082.7410022946151, 8406.3067214542752, 1146.876963533055, 10122.828436358452, 79485.528303101339, 0.016322075375510867, -0.31671196408501812, -2.2449898750933484, -0.012030220768425595, 1.1308973104404794, -0.43265255789518964, 1.1017579327509859, -0.018690366825776662, -9.7205487265828356, 46.5071669662277, 0.84680550392298759, 0.573769966451264, -12.34686662693751, -133.54848999827971, -539.02504818206046, -73.539478276418819, -649.09100588978845, -5096.7317923350383, 0.29495219220104613, -5.7232236681942963, -40.568657471183307, -0.21739514777841928, 20.436165940585621, -7.8183574990739855, 19.909595444422759, -0.33774900197898333, -175.65763484981809, 840.41952595869532, -2.3666730968497225, 11.214995181691574, -223.11717686913155, -2413.3217733593024, -9740.588494715068, -1328.9137460726893, -11729.56322775118, -92101.781214996678, 0.15110048378984617, -2.9319391005312521, -20.782838482590577, -0.11136893663259828, 10.469203627167046, -4.005251128110995, 10.199447853779086, -0.17302477807581823, -89.987307465394437, 430.53688128628744, -1.2124183490138447, 5.3116357767191262, -113.55040827480363, -1236.315908601905, -4989.9870991500838, -680.78663341376557, -6008.9150893603919, -47182.6420262938, 0.25397657695918679, -4.9281368128601839, -34.93274174188128, -0.18719398241551249, 17.597114410399175, -6.7322085665480138, 17.143696617009844, -0.29082792961760379, -151.25476601134861, 723.66600437796239, -2.0378879961318646, 8.9280393999355869, -192.12109060506415, -2077.6925968397627, -8387.2643287310511, -1144.2971885813108, -10100.058235132617, -79306.734255036412, 0.26335550019222081, -5.1101245276451266, -36.222748509588669, -0.19410673796085218, 18.2469459309042, -6.9808175843180829, 17.776784189204339, -0.30156771065790045, -156.84034739068551, 750.38975970484842, -2.1131437354684635, 9.2577367175230858, -199.21579587987864, -2154.9285025875915, -8696.7664797104771, -1186.5541384779362, -10473.036215900129, -82235.397131535225, -0.581378500076152, 11.281011905641742, 79.964637844166788, 0.42850627417307441, -40.28160432775001, 15.410717655465003, -39.243684375506191, 0.66573503559151437, 346.23771233509564, -1656.5458957617607, 4.6649351711860012, -20.43720022177261, 439.78493145419367, 4756.88409815377, 19199.615661972977, 2620.0042578111852, 23120.071849644595, 181541.26951061451, 0.31672257357454331, -6.1456540322903432, -43.563024586639187, -0.23344105420334255, 21.944556581857295, -8.3954294075721734, 21.379119988663756, -0.36267821008803375, -188.62290109622194, 902.450777387345, -2.5413569177100692, 11.133749614150146, -239.58542548654864, -2591.44872671717, -10459.540012755331, -1427.0006897519049, -12594.830837399635, -98899.801217038781, -0.069433607179997942, 1.3472829647924895, 9.5501179552312525, 0.051176189541237892, -4.8108024137575551, 1.8404906887875261, -4.6868443963232336, 0.079508246247785977, 41.350915635901913, -197.84005942237971, 0.55712978060567886, -2.4407998091977157, 52.523191294953385, 568.11117340721194, 2292.9959943578092, 312.83468121510492, 2761.2131968610452, 21681.695277905554]
+			 flags:   PARAM
+			}
+			p_1_Pierre_Controller_LTI_real_T_0[353]
+			{
+			 type:    Pierre_Controller_LTI_ArrayDT0_18*
+			 alias:   "B"
+			 value:   [-0.36117556345016522, -1.091782462109171, 0.55247529427358955, -0.064544699786380832, 0.75006654708837828, -0.5706248197951036, -1.569735822851098, -2.6223563479930041, -0.74774957753712157, 0.89610969800030371, -0.057459903516042868, -1.0383437225847874, -0.53193108229474861, -0.89409399672944145, -0.92711136809038208, 2.0466730946971774, -1.1149837321699319, 0.2444326642014806]
+			 flags:   PARAM
+			}
+			p_1_Pierre_Controller_LTI_real_T_0[371]
+			{
+			 type:    Pierre_Controller_LTI_ArrayDT0_18*
+			 alias:   "C"
+			 value:   [0.027625921013206992, -0.69785713383023618, -5.5778944828629831, 0.54981850609314686, 3.4723673569498961, -0.73280181651468768, 2.9192630352405038, -0.38389392001196709, -26.365545456273285, 96.8288985080498, 2.077708995190731, 1.1075627944209412, -33.759216802146177, -225.71270529848593, -1215.5561821780661, -193.51177435460315, -1589.4814237095557, -11558.669438913083]
+			 flags:   PARAM
+			}
+			p_1_Pierre_Controller_LTI_real_T_0[389]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "D"
+			 value:   -0.16429007669683904
+			 flags:   PARAM
+			}
+			p_1_Pierre_Controller_LTI_real_T_0[390]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "InitialCondition"
+			 value:   0.0
+			 flags:   PARAM
+			}
+
+
+		endgroup -- block-group "Controller K"
+
+		group "Gain" -- block-group
+		{
+		 block: "Gain"
+		}
+			p_0_Pierre_Controller_LTI_real_T_0[40]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "Out1"
+			 flags:   OUTPUT|READONLY
+			}
+			p_1_Pierre_Controller_LTI_real_T_0[396]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "Gain"
+			 value:   1.0
+			 flags:   PARAM
+			}
+
+
+		endgroup -- block-group "Gain"
+
+		group "Gain1" -- block-group
+		{
+		 block: "Gain"
+		}
+			p_0_Pierre_Controller_LTI_real_T_0[41]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "Out1"
+			 flags:   OUTPUT|READONLY
+			}
+			p_1_Pierre_Controller_LTI_real_T_0[397]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "Gain"
+			 value:   1.0
+			 flags:   PARAM
+			}
+
+
+		endgroup -- block-group "Gain1"
+
+		group "Gain2" -- block-group
+		{
+		 block: "Gain"
+		}
+			p_0_Pierre_Controller_LTI_real_T_0[42]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "Out1"
+			 flags:   OUTPUT|READONLY
+			}
+			p_1_Pierre_Controller_LTI_real_T_0[398]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "Gain"
+			 value:   1.0
+			 flags:   PARAM
+			}
+
+
+		endgroup -- block-group "Gain2"
+
+		group "Gain3" -- block-group
+		{
+		 block: "Gain"
+		}
+			p_0_Pierre_Controller_LTI_real_T_0[35]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "Out1"
+			 flags:   OUTPUT|READONLY
+			}
+			trcref0_Px
+			{
+			 refgroup: "/Tunable Parameters"
+			 refvar:   "Px"
+			 alias:    "Px"
+			}
+			trcref0_Gain
+			{
+			 refgroup: "/Tunable Parameters"
+			 refvar:   "Px"
+			 alias:    "Gain"
+			 flags:    DEPRECATED|HIDDEN
+			}
+
+
+		endgroup -- block-group "Gain3"
+
+		group "Gain4" -- block-group
+		{
+		 block: "Gain"
+		}
+			p_0_Pierre_Controller_LTI_real_T_0[26]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "Out1"
+			 flags:   OUTPUT|READONLY
+			}
+			trcref0_Py
+			{
+			 refgroup: "/Tunable Parameters"
+			 refvar:   "Py"
+			 alias:    "Py"
+			}
+			trcref0_Gain
+			{
+			 refgroup: "/Tunable Parameters"
+			 refvar:   "Py"
+			 alias:    "Gain"
+			 flags:    DEPRECATED|HIDDEN
+			}
+
+
+		endgroup -- block-group "Gain4"
+
+		group "Gain5" -- block-group
+		{
+		 block: "Gain"
+		}
+			p_0_Pierre_Controller_LTI_real_T_0[38]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "Out1"
+			 flags:   OUTPUT|READONLY
+			}
+			trcref0_Pz
+			{
+			 refgroup: "/Tunable Parameters"
+			 refvar:   "Pz"
+			 alias:    "Pz"
+			}
+			trcref0_Gain
+			{
+			 refgroup: "/Tunable Parameters"
+			 refvar:   "Pz"
+			 alias:    "Gain"
+			 flags:    DEPRECATED|HIDDEN
+			}
+
+
+		endgroup -- block-group "Gain5"
+
+		group "Stability Gain" -- block-group
+		{
+		 block: "Gain"
+		}
+			p_0_Pierre_Controller_LTI_real_T_0[23]
+			{
+			 type:    Pierre_Controller_LTI_ArrayDT0_3*
+			 alias:   "Out1"
+			 flags:   OUTPUT|READONLY
+			}
+			p_1_Pierre_Controller_LTI_real_T_0[392]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "Gain"
+			 value:   1.0
+			 flags:   PARAM
+			}
+
+
+		endgroup -- block-group "Stability Gain"
+
+		group "dSpace Conversion" -- block-group
+		{
+		 block: "Gain"
+		}
+			p_0_Pierre_Controller_LTI_real_T_0[20]
+			{
+			 type:    Pierre_Controller_LTI_ArrayDT0_3*
+			 alias:   "Out1"
+			 flags:   OUTPUT|READONLY
+			}
+			p_1_Pierre_Controller_LTI_real_T_0[391]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "Gain"
+			 value:   0.1
+			 flags:   PARAM
+			}
+
+
+		endgroup -- block-group "dSpace Conversion"
+
+		group "Multiport\nSwitch2" -- block-group
+		{
+		 block: "MultiPortSwitch"
+		}
+			p_0_Pierre_Controller_LTI_real_T_0[14]
+			{
+			 type:    Pierre_Controller_LTI_ArrayDT0_3*
+			 alias:   "Out1"
+			 flags:   OUTPUT|READONLY
+			}
+
+
+		endgroup -- block-group "Multiport\nSwitch2"
+
+		group "Add" -- block-group
+		{
+		 block: "Sum"
+		}
+			p_0_Pierre_Controller_LTI_real_T_0[36]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "Out1"
+			 flags:   OUTPUT|READONLY
+			}
+
+
+		endgroup -- block-group "Add"
+
+
+
+	endgroup -- subsystem-group "Controller"
+  
+  
+	group "Current monitoring" -- subsystem-group
+
+		p_0_Pierre_Controller_LTI_real_T_0[45]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "PMA1_current"
+		 flags:   OUTPUT|READONLY
+		}
+		p_0_Pierre_Controller_LTI_real_T_0[48]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "PMA2_current"
+		 flags:   OUTPUT|READONLY
+		}
+		p_0_Pierre_Controller_LTI_real_T_0[51]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "PMA3_current"
+		 flags:   OUTPUT|READONLY
+		}
+		p_0_Pierre_Controller_LTI_real_T_0[54]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "PMA4_current"
+		 flags:   OUTPUT|READONLY
+		}
+		p_0_Pierre_Controller_LTI_real_T_0[57]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "PMA5_current"
+		 flags:   OUTPUT|READONLY
+		}
+		p_0_Pierre_Controller_LTI_real_T_0[60]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "PMA6_current"
+		 flags:   OUTPUT|READONLY
+		}
+
+
+		group "GainADC_Ch1" -- block-group
+		{
+		 block: "Gain"
+		}
+			p_0_Pierre_Controller_LTI_real_T_0[44]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "Out1"
+			 flags:   OUTPUT|READONLY
+			}
+			p_1_Pierre_Controller_LTI_real_T_0[399]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "Gain"
+			 value:   10.0
+			 flags:   PARAM
+			}
+
+
+		endgroup -- block-group "GainADC_Ch1"
+
+		group "GainADC_Ch2" -- block-group
+		{
+		 block: "Gain"
+		}
+			p_0_Pierre_Controller_LTI_real_T_0[47]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "Out1"
+			 flags:   OUTPUT|READONLY
+			}
+			p_1_Pierre_Controller_LTI_real_T_0[401]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "Gain"
+			 value:   10.0
+			 flags:   PARAM
+			}
+
+
+		endgroup -- block-group "GainADC_Ch2"
+
+		group "GainADC_Ch3" -- block-group
+		{
+		 block: "Gain"
+		}
+			p_0_Pierre_Controller_LTI_real_T_0[50]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "Out1"
+			 flags:   OUTPUT|READONLY
+			}
+			p_1_Pierre_Controller_LTI_real_T_0[403]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "Gain"
+			 value:   10.0
+			 flags:   PARAM
+			}
+
+
+		endgroup -- block-group "GainADC_Ch3"
+
+		group "GainADC_Ch4" -- block-group
+		{
+		 block: "Gain"
+		}
+			p_0_Pierre_Controller_LTI_real_T_0[53]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "Out1"
+			 flags:   OUTPUT|READONLY
+			}
+			p_1_Pierre_Controller_LTI_real_T_0[405]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "Gain"
+			 value:   10.0
+			 flags:   PARAM
+			}
+
+
+		endgroup -- block-group "GainADC_Ch4"
+
+		group "GainADC_Ch5" -- block-group
+		{
+		 block: "Gain"
+		}
+			p_0_Pierre_Controller_LTI_real_T_0[56]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "Out1"
+			 flags:   OUTPUT|READONLY
+			}
+			p_1_Pierre_Controller_LTI_real_T_0[407]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "Gain"
+			 value:   10.0
+			 flags:   PARAM
+			}
+
+
+		endgroup -- block-group "GainADC_Ch5"
+
+		group "GainADC_Ch6" -- block-group
+		{
+		 block: "Gain"
+		}
+			p_0_Pierre_Controller_LTI_real_T_0[59]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "Out1"
+			 flags:   OUTPUT|READONLY
+			}
+			p_1_Pierre_Controller_LTI_real_T_0[409]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "Gain"
+			 value:   10.0
+			 flags:   PARAM
+			}
+
+
+		endgroup -- block-group "GainADC_Ch6"
+
+  
+  
+		group "PMA1_monitoring" -- subsystem-group
+
+			p_0_Pierre_Controller_LTI_real_T_0[43]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "ADC"
+			 flags:   OUTPUT|READONLY
+			}
+
+		endgroup -- subsystem-group "PMA1_monitoring"
+  
+  
+		group "PMA2_monitoring" -- subsystem-group
+
+			p_0_Pierre_Controller_LTI_real_T_0[46]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "ADC"
+			 flags:   OUTPUT|READONLY
+			}
+
+		endgroup -- subsystem-group "PMA2_monitoring"
+  
+  
+		group "PMA3_monitoring" -- subsystem-group
+
+			p_0_Pierre_Controller_LTI_real_T_0[49]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "ADC"
+			 flags:   OUTPUT|READONLY
+			}
+
+		endgroup -- subsystem-group "PMA3_monitoring"
+  
+  
+		group "PMA4_monitoring" -- subsystem-group
+
+			p_0_Pierre_Controller_LTI_real_T_0[52]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "ADC"
+			 flags:   OUTPUT|READONLY
+			}
+
+		endgroup -- subsystem-group "PMA4_monitoring"
+  
+  
+		group "PMA5_monitoring" -- subsystem-group
+
+			p_0_Pierre_Controller_LTI_real_T_0[55]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "ADC"
+			 flags:   OUTPUT|READONLY
+			}
+
+		endgroup -- subsystem-group "PMA5_monitoring"
+  
+  
+		group "PMA6_monitoring" -- subsystem-group
+
+			p_0_Pierre_Controller_LTI_real_T_0[58]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "ADC"
+			 flags:   OUTPUT|READONLY
+			}
+
+		endgroup -- subsystem-group "PMA6_monitoring"
+  
+  
+		group "Subsystem" -- subsystem-group
+
+			p_0_Pierre_Controller_LTI_real_T_0[45]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "PMA1_monitoring (A)"
+			 flags:   OUTPUT|READONLY
+			}
+
+
+			group "V2A_PMA_monitoring" -- block-group
+			{
+			 block: "Gain"
+			}
+				p_0_Pierre_Controller_LTI_real_T_0[45]
+				{
+				 type:    flt(64,IEEE)*
+				 alias:   "Out1"
+				 flags:   OUTPUT|READONLY
+				}
+				p_1_Pierre_Controller_LTI_real_T_0[400]
+				{
+				 type:    flt(64,IEEE)*
+				 alias:   "Gain"
+				 value:   0.2
+				 flags:   PARAM
+				}
+
+
+			endgroup -- block-group "V2A_PMA_monitoring"
+
+
+
+		endgroup -- subsystem-group "Subsystem"
+  
+  
+		group "Subsystem1" -- subsystem-group
+
+			p_0_Pierre_Controller_LTI_real_T_0[48]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "PMA2_monitoring (A)"
+			 flags:   OUTPUT|READONLY
+			}
+
+
+			group "V2A_PMA_monitoring" -- block-group
+			{
+			 block: "Gain"
+			}
+				p_0_Pierre_Controller_LTI_real_T_0[48]
+				{
+				 type:    flt(64,IEEE)*
+				 alias:   "Out1"
+				 flags:   OUTPUT|READONLY
+				}
+				p_1_Pierre_Controller_LTI_real_T_0[402]
+				{
+				 type:    flt(64,IEEE)*
+				 alias:   "Gain"
+				 value:   0.2
+				 flags:   PARAM
+				}
+
+
+			endgroup -- block-group "V2A_PMA_monitoring"
+
+
+
+		endgroup -- subsystem-group "Subsystem1"
+  
+  
+		group "Subsystem2" -- subsystem-group
+
+			p_0_Pierre_Controller_LTI_real_T_0[51]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "PMA3_monitoring (A)"
+			 flags:   OUTPUT|READONLY
+			}
+
+
+			group "V2A_PMA_monitoring" -- block-group
+			{
+			 block: "Gain"
+			}
+				p_0_Pierre_Controller_LTI_real_T_0[51]
+				{
+				 type:    flt(64,IEEE)*
+				 alias:   "Out1"
+				 flags:   OUTPUT|READONLY
+				}
+				p_1_Pierre_Controller_LTI_real_T_0[404]
+				{
+				 type:    flt(64,IEEE)*
+				 alias:   "Gain"
+				 value:   0.2
+				 flags:   PARAM
+				}
+
+
+			endgroup -- block-group "V2A_PMA_monitoring"
+
+
+
+		endgroup -- subsystem-group "Subsystem2"
+  
+  
+		group "Subsystem3" -- subsystem-group
+
+			p_0_Pierre_Controller_LTI_real_T_0[54]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "PMA4_monitoring (A)"
+			 flags:   OUTPUT|READONLY
+			}
+
+
+			group "V2A_PMA_monitoring" -- block-group
+			{
+			 block: "Gain"
+			}
+				p_0_Pierre_Controller_LTI_real_T_0[54]
+				{
+				 type:    flt(64,IEEE)*
+				 alias:   "Out1"
+				 flags:   OUTPUT|READONLY
+				}
+				p_1_Pierre_Controller_LTI_real_T_0[406]
+				{
+				 type:    flt(64,IEEE)*
+				 alias:   "Gain"
+				 value:   0.2
+				 flags:   PARAM
+				}
+
+
+			endgroup -- block-group "V2A_PMA_monitoring"
+
+
+
+		endgroup -- subsystem-group "Subsystem3"
+  
+  
+		group "Subsystem4" -- subsystem-group
+
+			p_0_Pierre_Controller_LTI_real_T_0[57]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "PMA5_monitoring (A)"
+			 flags:   OUTPUT|READONLY
+			}
+
+
+			group "V2A_PMA_monitoring" -- block-group
+			{
+			 block: "Gain"
+			}
+				p_0_Pierre_Controller_LTI_real_T_0[57]
+				{
+				 type:    flt(64,IEEE)*
+				 alias:   "Out1"
+				 flags:   OUTPUT|READONLY
+				}
+				p_1_Pierre_Controller_LTI_real_T_0[408]
+				{
+				 type:    flt(64,IEEE)*
+				 alias:   "Gain"
+				 value:   0.2
+				 flags:   PARAM
+				}
+
+
+			endgroup -- block-group "V2A_PMA_monitoring"
+
+
+
+		endgroup -- subsystem-group "Subsystem4"
+  
+  
+		group "Subsystem5" -- subsystem-group
+
+			p_0_Pierre_Controller_LTI_real_T_0[60]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "PMA6_monitoring (A)"
+			 flags:   OUTPUT|READONLY
+			}
+
+
+			group "V2A_PMA_monitoring" -- block-group
+			{
+			 block: "Gain"
+			}
+				p_0_Pierre_Controller_LTI_real_T_0[60]
+				{
+				 type:    flt(64,IEEE)*
+				 alias:   "Out1"
+				 flags:   OUTPUT|READONLY
+				}
+				p_1_Pierre_Controller_LTI_real_T_0[410]
+				{
+				 type:    flt(64,IEEE)*
+				 alias:   "Gain"
+				 value:   0.2
+				 flags:   PARAM
+				}
+
+
+			endgroup -- block-group "V2A_PMA_monitoring"
+
+
+
+		endgroup -- subsystem-group "Subsystem5"
+
+
+	endgroup -- subsystem-group "Current monitoring"
+  
+  
+	group "Force_measure" -- subsystem-group
+
+		p_3_Pierre_Controller_LTI_real_T_0[0]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "Excitation [N]"
+		 flags:   OUTPUT|READONLY
+		}
+
+
+		group "GainADC_Ch1" -- block-group
+		{
+		 block: "Gain"
+		}
+			p_3_Pierre_Controller_LTI_real_T_0[0]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "Out1"
+			 flags:   OUTPUT|READONLY
+			}
+			p_1_Pierre_Controller_LTI_real_T_0[18]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "Gain"
+			 value:   50.0
+			 flags:   PARAM
+			}
+
+
+		endgroup -- block-group "GainADC_Ch1"
+
+
+
+	endgroup -- subsystem-group "Force_measure"
+  
+  
+	group "IMU" -- subsystem-group
+
+		p_0_Pierre_Controller_LTI_real_T_0[64]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "Acc_X (m/s^2)"
+		 flags:   OUTPUT|READONLY
+		}
+		p_0_Pierre_Controller_LTI_real_T_0[68]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "Acc_Y (m/s^2)"
+		 flags:   OUTPUT|READONLY
+		}
+		p_0_Pierre_Controller_LTI_real_T_0[72]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "Acc_Z (m/s^2)"
+		 flags:   OUTPUT|READONLY
+		}
+		p_0_Pierre_Controller_LTI_real_T_0[75]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "Gyro_X (rad/s)"
+		 flags:   OUTPUT|READONLY
+		}
+		p_0_Pierre_Controller_LTI_real_T_0[78]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "Gyro_Y (rad/s)"
+		 flags:   OUTPUT|READONLY
+		}
+		p_0_Pierre_Controller_LTI_real_T_0[81]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "Gyro_Z (rad/s)"
+		 flags:   OUTPUT|READONLY
+		}
+
+
+		group "GainADC_ACCE_X" -- block-group
+		{
+		 block: "Gain"
+		}
+			p_0_Pierre_Controller_LTI_real_T_0[62]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "Out1"
+			 flags:   OUTPUT|READONLY
+			}
+			p_1_Pierre_Controller_LTI_real_T_0[411]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "Gain"
+			 value:   10.0
+			 flags:   PARAM
+			}
+
+
+		endgroup -- block-group "GainADC_ACCE_X"
+
+		group "GainADC_ACCE_Y" -- block-group
+		{
+		 block: "Gain"
+		}
+			p_0_Pierre_Controller_LTI_real_T_0[66]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "Out1"
+			 flags:   OUTPUT|READONLY
+			}
+			p_1_Pierre_Controller_LTI_real_T_0[413]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "Gain"
+			 value:   10.0
+			 flags:   PARAM
+			}
+
+
+		endgroup -- block-group "GainADC_ACCE_Y"
+
+		group "GainADC_ACCE_Z" -- block-group
+		{
+		 block: "Gain"
+		}
+			p_0_Pierre_Controller_LTI_real_T_0[70]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "Out1"
+			 flags:   OUTPUT|READONLY
+			}
+			p_1_Pierre_Controller_LTI_real_T_0[415]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "Gain"
+			 value:   10.0
+			 flags:   PARAM
+			}
+
+
+		endgroup -- block-group "GainADC_ACCE_Z"
+
+		group "GainADC_GIRO_X" -- block-group
+		{
+		 block: "Gain"
+		}
+			p_0_Pierre_Controller_LTI_real_T_0[74]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "Out1"
+			 flags:   OUTPUT|READONLY
+			}
+			p_1_Pierre_Controller_LTI_real_T_0[417]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "Gain"
+			 value:   10.0
+			 flags:   PARAM
+			}
+
+
+		endgroup -- block-group "GainADC_GIRO_X"
+
+		group "GainADC_GIRO_Y" -- block-group
+		{
+		 block: "Gain"
+		}
+			p_0_Pierre_Controller_LTI_real_T_0[77]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "Out1"
+			 flags:   OUTPUT|READONLY
+			}
+			p_1_Pierre_Controller_LTI_real_T_0[418]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "Gain"
+			 value:   10.0
+			 flags:   PARAM
+			}
+
+
+		endgroup -- block-group "GainADC_GIRO_Y"
+
+		group "GainADC_GIRO_Z" -- block-group
+		{
+		 block: "Gain"
+		}
+			p_0_Pierre_Controller_LTI_real_T_0[80]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "Out1"
+			 flags:   OUTPUT|READONLY
+			}
+			p_1_Pierre_Controller_LTI_real_T_0[419]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "Gain"
+			 value:   10.0
+			 flags:   PARAM
+			}
+
+
+		endgroup -- block-group "GainADC_GIRO_Z"
+
+		group "V2g_Wilcoxon" -- block-group
+		{
+		 block: "Gain"
+		}
+			p_0_Pierre_Controller_LTI_real_T_0[63]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "Out1"
+			 flags:   OUTPUT|READONLY
+			}
+			trcref0_Sen_AX
+			{
+			 refgroup: "/Tunable Parameters"
+			 refvar:   "Sen_AX"
+			 alias:    "Sen_AX"
+			}
+			-- Skipping parameter "Gain"
+
+
+		endgroup -- block-group "V2g_Wilcoxon"
+
+		group "V2g_Wilcoxon1" -- block-group
+		{
+		 block: "Gain"
+		}
+			p_0_Pierre_Controller_LTI_real_T_0[67]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "Out1"
+			 flags:   OUTPUT|READONLY
+			}
+			trcref0_Sen_AY
+			{
+			 refgroup: "/Tunable Parameters"
+			 refvar:   "Sen_AY"
+			 alias:    "Sen_AY"
+			}
+			-- Skipping parameter "Gain"
+
+
+		endgroup -- block-group "V2g_Wilcoxon1"
+
+		group "V2g_Wilcoxon2" -- block-group
+		{
+		 block: "Gain"
+		}
+			p_0_Pierre_Controller_LTI_real_T_0[71]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "Out1"
+			 flags:   OUTPUT|READONLY
+			}
+			trcref0_Sen_AZ
+			{
+			 refgroup: "/Tunable Parameters"
+			 refvar:   "Sen_AZ"
+			 alias:    "Sen_AZ"
+			}
+			-- Skipping parameter "Gain"
+
+
+		endgroup -- block-group "V2g_Wilcoxon2"
+
+		group "V2g_Wilcoxon3" -- block-group
+		{
+		 block: "Gain"
+		}
+			p_0_Pierre_Controller_LTI_real_T_0[75]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "Out1"
+			 flags:   OUTPUT|READONLY
+			}
+			trcref0_Sen_GX
+			{
+			 refgroup: "/Tunable Parameters"
+			 refvar:   "Sen_GX"
+			 alias:    "Sen_GX"
+			}
+			-- Skipping parameter "Gain"
+
+
+		endgroup -- block-group "V2g_Wilcoxon3"
+
+		group "V2g_Wilcoxon4" -- block-group
+		{
+		 block: "Gain"
+		}
+			p_0_Pierre_Controller_LTI_real_T_0[78]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "Out1"
+			 flags:   OUTPUT|READONLY
+			}
+			trcref0_Sen_GY
+			{
+			 refgroup: "/Tunable Parameters"
+			 refvar:   "Sen_GY"
+			 alias:    "Sen_GY"
+			}
+			-- Skipping parameter "Gain"
+
+
+		endgroup -- block-group "V2g_Wilcoxon4"
+
+		group "V2g_Wilcoxon5" -- block-group
+		{
+		 block: "Gain"
+		}
+			p_0_Pierre_Controller_LTI_real_T_0[81]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "Out1"
+			 flags:   OUTPUT|READONLY
+			}
+			trcref0_Sen_GZ
+			{
+			 refgroup: "/Tunable Parameters"
+			 refvar:   "Sen_GZ"
+			 alias:    "Sen_GZ"
+			}
+			-- Skipping parameter "Gain"
+
+
+		endgroup -- block-group "V2g_Wilcoxon5"
+
+  
+  
+		group "ACCE_X" -- subsystem-group
+
+			p_0_Pierre_Controller_LTI_real_T_0[61]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "ADC"
+			 flags:   OUTPUT|READONLY
+			}
+
+		endgroup -- subsystem-group "ACCE_X"
+  
+  
+		group "ACCE_Y" -- subsystem-group
+
+			p_0_Pierre_Controller_LTI_real_T_0[65]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "ADC"
+			 flags:   OUTPUT|READONLY
+			}
+
+		endgroup -- subsystem-group "ACCE_Y"
+  
+  
+		group "ACCE_Z" -- subsystem-group
+
+			p_0_Pierre_Controller_LTI_real_T_0[69]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "ADC"
+			 flags:   OUTPUT|READONLY
+			}
+
+		endgroup -- subsystem-group "ACCE_Z"
+  
+  
+		group "GIRO_X" -- subsystem-group
+
+			p_0_Pierre_Controller_LTI_real_T_0[73]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "ADC"
+			 flags:   OUTPUT|READONLY
+			}
+
+		endgroup -- subsystem-group "GIRO_X"
+  
+  
+		group "GIRO_Y" -- subsystem-group
+
+			p_0_Pierre_Controller_LTI_real_T_0[76]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "ADC"
+			 flags:   OUTPUT|READONLY
+			}
+
+		endgroup -- subsystem-group "GIRO_Y"
+  
+  
+		group "GIRO_Z" -- subsystem-group
+
+			p_0_Pierre_Controller_LTI_real_T_0[79]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "ADC"
+			 flags:   OUTPUT|READONLY
+			}
+
+		endgroup -- subsystem-group "GIRO_Z"
+  
+  
+		group "Subsystem1" -- subsystem-group
+
+			p_0_Pierre_Controller_LTI_real_T_0[75]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "Gyro_X (rad/s)"
+			 flags:   OUTPUT|READONLY
+			}
+
+
+
+
+		endgroup -- subsystem-group "Subsystem1"
+  
+  
+		group "Subsystem12" -- subsystem-group
+
+			p_0_Pierre_Controller_LTI_real_T_0[64]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "Acc_X (m/s^2)"
+			 flags:   OUTPUT|READONLY
+			}
+
+
+			group "g2ms^2_Wilcoxon" -- block-group
+			{
+			 block: "Gain"
+			}
+				p_0_Pierre_Controller_LTI_real_T_0[64]
+				{
+				 type:    flt(64,IEEE)*
+				 alias:   "Out1"
+				 flags:   OUTPUT|READONLY
+				}
+				p_1_Pierre_Controller_LTI_real_T_0[412]
+				{
+				 type:    flt(64,IEEE)*
+				 alias:   "Gain"
+				 value:   9.80655
+				 flags:   PARAM
+				}
+
+
+			endgroup -- block-group "g2ms^2_Wilcoxon"
+
+
+
+		endgroup -- subsystem-group "Subsystem12"
+  
+  
+		group "Subsystem13" -- subsystem-group
+
+			p_0_Pierre_Controller_LTI_real_T_0[68]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "Acc_Y (m/s^2)"
+			 flags:   OUTPUT|READONLY
+			}
+
+
+			group "g2ms^2_Wilcoxon" -- block-group
+			{
+			 block: "Gain"
+			}
+				p_0_Pierre_Controller_LTI_real_T_0[68]
+				{
+				 type:    flt(64,IEEE)*
+				 alias:   "Out1"
+				 flags:   OUTPUT|READONLY
+				}
+				p_1_Pierre_Controller_LTI_real_T_0[414]
+				{
+				 type:    flt(64,IEEE)*
+				 alias:   "Gain"
+				 value:   9.80655
+				 flags:   PARAM
+				}
+
+
+			endgroup -- block-group "g2ms^2_Wilcoxon"
+
+
+
+		endgroup -- subsystem-group "Subsystem13"
+  
+  
+		group "Subsystem14" -- subsystem-group
+
+			p_0_Pierre_Controller_LTI_real_T_0[72]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "Acc_Z (m/s^2)"
+			 flags:   OUTPUT|READONLY
+			}
+
+
+			group "g2ms^2_Wilcoxon" -- block-group
+			{
+			 block: "Gain"
+			}
+				p_0_Pierre_Controller_LTI_real_T_0[72]
+				{
+				 type:    flt(64,IEEE)*
+				 alias:   "Out1"
+				 flags:   OUTPUT|READONLY
+				}
+				p_1_Pierre_Controller_LTI_real_T_0[416]
+				{
+				 type:    flt(64,IEEE)*
+				 alias:   "Gain"
+				 value:   9.80655
+				 flags:   PARAM
+				}
+
+
+			endgroup -- block-group "g2ms^2_Wilcoxon"
+
+
+
+		endgroup -- subsystem-group "Subsystem14"
+  
+  
+		group "Subsystem2" -- subsystem-group
+
+			p_0_Pierre_Controller_LTI_real_T_0[78]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "Gyro_Y (rad/s)"
+			 flags:   OUTPUT|READONLY
+			}
+
+
+
+
+		endgroup -- subsystem-group "Subsystem2"
+  
+  
+		group "Subsystem3" -- subsystem-group
+
+			p_0_Pierre_Controller_LTI_real_T_0[81]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "Gyro_Z (rad/s)"
+			 flags:   OUTPUT|READONLY
+			}
+
+
+
+
+		endgroup -- subsystem-group "Subsystem3"
+
+
+	endgroup -- subsystem-group "IMU"
+  
+  
+	group "Micromega PMA1" -- subsystem-group
+
+
+	endgroup -- subsystem-group "Micromega PMA1"
+  
+  
+	group "Micromega PMA2" -- subsystem-group
+
+
+	endgroup -- subsystem-group "Micromega PMA2"
+  
+  
+	group "Micromega PMA3" -- subsystem-group
+
+
+	endgroup -- subsystem-group "Micromega PMA3"
+  
+  
+	group "Micromega PMA4" -- subsystem-group
+
+
+	endgroup -- subsystem-group "Micromega PMA4"
+  
+  
+	group "Micromega PMA5" -- subsystem-group
+
+
+	endgroup -- subsystem-group "Micromega PMA5"
+  
+  
+	group "Micromega PMA6" -- subsystem-group
+
+
+	endgroup -- subsystem-group "Micromega PMA6"
+  
+  
+	group "PCB208C01" -- subsystem-group
+
+		p_0_Pierre_Controller_LTI_real_T_0[0]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "ADC"
+		 flags:   OUTPUT|READONLY
+		}
+
+	endgroup -- subsystem-group "PCB208C01"
+  
+  
+	group "Payload Accelerometers" -- subsystem-group
+
+		p_0_Pierre_Controller_LTI_real_T_0[4]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "Payload_acc1"
+		 flags:   OUTPUT|READONLY
+		}
+		p_0_Pierre_Controller_LTI_real_T_0[8]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "Payload_acc2"
+		 flags:   OUTPUT|READONLY
+		}
+		p_0_Pierre_Controller_LTI_real_T_0[12]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "Payload_acc3"
+		 flags:   OUTPUT|READONLY
+		}
+
+
+		group "GainADC_Ch14" -- block-group
+		{
+		 block: "Gain"
+		}
+			p_0_Pierre_Controller_LTI_real_T_0[3]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "Out1"
+			 flags:   OUTPUT|READONLY
+			}
+			p_1_Pierre_Controller_LTI_real_T_0[21]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "Gain"
+			 value:   0.5
+			 flags:   PARAM
+			}
+
+
+		endgroup -- block-group "GainADC_Ch14"
+
+		group "GainADC_Ch15" -- block-group
+		{
+		 block: "Gain"
+		}
+			p_0_Pierre_Controller_LTI_real_T_0[7]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "Out1"
+			 flags:   OUTPUT|READONLY
+			}
+			p_1_Pierre_Controller_LTI_real_T_0[24]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "Gain"
+			 value:   0.5
+			 flags:   PARAM
+			}
+
+
+		endgroup -- block-group "GainADC_Ch15"
+
+		group "GainADC_Ch16" -- block-group
+		{
+		 block: "Gain"
+		}
+			p_0_Pierre_Controller_LTI_real_T_0[11]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "Out1"
+			 flags:   OUTPUT|READONLY
+			}
+			p_1_Pierre_Controller_LTI_real_T_0[27]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "Gain"
+			 value:   0.5
+			 flags:   PARAM
+			}
+
+
+		endgroup -- block-group "GainADC_Ch16"
+
+  
+  
+		group "Accelerometer_Wilcoxon#4546" -- subsystem-group
+
+			p_0_Pierre_Controller_LTI_real_T_0[2]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "ADC"
+			 flags:   OUTPUT|READONLY
+			}
+
+		endgroup -- subsystem-group "Accelerometer_Wilcoxon#4546"
+  
+  
+		group "Accelerometer_Wilcoxon#4786" -- subsystem-group
+
+			p_0_Pierre_Controller_LTI_real_T_0[6]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "ADC"
+			 flags:   OUTPUT|READONLY
+			}
+
+		endgroup -- subsystem-group "Accelerometer_Wilcoxon#4786"
+  
+  
+		group "Accelerometer_Wilcoxon#4787" -- subsystem-group
+
+			p_0_Pierre_Controller_LTI_real_T_0[10]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "ADC"
+			 flags:   OUTPUT|READONLY
+			}
+
+		endgroup -- subsystem-group "Accelerometer_Wilcoxon#4787"
+  
+  
+		group "DocBlock" -- subsystem-group
+
+
+
+  
+  
+			group "EmptySubsystem" -- subsystem-group
+
+
+
+
+
+			endgroup -- subsystem-group "EmptySubsystem"
+
+
+		endgroup -- subsystem-group "DocBlock"
+  
+  
+		group "Subsystem12" -- subsystem-group
+
+			p_0_Pierre_Controller_LTI_real_T_0[4]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "g2ms^2_Wilcoxon1"
+			 flags:   OUTPUT|READONLY
+			}
+
+
+			group "g2ms^2_Wilcoxon" -- block-group
+			{
+			 block: "Gain"
+			}
+				p_0_Pierre_Controller_LTI_real_T_0[4]
+				{
+				 type:    flt(64,IEEE)*
+				 alias:   "Out1"
+				 flags:   OUTPUT|READONLY
+				}
+				p_1_Pierre_Controller_LTI_real_T_0[22]
+				{
+				 type:    flt(64,IEEE)*
+				 alias:   "Gain"
+				 value:   9.80655
+				 flags:   PARAM
+				}
+
+
+			endgroup -- block-group "g2ms^2_Wilcoxon"
+
+
+
+		endgroup -- subsystem-group "Subsystem12"
+  
+  
+		group "Subsystem13" -- subsystem-group
+
+			p_0_Pierre_Controller_LTI_real_T_0[8]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "g2ms^2_Wilcoxon2"
+			 flags:   OUTPUT|READONLY
+			}
+
+
+			group "g2ms^2_Wilcoxon" -- block-group
+			{
+			 block: "Gain"
+			}
+				p_0_Pierre_Controller_LTI_real_T_0[8]
+				{
+				 type:    flt(64,IEEE)*
+				 alias:   "Out1"
+				 flags:   OUTPUT|READONLY
+				}
+				p_1_Pierre_Controller_LTI_real_T_0[25]
+				{
+				 type:    flt(64,IEEE)*
+				 alias:   "Gain"
+				 value:   9.80655
+				 flags:   PARAM
+				}
+
+
+			endgroup -- block-group "g2ms^2_Wilcoxon"
+
+
+
+		endgroup -- subsystem-group "Subsystem13"
+  
+  
+		group "Subsystem14" -- subsystem-group
+
+			p_0_Pierre_Controller_LTI_real_T_0[12]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "g2ms^2_Wilcoxon3"
+			 flags:   OUTPUT|READONLY
+			}
+
+
+			group "g2ms^2_Wilcoxon" -- block-group
+			{
+			 block: "Gain"
+			}
+				p_0_Pierre_Controller_LTI_real_T_0[12]
+				{
+				 type:    flt(64,IEEE)*
+				 alias:   "Out1"
+				 flags:   OUTPUT|READONLY
+				}
+				p_1_Pierre_Controller_LTI_real_T_0[28]
+				{
+				 type:    flt(64,IEEE)*
+				 alias:   "Gain"
+				 value:   9.80655
+				 flags:   PARAM
+				}
+
+
+			endgroup -- block-group "g2ms^2_Wilcoxon"
+
+
+
+		endgroup -- subsystem-group "Subsystem14"
+
+
+	endgroup -- subsystem-group "Payload Accelerometers"
+  
+  
+	group "RTI Data" -- subsystem-group
+
+
+	endgroup -- subsystem-group "RTI Data"
+  
+  
+	group "Shaker TMS_2007E" -- subsystem-group
+
+
+	endgroup -- subsystem-group "Shaker TMS_2007E"
+  
+  
+	group "SineSweep_TMS" -- subsystem-group
+
+		p_0_Pierre_Controller_LTI_real_T_0[30]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "Signal"
+		 flags:   OUTPUT|READONLY
+		}
+
+
+		group "Amplitude (Sweep)" -- block-group
+		{
+		 block: "Constant"
+		}
+			-- Skipping output Out1
+			trcref0_Sweep_amp
+			{
+			 refgroup: "/Tunable Parameters"
+			 refvar:   "Sweep_amp"
+			 alias:    "Sweep_amp"
+			}
+			trcref0_Value
+			{
+			 refgroup: "/Tunable Parameters"
+			 refvar:   "Sweep_amp"
+			 alias:    "Value"
+			 flags:    DEPRECATED|HIDDEN
+			}
+
+
+		endgroup -- block-group "Amplitude (Sweep)"
+
+		group "SineSweep" -- block-group
+		{
+		 block: "FromWorkspace"
+		}
+			p_0_Pierre_Controller_LTI_real_T_0[29]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "Out1"
+			 flags:   OUTPUT|READONLY
+			}
+
+
+		endgroup -- block-group "SineSweep"
+
+		group "Product" -- block-group
+		{
+		 block: "Product"
+		}
+			p_0_Pierre_Controller_LTI_real_T_0[30]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "Out1"
+			 flags:   OUTPUT|READONLY
+			}
+
+
+		endgroup -- block-group "Product"
+
+
+
+	endgroup -- subsystem-group "SineSweep_TMS"
+  
+  
+	group "Sinus_TMS" -- subsystem-group
+
+		p_0_Pierre_Controller_LTI_real_T_0[82]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "Signal"
+		 flags:   OUTPUT|READONLY
+		}
+
+
+		group "Clock" -- block-group
+		{
+		 block: "Clock"
+		}
+			p_0_Pierre_Controller_LTI_real_T_0[28]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "Out1"
+			 flags:   OUTPUT|READONLY
+			}
+
+
+		endgroup -- block-group "Clock"
+
+		group "Amplitude (Sinus)" -- block-group
+		{
+		 block: "Constant"
+		}
+			-- Skipping output Out1
+			trcref0_TMS_amp
+			{
+			 refgroup: "/Tunable Parameters"
+			 refvar:   "TMS_amp"
+			 alias:    "TMS_amp"
+			}
+			trcref0_Value
+			{
+			 refgroup: "/Tunable Parameters"
+			 refvar:   "TMS_amp"
+			 alias:    "Value"
+			 flags:    DEPRECATED|HIDDEN
+			}
+
+
+		endgroup -- block-group "Amplitude (Sinus)"
+
+		group "Frequency 1" -- block-group
+		{
+		 block: "Constant"
+		}
+			-- Skipping output Out1
+			trcref0_TMS_freq1
+			{
+			 refgroup: "/Tunable Parameters"
+			 refvar:   "TMS_freq1"
+			 alias:    "TMS_freq1"
+			}
+			trcref0_Value
+			{
+			 refgroup: "/Tunable Parameters"
+			 refvar:   "TMS_freq1"
+			 alias:    "Value"
+			 flags:    DEPRECATED|HIDDEN
+			}
+
+
+		endgroup -- block-group "Frequency 1"
+
+		group "Frequency 2" -- block-group
+		{
+		 block: "Constant"
+		}
+			-- Skipping output Out1
+			trcref0_TMS_freq2
+			{
+			 refgroup: "/Tunable Parameters"
+			 refvar:   "TMS_freq2"
+			 alias:    "TMS_freq2"
+			}
+			trcref0_Value
+			{
+			 refgroup: "/Tunable Parameters"
+			 refvar:   "TMS_freq2"
+			 alias:    "Value"
+			 flags:    DEPRECATED|HIDDEN
+			}
+
+
+		endgroup -- block-group "Frequency 2"
+
+		group "Frequency 3" -- block-group
+		{
+		 block: "Constant"
+		}
+			-- Skipping output Out1
+			trcref0_TMS_freq3
+			{
+			 refgroup: "/Tunable Parameters"
+			 refvar:   "TMS_freq3"
+			 alias:    "TMS_freq3"
+			}
+			trcref0_Value
+			{
+			 refgroup: "/Tunable Parameters"
+			 refvar:   "TMS_freq3"
+			 alias:    "Value"
+			 flags:    DEPRECATED|HIDDEN
+			}
+
+
+		endgroup -- block-group "Frequency 3"
+
+  
+  
+		group "MATLAB Function" -- subsystem-group
+
+			p_0_Pierre_Controller_LTI_real_T_0[82]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "signal"
+			 flags:   OUTPUT|READONLY
+			}
+
+
+
+
+		endgroup -- subsystem-group "MATLAB Function"
+
+
+	endgroup -- subsystem-group "Sinus_TMS"
+  
+  
+	group "TMS_Command" -- subsystem-group
+
+		p_0_Pierre_Controller_LTI_real_T_0[34]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "Command (V)"
+		 flags:   OUTPUT|READONLY
+		}
+
+
+		group "GainDAC_Ch1" -- block-group
+		{
+		 block: "Gain"
+		}
+			p_0_Pierre_Controller_LTI_real_T_0[34]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "Out1"
+			 flags:   OUTPUT|READONLY
+			}
+			p_1_Pierre_Controller_LTI_real_T_0[394]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "Gain"
+			 value:   0.1
+			 flags:   PARAM
+			}
+
+
+		endgroup -- block-group "GainDAC_Ch1"
+
+
+
+	endgroup -- subsystem-group "TMS_Command"
+  
+  
+	group "MATLAB Function" -- subsystem-group
+
+		p_0_Pierre_Controller_LTI_real_T_0[83]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "u_exc_cmd"
+		 flags:   OUTPUT|READONLY
+		}
+		p_0_Pierre_Controller_LTI_real_T_0[84]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "u_exc_dist"
+		 flags:   OUTPUT|READONLY
+		}
+
+
+
+
+	endgroup -- subsystem-group "MATLAB Function"
+
+
+
+endgroup -- "Model Root"
+-- ******** Tunable Parameters ************************************************
+
+group "Tunable Parameters"
+
+
+	p_1_Pierre_Controller_LTI_real_T_0[0]
+	{
+	 type:    flt(64,IEEE)*
+	 alias:   "Px"
+	 value:   1.0
+	 flags:   PARAM
+	}
+	p_1_Pierre_Controller_LTI_real_T_0[1]
+	{
+	 type:    flt(64,IEEE)*
+	 alias:   "Py"
+	 value:   1.0
+	 flags:   PARAM
+	}
+	p_1_Pierre_Controller_LTI_real_T_0[2]
+	{
+	 type:    flt(64,IEEE)*
+	 alias:   "Pz"
+	 value:   1.0
+	 flags:   PARAM
+	}
+	p_1_Pierre_Controller_LTI_real_T_0[3]
+	{
+	 type:    flt(64,IEEE)*
+	 alias:   "Sen_AX"
+	 value:   0.5424
+	 flags:   PARAM
+	}
+	p_1_Pierre_Controller_LTI_real_T_0[4]
+	{
+	 type:    flt(64,IEEE)*
+	 alias:   "Sen_AY"
+	 value:   0.53845
+	 flags:   PARAM
+	}
+	p_1_Pierre_Controller_LTI_real_T_0[5]
+	{
+	 type:    flt(64,IEEE)*
+	 alias:   "Sen_AZ"
+	 value:   0.54161
+	 flags:   PARAM
+	}
+	p_1_Pierre_Controller_LTI_real_T_0[6]
+	{
+	 type:    flt(64,IEEE)*
+	 alias:   "Sen_GX"
+	 value:   0.18811
+	 flags:   PARAM
+	}
+	p_1_Pierre_Controller_LTI_real_T_0[7]
+	{
+	 type:    flt(64,IEEE)*
+	 alias:   "Sen_GY"
+	 value:   0.18991
+	 flags:   PARAM
+	}
+	p_1_Pierre_Controller_LTI_real_T_0[8]
+	{
+	 type:    flt(64,IEEE)*
+	 alias:   "Sen_GZ"
+	 value:   0.18764
+	 flags:   PARAM
+	}
+	p_1_Pierre_Controller_LTI_real_T_0[9]
+	{
+	 type:    flt(64,IEEE)*
+	 alias:   "Sweep_amp"
+	 value:   0.5
+	 flags:   PARAM
+	}
+	p_1_Pierre_Controller_LTI_real_T_0[10]
+	{
+	 type:    flt(64,IEEE)*
+	 alias:   "Switch_excit"
+	 value:   4.0
+	 flags:   PARAM
+	}
+	p_1_Pierre_Controller_LTI_real_T_0[11]
+	{
+	 type:    flt(64,IEEE)*
+	 alias:   "TMS_amp"
+	 value:   2.0
+	 flags:   PARAM
+	}
+	p_1_Pierre_Controller_LTI_real_T_0[12]
+	{
+	 type:    flt(64,IEEE)*
+	 alias:   "TMS_freq1"
+	 value:   80.0
+	 flags:   PARAM
+	}
+	p_1_Pierre_Controller_LTI_real_T_0[13]
+	{
+	 type:    flt(64,IEEE)*
+	 alias:   "TMS_freq2"
+	 value:   0.0
+	 flags:   PARAM
+	}
+	p_1_Pierre_Controller_LTI_real_T_0[14]
+	{
+	 type:    flt(64,IEEE)*
+	 alias:   "TMS_freq3"
+	 value:   0.0
+	 flags:   PARAM
+	}
+	p_1_Pierre_Controller_LTI_real_T_0[15]
+	{
+	 type:    flt(64,IEEE)*
+	 alias:   "V_sat"
+	 value:   0.2
+	 flags:   PARAM
+	}
+	p_1_Pierre_Controller_LTI_real_T_0[16]
+	{
+	 type:    flt(64,IEEE)*
+	 alias:   "V_sat_TMS"
+	 value:   5.0
+	 flags:   PARAM
+	}
+
+endgroup
+
+-- ******** State Machine Data ************************************************
+
+group "State Machine Data"
+
+
+
+endgroup
+
+
+-- ******** Labels ************************************************************
+
+-- Generation of labels turned off with TRCGenerateLabels option.
+
+-- ******** RTT Dynamic Variables *********************************************
+
+group "RTT Dynamic Variables"
+
+endgroup
+
+-- ******** User variables from model_usr.trc *********************************
+
+-- RTI_USR_TRC_BEGIN
+
+-- No user file Pierre_Controller_LTI_usr.trc found.
+
+-- RTI_USR_TRC_END
+
+-- ******** EESPort States Variables ******************************************
+group "XIL API"
+{ 
+  
+}
+
+  group "EESPort"
+  {  
+    
+  }
+
+    p_xilapi_eesport_activeerrorset_uint32_T
+    {
+      type:    uint(32)*
+      alias:   "Active ErrorSet"
+      desc:    "Index of active ErrorSet or 0 if no ErrorSet is active."
+      flags:   OUTPUT|READONLY
+      range:   < 0 ; 4294967295 >
+    }
+
+    p_xilapi_eesport_erroractivated_uint32_T
+    {
+      type:    uint(32)*
+      alias:   "Error Activated"
+      desc:    "0 - no error is activated on hardware, 1 - at least one error is activated on hardware."  
+      flags:   OUTPUT|READONLY
+      range:   < 0 ; 1 >
+    }
+
+    p_xilapi_eesport_errorswitching_uint32_T
+    {
+      type:    uint(32)*
+      alias:   "Error Switching"
+      desc:    "0 - no switching operation running on hardware, 1 -  switching operation running on hardware."
+      flags:   OUTPUT|READONLY
+      range:   < 0 ; 1 >
+    }
+
+    xilapi_eesport_flags_uint32_T
+    {
+      type:    uint(32)
+      alias:   "Flags"
+      flags:   OUTPUT|READONLY
+      range:   < 0 ; 4294967295 >
+    }
+
+    xilapi_eesport_trigger_uint32_T
+    {
+      type:    uint(32)
+      alias:   "Trigger"
+      flags:   OUTPUT|READONLY
+      range:   < 0 ; 4294967295 >
+    }
+
+    endgroup -- "EESPort"
+
+endgroup -- "XILAPI"
+
+
+
+-- ******** [EOF] *************************************************************
+

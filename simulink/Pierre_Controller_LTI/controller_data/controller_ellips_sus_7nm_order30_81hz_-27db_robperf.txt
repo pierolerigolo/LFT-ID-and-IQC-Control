@@ -1,0 +1,195 @@
+Iter   1 | Stage 1
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   0.0000e+00 - 6.3602e-05i
+
+max:   -1.0215
+
+  obj = 0.000000 | gamma = 10.000000 | slack = 0.000000 | time = 1.97 s
+Controller is OL stable
+Iter   2 | Stage 1
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   0.0000e+00 - 6.3602e-05i
+
+max:   -1.0215
+
+  obj = 0.000000 | gamma = 10.000000 | slack = 0.000000 | time = 1.99 s
+Controller is OL stable
+  --> Saved K_stage{2}
+  --> Advancing to Stage 2
+Iter   3 | Stage 2
+  obj = 0.000000 | gamma = 10.000000 | slack = 0.000000 | time = 0.87 s
+Controller is OL stable
+Iter   4 | Stage 3
+gamma warm 107467.963976
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   0.0000e+00 - 6.3602e-05i
+
+max:   -1.0215
+
+  obj = 232.591357 | time = 3.26 s
+
+Controller is OL unstable
+Iter   5 | Stage 3
+gamma warm 1398.717610
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   0.0000e+00 - 6.3602e-05i
+
+max:   -1.0215
+
+  obj = 132.765105 | time = 3.15 s
+
+Controller is OL unstable
+Iter   6 | Stage 3
+gamma warm 219.531861
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   0.0000e+00 - 6.3602e-05i
+
+max:   -1.0215
+
+  obj = 132.765132 | time = 3.01 s
+
+Controller is OL stable
+  --> Saved K_stage{4}
+  --> Converged.
+
+norminf_W1S =
+
+    2.2330
+
+
+norminf_T =
+
+    5.4659
+
+
+controlllername =
+
+    'controller_ellips_sus_7nm_order30_81hz_-27db_robperf.mat'
+
+Iter   1 | Stage 1
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   0.0000e+00 - 6.3602e-05i
+
+max:   -1.0215
+
+  obj = 0.000000 | gamma = 10.000000 | slack = 0.000000 | time = 1.95 s
+Controller is OL stable
+Iter   2 | Stage 1
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   0.0000e+00 - 6.3602e-05i
+
+max:   -1.0215
+
+  obj = 0.000000 | gamma = 10.000000 | slack = 0.000000 | time = 1.97 s
+Controller is OL stable
+  --> Saved K_stage{2}
+  --> Advancing to Stage 2
+Iter   3 | Stage 2
+  obj = 0.000000 | gamma = 10.000000 | slack = 0.000000 | time = 0.87 s
+Controller is OL stable
+Iter   4 | Stage 3
+gamma warm 107467.963976
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   0.0000e+00 - 6.3602e-05i
+
+max:   -1.0215
+
+  obj = 232.591357 | time = 3.28 s
+
+Controller is OL unstable
+Iter   5 | Stage 3
+gamma warm 1398.717610
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   0.0000e+00 - 6.3602e-05i
+
+max:   -1.0215
+
+  obj = 132.765105 | time = 3.14 s
+
+Controller is OL unstable
+Iter   6 | Stage 3
+gamma warm 219.531861
+Pi scaler: 5.000e-01 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   0.0000e+00 - 6.3602e-05i
+
+max:   -1.0215
+
+  obj = 132.765132 | time = 3.03 s
+
+Controller is OL stable
+  --> Saved K_stage{4}
+  --> Converged.
+
+norminf_W1S =
+
+    2.2330
+
+
+norminf_T =
+
+    5.4659
+
+
+controlllername =
+
+    'controller_ellips_sus_7nm_order30_81hz_-27db_robperf.mat'

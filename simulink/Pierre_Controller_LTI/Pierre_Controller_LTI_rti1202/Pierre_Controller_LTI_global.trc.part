@@ -1,0 +1,146 @@
+-- ******** Tunable Parameters ************************************************
+
+group "Tunable Parameters"
+
+
+	p_1_Pierre_Controller_LTI_real_T_0[0]
+	{
+	 type:    flt(64,IEEE)*
+	 alias:   "Px"
+	 value:   1.0
+	 flags:   PARAM
+	}
+	p_1_Pierre_Controller_LTI_real_T_0[1]
+	{
+	 type:    flt(64,IEEE)*
+	 alias:   "Py"
+	 value:   1.0
+	 flags:   PARAM
+	}
+	p_1_Pierre_Controller_LTI_real_T_0[2]
+	{
+	 type:    flt(64,IEEE)*
+	 alias:   "Pz"
+	 value:   1.0
+	 flags:   PARAM
+	}
+	p_1_Pierre_Controller_LTI_real_T_0[3]
+	{
+	 type:    flt(64,IEEE)*
+	 alias:   "Sen_AX"
+	 value:   0.5424
+	 flags:   PARAM
+	}
+	p_1_Pierre_Controller_LTI_real_T_0[4]
+	{
+	 type:    flt(64,IEEE)*
+	 alias:   "Sen_AY"
+	 value:   0.53845
+	 flags:   PARAM
+	}
+	p_1_Pierre_Controller_LTI_real_T_0[5]
+	{
+	 type:    flt(64,IEEE)*
+	 alias:   "Sen_AZ"
+	 value:   0.54161
+	 flags:   PARAM
+	}
+	p_1_Pierre_Controller_LTI_real_T_0[6]
+	{
+	 type:    flt(64,IEEE)*
+	 alias:   "Sen_GX"
+	 value:   0.18811
+	 flags:   PARAM
+	}
+	p_1_Pierre_Controller_LTI_real_T_0[7]
+	{
+	 type:    flt(64,IEEE)*
+	 alias:   "Sen_GY"
+	 value:   0.18991
+	 flags:   PARAM
+	}
+	p_1_Pierre_Controller_LTI_real_T_0[8]
+	{
+	 type:    flt(64,IEEE)*
+	 alias:   "Sen_GZ"
+	 value:   0.18764
+	 flags:   PARAM
+	}
+	p_1_Pierre_Controller_LTI_real_T_0[9]
+	{
+	 type:    flt(64,IEEE)*
+	 alias:   "Sweep_amp"
+	 value:   0.5
+	 flags:   PARAM
+	}
+	p_1_Pierre_Controller_LTI_real_T_0[10]
+	{
+	 type:    flt(64,IEEE)*
+	 alias:   "Switch_excit"
+	 value:   4.0
+	 flags:   PARAM
+	}
+	p_1_Pierre_Controller_LTI_real_T_0[11]
+	{
+	 type:    flt(64,IEEE)*
+	 alias:   "TMS_amp"
+	 value:   2.0
+	 flags:   PARAM
+	}
+	p_1_Pierre_Controller_LTI_real_T_0[12]
+	{
+	 type:    flt(64,IEEE)*
+	 alias:   "TMS_freq1"
+	 value:   80.0
+	 flags:   PARAM
+	}
+	p_1_Pierre_Controller_LTI_real_T_0[13]
+	{
+	 type:    flt(64,IEEE)*
+	 alias:   "TMS_freq2"
+	 value:   0.0
+	 flags:   PARAM
+	}
+	p_1_Pierre_Controller_LTI_real_T_0[14]
+	{
+	 type:    flt(64,IEEE)*
+	 alias:   "TMS_freq3"
+	 value:   0.0
+	 flags:   PARAM
+	}
+	p_1_Pierre_Controller_LTI_real_T_0[15]
+	{
+	 type:    flt(64,IEEE)*
+	 alias:   "V_sat"
+	 value:   0.2
+	 flags:   PARAM
+	}
+	p_1_Pierre_Controller_LTI_real_T_0[16]
+	{
+	 type:    flt(64,IEEE)*
+	 alias:   "V_sat_TMS"
+	 value:   5.0
+	 flags:   PARAM
+	}
+
+endgroup
+
+-- ******** State Machine Data ************************************************
+
+group "State Machine Data"
+
+
+
+endgroup
+
+
+-- ******** Labels ************************************************************
+
+-- Generation of labels turned off with TRCGenerateLabels option.
+
+-- ******** RTT Dynamic Variables *********************************************
+
+group "RTT Dynamic Variables"
+
+endgroup
+
