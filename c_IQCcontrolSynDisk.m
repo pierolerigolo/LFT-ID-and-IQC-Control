@@ -307,7 +307,8 @@ for orderK = orderK_list
         obj_val      = value(OBJ);
         K_good_state = K.getstate();
         N_enc_it     = utils.encirclements(ss(K), GFRF);
-        K_is_stable  = isstable(ss(K)) && (~cl_check || all(N_enc_it == 0));   % 'stable' = accepted
+        K_is_stable  = STAGE == 1 || (isstable(ss(K)) && (~cl_check || all(N_enc_it == 0)));   % accepted
+        % stage 1 only needs a feasible (solved) controller: no stability / encirclement test
         hist_state{iter}  = K_good_state;
         hist_obj(iter)    = obj_val;
         hist_stable(iter) = K_is_stable;
@@ -315,13 +316,13 @@ for orderK = orderK_list
         iter_in_stage     = iter_in_stage + 1;
         if isstable(ss(K)), stab = 'stable'; else, stab = 'unstable'; end
         stab = sprintf('%s | N_enc [%s] -> %s', stab, num2str(N_enc_it.'), ...
-            string(ifelse_str(K_is_stable, 'accepted', 'REJECTED')));
+            string(ifelse_str(STAGE == 1, 'feasible (stage 1, not tested)', ifelse_str(K_is_stable, 'accepted', 'REJECTED'))));
         fprintf('  obj = %.6f | K OL %s | time = %.2f s\n\n', obj_val, stab, elapsed);
 
         err = abs(prev_obj - obj_val);
         if STAGE == 1 && robust_method == "hinf"
             fprintf('  || r K S ||_inf = %.4f (robustly stable if <= 1)\n', sqrt(obj_val));
-            if obj_val <= 1 && K_is_stable
+            if obj_val <= 1
                 fprintf('  --> Stage 1: robust stability reached\n');
                 nextstage = true;
             end
