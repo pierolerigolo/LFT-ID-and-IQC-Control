@@ -1,4 +1,4 @@
-function [constraints, slack, D, E, PI] = IQC_performance_combinedPI_par_fix(plant, PILTI, controller, eta, gamma, alpha, beta, omegas, opts)
+function [constraints, slack, D, E, PI, Tau] = IQC_performance_combinedPI_par_fix(plant, PILTI, controller, eta, gamma, alpha, beta, omegas, opts)
     %IQC_PERFORMANCE_COMBINEDPI_PAR_FIX Robust-performance version of
     %IQC_reduced_combinedPI_par_fix: for a FIXED controller and a FIXED performance
     %level gamma, LMI constraints in the multiplier of the parametric block
@@ -17,6 +17,10 @@ function [constraints, slack, D, E, PI] = IQC_performance_combinedPI_par_fix(pla
     %   PIrp_plus = blkdiag over (p, z | q, w) of PI_plus, gamma^-1 I, beta_perf I.
     %   No PI normalisation (use pinorm = false in the matching IQC_performance call).
     %   "addSlack": M + slack I >= 0, slack >= slackLower (negative = margin).
+    %   "freeLTIScale" (true): the LTI block multiplier is tau(w)*PILTI with tau(w) >= epsTau
+    %   a decision variable (valid for an LTI block), so the scale of the uncertainty
+    %   multipliers against the performance channel is optimised instead of fixed (tau = 1).
+    %   Tau (cell, one per frequency) is returned; PI contains tau.
     %
     %   Adapted 2026 from IQC_reduced_combinedPI_par_fix and IQC_performance.
     %
@@ -45,6 +49,8 @@ function [constraints, slack, D, E, PI] = IQC_performance_combinedPI_par_fix(pla
         opts.warmstartPI double = [];   % previous COMBINED PI (numeric, 2n x 2n)
         opts.verbose (1, 1) logical = false;
         opts.betaPerformance (1, 1) double = 1e-2;
+        opts.freeLTIScale (1, 1) logical = false;
+        opts.epsTau (1, 1) double = 1e-4;
     end
 
     % Ensure that frequencies are ordered!
@@ -141,6 +147,18 @@ function [constraints, slack, D, E, PI] = IQC_performance_combinedPI_par_fix(pla
         warmstart(E{i}, E_ws{i});
     end
 
+    % ----- Scale of the LTI-block multiplier: tau(w) (fixed 1 unless freeLTIScale) -----
+    Tau = repmat({1}, nomegas, 1);
+    if opts.freeLTIScale
+        for i = 1:nomegas
+            if opts.multiplier == "constant" && i > 1
+                Tau{i} = Tau{1};   continue
+            end
+            Tau{i} = sdpvar(1);
+            warmstart(Tau{i}, 1);
+        end
+    end
+
     if opts.verbose
         fprintf('D warm-start:\n'); disp(double(D{1}));
         fprintf('E warm-start:\n'); disp(double(E{1}));
@@ -155,11 +173,12 @@ function [constraints, slack, D, E, PI] = IQC_performance_combinedPI_par_fix(pla
         Dk = D{i_W};
         Ek = E{i_W};
 
+        tk   = Tau{i_W};
         PLk  = PL(:, :, i_W);
-        PL11 = PLk(1:nl,     1:nl);
-        PL12 = PLk(1:nl,     nl+1:end);
-        PL21 = PLk(nl+1:end, 1:nl);
-        PL22 = PLk(nl+1:end, nl+1:end);
+        PL11 = tk*PLk(1:nl,     1:nl);
+        PL12 = tk*PLk(1:nl,     nl+1:end);
+        PL21 = tk*PLk(nl+1:end, 1:nl);
+        PL22 = tk*PLk(nl+1:end, nl+1:end);
 
         % Combined multiplier on (p ; q): LTI block (given) + parametric block (optimised)
         PI_11 = SL*PL11*SL' + SM*(eta^2 * Dk)*SM';
@@ -174,9 +193,9 @@ function [constraints, slack, D, E, PI] = IQC_performance_combinedPI_par_fix(pla
             ];
         PI_minus_22{i_W} = PI_22 - beta * eye(nq);
 
-        % The LTI part of PI_plus is a constant: it is only CHECKED, never constrained.
+        % LTI part of PI_plus: checked when fixed, constrained when tau is free
         PLplus = [PL11 + alpha*eye(nl), PL12; PL21, (beta + eps(1.0))*eye(nl)];
-        if min(real(eig((PLplus + PLplus') / 2))) <= 0
+        if ~opts.freeLTIScale && min(real(eig((PLplus + PLplus') / 2))) <= 0
             nBadLTI = nBadLTI + 1;
         end
 
@@ -198,6 +217,11 @@ function [constraints, slack, D, E, PI] = IQC_performance_combinedPI_par_fix(pla
             if isfinite(opts.DMax)
                 multiplierConstraints{i_W} = [multiplierConstraints{i_W}; ...
                     Dk <= opts.DMax * eye(nm)];
+            end
+            if opts.freeLTIScale
+                multiplierConstraints{i_W} = [multiplierConstraints{i_W}; ...
+                    tk >= opts.epsTau; ...
+                    (PLplus + PLplus')/2 >= opts.epsPIplus * eye(2*nl)];
             end
         end
     end

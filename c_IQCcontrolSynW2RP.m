@@ -68,6 +68,9 @@ zeta_n        = 0.0001;
 alpha_PI        = 0;         % split of the multiplier (Gupta et al. 2024, Cor. 1)
 beta_PI         = 0.5;
 beta_perf       = 1e-2;      % beta of the performance channel (IQC_performance)
+free_tau        = true;      % stage 3: scale tau(w) of the W2-block multiplier optimised with D, E
+                             % (relative weight of the uncertainty vs the performance channel);
+                             % false = tau fixed at 1 (only perf_scale)
 rp_slack        = false;     % stage 2 without slack (true: gamma + rp_slack_weight*slack, slack <= 1)
 rp_slack_weight = 1e7;       % stage-2 objective gamma + rp_slack_weight*slack: the weight must be much
                              % larger than gamma (~||W1 S||^2, 1e3-1e5 with peak_extra 500), otherwise
@@ -263,8 +266,11 @@ for orderK = orderK_list
                         % (a) multiplier for the current (frozen) controller at its robust
                         %     performance level gamma_val (relaxed by 1.05 in the bisection)
                         [eta, D_val, E_val, PI_matrix] = multiplier_bisection_rp(G_rp, PILTI, K, eta, D_val, E_val, ...
-                            alpha_PI, beta_PI, W_lft, multiplier_type, D0, gamma_val, beta_perf);
+                            alpha_PI, beta_PI, W_lft, multiplier_type, D0, gamma_val, beta_perf, free_tau);
                         PI = frd(PI_matrix, W_lft, Ts);
+                        tau_w = -squeeze(real(PI_matrix(np + 1, np + 1, :)));   % W2-block q entry = -tau
+                        fprintf('  multiplier scale tau(w) of the W2 block: min %.3g, median %.3g, max %.3g\n', ...
+                            min(tau_w), median(tau_w), max(tau_w));
                         % (b) controller step: min gamma s.t. robust performance with that multiplier
                         [LMIs, OBJ, slack_var, gamma_var] = datadriven.Objective.IQC_performance( ...
                             G_rp, K, PI, alpha_PI, beta_PI, W_lft, ...
@@ -425,7 +431,7 @@ for orderK = orderK_list
                 else
                 try
                     [eta, D_val, E_val] = multiplier_bisection_rp(G_rp, PILTI, K, eta, D_val, E_val, ...
-                        alpha_PI, beta_PI, W_lft, multiplier_type, D0, gamma_val, beta_perf);
+                        alpha_PI, beta_PI, W_lft, multiplier_type, D0, gamma_val, beta_perf, free_tau);
                 catch ME
                     warning('Final robust-performance eta bisection failed (%s): eta kept at %.4g.', ME.message, eta);
                 end
@@ -664,7 +670,7 @@ function [eta, D_val, E_val, PI_matrix] = multiplier_bisection(G_robustness, PIL
 end
 
 function [eta, D_val, E_val, PI_matrix] = multiplier_bisection_rp(G_combined, PILTI, K, eta, D_val, E_val, ...
-        alpha_PI, beta_PI, W_lft, multiplier_type, D0, gamma_val, beta_perf)
+        alpha_PI, beta_PI, W_lft, multiplier_type, D0, gamma_val, beta_perf, free_tau)
 %MULTIPLIER_BISECTION_RP Largest eta (and D(w), E(w)) for which the frozen controller K
 %   keeps the robust performance level gamma_val (relaxed by 1.05), warm-started.
     warm = {};
@@ -674,7 +680,8 @@ function [eta, D_val, E_val, PI_matrix] = multiplier_bisection_rp(G_combined, PI
         G_combined, PILTI, datadriven.Controller.Fixed(K), alpha_PI, beta_PI, W_lft, ...
         "etaUpperInit", eta, "etaLower", 1e-2, "etaHardCap", 100, ...
         "multiplier", multiplier_type, "epsD", 1e-2*D0, ...
-        "gamma", gamma_val, "gammaRelax", 1.05, "betaPerformance", beta_perf, warm{:});
+        "gamma", gamma_val, "gammaRelax", 1.05, "betaPerformance", beta_perf, ...
+        "freeLTIScale", free_tau, warm{:});
 end
 
 function [ok, idx] = select_stable(hist_stage, hist_stable, hist_obj, stage, mode)

@@ -74,6 +74,7 @@ function [eta, D_val, E_val, PI_matrix, diagnostics] = IQC_reduced_combinedPI_pa
         opts.gamma double = [];
         opts.gammaRelax (1, 1) double = 1.05;
         opts.betaPerformance (1, 1) double = 1e-2;
+        opts.freeLTIScale (1, 1) logical = false;   % robust performance only: tau(w) on the LTI block
     end
 
     solverOpts = sdpsettings('verbose', 0, 'debug', 0, 'solver', char(opts.solver));
@@ -110,7 +111,7 @@ function [eta, D_val, E_val, PI_matrix, diagnostics] = IQC_reduced_combinedPI_pa
         else
             [LMIs, slack, D_var, E_var, PI_var] = datadriven.Objective.IQC_performance_combinedPI_par_fix( ...
                 plant, PILTI, controller, eta_try, opts.gamma*opts.gammaRelax, alpha, beta, omegas, ...
-                commonArgs{:}, "betaPerformance", opts.betaPerformance);
+                commonArgs{:}, "betaPerformance", opts.betaPerformance, "freeLTIScale", opts.freeLTIScale);
         end
 
         if opts.useSlack
