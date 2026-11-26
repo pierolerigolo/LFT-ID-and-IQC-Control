@@ -396,6 +396,7 @@ orderK=opensave.orderK;
 eta=opensave.eta;
 K_stage=opensave.K_stage;
 W1_frd=opensave.W1_frd;
+if isfield(opensave, 'D_val'), D_val = opensave.D_val; E_val = opensave.E_val; end
 
 % Sensitivity of the stage controllers on the nominal plant
 figure; hold on
@@ -440,6 +441,10 @@ if ~exist('realmass', 'var'), realmass = []; end
 nyq_table = utils.nyquistcheck(K_final, GFRF, 'G_hat', G_hat, 'realmass', realmass, ...
     'name', sprintf('no W2: L = G K_final, order %d', orderK), ...
     'file', fullfile('plots', sprintf('%s_nyquist_order%d', 'NoW2', orderK)));
+
+%% Mass multiplier D(w), E(w) of the final controller (stage-3 bisection)
+utils.plotDE(D_val, E_val, W_lft, eta, sprintf('NoW2, order %d', orderK), ...
+    fullfile('plots', sprintf('NoW2_multiplier_DE_order%d.pdf', orderK)));
 
 %% Local functions
 function s = ifelse_str(c, a, b)
