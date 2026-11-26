@@ -539,6 +539,9 @@ if comparewitholdLPV,   Ks_tab{end+1} = KLPV; names_tab(end+1) = "old LPV"; end
 if comparewithELI,      Ks_tab{end+1} = KSOA; names_tab(end+1) = "SOA ellipses"; end
 perf_table = utils.perftable(Ks_tab, names_tab, GFRF, omega_d, 'realmass', realmass, ...
     'G_hat', G_hat, 'file', fullfile('plots', sprintf('w2rp_perf_table_order%d.csv', orderK)));
+% further metrics per controller (each with its own W1 would differ: all evaluated with this run's W1)
+metrics_table = utils.ctrlmetrics(Ks_tab, names_tab, GFRF, W1_frd, omega_d, ...
+    'file', fullfile('plots', sprintf('w2rp_metrics_order%d.csv', orderK)));
 
 figure; utils.magplot(K_final, 'DisplayName', 'K final'); title('Controller')
 exportgraphics(gcf,fullfile('plots','w2rp_cont.pdf'),'ContentType','vector')

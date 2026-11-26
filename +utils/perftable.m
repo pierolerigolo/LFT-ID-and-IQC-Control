@@ -21,6 +21,7 @@ arguments
     opts.G_hat = []
     opts.file string = ""
     opts.digits (1,1) double = 1
+    opts.summary (1,1) logical = true   % add worst / best / mean / spread rows (operating points only)
 end
     nOP = size(GFRF, 2);          % one operating point per channel (as in the c scripts)
     Gw  = zeros(nOP, 1);
@@ -39,6 +40,11 @@ end
     S = zeros(numel(Gw), numel(Ks));
     for j = 1:numel(Ks)
         S(:, j) = mag2db(abs(1./(1 + squeeze(freqresp(Ks{j}, omega_d))*Gw)));
+    end
+    if opts.summary
+        Sop  = S(1:nOP, :);                          % measured operating points only
+        S    = [S; max(Sop, [], 1); min(Sop, [], 1); mean(Sop, 1); max(Sop, [], 1) - min(Sop, [], 1)];
+        rows = [rows; "Worst (max dB)"; "Best (min dB)"; "Mean"; "Spread (max - min)"];
     end
     S = round(S, opts.digits);
 
