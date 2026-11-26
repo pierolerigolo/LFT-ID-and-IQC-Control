@@ -2,9 +2,10 @@
 %
 %   Plant: LFT from b_LFT2ndorderID,  G = G_dm(dm) * G_LTI * (1 + W2*Delta)
 %     channel 1: Delta (W2 block, 1x1 LTI, ||Delta|| <= 1)  -> multiplier diag(1,-1)
-%     channel 2: dm    (real, centred, NOT normalised)       -> multiplier
-%                [eta^2*D, E; E', -D], eta in mass units (eta = dm_bound
-%                covers the whole identified mass range)
+%     channel 2: mass  (real, NORMALISED by lftdata: delta in [-1, 1] is dm in
+%                [-dm_bound, dm_bound])                  -> multiplier
+%                [eta^2*D, E; E', -D], eta normalised (eta = 1 covers the whole
+%                identified mass range; dm = eta*dm_bound kg)
 %   Performance: nominal ||W1 S||_inf, W1 = floor + narrow peak at omega_d.
 %
 %   Stages (frequency-domain convex-concave iterations, fixed-order SS controller):
@@ -69,11 +70,6 @@ zeta_n        = 0.0001;
 % IQC
 alpha_PI        = 0;         % split of the multiplier (Gupta et al. 2024, Cor. 1)
 beta_PI         = 0.5;
-% Units of dm for the synthesis: dm_ref = dm_bound of the reference (uncorrected 1110) id.
-% Scaling the FRFs by c (1110gc) multiplies the grey-box masses and dm_bound by 1/c; the dm
-% channel of the LFT is rescaled so that the synthesis runs in the reference units (see
-% below). [] -> no rescaling.
-dm_ref          = 0.3537;
 multiplier_type = "frequency";   % "frequency" or "constant" D, E
 
 % Optimisation
@@ -99,38 +95,22 @@ addpath(genpath("C:\Users\admin\Documents\MATLAB\tbxmanager"))
 
 %% Load the LFT plant
 load(fullfile('Data', sprintf('%s.mat', idname)), 'GLFT', 'Delta', 'dm_bound', 'GFRF')
-eta0_list           = dm_bound./[ 1];      % initial bound on dm (mass units)
+eta0_list           = 1./[1];      % initial bound on the NORMALISED mass uncertainty: lftdata returns
+                                   % delta in [-1, 1] (= dm in [-dm_bound, dm_bound]); 1 = whole identified range
 W_lft = GLFT.Frequency;
 [nout_lft, nin_lft] = size(GLFT);
 [nq, np] = size(Delta);          % Delta: p (plant outputs, np) -> q (plant inputs, nq)
 ny    = nout_lft - np;
 nu    = nin_lft - nq;
-% gain correction applied to the OUTPUT of the LFT (G -> plant_gain*G): the mass, W2 and
-% dm range stay those of the original id, so the robust problem is the same as without
-% correction (only K scales by 1/plant_gain). Scaling the FRFs before b instead (1110gc)
-% rescales the grey-box masses (dm_bound 0.35 -> 1.81 kg) and with it the dm multiplier,
-% and the alpha/beta split of the IQC is not scale invariant: stage 1 stops reaching 0.
+% optional gain correction applied to the OUTPUT of the LFT (G -> plant_gain*G), for an
+% uncorrected idname. Equivalent to using the corrected id (1110gc): the mass channel of
+% GLFT is normalised (delta in [-1, 1]), so the masses scaling with the correction
+% (dm_bound 0.35 -> 1.81 kg) does not change the robust problem; only K scales by 1/gain.
 if ~isempty(gainfile)
     plant_gain = getfield(load(gainfile, 'gain_corr'), 'gain_corr');
     GLFT = blkdiag(eye(np), plant_gain*eye(ny))*GLFT;
     GFRF = plant_gain*GFRF;
     fprintf('plant gain correction %.4f (from %s)\n', plant_gain, gainfile);
-end
-% ----- dm channel in the units of the reference id -----
-% The IQC synthesis is NOT unit invariant (fixed D in stages 1-2, beta split, normalisations):
-% on the gain-corrected id (masses x 1/c) stage 1 no longer reaches zero slack, even with D
-% rescaled. So the dm channel is rescaled to the units of the reference id: with
-% k_dm = dm_bound/dm_ref, q_dm -> k_dm*q_dm in the LFT and dm in [-dm_ref, dm_ref]; the plant
-% is unchanged and the synthesis is the same problem as on the reference id. eta (and the
-% file names) are in the reference units: physical dm range = k_dm*eta.
-k_dm = 1;
-if ~isempty(dm_ref)
-    k_dm = dm_bound/dm_ref;
-    idm  = nq;                                  % dm = last Delta channel (W2 block first)
-    GLFT(:, idm) = k_dm*GLFT(:, idm);
-    dm_bound  = dm_ref;
-    eta0_list = eta0_list/k_dm;
-    fprintf('dm channel rescaled by k_dm = %.4g (eta in the units of the reference id, physical = k_dm*eta)\n', k_dm);
 end
 G_hat = GLFT(np+1:end, nq+1:end);   % nominal plant (dm = 0, Delta = 0)
 nOP   = size(GFRF, 2);
@@ -179,7 +159,7 @@ for orderK = orderK_list
             % IQC multipliers, ordering (p1, p2, q1, q2)
             N     = length(W_lft);
             PILTI = frd(repmat(diag([1, -1]), [1 1 N]), W_lft, Ts);          % W2 block
-            D0 = 1;   % D of the dm multiplier in stages 1-2 (dm channel already in reference units)
+            D0 = 1;   % D of the mass multiplier in stages 1-2
             PI0   = frd(repmat(diag([1, eta0^2*D0, -1, -D0]), [1 1 N]), W_lft, Ts); % W2 block + dm at eta0, D = D0
             fprintf('dm multiplier: D0 = %.4g (eta0 = %.4g)\n', D0, eta0);
 
@@ -390,7 +370,7 @@ for orderK = orderK_list
         
             %% Nominal closed loop and save
             norminf_W1S = norm(W1_frd*frd(feedback(1, G_hat*K_final), W_lft), inf);
-            fprintf('Order %d: ||W1 S||_inf = %.3f, certified eta = %.4g (dm_bound = %.4g), K OL stable: %d, N_enc [%s]\n', ...
+            fprintf('Order %d: ||W1 S||_inf = %.3f, certified eta = %.4g (normalised: 1 = whole mass range, dm = eta*%.4g kg), K OL stable: %d, N_enc [%s]\n', ...
                 orderK, norminf_W1S, eta, dm_bound, isstable(K_final), num2str(utils.encirclements(K_final, GFRF).'));
         
             tag = stage_tags{STAGE};
@@ -402,7 +382,7 @@ for orderK = orderK_list
             save(fullfile('Data', 'controller', sprintf('%s.mat', expname)), ...
                 'K_final', 'K_stage', 'K_itr', 'D_itr', 'E_itr', 'eta_itr', ...
                 'hist_obj', 'hist_stable', 'hist_stage', 'D_val', 'E_val', ...
-                'eta', 'eta0', 'dm_bound', 'k_dm', 'W1_frd', 'orderK', 'idname', 'STAGE', 'converged', 'norminf_W1S')
+                'eta', 'eta0', 'dm_bound', 'W1_frd', 'orderK', 'idname', 'STAGE', 'converged', 'norminf_W1S')
             diary off
             movefile(diaryfile, fullfile('Data', 'diaries', sprintf('%s.txt', expname)))
             catch ME
@@ -600,7 +580,7 @@ function [eta, D_val, E_val, PI_matrix] = multiplier_bisection(G_robustness, PIL
     [eta, D_val, E_val, PI_matrix] = ...
         datadriven.Objective.IQC_reduced_combinedPI_par_fix_eta_bisection( ...
         G_robustness, PILTI, datadriven.Controller.Fixed(K), alpha_PI, beta_PI, W_lft, ...
-        "etaUpperInit", eta, "etaLower", 1e-2, "etaHardCap", 100*dm_bound, ...
+        "etaUpperInit", eta, "etaLower", 1e-2, "etaHardCap", 100, ...
         "multiplier", multiplier_type, "epsD", 1e-2*D0, warm{:});   % D >= epsD scaled with D0
 end
 
