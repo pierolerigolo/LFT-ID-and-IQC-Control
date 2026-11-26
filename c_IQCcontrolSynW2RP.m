@@ -39,8 +39,7 @@ usesavedcont=false;
 % conditioned; from the stage-1 (robust-stability-only) controller ||W1 S|| ~ 57 and
 % gamma ~ 3e3 (warm start 3e5) make them numerically infeasible / slack-bound.
 % Non-empty: K starts from that file's K_final and stage 1 is skipped. '' = K = 0, stage 1.
-K_init_file = fullfile('Data', 'controller', ...
-    'LFT_GFRF_GdmGLTIW2opt_1110gc_etfe_80hz_fmin10_hyb_controller_order18_80hz_-34db_nperfoptiIQC_notconv_etai1.00_etaf1.06_multi_freq.mat');
+K_init_file = '';   % e.g. the W2 nominal-performance controller file; '' = K = 0 and stage 1
 
 orderK_list   = 18;     % controller orders to synthesise
 Ts            = 0.001;
@@ -54,7 +53,7 @@ cl_check      = true;        % accept a controller only if K is OL stable AND L 
 % Performance weight W1 = floor_gain + peak_extra * band-pass at omega_d
 omega_d       = 80*2*pi;   % disturbance frequency (rad/s)
 floor_gain    = 0.5;
-peak_extra_list    = [ 500 ];
+peak_extra_list    = [ 100 ];   % lower than W2 (500): gamma ~ ||W1 S||^2 must stay moderate for the RP LMIs
 zeta_d        = 0.001;
 zeta_n        = 0.0001;
 
@@ -69,6 +68,7 @@ zeta_n        = 0.0001;
 alpha_PI        = 0;         % split of the multiplier (Gupta et al. 2024, Cor. 1)
 beta_PI         = 0.5;
 beta_perf       = 1e-2;      % beta of the performance channel (IQC_performance)
+rp_slack        = false;     % stage 2 without slack (true: gamma + rp_slack_weight*slack, slack <= 1)
 rp_slack_weight = 1e7;       % stage-2 objective gamma + rp_slack_weight*slack: the weight must be much
                              % larger than gamma (~||W1 S||^2, 1e3-1e5 with peak_extra 500), otherwise
                              % the solver keeps the slack (capped at 1) and drives gamma to 0
@@ -240,7 +240,7 @@ for orderK = orderK_list
                         % slack is <= slack_tol.
                         [LMIs, OBJ, slack_var, gamma_var] = datadriven.Objective.IQC_performance( ...
                             G_combined, K, PI, alpha_PI, beta_PI, W_lft, ...
-                            "pinorm", false, "beta_performance", beta_perf, "addSlack", true, "slack_max", 1, ...
+                            "pinorm", false, "beta_performance", beta_perf, "addSlack", rp_slack, "slack_max", 1, ...
                             "slack_weight", rp_slack_weight);
                     case 3
                         if ~isfinite(gamma_val)
