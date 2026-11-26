@@ -34,6 +34,13 @@ close all; clc; clear; clear("yalmip");
 idname='LFT_GFRF_GdmGLTIW2opt_1110gc_etfe_80hz_fmin10_hyb';   % gain-corrected id
 
 usesavedcont=false;
+% Initial controller of the robust-performance stages: a controller that already meets
+% roughly the performance (gamma of order 1) keeps the robust-performance LMIs well
+% conditioned; from the stage-1 (robust-stability-only) controller ||W1 S|| ~ 57 and
+% gamma ~ 3e3 (warm start 3e5) make them numerically infeasible / slack-bound.
+% Non-empty: K starts from that file's K_final and stage 1 is skipped. '' = K = 0, stage 1.
+K_init_file = fullfile('Data', 'controller', ...
+    'LFT_GFRF_GdmGLTIW2opt_1110gc_etfe_80hz_fmin10_hyb_controller_order18_80hz_-34db_nperfoptiIQC_notconv_etai1.00_etaf1.06_multi_freq.mat');
 
 orderK_list   = 18;     % controller orders to synthesise
 Ts            = 0.001;
@@ -200,12 +207,21 @@ for orderK = orderK_list
             eta   = eta0;
             D_val = repmat({D0}, N, 1);   E_val = repmat({0}, N, 1);   % warm start of the bisection
             STAGE = 1;
+            if ~isempty(K_init_file)
+                K_init = getfield(load(K_init_file, 'K_final'), 'K_final');
+                K.setinitial(K_init);
+                STAGE = 2;
+                K_stage{1} = ss(K);
+                fprintf('Initial controller from %s (||W1 S||_inf = %.3f, N_enc [%s]): stage 1 skipped\n', K_init_file, ...
+                    norm(W1_frd*frd(feedback(1, G_hat*ss(K)), W_lft), inf), num2str(utils.encirclements(ss(K), GFRF).'));
+            end
             converged = false;
             nextstage = false;
             prev_obj  = Inf;          % for the convergence test
             iter_in_stage = 0;        % solved iterations in the current stage
             K_good_state  = K.getstate();   % last solved controller (rollback on failure)
             K_stage_state = cell(3, 1);     % parameters of K_stage{s} (for fallbacks)
+            if ~isempty(K_init_file), K_stage_state{1} = K.getstate(); end   % initial controller as stage-1 fallback
         
         
             for iter = 1:max_iter
