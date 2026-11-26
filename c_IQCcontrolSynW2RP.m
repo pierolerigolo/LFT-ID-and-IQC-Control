@@ -301,10 +301,10 @@ for orderK = orderK_list
                 % ----- Solved iteration (oscillations of the objective are allowed) -----
                 obj_val      = value(OBJ);
                 conv_obj     = obj_val;               % convergence test on the full objective (gamma + slack penalty)
-                rp_slack = 0;
+                rp_slack_val = 0;
                 if STAGE >= 2
-                    rp_slack = double(value(slack_var));
-                    if rp_slack <= slack_tol
+                    rp_slack_val = double(value(slack_var));
+                    if rp_slack_val <= slack_tol
                         gamma_val = value(gamma_var);   hist_gamma(iter) = gamma_val;
                     end
                     obj_val = value(gamma_var);          % gamma (without the slack penalty)
@@ -312,7 +312,7 @@ for orderK = orderK_list
                 K_good_state = K.getstate();
                 N_enc_it     = utils.encirclements(ss(K), GFRF);
                 stage1_feas  = obj_val <= slack_tol;
-                K_is_stable  = (STAGE == 1 && stage1_feas) || (STAGE > 1 && rp_slack <= slack_tol && isstable(ss(K)) && (~cl_check || all(N_enc_it == 0)));   % accepted
+                K_is_stable  = (STAGE == 1 && stage1_feas) || (STAGE > 1 && rp_slack_val <= slack_tol && isstable(ss(K)) && (~cl_check || all(N_enc_it == 0)));   % accepted
                 % stage 1: accepted = feasible (slack <= slack_tol), no stability / encirclement test
                 hist_state{iter}  = K_good_state;
                 hist_obj(iter)    = obj_val;
@@ -324,7 +324,7 @@ for orderK = orderK_list
                     string(ifelse_str(STAGE == 1, ifelse_str(stage1_feas, 'stage 1 FEASIBLE', 'stage 1 not feasible yet'), ifelse_str(K_is_stable, 'accepted', 'REJECTED'))));
                 if STAGE >= 2
                     fprintf('  gamma = %.6f (robust perf. level sqrt(gamma) = %.4f) | RP slack = %.2g | eta = %.4g | K OL %s | time = %.2f s\n\n', ...
-                        obj_val, sqrt(obj_val), rp_slack, eta, stab, elapsed);
+                        obj_val, sqrt(obj_val), rp_slack_val, eta, stab, elapsed);
                 else
                     fprintf('  slack = %.6f | eta = %.4g | K OL %s | time = %.2f s\n\n', obj_val, eta, stab, elapsed);
                 end
