@@ -21,7 +21,7 @@ oldidfile  = fullfile('Data', 'MIVIDA 261110', '261110_gfrf0kg_xsswp.mat');     
 newidfile  = fullfile('Data', 'MIVIDA 261118 sswp new simulink', 'gfrf0_ssweep_id.mat');   % x_command -> Payload_acc1
 g_block = 0.1;         % factor inside the controller block (folded into G_new)
 f_band  = [20 200];    % band for the estimate (Hz)
-coh_min = 0.9;         % minimum coherence of both sweeps
+coh_min = 0.6;         % minimum coherence of both sweeps
 
 % FRF exactly as in a_MultimodelFRFID
 Ts      = 0.001;
@@ -38,7 +38,7 @@ coh   = @(u, y) interp1(mscohere(detrend(u(:)), detrend(y(:)), hann(4096), 2048,
 
 %% Gain estimate
 r   = squeeze(G_new.ResponseData)./squeeze(G_old.ResponseData);
-sel = w(:)/2/pi >= f_band(1) & w(:)/2/pi <= f_band(2) & C_old(:) > coh_min & C_new(:) > coh_min;
+sel = w(:)/2/pi >= f_band(1) & w(:)/2/pi <= f_band(2)% & C_old(:) > coh_min & C_new(:) > coh_min;
 c   = median(abs(r(sel)));
 ph  = rad2deg(median(angle(r(sel))));
 Go  = squeeze(G_old.ResponseData);  Gn = squeeze(G_new.ResponseData);

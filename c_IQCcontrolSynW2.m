@@ -39,9 +39,9 @@ close all; clc; clear; clear("yalmip");
 % idname ='LFT_GFRF_GdmGLTIW2opthpf75fl40_1028_etfe_50hz';
 % idname='LFT_GFRF_GdmGLTIW2opt_1028_etfe_80hz_fmin10';
 % idname='LFT_GFRF_GdmGLTIW2opt_1028_etfe_80hz_fmin10';
-idname='LFT_GFRF_GdmGLTIW2opt_1110_etfe_80hz_fmin10_hyb';
+idname='LFT_GFRF_GdmGLTIW2opt_1110gc_etfe_80hz_fmin10_hyb';
 
-usesavedcont=true;
+usesavedcont=false;
 
 orderK_list   = 18;     % controller orders to synthesise
 Ts            = 0.001;
