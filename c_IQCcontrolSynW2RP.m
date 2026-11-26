@@ -53,7 +53,7 @@ cl_check      = true;        % accept a controller only if K is OL stable AND L 
 % Performance weight W1 = floor_gain + peak_extra * band-pass at omega_d
 omega_d       = 80*2*pi;   % disturbance frequency (rad/s)
 floor_gain    = 0.5;
-peak_extra_list    = [ 100 ];   % lower than W2 (500): gamma ~ ||W1 S||^2 must stay moderate for the RP LMIs
+peak_extra_list    = [ 500 ];   % lower than W2 (500): gamma ~ ||W1 S||^2 must stay moderate for the RP LMIs
 zeta_d        = 0.001;
 zeta_n        = 0.0001;
 
