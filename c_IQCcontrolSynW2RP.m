@@ -214,18 +214,26 @@ for orderK = orderK_list
                             G_robustness, K, PI, alpha_PI, beta_PI, W_lft, ...
                             "addSlack", true, "epsNormalisation", 1e-6, "pinorm", true);
                     case 2
-                        % min gamma s.t. robust performance, fixed multiplier at eta0
-                        [LMIs, OBJ, ~, gamma_var] = datadriven.Objective.IQC_performance( ...
+                        % min gamma (+ 1000 slack) s.t. robust performance, fixed multiplier
+                        % at eta0. The slack is needed: the stage-1 controller is only on the
+                        % boundary of robust stability (slack 0), where robust performance,
+                        % which needs a strict margin, is infeasible. Accepted only once the
+                        % slack is <= slack_tol.
+                        [LMIs, OBJ, slack_var, gamma_var] = datadriven.Objective.IQC_performance( ...
                             G_combined, K, PI, alpha_PI, beta_PI, W_lft, ...
-                            "pinorm", false, "beta_performance", beta_perf);
+                            "pinorm", false, "beta_performance", beta_perf, "addSlack", true, "slack_max", 1);
                     case 3
+                        if ~isfinite(gamma_val)
+                            fprintf('  !! no robust-performance level: stage 2 found no controller with slack <= %g, stopping\n', slack_tol);
+                            break
+                        end
                         % (a) multiplier for the current (frozen) controller at its robust
                         %     performance level gamma_val (relaxed by 1.05 in the bisection)
                         [eta, D_val, E_val, PI_matrix] = multiplier_bisection_rp(G_combined, PILTI, K, eta, D_val, E_val, ...
                             alpha_PI, beta_PI, W_lft, multiplier_type, D0, gamma_val, beta_perf);
                         PI = frd(PI_matrix, W_lft, Ts);
                         % (b) controller step: min gamma s.t. robust performance with that multiplier
-                        [LMIs, OBJ, ~, gamma_var] = datadriven.Objective.IQC_performance( ...
+                        [LMIs, OBJ, slack_var, gamma_var] = datadriven.Objective.IQC_performance( ...
                             G_combined, K, PI, alpha_PI, beta_PI, W_lft, ...
                             "pinorm", false, "beta_performance", beta_perf);
                 end
@@ -272,11 +280,19 @@ for orderK = orderK_list
         
                 % ----- Solved iteration (oscillations of the objective are allowed) -----
                 obj_val      = value(OBJ);
-                if STAGE >= 2, gamma_val = value(gamma_var); hist_gamma(iter) = gamma_val; end
+                conv_obj     = obj_val;               % convergence test on the full objective (gamma + slack penalty)
+                rp_slack = 0;
+                if STAGE >= 2
+                    rp_slack = double(value(slack_var));
+                    if rp_slack <= slack_tol
+                        gamma_val = value(gamma_var);   hist_gamma(iter) = gamma_val;
+                    end
+                    obj_val = value(gamma_var);          % gamma (without the slack penalty)
+                end
                 K_good_state = K.getstate();
                 N_enc_it     = utils.encirclements(ss(K), GFRF);
                 stage1_feas  = obj_val <= slack_tol;
-                K_is_stable  = (STAGE == 1 && stage1_feas) || (STAGE > 1 && isstable(ss(K)) && (~cl_check || all(N_enc_it == 0)));   % accepted
+                K_is_stable  = (STAGE == 1 && stage1_feas) || (STAGE > 1 && rp_slack <= slack_tol && isstable(ss(K)) && (~cl_check || all(N_enc_it == 0)));   % accepted
                 % stage 1: accepted = feasible (slack <= slack_tol), no stability / encirclement test
                 hist_state{iter}  = K_good_state;
                 hist_obj(iter)    = obj_val;
@@ -287,18 +303,18 @@ for orderK = orderK_list
                 stab = sprintf('%s | N_enc [%s] -> %s', stab, num2str(N_enc_it.'), ...
                     string(ifelse_str(STAGE == 1, ifelse_str(stage1_feas, 'stage 1 FEASIBLE', 'stage 1 not feasible yet'), ifelse_str(K_is_stable, 'accepted', 'REJECTED'))));
                 if STAGE >= 2
-                    fprintf('  gamma = %.6f (robust perf. level sqrt(gamma) = %.4f) | eta = %.4g | K OL %s | time = %.2f s\n\n', ...
-                        obj_val, sqrt(obj_val), eta, stab, elapsed);
+                    fprintf('  gamma = %.6f (robust perf. level sqrt(gamma) = %.4f) | RP slack = %.2g | eta = %.4g | K OL %s | time = %.2f s\n\n', ...
+                        obj_val, sqrt(obj_val), rp_slack, eta, stab, elapsed);
                 else
                     fprintf('  slack = %.6f | eta = %.4g | K OL %s | time = %.2f s\n\n', obj_val, eta, stab, elapsed);
                 end
         
-                err = abs(prev_obj - obj_val);
+                err = abs(prev_obj - conv_obj);
                 if STAGE == 2 && iter_in_stage >= max_iter_stage2
                     fprintf('  --> Stage 2: %d iterations reached (max_iter_stage2)\n', iter_in_stage);
                     nextstage = true;
                 end
-                if err < obj_err(STAGE) || err/prev_obj < obj_err(STAGE) || nextstage
+                if err < obj_err(STAGE) || err/abs(prev_obj) < obj_err(STAGE) || nextstage
                     nextstage = false;
                     if STAGE == 2
                         % Stage 2 -> 3 from the best (lowest objective) OL-stable
@@ -333,7 +349,7 @@ for orderK = orderK_list
                         break
                     end
                 else
-                    prev_obj = obj_val;
+                    prev_obj = conv_obj;
                 end
             end
         
