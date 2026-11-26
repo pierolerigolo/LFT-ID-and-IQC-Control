@@ -39,6 +39,7 @@ orderK_list   = 18 %10:2:20;     % controller orders to synthesise
 Ts            = 0.001;
 seed          = 22;
 robust_method = "hinf";      % "hinf" (Hindi et al., small gain in H-inf) | "iqc"
+slack_tol     = 1e-6;        % stage 1 is feasible (robustly stable) only if its slack <= slack_tol
 cl_check      = true;        % accept a controller only if K is OL stable AND L = G K does not
                              % encircle -1 on any measured FRF (utils.encirclements)
 
@@ -309,8 +310,9 @@ for orderK = orderK_list
         obj_val      = value(OBJ);
         K_good_state = K.getstate();
         N_enc_it     = utils.encirclements(ss(K), GFRF);
-        K_is_stable  = STAGE == 1 || (isstable(ss(K)) && (~cl_check || all(N_enc_it == 0)));   % accepted
-        % stage 1 only needs a feasible (solved) controller: no stability / encirclement test
+        stage1_feas  = (robust_method == "hinf" && obj_val <= 1) || (robust_method ~= "hinf" && obj_val <= slack_tol);
+        K_is_stable  = (STAGE == 1 && stage1_feas) || (STAGE > 1 && isstable(ss(K)) && (~cl_check || all(N_enc_it == 0)));   % accepted
+        % stage 1: accepted = feasible (slack <= slack_tol), no stability / encirclement test
         hist_state{iter}  = K_good_state;
         hist_obj(iter)    = obj_val;
         hist_stable(iter) = K_is_stable;
@@ -318,7 +320,7 @@ for orderK = orderK_list
         iter_in_stage     = iter_in_stage + 1;
         if isstable(ss(K)), stab = 'stable'; else, stab = 'unstable'; end
         stab = sprintf('%s | N_enc [%s] -> %s', stab, num2str(N_enc_it.'), ...
-            string(ifelse_str(STAGE == 1, 'feasible (stage 1, not tested)', ifelse_str(K_is_stable, 'accepted', 'REJECTED'))));
+            string(ifelse_str(STAGE == 1, ifelse_str(stage1_feas, 'stage 1 FEASIBLE', 'stage 1 not feasible yet'), ifelse_str(K_is_stable, 'accepted', 'REJECTED'))));
         fprintf('  obj = %.6f | K OL %s | time = %.2f s\n\n', obj_val, stab, elapsed);
 
         err = abs(prev_obj - obj_val);
@@ -345,6 +347,9 @@ for orderK = orderK_list
                 STAGE    = STAGE + 1;
                 prev_obj = Inf;
                 iter_in_stage = 0;
+                if STAGE == 2 && ~any(hist_stage == 1 & hist_stable)
+                    warning('c:stage1', 'Stage 1 never reached a feasible controller (last slack/objective %.3g): stage 2 is likely infeasible.', obj_val);
+                end
                 fprintf('  --> Advancing to Stage %d\n', STAGE);
             else
                 converged = true;
