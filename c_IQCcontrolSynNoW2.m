@@ -147,6 +147,8 @@ for orderK = orderK_list
             rng(seed);
         
             K       = datadriven.Controller.SS(orderK, ny, nu, Ts, "right");
+            K0      = ss(K);   % initial controller: zero gain (C, D = 0) on a random stable pole basis (rng(seed))
+            fprintf('Initial controller: ||K0||_inf = %.3g, max |pole| = %.3f\n', norm(K0, inf), max(abs(pole(K0))));
             K_stage = cell(3, 1);     % controller at the end of each stage
             K_itr = {}; D_itr = {}; E_itr = {}; eta_itr = {};
         
