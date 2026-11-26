@@ -504,6 +504,7 @@ exportgraphics(gcf,fullfile('plots','w2rp_sensstage.pdf'),'ContentType','vector'
 figure; hold on
 comparewithELI=false;
 comparewitholdLPV=true;
+comparewithnormperf=true;   % W2 nominal-performance controller (same id, 1110gc)
 for i = 1:nOP
     utils.magplot(inv(1 + K_final*GFRF(i)), 'Color', colors(i, :), 'DisplayName', 'S OP'+string(i));
     if comparewitholdLPV
@@ -515,6 +516,11 @@ for i = 1:nOP
         SOAsave=load(fullfile('data','finalrepportcont','controller_ellips_sus_7nm_order20_82hz_-30db_nomperf.mat'));
         KSOA=SOAsave.K_itr{end};
         utils.magplot(inv(1 + KSOA*GFRF(i)), 'Color', [colors(i, :) .3],'linestyle','--', 'DisplayName', 'S SOA ELI OP'+string(i));
+    end
+    if comparewithnormperf
+        NPsave=load(fullfile('data','controller','LFT_GFRF_GdmGLTIW2opt_1110gc_etfe_80hz_fmin10_hyb_controller_order18_80hz_-34db_nperfoptiIQC_notconv_etai1.00_etaf1.06_multi_freq.mat'));
+        KNP=NPsave.K_final;
+        utils.magplot(inv(1 + KNP*GFRF(i)), 'Color', [colors(i, :) .3],'linestyle',':', 'DisplayName', 'S W2 nom. perf. OP'+string(i));
     end
 end
 utils.magplot(inv(1 + K_final*G_hat), 'Color', 'k', 'DisplayName', 'S nominal');
