@@ -100,11 +100,10 @@ W_lft = GLFT.Frequency;
 [nq, np] = size(Delta);          % Delta: p (plant outputs, np) -> q (plant inputs, nq)
 ny    = nout_lft - np;
 nu    = nin_lft - nq;
-% gain correction applied to the OUTPUT of the LFT (G -> plant_gain*G): the mass, W2 and
-% dm range stay those of the original id, so the robust problem is the same as without
-% correction (only K scales by 1/plant_gain). Scaling the FRFs before b instead (1110gc)
-% rescales the grey-box masses (dm_bound 0.35 -> 1.81 kg) and with it the dm multiplier,
-% and the alpha/beta split of the IQC is not scale invariant: stage 1 stops reaching 0.
+% optional gain correction applied to the OUTPUT of the LFT (G -> plant_gain*G), for an
+% uncorrected idname. Equivalent to using the corrected id (1110gc): the mass channel of
+% GLFT is normalised (delta in [-1, 1]), so the masses scaling with the correction
+% (dm_bound 0.35 -> 1.81 kg) does not change the robust problem; only K scales by 1/gain.
 if ~isempty(gainfile)
     plant_gain = getfield(load(gainfile, 'gain_corr'), 'gain_corr');
     GLFT = blkdiag(eye(np), plant_gain*eye(ny))*GLFT;
