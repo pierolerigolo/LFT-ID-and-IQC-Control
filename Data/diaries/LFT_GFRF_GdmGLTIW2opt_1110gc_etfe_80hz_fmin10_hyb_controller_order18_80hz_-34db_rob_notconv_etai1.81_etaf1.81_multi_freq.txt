@@ -13,7 +13,7 @@ min:   -1.5000
 
 max:     0
 
-  obj = 0.106463 | eta = 1.81 | K OL stable | N_enc [0  0  0  0] -> feasible (stage 1, not tested) | time = 3.14 s
+  obj = 0.106463 | eta = 1.81 | K OL stable | N_enc [0  0  0  0] -> stage 1 not feasible yet | time = 3.29 s
 
 Iter   2 | Stage 1
 Pi scaler: 1.000e+00 used
@@ -27,7 +27,7 @@ min:   -1.5000
 
 max:     0
 
-  obj = 0.085973 | eta = 1.81 | K OL stable | N_enc [0  0  0  0] -> feasible (stage 1, not tested) | time = 2.93 s
+  obj = 0.085973 | eta = 1.81 | K OL stable | N_enc [0  0  0  0] -> stage 1 not feasible yet | time = 2.94 s
 
 Iter   3 | Stage 1
 Pi scaler: 1.000e+00 used
@@ -41,7 +41,7 @@ min:   -1.5000
 
 max:     0
 
-  obj = 0.069544 | eta = 1.81 | K OL stable | N_enc [0  0  0  0] -> feasible (stage 1, not tested) | time = 2.72 s
+  obj = 0.069544 | eta = 1.81 | K OL stable | N_enc [0  0  0  0] -> stage 1 not feasible yet | time = 2.67 s
 
 Iter   4 | Stage 1
 Pi scaler: 1.000e+00 used
@@ -55,7 +55,7 @@ min:   -1.5000
 
 max:     0
 
-  obj = 0.054811 | eta = 1.81 | K OL stable | N_enc [0  0  0  0] -> feasible (stage 1, not tested) | time = 2.85 s
+  obj = 0.054811 | eta = 1.81 | K OL stable | N_enc [0  0  0  0] -> stage 1 not feasible yet | time = 2.79 s
 
 Iter   5 | Stage 1
 Pi scaler: 1.000e+00 used
@@ -69,7 +69,7 @@ min:   -1.5000
 
 max:     0
 
-  obj = 0.042227 | eta = 1.81 | K OL stable | N_enc [0  0  0  0] -> feasible (stage 1, not tested) | time = 2.88 s
+  obj = 0.042227 | eta = 1.81 | K OL stable | N_enc [0  0  0  0] -> stage 1 not feasible yet | time = 3.00 s
 
 Iter   6 | Stage 1
 Pi scaler: 1.000e+00 used
@@ -83,7 +83,7 @@ min:   -1.5000
 
 max:     0
 
-  obj = 0.031808 | eta = 1.81 | K OL unstable | N_enc [4  2  2  0] -> feasible (stage 1, not tested) | time = 2.80 s
+  obj = 0.031808 | eta = 1.81 | K OL unstable | N_enc [4  2  2  0] -> stage 1 not feasible yet | time = 4.20 s
 
 Iter   7 | Stage 1
 Pi scaler: 1.000e+00 used
@@ -97,7 +97,7 @@ min:   -1.5000
 
 max:     0
 
-  obj = 0.023545 | eta = 1.81 | K OL unstable | N_enc [1  2  0  0] -> feasible (stage 1, not tested) | time = 2.95 s
+  obj = 0.023545 | eta = 1.81 | K OL unstable | N_enc [1  2  0  0] -> stage 1 not feasible yet | time = 4.24 s
 
 Iter   8 | Stage 1
 Pi scaler: 1.000e+00 used
@@ -111,7 +111,7 @@ min:   -1.5000
 
 max:     0
 
-  obj = 0.017139 | eta = 1.81 | K OL unstable | N_enc [-1  0  0  2] -> feasible (stage 1, not tested) | time = 3.25 s
+  obj = 0.017139 | eta = 1.81 | K OL unstable | N_enc [-1  0  0  2] -> stage 1 not feasible yet | time = 4.59 s
 
 Iter   9 | Stage 1
 Pi scaler: 1.000e+00 used
@@ -125,7 +125,7 @@ min:   -1.5000
 
 max:     0
 
-  obj = 0.012294 | eta = 1.81 | K OL unstable | N_enc [-1  0  0  0] -> feasible (stage 1, not tested) | time = 3.28 s
+  obj = 0.012294 | eta = 1.81 | K OL unstable | N_enc [-1  0  0  0] -> stage 1 not feasible yet | time = 4.27 s
 
 Iter  10 | Stage 1
 Pi scaler: 1.000e+00 used
@@ -139,7 +139,7 @@ min:   -1.5000
 
 max:     0
 
-  obj = 0.008763 | eta = 1.81 | K OL unstable | N_enc [-1 -1 -2  0] -> feasible (stage 1, not tested) | time = 3.14 s
+  obj = 0.008763 | eta = 1.81 | K OL unstable | N_enc [-1 -1 -2  0] -> stage 1 not feasible yet | time = 4.53 s
 
 Iter  11 | Stage 1
 Pi scaler: 1.000e+00 used
@@ -153,7 +153,7 @@ min:   -1.5000
 
 max:     0
 
-  obj = 0.006319 | eta = 1.81 | K OL unstable | N_enc [-3 -5 -2  0] -> feasible (stage 1, not tested) | time = 3.21 s
+  obj = 0.006319 | eta = 1.81 | K OL unstable | N_enc [-3 -5 -2  0] -> stage 1 not feasible yet | time = 4.66 s
 
 Iter  12 | Stage 1
 Pi scaler: 1.000e+00 used
@@ -167,7 +167,7 @@ min:   -1.5000
 
 max:     0
 
-  obj = 0.004896 | eta = 1.81 | K OL unstable | N_enc [-3 -3  0  0] -> feasible (stage 1, not tested) | time = 3.49 s
+  obj = 0.004896 | eta = 1.81 | K OL unstable | N_enc [-3 -3  0  0] -> stage 1 not feasible yet | time = 4.95 s
 
 Iter  13 | Stage 1
 Pi scaler: 1.000e+00 used
@@ -181,7 +181,7 @@ min:   -1.5000
 
 max:     0
 
-  obj = 0.003993 | eta = 1.81 | K OL unstable | N_enc [-3 -2  0  0] -> feasible (stage 1, not tested) | time = 3.25 s
+  obj = 0.003993 | eta = 1.81 | K OL unstable | N_enc [-3 -2  0  0] -> stage 1 not feasible yet | time = 4.66 s
 
 Iter  14 | Stage 1
 Pi scaler: 1.000e+00 used
@@ -195,7 +195,7 @@ min:   -1.5000
 
 max:     0
 
-  obj = 0.003248 | eta = 1.81 | K OL unstable | N_enc [-3  0  0  0] -> feasible (stage 1, not tested) | time = 3.30 s
+  obj = 0.003248 | eta = 1.81 | K OL unstable | N_enc [-3  0  0  0] -> stage 1 not feasible yet | time = 4.70 s
 
 Iter  15 | Stage 1
 Pi scaler: 1.000e+00 used
@@ -209,7 +209,7 @@ min:   -1.5000
 
 max:     0
 
-  obj = 0.002635 | eta = 1.81 | K OL unstable | N_enc [-3  0  0  0] -> feasible (stage 1, not tested) | time = 3.16 s
+  obj = 0.002635 | eta = 1.81 | K OL unstable | N_enc [-3  0  0  0] -> stage 1 not feasible yet | time = 4.51 s
 
 Iter  16 | Stage 1
 Pi scaler: 1.000e+00 used
@@ -223,7 +223,7 @@ min:   -1.5000
 
 max:     0
 
-  obj = 0.002132 | eta = 1.81 | K OL unstable | N_enc [-3  0  0  0] -> feasible (stage 1, not tested) | time = 3.14 s
+  obj = 0.002132 | eta = 1.81 | K OL unstable | N_enc [-3  0  0  0] -> stage 1 not feasible yet | time = 4.37 s
 
 Iter  17 | Stage 1
 Pi scaler: 1.000e+00 used
@@ -237,7 +237,7 @@ min:   -1.5000
 
 max:     0
 
-  obj = 0.001722 | eta = 1.81 | K OL unstable | N_enc [-3  0  0  0] -> feasible (stage 1, not tested) | time = 3.12 s
+  obj = 0.001722 | eta = 1.81 | K OL unstable | N_enc [-3  0  0  0] -> stage 1 not feasible yet | time = 4.41 s
 
 Iter  18 | Stage 1
 Pi scaler: 1.000e+00 used
@@ -251,7 +251,7 @@ min:   -1.5000
 
 max:     0
 
-  obj = 0.001389 | eta = 1.81 | K OL unstable | N_enc [-3  0  0 -2] -> feasible (stage 1, not tested) | time = 3.17 s
+  obj = 0.001389 | eta = 1.81 | K OL unstable | N_enc [-3  0  0 -2] -> stage 1 not feasible yet | time = 4.53 s
 
 Iter  19 | Stage 1
 Pi scaler: 1.000e+00 used
@@ -265,7 +265,7 @@ min:   -1.5000
 
 max:     0
 
-  obj = 0.001118 | eta = 1.81 | K OL unstable | N_enc [-3  0  0 -2] -> feasible (stage 1, not tested) | time = 3.17 s
+  obj = 0.001118 | eta = 1.81 | K OL unstable | N_enc [-3  0  0 -2] -> stage 1 not feasible yet | time = 4.49 s
 
 Iter  20 | Stage 1
 Pi scaler: 1.000e+00 used
@@ -279,7 +279,7 @@ min:   -1.5000
 
 max:     0
 
-  obj = 0.000900 | eta = 1.81 | K OL unstable | N_enc [-3  0  0 -2] -> feasible (stage 1, not tested) | time = 3.15 s
+  obj = 0.000900 | eta = 1.81 | K OL unstable | N_enc [-3  0  0 -2] -> stage 1 not feasible yet | time = 4.63 s
 
 Iter  21 | Stage 1
 Pi scaler: 1.000e+00 used
@@ -293,7 +293,7 @@ min:   -1.5000
 
 max:     0
 
-  obj = 0.000723 | eta = 1.81 | K OL unstable | N_enc [-3 -2 -2 -2] -> feasible (stage 1, not tested) | time = 3.05 s
+  obj = 0.000723 | eta = 1.81 | K OL unstable | N_enc [-3 -2 -2 -2] -> stage 1 not feasible yet | time = 4.46 s
 
 Iter  22 | Stage 1
 Pi scaler: 1.000e+00 used
@@ -307,7 +307,7 @@ min:   -1.5000
 
 max:     0
 
-  obj = 0.000581 | eta = 1.81 | K OL unstable | N_enc [-5 -4 -2 -2] -> feasible (stage 1, not tested) | time = 3.04 s
+  obj = 0.000581 | eta = 1.81 | K OL unstable | N_enc [-5 -4 -2 -2] -> stage 1 not feasible yet | time = 4.46 s
 
 Iter  23 | Stage 1
 Pi scaler: 1.000e+00 used
@@ -321,7 +321,7 @@ min:   -1.5000
 
 max:     0
 
-  obj = 0.000466 | eta = 1.81 | K OL unstable | N_enc [-1  0  0  2] -> feasible (stage 1, not tested) | time = 3.04 s
+  obj = 0.000466 | eta = 1.81 | K OL unstable | N_enc [-1  0  0  2] -> stage 1 not feasible yet | time = 4.51 s
 
 Iter  24 | Stage 1
 Pi scaler: 1.000e+00 used
@@ -335,7 +335,7 @@ min:   -1.5000
 
 max:     0
 
-  obj = 0.000374 | eta = 1.81 | K OL unstable | N_enc [-3  0  0  0] -> feasible (stage 1, not tested) | time = 3.18 s
+  obj = 0.000374 | eta = 1.81 | K OL unstable | N_enc [-3  0  0  0] -> stage 1 not feasible yet | time = 4.56 s
 
 Iter  25 | Stage 1
 Pi scaler: 1.000e+00 used
@@ -349,7 +349,7 @@ min:   -1.5000
 
 max:     0
 
-  obj = 0.000300 | eta = 1.81 | K OL unstable | N_enc [-3  0  0  0] -> feasible (stage 1, not tested) | time = 3.95 s
+  obj = 0.000300 | eta = 1.81 | K OL unstable | N_enc [-3  0  0  0] -> stage 1 not feasible yet | time = 4.62 s
 
 Iter  26 | Stage 1
 Pi scaler: 1.000e+00 used
@@ -363,7 +363,7 @@ min:   -1.5000
 
 max:     0
 
-  obj = 0.000241 | eta = 1.81 | K OL unstable | N_enc [-1  2  2  2] -> feasible (stage 1, not tested) | time = 4.54 s
+  obj = 0.000241 | eta = 1.81 | K OL unstable | N_enc [-1  2  2  2] -> stage 1 not feasible yet | time = 4.74 s
 
 Iter  27 | Stage 1
 Pi scaler: 1.000e+00 used
@@ -377,7 +377,7 @@ min:   -1.5000
 
 max:     0
 
-  obj = 0.000193 | eta = 1.81 | K OL unstable | N_enc [-1  2  2  2] -> feasible (stage 1, not tested) | time = 3.20 s
+  obj = 0.000193 | eta = 1.81 | K OL unstable | N_enc [-1  2  2  2] -> stage 1 not feasible yet | time = 4.64 s
 
 Iter  28 | Stage 1
 Pi scaler: 1.000e+00 used
@@ -391,7 +391,7 @@ min:   -1.5000
 
 max:     0
 
-  obj = 0.000155 | eta = 1.81 | K OL unstable | N_enc [0  0  0  0] -> feasible (stage 1, not tested) | time = 3.35 s
+  obj = 0.000155 | eta = 1.81 | K OL unstable | N_enc [0  0  0  0] -> stage 1 not feasible yet | time = 4.91 s
 
 Iter  29 | Stage 1
 Pi scaler: 1.000e+00 used
@@ -405,7 +405,7 @@ min:   -1.5000
 
 max:     0
 
-  obj = 0.000127 | eta = 1.81 | K OL unstable | N_enc [2  2  2  2] -> feasible (stage 1, not tested) | time = 3.24 s
+  obj = 0.000127 | eta = 1.81 | K OL unstable | N_enc [2  2  2  2] -> stage 1 not feasible yet | time = 4.92 s
 
 Iter  30 | Stage 1
 Pi scaler: 1.000e+00 used
@@ -419,6 +419,6 @@ min:   -1.5000
 
 max:     0
 
-  obj = 0.000111 | eta = 1.81 | K OL unstable | N_enc [1  2  2  2] -> feasible (stage 1, not tested) | time = 3.26 s
+  obj = 0.000111 | eta = 1.81 | K OL unstable | N_enc [1  2  2  2] -> stage 1 not feasible yet | time = 4.85 s
 
 Order 18: ||W1 S||_inf = 57.148, certified eta = 1.81 (dm_bound = 1.81), K OL stable: 0, N_enc [1  2  2  2]
