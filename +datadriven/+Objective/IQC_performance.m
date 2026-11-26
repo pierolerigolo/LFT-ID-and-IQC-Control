@@ -25,6 +25,7 @@ function [LMI, OBJ, slack, gamma] = IQC_performance(G, K, PI, alpha, beta, omega
         opts.last_gamma (1, 1) double = 0;
         opts.addSlack (1, 1) logical = false;
         opts.slack_max (1, 1) double = 1;
+        opts.slack_weight (1, 1) double = 1000;   % OBJ = gamma + slack_weight*slack (must dominate gamma)
         opts.pinorm (1,1) logical = false;
     end
 
@@ -195,7 +196,7 @@ function [LMI, OBJ, slack, gamma] = IQC_performance(G, K, PI, alpha, beta, omega
     end
     if opts.addSlack
         LMI = [LMI_collect{:}, gamma >= 0, slack >= 0, slack <= opts.slack_max];
-        OBJ = gamma + 1000*slack;
+        OBJ = gamma + opts.slack_weight*slack;
     else
         LMI = [LMI_collect{:}, gamma >= 0];
         OBJ = gamma;

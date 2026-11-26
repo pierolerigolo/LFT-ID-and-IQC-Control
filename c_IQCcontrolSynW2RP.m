@@ -62,6 +62,9 @@ zeta_n        = 0.0001;
 alpha_PI        = 0;         % split of the multiplier (Gupta et al. 2024, Cor. 1)
 beta_PI         = 0.5;
 beta_perf       = 1e-2;      % beta of the performance channel (IQC_performance)
+rp_slack_weight = 1e7;       % stage-2 objective gamma + rp_slack_weight*slack: the weight must be much
+                             % larger than gamma (~||W1 S||^2, 1e3-1e5 with peak_extra 500), otherwise
+                             % the solver keeps the slack (capped at 1) and drives gamma to 0
 multiplier_type = "frequency";   % "frequency" or "constant" D, E
 
 % Optimisation
@@ -221,7 +224,8 @@ for orderK = orderK_list
                         % slack is <= slack_tol.
                         [LMIs, OBJ, slack_var, gamma_var] = datadriven.Objective.IQC_performance( ...
                             G_combined, K, PI, alpha_PI, beta_PI, W_lft, ...
-                            "pinorm", false, "beta_performance", beta_perf, "addSlack", true, "slack_max", 1);
+                            "pinorm", false, "beta_performance", beta_perf, "addSlack", true, "slack_max", 1, ...
+                            "slack_weight", rp_slack_weight);
                     case 3
                         if ~isfinite(gamma_val)
                             fprintf('  !! no robust-performance level: stage 2 found no controller with slack <= %g, stopping\n', slack_tol);
@@ -387,11 +391,15 @@ for orderK = orderK_list
             if STAGE >= 2
                 % gamma_val: robust performance level of the final controller (kept in sync
                 % with every fallback to an earlier iteration)
+                if ~isfinite(gamma_val)
+                    fprintf('No robust-performance level available: final robust-performance eta not computed.\n');
+                else
                 try
                     [eta, D_val, E_val] = multiplier_bisection_rp(G_combined, PILTI, K, eta, D_val, E_val, ...
                         alpha_PI, beta_PI, W_lft, multiplier_type, D0, gamma_val, beta_perf);
                 catch ME
                     warning('Final robust-performance eta bisection failed (%s): eta kept at %.4g.', ME.message, eta);
+                end
                 end
                 try
                     eta_rs = multiplier_bisection(G_robustness, PILTI, K, eta, D_val, E_val, ...
