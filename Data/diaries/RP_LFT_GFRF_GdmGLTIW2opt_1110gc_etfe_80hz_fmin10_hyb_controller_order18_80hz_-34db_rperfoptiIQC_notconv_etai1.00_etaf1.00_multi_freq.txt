@@ -1,38 +1,9 @@
 
 ===== Controller order 18, peak_extra 500, eta0 1 =====
 Initial controller: ||K0||_inf = 0, max |pole| = 0.978
-Iter   1 | Stage 1
-Pi scaler: 1.000e+00 used
-range of Pi plus
-min:     0
-
-max:     1
-
-range of Pi minus
-min:   -1.5000
-
-max:     0
-
-  slack = 0.000000 | eta = 1 | K OL stable | N_enc [0  0  0  0] -> stage 1 FEASIBLE | time = 2.53 s
-
-Iter   2 | Stage 1
-Pi scaler: 1.000e+00 used
-range of Pi plus
-min:     0
-
-max:     1
-
-range of Pi minus
-min:   -1.5000
-
-max:     0
-
-  slack = 0.000000 | eta = 1 | K OL stable | N_enc [0  0  0  0] -> stage 1 FEASIBLE | time = 2.20 s
-
-  --> Saved K_stage{1}
-  --> Advancing to Stage 2
-Iter   3 | Stage 2
-gamma warm 330051.173462
+Initial controller from Data\controller\LFT_GFRF_GdmGLTIW2opt_1110gc_etfe_80hz_fmin10_hyb_controller_order18_80hz_-34db_nperfoptiIQC_notconv_etai1.00_etaf1.06_multi_freq.mat (||W1 S||_inf = 0.921, N_enc [0  0  0  0]): stage 1 skipped
+Iter   1 | Stage 2
+gamma warm 84.796216
 Pi scaler: 1.000e+00 not used
 range of Pi plus
 min:     0
@@ -44,10 +15,40 @@ min:   -1.5000
 
 max:     0
 
-  gamma = -0.000411 (robust perf. level sqrt(gamma) = 0.0000) | RP slack = 0.91 | eta = 1 | K OL stable | N_enc [0  0  0  0] -> REJECTED | time = 3.96 s
+  gamma = 13138.367632 (robust perf. level sqrt(gamma) = 114.6227) | RP slack = 0.71 | eta = 1 | K OL unstable | N_enc [0  0  0  0] -> REJECTED | time = 4.12 s
+
+Iter   2 | Stage 2
+gamma warm 344502.247342
+Pi scaler: 1.000e+00 not used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  gamma = -0.000171 (robust perf. level sqrt(gamma) = 0.0000) | RP slack = 0.87 | eta = 1 | K OL unstable | N_enc [0  0  0  0] -> REJECTED | time = 4.02 s
+
+Iter   3 | Stage 2
+gamma warm 297117.370064
+Pi scaler: 1.000e+00 not used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  gamma = -0.000181 (robust perf. level sqrt(gamma) = 0.0000) | RP slack = 0.89 | eta = 1 | K OL unstable | N_enc [1  2  2  0] -> REJECTED | time = 3.85 s
 
 Iter   4 | Stage 2
-gamma warm 303146.018272
+gamma warm 748625.908815
 Pi scaler: 1.000e+00 not used
 range of Pi plus
 min:     0
@@ -59,10 +60,10 @@ min:   -1.5000
 
 max:     0
 
-  gamma = -0.002735 (robust perf. level sqrt(gamma) = 0.0000) | RP slack = 0.9 | eta = 1 | K OL stable | N_enc [0  0  0  0] -> REJECTED | time = 3.79 s
+  gamma = -0.000493 (robust perf. level sqrt(gamma) = 0.0000) | RP slack = 0.94 | eta = 1 | K OL unstable | N_enc [1  4  2  0] -> REJECTED | time = 3.94 s
 
 Iter   5 | Stage 2
-gamma warm 273331.458303
+gamma warm 1726126.760351
 Pi scaler: 1.000e+00 not used
 range of Pi plus
 min:     0
@@ -74,10 +75,10 @@ min:   -1.5000
 
 max:     0
 
-  gamma = -0.000094 (robust perf. level sqrt(gamma) = 0.0000) | RP slack = 0.97 | eta = 1 | K OL stable | N_enc [0  0  0  0] -> REJECTED | time = 3.67 s
+  gamma = -0.015508 (robust perf. level sqrt(gamma) = 0.0000) | RP slack = 0.99 | eta = 1 | K OL unstable | N_enc [1  2  2  0] -> REJECTED | time = 3.89 s
 
 Iter   6 | Stage 2
-gamma warm 287559.529443
+gamma warm 3206707.642788
 Pi scaler: 1.000e+00 not used
 range of Pi plus
 min:     0
@@ -89,10 +90,10 @@ min:   -1.5000
 
 max:     0
 
-  gamma = 0.000364 (robust perf. level sqrt(gamma) = 0.0191) | RP slack = 1 | eta = 1 | K OL stable | N_enc [0  0  0  0] -> REJECTED | time = 5.13 s
+  gamma = -0.016461 (robust perf. level sqrt(gamma) = 0.0000) | RP slack = 1 | eta = 1 | K OL unstable | N_enc [-1  0  2  2] -> REJECTED | time = 3.73 s
 
 Iter   7 | Stage 2
-gamma warm 280066.829408
+gamma warm 5440932.310331
 Pi scaler: 1.000e+00 not used
 range of Pi plus
 min:     0
@@ -104,27 +105,12 @@ min:   -1.5000
 
 max:     0
 
-  gamma = -0.001011 (robust perf. level sqrt(gamma) = 0.0000) | RP slack = 1 | eta = 1 | K OL stable | N_enc [0  0  0  0] -> REJECTED | time = 5.57 s
-
-Iter   8 | Stage 2
-gamma warm 276774.735355
-Pi scaler: 1.000e+00 not used
-range of Pi plus
-min:     0
-
-max:     1
-
-range of Pi minus
-min:   -1.5000
-
-max:     0
-
-  gamma = -0.001947 (robust perf. level sqrt(gamma) = 0.0000) | RP slack = 1 | eta = 1 | K OL stable | N_enc [0  0  0  0] -> REJECTED | time = 5.66 s
+  gamma = -0.003990 (robust perf. level sqrt(gamma) = 0.0000) | RP slack = 1 | eta = 1 | K OL unstable | N_enc [-3  0 -2 -2] -> REJECTED | time = 3.82 s
 
   --> No accepted controller (OL stable, no encirclement) in stage 2: back to the stage-1 controller
   --> Saved K_stage{2}
   --> Advancing to Stage 3
-Iter   9 | Stage 3
+Iter   8 | Stage 3
   !! no robust-performance level: stage 2 found no controller with slack <= 1e-06, stopping
 No robust-performance level available: final robust-performance eta not computed.
 D warm-start:
@@ -134,79 +120,75 @@ E warm-start:
      0
 
   [etaLower] eta = 0.01 -> true (slack = 0)
-    D = 1.394
-    E = 9.667e-16+1.674e-08i
+    D = 1.446
+    E = 2.907e-16+1.899e-08i
 D warm-start:
-    1.3939
+    1.4462
 
 E warm-start:
-   9.6673e-16 + 1.6738e-08i
+   2.9072e-16 + 1.8988e-08i
 
   [expand] eta = 1 -> true (slack = 0)
-    D = 1.351
-    E = -9.514e-15-6.626e-05i
+    D = 1.641
+    E = 1.647e-16-6.612e-05i
 D warm-start:
-    1.3514
+    1.6408
 
 E warm-start:
-  -9.5142e-15 - 6.6258e-05i
+   1.6472e-16 - 6.6118e-05i
 
   [expand] eta = 2 -> false (slack = 0)
 D warm-start:
-    1.3514
+    1.6408
 
 E warm-start:
-  -9.5142e-15 - 6.6258e-05i
+   1.6472e-16 - 6.6118e-05i
 
   [bisect  1] eta = 1.5 -> false (slack = 0)
 D warm-start:
-    1.3514
+    1.6408
 
 E warm-start:
-  -9.5142e-15 - 6.6258e-05i
+   1.6472e-16 - 6.6118e-05i
 
   [bisect  2] eta = 1.25 -> false (slack = 0)
 D warm-start:
-    1.3514
+    1.6408
 
 E warm-start:
-  -9.5142e-15 - 6.6258e-05i
+   1.6472e-16 - 6.6118e-05i
 
-  [bisect  3] eta = 1.125 -> true (slack = 0)
-    D = 1.151
-    E = 3.816e-15-0.0001968i
+  [bisect  3] eta = 1.125 -> false (slack = 0)
 D warm-start:
-    1.1505
+    1.6408
 
 E warm-start:
-   3.8157e-15 - 1.9679e-04i
+   1.6472e-16 - 6.6118e-05i
 
-  [bisect  4] eta = 1.1875 -> true (slack = 0)
-    D = 1.218
-    E = -1.51e-15-0.0002207i
+  [bisect  4] eta = 1.0625 -> true (slack = 0)
+    D = 2.357
+    E = 4.478e-16-0.0001491i
 D warm-start:
-    1.2182
+    2.3569
 
 E warm-start:
-  -1.5105e-15 - 2.2071e-04i
+   4.4780e-16 - 1.4913e-04i
 
-  [bisect  5] eta = 1.21875 -> false (slack = 0)
+  [bisect  5] eta = 1.09375 -> false (slack = 0)
 D warm-start:
-    1.2182
+    2.3569
 
 E warm-start:
-  -1.5105e-15 - 2.2071e-04i
+   4.4780e-16 - 1.4913e-04i
 
-  [bisect  6] eta = 1.20312 -> false (slack = 0)
+  [bisect  6] eta = 1.07812 -> false (slack = 0)
 D warm-start:
-    1.2182
+    2.3569
 
 E warm-start:
-  -1.5105e-15 - 2.2071e-04i
+   4.4780e-16 - 1.4913e-04i
 
-  [bisect  7] eta = 1.19531 -> true (slack = 0)
-    D = 1.235
-    E = 4.016e-15-0.0002728i
-IQC_reduced_combinedPI_eta_bisection: converged, eta = 1.19531
-Robust performance: gamma = NaN (level NaN) certified up to eta = 1; robust stability up to eta_rs = 1.195
-Order 18: ||W1 S||_inf = 57.450, certified eta = 1 (normalised: 1 = whole mass range, dm = eta*1.81 kg), K OL stable: 1, N_enc [0  0  0  0]
+  [bisect  7] eta = 1.07031 -> false (slack = 0)
+IQC_reduced_combinedPI_eta_bisection: converged, eta = 1.0625
+Robust performance: gamma = NaN (level NaN) certified up to eta = 1; robust stability up to eta_rs = 1.062
+Order 18: ||W1 S||_inf = 0.921, certified eta = 1 (normalised: 1 = whole mass range, dm = eta*1.81 kg), K OL stable: 1, N_enc [0  0  0  0]
