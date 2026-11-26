@@ -195,7 +195,7 @@ for orderK = orderK_list
             fprintf('Initial controller: ||K0||_inf = %.3g, max |pole| = %.3f\n', norm(K0, inf), max(abs(pole(K0))));
             K_stage = cell(3, 1);     % controller at the end of each stage
             K_itr = {}; D_itr = {}; E_itr = {}; eta_itr = {};
-            hist_gamma = nan(max_iter, 1);   gamma_val = NaN;
+            hist_gamma = nan(max_iter, 1);   gamma_val = NaN;   perf_scale = NaN;   G_rp = G_combined;
         
             % history of the solved iterations (to fall back on OL-stable controllers)
             hist_state  = cell(max_iter, 1);   % K.getstate() after the iteration
@@ -233,13 +233,26 @@ for orderK = orderK_list
                             G_robustness, K, PI, alpha_PI, beta_PI, W_lft, ...
                             "addSlack", true, "epsNormalisation", 1e-6, "pinorm", true);
                     case 2
-                        % min gamma (+ 1000 slack) s.t. robust performance, fixed multiplier
-                        % at eta0. The slack is needed: the stage-1 controller is only on the
-                        % boundary of robust stability (slack 0), where robust performance,
-                        % which needs a strict margin, is infeasible. Accepted only once the
-                        % slack is <= slack_tol.
+                        % min gamma s.t. robust performance, fixed multiplier at eta0.
+                        % Scale of the performance channel (perf_scale = sqrt(tau)): with q = 0
+                        % the condition requires |p|_PI11^2 < |w|^2 for p = H_pw w (disturbance
+                        % -> uncertainty inputs), WHATEVER gamma, because the multiplier and the
+                        % performance block are both fixed. Scaling w by perf_scale (= using
+                        % tau*PI, tau free in theory) is set at the first stage-2 iteration so
+                        % that the weighted ||H_pw||_inf of the current K is 0.5.
+                        if isnan(perf_scale)
+                            H   = lft(G_combined, ss(K));                 % [q; w] -> [p; z]
+                            Hpw = squeeze(H(1:np, nq + (1:ny)).ResponseData);   % np x nw(=1) x N
+                            Pd  = diag(PI0.ResponseData(1:np, 1:np, 1));        % Pi_11 weights
+                            hpw = sqrt(max(real(Pd(:).' * abs(Hpw).^2), [], 2));
+                            perf_scale = min(1, 0.5/hpw);
+                            G_rp = G_combined;
+                            G_rp(:, nq + (1:ny)) = perf_scale*G_combined(:, nq + (1:ny));
+                            fprintf('  performance channel scaled by %.4g (weighted ||H_pw||_inf = %.4g): gamma_true = gamma/%.4g\n', ...
+                                perf_scale, hpw, perf_scale^2);
+                        end
                         [LMIs, OBJ, slack_var, gamma_var] = datadriven.Objective.IQC_performance( ...
-                            G_combined, K, PI, alpha_PI, beta_PI, W_lft, ...
+                            G_rp, K, PI, alpha_PI, beta_PI, W_lft, ...
                             "pinorm", false, "beta_performance", beta_perf, "addSlack", rp_slack, "slack_max", 1, ...
                             "slack_weight", rp_slack_weight);
                     case 3
@@ -249,12 +262,12 @@ for orderK = orderK_list
                         end
                         % (a) multiplier for the current (frozen) controller at its robust
                         %     performance level gamma_val (relaxed by 1.05 in the bisection)
-                        [eta, D_val, E_val, PI_matrix] = multiplier_bisection_rp(G_combined, PILTI, K, eta, D_val, E_val, ...
+                        [eta, D_val, E_val, PI_matrix] = multiplier_bisection_rp(G_rp, PILTI, K, eta, D_val, E_val, ...
                             alpha_PI, beta_PI, W_lft, multiplier_type, D0, gamma_val, beta_perf);
                         PI = frd(PI_matrix, W_lft, Ts);
                         % (b) controller step: min gamma s.t. robust performance with that multiplier
                         [LMIs, OBJ, slack_var, gamma_var] = datadriven.Objective.IQC_performance( ...
-                            G_combined, K, PI, alpha_PI, beta_PI, W_lft, ...
+                            G_rp, K, PI, alpha_PI, beta_PI, W_lft, ...
                             "pinorm", false, "beta_performance", beta_perf);
                 end
         
@@ -323,8 +336,8 @@ for orderK = orderK_list
                 stab = sprintf('%s | N_enc [%s] -> %s', stab, num2str(N_enc_it.'), ...
                     string(ifelse_str(STAGE == 1, ifelse_str(stage1_feas, 'stage 1 FEASIBLE', 'stage 1 not feasible yet'), ifelse_str(K_is_stable, 'accepted', 'REJECTED'))));
                 if STAGE >= 2
-                    fprintf('  gamma = %.6f (robust perf. level sqrt(gamma) = %.4f) | RP slack = %.2g | eta = %.4g | K OL %s | time = %.2f s\n\n', ...
-                        obj_val, sqrt(obj_val), rp_slack_val, eta, stab, elapsed);
+                    fprintf('  gamma = %.6f (true %.6g, robust perf. level %.4f) | RP slack = %.2g | eta = %.4g | K OL %s | time = %.2f s\n\n', ...
+                        obj_val, obj_val/perf_scale^2, sqrt(max(obj_val, 0))/perf_scale, rp_slack_val, eta, stab, elapsed);
                 else
                     fprintf('  slack = %.6f | eta = %.4g | K OL %s | time = %.2f s\n\n', obj_val, eta, stab, elapsed);
                 end
@@ -411,7 +424,7 @@ for orderK = orderK_list
                     fprintf('No robust-performance level available: final robust-performance eta not computed.\n');
                 else
                 try
-                    [eta, D_val, E_val] = multiplier_bisection_rp(G_combined, PILTI, K, eta, D_val, E_val, ...
+                    [eta, D_val, E_val] = multiplier_bisection_rp(G_rp, PILTI, K, eta, D_val, E_val, ...
                         alpha_PI, beta_PI, W_lft, multiplier_type, D0, gamma_val, beta_perf);
                 catch ME
                     warning('Final robust-performance eta bisection failed (%s): eta kept at %.4g.', ME.message, eta);
@@ -429,8 +442,8 @@ for orderK = orderK_list
         
             %% Nominal closed loop and save
             norminf_W1S = norm(W1_frd*frd(feedback(1, G_hat*K_final), W_lft), inf);
-            fprintf('Robust performance: gamma = %.4f (level %.4f) certified up to eta = %.4g; robust stability up to eta_rs = %.4g\n', ...
-                gamma_val, sqrt(gamma_val), eta, eta_rs);
+            fprintf('Robust performance: gamma = %.4f (true %.4g, level %.4f; performance channel scaled by %.4g) certified up to eta = %.4g; robust stability up to eta_rs = %.4g\n', ...
+                gamma_val, gamma_val/perf_scale^2, sqrt(gamma_val)/perf_scale, perf_scale, eta, eta_rs);
             fprintf('Order %d: ||W1 S||_inf = %.3f, certified eta = %.4g (normalised: 1 = whole mass range, dm = eta*%.4g kg), K OL stable: %d, N_enc [%s]\n', ...
                 orderK, norminf_W1S, eta, dm_bound, isstable(K_final), num2str(utils.encirclements(K_final, GFRF).'));
         
@@ -443,7 +456,7 @@ for orderK = orderK_list
             save(fullfile('Data', 'controller', sprintf('%s.mat', expname)), ...
                 'K_final', 'K_stage', 'K_itr', 'D_itr', 'E_itr', 'eta_itr', ...
                 'hist_obj', 'hist_stable', 'hist_stage', 'D_val', 'E_val', ...
-                'eta', 'eta0', 'eta_rs', 'gamma_val', 'hist_gamma', 'beta_perf', 'dm_bound', 'W1_frd', 'orderK', 'idname', 'STAGE', 'converged', 'norminf_W1S')
+                'eta', 'eta0', 'eta_rs', 'gamma_val', 'hist_gamma', 'perf_scale', 'beta_perf', 'dm_bound', 'W1_frd', 'orderK', 'idname', 'STAGE', 'converged', 'norminf_W1S')
             diary off
             movefile(diaryfile, fullfile('Data', 'diaries', sprintf('%s.txt', expname)))
             catch ME
