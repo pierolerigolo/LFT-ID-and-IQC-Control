@@ -31,7 +31,7 @@
 %               Needs a multiplier with separate blocks for dmhat and eps (not yet in c).
 %
 %   Measured FRFs for the checks of the c scripts (encirclements, Nyquist, tables): each
-%   operating point is compensated with its own estimate dmhat_i = dm_i + eps_test*eps_max
+%   operating point is compensated with its own estimate dmhat_i = dm_i + eps_test*dm_bound
 %   (eps_test = 0: perfect estimate), GFRF = GFRF_raw (1 + dmhat_i G_nom).
 %
 %   Input : Data/<lftname>.mat from b_LFT2ndorderID
