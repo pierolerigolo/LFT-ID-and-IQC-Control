@@ -29,7 +29,7 @@ idname='LFT_GFRF_GdmGLTIW2opt_1110gc_etfe_80hz_fmin10_hyb_estfix0';   % from b_L
 
 usesavedcont=false;
 
-orderK_list   = 18;     % controller orders to synthesise
+orderK_list   = 20;     % controller orders to synthesise
 Ts            = 0.001;
 seed          = 22;
 gainfile      = '';          % optional: gain_corr file applied to the LFT output (with an
@@ -41,7 +41,7 @@ cl_check      = true;        % accept a controller only if K is OL stable AND L 
 % Performance weight W1 = floor_gain + peak_extra * band-pass at omega_d
 omega_d       = 80*2*pi;   % disturbance frequency (rad/s)
 floor_gain    = 0.5;
-peak_extra_list    = [ 500 ];
+peak_extra_list    = [ 1500 ];
 zeta_d        = 0.001;
 zeta_n        = 0.0001;
 
