@@ -59,7 +59,7 @@ multiplier_type = "frequency";   % "frequency" or "constant" D, E
 
 % Optimisation
 solver          = 'mosek';
-mosek_near_rel  = 1e6;       % controller steps only (MOSEK default 1e3); the eta
+mosek_near_rel  = 1e3;       % controller steps only (MOSEK default 1e3); the eta
                              % bisection always runs at the MOSEK defaults
 max_iter        = 30;
 max_iter_stage2 = 20;        % stage 2 ends after this many iterations even if the

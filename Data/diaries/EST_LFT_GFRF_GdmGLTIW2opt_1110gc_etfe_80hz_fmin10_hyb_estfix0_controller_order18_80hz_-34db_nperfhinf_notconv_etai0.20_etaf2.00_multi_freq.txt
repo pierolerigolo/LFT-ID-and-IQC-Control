@@ -1,0 +1,161 @@
+
+===== Controller order 18, peak_extra 500, eta0 0.2 =====
+Initial controller: ||K0||_inf = 0, max |pole| = 0.978
+Iter   1 | Stage 1
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 0.000000 | eta = 0.2 | K OL stable | N_enc [0  0  0  0] -> stage 1 FEASIBLE | time = 2.57 s
+
+Iter   2 | Stage 1
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 0.000000 | eta = 0.2 | K OL stable | N_enc [0  0  0  0] -> stage 1 FEASIBLE | time = 1.98 s
+
+  --> Saved K_stage{1}
+  --> Advancing to Stage 2
+Iter   3 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 0.461247 | eta = 0.2 | K OL unstable | N_enc [0  0  0  0] -> REJECTED | time = 4.66 s
+
+Iter   4 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 0.371365 | eta = 0.2 | K OL unstable | N_enc [0  0  0  0] -> REJECTED | time = 4.52 s
+
+Iter   5 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 0.353358 | eta = 0.2 | K OL unstable | N_enc [0  0  0  0] -> REJECTED | time = 3.86 s
+
+Iter   6 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 0.352220 | eta = 0.2 | K OL unstable | N_enc [0  0  0  0] -> REJECTED | time = 3.76 s
+
+Iter   7 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  !! Solver failed (code 4: Numerical problems (<a href="yalmip.github.io/inside/debuggingnumerics">learn to debug</a>) (MOSEK-SDP))
+  --> no accepted controller (OL stable, no encirclement) in stage 2: back to the stage-1 controller
+  --> no accepted stage-2 controller: stopping (lower peak_extra or raise mosek_near_rel)
+No accepted stage-2 controller: back to the stage-1 controller
+D warm-start:
+     1
+
+E warm-start:
+     0
+
+  [etaLower] eta = 0.01 -> true (slack = 0)
+    D = 1.474
+    E = 2.346e-15+5.586e-09i
+D warm-start:
+    1.4736
+
+E warm-start:
+   2.3458e-15 + 5.5856e-09i
+
+  [expand] eta = 0.2 -> true (slack = 0)
+    D = 2.171
+    E = 1.075e-13+1.742e-06i
+D warm-start:
+    2.1709
+
+E warm-start:
+   1.0751e-13 + 1.7422e-06i
+
+  [expand] eta = 0.4 -> true (slack = 0)
+    D = 2.307
+    E = -4.494e-14+2.875e-06i
+D warm-start:
+    2.3065
+
+E warm-start:
+  -4.4939e-14 + 2.8749e-06i
+
+  [expand] eta = 0.8 -> true (slack = 0)
+    D = 1.971
+    E = -1.097e-14-2.263e-05i
+D warm-start:
+    1.9709
+
+E warm-start:
+  -1.0966e-14 - 2.2625e-05i
+
+  [expand] eta = 1.6 -> true (slack = 0)
+    D = 0.5598
+    E = 4.118e-15-0.0003973i
+D warm-start:
+    0.5598
+
+E warm-start:
+   4.1181e-15 - 3.9726e-04i
+
+  [expand] eta = 2 -> true (slack = 0)
+    D = 0.281
+    E = -2.983e-14-0.0004927i
+IQC_reduced_combinedPI_eta_bisection: hit etaHardCap = 2 while still feasible; stopping expansion.
+Order 18: ||W1 S||_inf = 52.139, certified eta = 2 (normalised: 1 = whole mass range, dm = eta*1.81 kg), K OL stable: 1, N_enc [0  0  0  0]
