@@ -410,7 +410,7 @@ figure; hold on
 comparewithELI=false;
 comparewitholdLPV=false;     % LPV / ellipses run WITHOUT the compensator: evaluated on GFRF_raw
 comparewithW2=true;          % W2 controller without compensation (1110gc), on GFRF_raw
-eps_plot = [-eta0, eta0];    % estimation errors shown dashed (fraction of dm_bound); [] = none
+eps_plot = [-eta0_list(1), eta0_list(1)];    % estimation errors shown dashed (fraction of dm_bound); [] = none
 EST  = load(fullfile('Data', sprintf('%s.mat', idname)), 'dm_i', 'Gn');
 wF   = GFRF_raw.Frequency;
 Gn_F = squeeze(interp(EST.Gn, wF).ResponseData);
