@@ -1,0 +1,9 @@
+Row,|S| at 80 Hz (dB) - W2 + dm est. (eta 0.325),|S| at 80 Hz (dB) - W2 nom. perf. (eta 1.06)
+OP1 (0.00 kg),-45,-44.1
+OP2 (2.10 kg),-42.6,-36.3
+OP3 (5.90 kg),-42.8,-32
+OP4 (7.60 kg),-43.1,-30.8
+Worst (max dB),-42.6,-30.8
+Best (min dB),-45,-44.1
+Mean,-43.4,-35.8
+Spread (max - min),2.4,13.2

@@ -13,7 +13,7 @@ min:   -1.5000
 
 max:     0
 
-  obj = 0.000000 | eta = 0.2 | K OL stable | N_enc [0  0  0  0] -> stage 1 FEASIBLE | time = 2.66 s
+  obj = 0.000000 | eta = 0.2 | K OL stable | N_enc [0  0  0  0] -> stage 1 FEASIBLE | time = 2.67 s
 
 Iter   2 | Stage 1
 Pi scaler: 1.000e+00 used
@@ -27,7 +27,7 @@ min:   -1.5000
 
 max:     0
 
-  obj = 0.000000 | eta = 0.2 | K OL stable | N_enc [0  0  0  0] -> stage 1 FEASIBLE | time = 2.05 s
+  obj = 0.000000 | eta = 0.2 | K OL stable | N_enc [0  0  0  0] -> stage 1 FEASIBLE | time = 2.12 s
 
   --> Saved K_stage{1}
   --> Advancing to Stage 2
@@ -43,7 +43,7 @@ min:   -1.5000
 
 max:     0
 
-  obj = 1.488113 | eta = 0.2 | K OL stable | N_enc [0  0  0  0] -> accepted | time = 4.79 s
+  obj = 1.488113 | eta = 0.2 | K OL stable | N_enc [0  0  0  0] -> accepted | time = 4.77 s
 
 Iter   4 | Stage 2
 Pi scaler: 1.000e+00 used
@@ -57,7 +57,7 @@ min:   -1.5000
 
 max:     0
 
-  obj = 1.135764 | eta = 0.2 | K OL stable | N_enc [0  0  0  0] -> accepted | time = 6.05 s
+  obj = 1.135764 | eta = 0.2 | K OL stable | N_enc [0  0  0  0] -> accepted | time = 6.01 s
 
 Iter   5 | Stage 2
 Pi scaler: 1.000e+00 used
@@ -71,7 +71,7 @@ min:   -1.5000
 
 max:     0
 
-  obj = 1.196354 | eta = 0.2 | K OL stable | N_enc [0  0  0  0] -> accepted | time = 4.90 s
+  obj = 1.196354 | eta = 0.2 | K OL stable | N_enc [0  0  0  0] -> accepted | time = 4.82 s
 
 Iter   6 | Stage 2
 Pi scaler: 1.000e+00 used

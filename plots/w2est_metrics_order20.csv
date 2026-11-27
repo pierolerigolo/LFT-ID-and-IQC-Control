@@ -1,0 +1,3 @@
+Row,S80_worst_dB,S80_spread_dB,W1S_worst,W1S_worst_OP,W1S_worst_Hz,Speak_dB,min_1pL,notch_width_Hz,KS80_max_dB,KSpeak_dB,N_enc_total
+W2 + dm est. (eta 0.325),-42.595,2.414,3.77,4,469.697,17.547,0.133,2.09,11.448,17.262,0
+W2 nom. perf. (eta 1.06),-30.849,13.214,17.412,4,80.645,13.52,0.211,0.505,15.013,19.305,0
