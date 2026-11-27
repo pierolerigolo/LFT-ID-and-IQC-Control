@@ -70,16 +70,23 @@ fprintf('dm_bound = %.4g, mass offsets of the operating points dm_i = %s\n', dm_
 
 %% Compensated LFT in the estimation error eps (declared over +/- dm_bound: eta = |eps|/dm_bound)
 epsu    = ureal('eps', 0, 'PlusMinus', dm_bound);
+% Same realisation as b: GLFT_delta = (mass part) * (G_LTI part), i.e. u enters the
+% G_LTI/W2 LFT first. The IQC with fixed multipliers is NOT invariant to the realisation
+% (the reverse order, GLTIwW2*Gcomp, gave the W2 channel input W2*Gcomp*u and stage 1
+% stuck at slack 0.957 even with eta0 = 0.2).
 switch dmhat_mode
     case "fixed"
-        dmh = dmhat_design;
-        tag = sprintf('estfix%g', dmhat_design);
+        % Gcomp = G_nom/(1 + eps G'),  G' = G_nom/(1 + G_nom dmhat)
+        %       = Fu([-G', G'; -G_nom, G_nom], eps)   (= b's [-G_nom, G_nom; -G_nom, G_nom] for dmhat = 0)
+        Gp    = Gn/(1 + Gn*dmhat_design);
+        Gcomp = lft(epsu, [-Gp, Gp; -Gn, Gn]);
+        tag   = sprintf('estfix%g', dmhat_design);
     case "range"
-        dmh = ureal('dmhat', 0, 'PlusMinus', dm_bound);
-        tag = 'estrange';
+        dmh   = ureal('dmhat', 0, 'PlusMinus', dm_bound);
+        Gcomp = Gn*(1 + Gn*dmh)/(1 + Gn*(dmh + epsu));     % exact compensated mass part
+        tag   = 'estrange';
 end
-Gcomp      = Gn*(1 + Gn*dmh)/(1 + Gn*(dmh + epsu));       % exact compensated mass part
-GLFT_delta = GLTIwW2*Gcomp;
+GLFT_delta = Gcomp*GLTIwW2;
 [GLFT, Delta, BlkStruct] = lftdata(GLFT_delta);
 disp(GLFT_delta)
 fprintf('lftdata blocks: %s\n', strjoin(string({BlkStruct.Name}) + "(" + string([BlkStruct.Occurrences]) + ")", ', '));
