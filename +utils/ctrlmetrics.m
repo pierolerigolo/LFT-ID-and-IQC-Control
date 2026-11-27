@@ -28,6 +28,7 @@ arguments
     opts.file string = ""
     opts.S_notch_dB (1,1) double = -20
     opts.n_grid (1,1) double = 6000
+    opts.GFRFs cell = {}                % optional: one GFRF per controller (same operating points)
 end
     nOP = size(GFRF, 2);
     w0  = min(GFRF.Frequency);   w1 = max(GFRF.Frequency);
@@ -43,7 +44,12 @@ end
     V  = nan(nK, 11);
     for j = 1:nK
         Kw = squeeze(freqresp(Ks{j}, w));
-        L  = Kw.*Gw;   S = 1./(1 + L);   KS = Kw.*S;
+        Gj = Gw;   Fj = GFRF;
+        if numel(opts.GFRFs) >= j && ~isempty(opts.GFRFs{j})
+            Fj = opts.GFRFs{j};
+            for i = 1:nOP, Gj(:, i) = squeeze(interp(Fj(i), w).ResponseData); end
+        end
+        L  = Kw.*Gj;   S = 1./(1 + L);   KS = Kw.*S;
         S80 = mag2db(abs(S(k80, :)));
         W1S = abs(W1w.*S);   [w1s, kk] = max(W1S(:));   [kw, iop] = ind2sub(size(W1S), kk);
         below = all(mag2db(abs(S)) < opts.S_notch_dB, 2);       % band where every OP is below
@@ -57,7 +63,7 @@ end
         V(j, :) = [max(S80), max(S80) - min(S80), w1s, iop, w(kw)/2/pi, ...
                    mag2db(max(abs(S(:)))), min(abs(1 + L(:))), width, ...
                    mag2db(max(abs(KS(k80, :)))), mag2db(max(abs(KS(:)))), ...
-                   sum(abs(utils.encirclements(ss(Ks{j}), GFRF)))];
+                   sum(abs(utils.encirclements(ss(Ks{j}), Fj)))];
     end
     vn = {'S80_worst_dB', 'S80_spread_dB', 'W1S_worst', 'W1S_worst_OP', 'W1S_worst_Hz', ...
           'Speak_dB', 'min_1pL', 'notch_width_Hz', 'KS80_max_dB', 'KSpeak_dB', 'N_enc_total'};

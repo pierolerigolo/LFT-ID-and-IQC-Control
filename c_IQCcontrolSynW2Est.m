@@ -421,7 +421,7 @@ figure; hold on
 comparewithELI=false;
 comparewitholdLPV=false;     % LPV / ellipses run WITHOUT the compensator: evaluated on GFRF_raw
 comparewithW2=true;          % W2 controller without compensation (1110gc), on GFRF_raw
-eps_plot = [-eta0_list(1), eta0_list(1)];    % estimation errors shown dashed (fraction of dm_bound); [] = none
+eps_plot = [];               % e.g. [-eta0_list(1), eta0_list(1)]: wrong estimate, dashed    % estimation errors shown dashed (fraction of dm_bound); [] = none
 EST  = load(fullfile('Data', sprintf('%s.mat', idname)), 'dm_i', 'Gn');
 wF   = GFRF_raw.Frequency;
 Gn_F = squeeze(interp(EST.Gn, wF).ResponseData);
@@ -452,8 +452,20 @@ for i = 1:nOP
 end
 utils.magplot(inv(1 + K_final*G_hat), 'Color', 'k', 'DisplayName', 'S nominal');
 utils.magplot(inv(W1_frd), 'Color', 'c', 'DisplayName', 'W_1^{-1}');
-title(sprintf('Sensitivity on the measured FRFs, order %d, \\eta = %.3g', orderK, eta))
+title(sprintf('Sensitivity on the measured FRFs (compensated), order %d, \\eta = %.3g', orderK, eta))
 exportgraphics(gcf,fullfile('plots','w2est_sensgfrf.pdf'),'ContentType','vector')
+
+% Comparison tables: this controller on the compensated FRFs, the W2 nominal-performance
+% controller (no compensation) on the raw FRFs
+realmass = getfield(load(fullfile('Data', sprintf('%s.mat', idname)), 'realmass'), 'realmass');
+Ks_tab = {K_final};   names_tab = sprintf("W2 + dm est. (eta %.3g)", eta);   GF_tab = {GFRF};
+if comparewithW2
+    Ks_tab{end+1} = W2save.K_final;   names_tab(end+1) = sprintf("W2 nom. perf. (eta %.3g)", W2save.eta);   GF_tab{end+1} = GFRF_raw;
+end
+perf_table = utils.perftable(Ks_tab, names_tab, GFRF, omega_d, 'realmass', realmass, 'GFRFs', GF_tab, ...
+    'file', fullfile('plots', sprintf('w2est_perf_table_order%d.csv', orderK)));
+metrics_table = utils.ctrlmetrics(Ks_tab, names_tab, GFRF, W1_frd, omega_d, 'GFRFs', GF_tab, ...
+    'file', fullfile('plots', sprintf('w2est_metrics_order%d.csv', orderK)));
 
 figure; utils.magplot(K_final, 'DisplayName', 'K final'); title('Controller')
 exportgraphics(gcf,fullfile('plots','w2est_cont.pdf'),'ContentType','vector')

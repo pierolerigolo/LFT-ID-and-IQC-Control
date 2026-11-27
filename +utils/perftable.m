@@ -22,6 +22,8 @@ arguments
     opts.file string = ""
     opts.digits (1,1) double = 1
     opts.summary (1,1) logical = true   % add worst / best / mean / spread rows (operating points only)
+    opts.GFRFs cell = {}                % optional: one GFRF per controller (e.g. with / without a
+                                        % compensator), same operating points; default GFRF for all
 end
     nOP = size(GFRF, 2);          % one operating point per channel (as in the c scripts)
     Gw  = zeros(nOP, 1);
@@ -39,7 +41,11 @@ end
 
     S = zeros(numel(Gw), numel(Ks));
     for j = 1:numel(Ks)
-        S(:, j) = mag2db(abs(1./(1 + squeeze(freqresp(Ks{j}, omega_d))*Gw)));
+        Gj = Gw;
+        if numel(opts.GFRFs) >= j && ~isempty(opts.GFRFs{j})
+            for i = 1:nOP, Gj(i) = squeeze(interp(opts.GFRFs{j}(i), omega_d).ResponseData); end
+        end
+        S(:, j) = mag2db(abs(1./(1 + squeeze(freqresp(Ks{j}, omega_d))*Gj)));
     end
     if opts.summary
         Sop  = S(1:nOP, :);                          % measured operating points only
