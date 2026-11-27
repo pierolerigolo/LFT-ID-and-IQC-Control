@@ -309,6 +309,12 @@ opensave=load(fullfile(fdname,[fn,'.mat']));
 % K=opensave.K_stage{2};
 K=opensave.K_final;
 
+
+% Nominal second order model
+modelsave=load('../../data/LFT_GFRF_GdmGLTIW2opt_1110gc_etfe_80hz_fmin10_hyb.mat');
+[Gnomnum,Gnomden]=tfdata(modelsave.Gdmnom);
+
+
 % opensave=load(fullfile('LFT-ID-and-IQC-Control/Data/finalrepportcont/', ...
 %    'controller_ellips_sus_7nm_order20_82hz_-30db_nomperf.mat' ));
 % K=opensave.K_itr{end};

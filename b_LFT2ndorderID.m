@@ -180,7 +180,8 @@ GLFT_delta    = GdmLFT*GLTILFT;
 
 save(fullfile('Data', sprintf('LFT_GFRF_GdmGLTIW2%s_%s_%dhz_fmin%g%s.mat', W2tag, expname, f_dist, f_min, gridtag)), ...
     "GLFT_delta", "GLFT", "Delta", "dm_bound", "m0", "m", "GFRF", "GFRF_cell", ...
-    "realmass", "W2", "W2frd", "Hpf", "GLTI", "GLTImean", "relerr", "Gdmnom")
+    "realmass", "W2", "W2frd", "Hpf", "GLTI", "GLTImean", "relerr", ...
+    "Gdm", "Gdmnom")
 
 %% Local functions
 function T = param_table(sys_est, names)
