@@ -270,7 +270,11 @@ for orderK = orderK_list
                 hist_stable(iter) = K_is_stable;
                 hist_stage(iter)  = STAGE;
                 iter_in_stage     = iter_in_stage + 1;
-                if isstable(ss(K)), stab = 'stable'; else, stab = 'unstable'; end
+                if isstable(ss(K)), stab = 'stable'; else
+                    pK = pole(ss(K));   pu = pK(abs(pK) > 1);
+                    stab = sprintf('unstable (%d pole(s) |z| = %s at %s Hz)', numel(pu), mat2str(abs(pu).', 4), ...
+                        mat2str(abs(angle(pu)).'/(2*pi*Ts), 3));
+                end
                 stab = sprintf('%s | N_enc [%s] -> %s', stab, num2str(N_enc_it.'), ...
                     string(ifelse_str(STAGE == 1, ifelse_str(stage1_feas, 'stage 1 FEASIBLE', 'stage 1 not feasible yet'), ifelse_str(K_is_stable, 'accepted', 'REJECTED'))));
                 fprintf('  obj = %.6f | eta = %.4g | K OL %s | time = %.2f s\n\n', obj_val, eta, stab, elapsed);
