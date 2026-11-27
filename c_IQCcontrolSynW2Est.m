@@ -410,8 +410,19 @@ figure; hold on
 comparewithELI=false;
 comparewitholdLPV=false;     % LPV / ellipses run WITHOUT the compensator: evaluated on GFRF_raw
 comparewithW2=true;          % W2 controller without compensation (1110gc), on GFRF_raw
+eps_plot = [-eta0, eta0];    % estimation errors shown dashed (fraction of dm_bound); [] = none
+EST  = load(fullfile('Data', sprintf('%s.mat', idname)), 'dm_i', 'Gn');
+wF   = GFRF_raw.Frequency;
+Gn_F = squeeze(interp(EST.Gn, wF).ResponseData);
 for i = 1:nOP
-    utils.magplot(inv(1 + K_final*GFRF(i)), 'Color', colors(i, :), 'DisplayName', 'S OP'+string(i));
+    utils.magplot(inv(1 + K_final*GFRF(i)), 'Color', colors(i, :), 'DisplayName', ...
+        sprintf('S OP%d, \\hat{dm} = dm_%d', i, i));
+    % same operating point with a wrong estimate: dmhat_i = dm_i +/- eps_plot*dm_bound
+    for e = eps_plot
+        Gc = frd(squeeze(GFRF_raw.ResponseData(1, i, :)).*(1 + (EST.dm_i(i) + e*dm_bound)*Gn_F), wF, GFRF.Ts);
+        utils.magplot(inv(1 + K_final*Gc), 'Color', [colors(i, :) .5], 'LineStyle', '--', 'LineWidth', 0.5, ...
+            'DisplayName', sprintf('S OP%d, \\hat{dm} = dm_%d %+.2g dm_{bound}', i, i, e));
+    end
     if comparewitholdLPV
         LPVsave=load(fullfile('data','finalrepportcont','controller_sus_7nm_order18_82hz_-34db_nperfhinfnperfoptiIQC_eta9.139390e-01.mat'));
         KLPV=LPVsave.K_itr{26};
