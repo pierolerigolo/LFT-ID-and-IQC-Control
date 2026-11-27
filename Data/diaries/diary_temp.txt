@@ -1,5 +1,5 @@
 
-===== Controller order 18, peak_extra 500, eta0 0.2 =====
+===== Controller order 18, peak_extra 1500, eta0 0.2 =====
 Initial controller: ||K0||_inf = 0, max |pole| = 0.978
 Iter   1 | Stage 1
 Pi scaler: 1.000e+00 used
@@ -13,7 +13,7 @@ min:   -1.5000
 
 max:     0
 
-  obj = 0.957249 | eta = 0.2 | K OL stable | N_enc [0  0  0  0] -> stage 1 not feasible yet | time = 6.17 s
+  obj = 0.000000 | eta = 0.2 | K OL stable | N_enc [0  0  0  0] -> stage 1 FEASIBLE | time = 2.55 s
 
 Iter   2 | Stage 1
 Pi scaler: 1.000e+00 used
@@ -27,7 +27,7 @@ min:   -1.5000
 
 max:     0
 
-  obj = 0.957249 | eta = 0.2 | K OL stable | N_enc [0  0  0  0] -> stage 1 not feasible yet | time = 2.90 s
+  obj = 0.000000 | eta = 0.2 | K OL stable | N_enc [0  0  0  0] -> stage 1 FEASIBLE | time = 2.04 s
 
   --> Saved K_stage{1}
   --> Advancing to Stage 2
@@ -43,10 +43,38 @@ min:   -1.5000
 
 max:     0
 
-  !! Solver failed (code 1: Infeasible problem (<a href="yalmip.github.io/debugginginfeasible">learn to debug</a>) (MOSEK-SDP))
+  obj = 1.218505 | eta = 0.2 | K OL unstable | N_enc [0  0  0  0] -> REJECTED | time = 4.35 s
+
+Iter   4 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 1.017787 | eta = 0.2 | K OL unstable | N_enc [0  0  0  0] -> REJECTED | time = 4.43 s
+
+Iter   5 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  !! Solver failed (code 4: Numerical problems (<a href="yalmip.github.io/inside/debuggingnumerics">learn to debug</a>) (MOSEK-SDP))
   --> no accepted controller (OL stable, no encirclement) in stage 2: back to the stage-1 controller
   --> Advancing to Stage 3
-Iter   4 | Stage 3
+Iter   6 | Stage 3
 D warm-start:
      1
 
@@ -54,93 +82,63 @@ E warm-start:
      0
 
   [etaLower] eta = 0.01 -> true (slack = 0)
-    D = 1.816
-    E = 5.012e-17+1.021e-08i
+    D = 1.474
+    E = 2.346e-15+5.586e-09i
 D warm-start:
-    1.8165
+    1.4736
 
 E warm-start:
-   5.0116e-17 + 1.0209e-08i
+   2.3458e-15 + 5.5856e-09i
 
   [expand] eta = 0.2 -> true (slack = 0)
-    D = 1.948
-    E = 1.004e-14+1.483e-06i
+    D = 2.171
+    E = 1.075e-13+1.742e-06i
 D warm-start:
-    1.9476
+    2.1709
 
 E warm-start:
-   1.0039e-14 + 1.4829e-06i
+   1.0751e-13 + 1.7422e-06i
 
-  [expand] eta = 0.4 -> false (slack = 0)
+  [expand] eta = 0.4 -> true (slack = 0)
+    D = 2.307
+    E = -4.494e-14+2.875e-06i
 D warm-start:
-    1.9476
+    2.3065
 
 E warm-start:
-   1.0039e-14 + 1.4829e-06i
+  -4.4939e-14 + 2.8749e-06i
 
-  [bisect  1] eta = 0.3 -> false (slack = 0)
+  [expand] eta = 0.8 -> true (slack = 0)
+    D = 1.971
+    E = -1.097e-14-2.263e-05i
 D warm-start:
-    1.9476
+    1.9709
 
 E warm-start:
-   1.0039e-14 + 1.4829e-06i
+  -1.0966e-14 - 2.2625e-05i
 
-  [bisect  2] eta = 0.25 -> false (slack = 0)
-D warm-start:
-    1.9476
-
-E warm-start:
-   1.0039e-14 + 1.4829e-06i
-
-  [bisect  3] eta = 0.225 -> false (slack = 0)
-{Operation terminated by user during <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('sdpvar', '/Users/pierre/Documents/MATLAB/tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/sdpvar.m', 714)" style="font-weight:bold">sdpvar</a> (<a href="matlab: opentoline('/Users/pierre/Documents/MATLAB/tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/sdpvar.m',714,0)">line 714</a>)
+  [expand] eta = 1.6 -> true (slack = 0)
+    D = 0.5598
+    E = 4.118e-15-0.0003973i
+{Operation terminated by user during <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('appendYALMIPvariables', '/Users/pierre/Documents/MATLAB/tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/appendYALMIPvariables.m', 38)" style="font-weight:bold">appendYALMIPvariables</a> (<a href="matlab: opentoline('/Users/pierre/Documents/MATLAB/tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/appendYALMIPvariables.m',38,0)">line 38</a>)
 
 
-In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('datadriven.Objective.IQC_reduced_combinedPI_par_fix', '/Users/pierre/GitHub_local/LFT-ID-and-IQC-Control/+datadriven/+Objective/IQC_reduced_combinedPI_par_fix.m', 199)" style="font-weight:bold">datadriven.Objective.IQC_reduced_combinedPI_par_fix</a> (<a href="matlab: opentoline('/Users/pierre/GitHub_local/LFT-ID-and-IQC-Control/+datadriven/+Objective/IQC_reduced_combinedPI_par_fix.m',199,0)">line 199</a>)
-        D{i} = sdpvar(nm, nm, 'hermitian', 'complex');
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('sdpvar', '/Users/pierre/Documents/MATLAB/tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/sdpvar.m', 699)" style="font-weight:bold">sdpvar</a> (<a href="matlab: opentoline('/Users/pierre/Documents/MATLAB/tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/sdpvar.m',699,0)">line 699</a>)
+appendYALMIPvariables(lmi_variables,mt,variabletype,hashed_monoms,current_hash);
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('datadriven.Objective.IQC_reduced_combinedPI_par_fix', '/Users/pierre/GitHub_local/LFT-ID-and-IQC-Control/+datadriven/+Objective/IQC_reduced_combinedPI_par_fix.m', 200)" style="font-weight:bold">datadriven.Objective.IQC_reduced_combinedPI_par_fix</a> (<a href="matlab: opentoline('/Users/pierre/GitHub_local/LFT-ID-and-IQC-Control/+datadriven/+Objective/IQC_reduced_combinedPI_par_fix.m',200,0)">line 200</a>)
+        E{i} = sdpvar(nm, nm, 'full', 'complex');
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('datadriven.Objective.IQC_reduced_combinedPI_par_fix_eta_bisection/check_feasibility', '/Users/pierre/GitHub_local/LFT-ID-and-IQC-Control/+datadriven/+Objective/IQC_reduced_combinedPI_par_fix_eta_bisection.m', 109)" style="font-weight:bold">datadriven.Objective.IQC_reduced_combinedPI_par_fix_eta_bisection/check_feasibility</a> (<a href="matlab: opentoline('/Users/pierre/GitHub_local/LFT-ID-and-IQC-Control/+datadriven/+Objective/IQC_reduced_combinedPI_par_fix_eta_bisection.m',109,0)">line 109</a>)
             [LMIs, slack, D_var, E_var, PI_var] = datadriven.Objective.IQC_reduced_combinedPI_par_fix( ...
                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('datadriven.Objective.IQC_reduced_combinedPI_par_fix_eta_bisection', '/Users/pierre/GitHub_local/LFT-ID-and-IQC-Control/+datadriven/+Objective/IQC_reduced_combinedPI_par_fix_eta_bisection.m', 203)" style="font-weight:bold">datadriven.Objective.IQC_reduced_combinedPI_par_fix_eta_bisection</a> (<a href="matlab: opentoline('/Users/pierre/GitHub_local/LFT-ID-and-IQC-Control/+datadriven/+Objective/IQC_reduced_combinedPI_par_fix_eta_bisection.m',203,0)">line 203</a>)
-        [feasibleMid, D_mid, E_mid, slackMid, PI_mid] = check_feasibility(etaMid, D_best, E_best);
-                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('c_IQCcontrolSynW2Est>multiplier_bisection', '/Users/pierre/GitHub_local/LFT-ID-and-IQC-Control/c_IQCcontrolSynW2Est.m', 577)" style="font-weight:bold">c_IQCcontrolSynW2Est>multiplier_bisection</a> (<a href="matlab: opentoline('/Users/pierre/GitHub_local/LFT-ID-and-IQC-Control/c_IQCcontrolSynW2Est.m',577,0)">line 577</a>)
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('datadriven.Objective.IQC_reduced_combinedPI_par_fix_eta_bisection', '/Users/pierre/GitHub_local/LFT-ID-and-IQC-Control/+datadriven/+Objective/IQC_reduced_combinedPI_par_fix_eta_bisection.m', 175)" style="font-weight:bold">datadriven.Objective.IQC_reduced_combinedPI_par_fix_eta_bisection</a> (<a href="matlab: opentoline('/Users/pierre/GitHub_local/LFT-ID-and-IQC-Control/+datadriven/+Objective/IQC_reduced_combinedPI_par_fix_eta_bisection.m',175,0)">line 175</a>)
+        [feasibleUpper, D_at_upper, E_at_upper, slackUpper, PI_at_upper] = check_feasibility(etaUpper, D_best, E_best);
+                                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('c_IQCcontrolSynW2Est>multiplier_bisection', '/Users/pierre/GitHub_local/LFT-ID-and-IQC-Control/c_IQCcontrolSynW2Est.m', 588)" style="font-weight:bold">c_IQCcontrolSynW2Est>multiplier_bisection</a> (<a href="matlab: opentoline('/Users/pierre/GitHub_local/LFT-ID-and-IQC-Control/c_IQCcontrolSynW2Est.m',588,0)">line 588</a>)
         datadriven.Objective.IQC_reduced_combinedPI_par_fix_eta_bisection( ...
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('c_IQCcontrolSynW2Est', '/Users/pierre/GitHub_local/LFT-ID-and-IQC-Control/c_IQCcontrolSynW2Est.m', 204)" style="font-weight:bold">c_IQCcontrolSynW2Est</a> (<a href="matlab: opentoline('/Users/pierre/GitHub_local/LFT-ID-and-IQC-Control/c_IQCcontrolSynW2Est.m',204,0)">line 204</a>)
                         [eta, D_val, E_val, PI_matrix] = multiplier_bisection(G_robustness, PILTI, K, eta, D_val, E_val, ...
                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-} 
-{Operation terminated by user during <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('hggetbehavior', '/Applications/MATLAB_R2024b.app/toolbox/matlab/graphics/graphics/hggetbehavior.m', 50)" style="font-weight:bold">hggetbehavior</a> (<a href="matlab: opentoline('/Applications/MATLAB_R2024b.app/toolbox/matlab/graphics/graphics/hggetbehavior.m',50,0)">line 50</a>)
-
-
-In matlab.graphics.shape.internal.Button
-
-In matlab.graphics.controls.internal.PostUpdatePlugin.doCacheLoad
-
-In matlab.graphics.controls.internal.PostUpdatePlugin>@()matlab.graphics.controls.internal.PostUpdatePlugin.doCacheLoad(canvasParent)
-} 
-{Operation terminated by user during matlab.graphics.interaction.actions.Linger/enable
-
-
-In matlab.graphics.interaction.uiaxes.DataTipsBase/createLinger
-
-In matlab.graphics.interaction.uiaxes.DataTipsBase/enable
-
-In matlab.graphics.interaction.interactioncontainers.BaseAxesInteractionContainer/createDefaultSetAxesInteractions
-
-In matlab.graphics.interaction.interactioncontainers.BaseAxesInteractionContainer/createDefaultAxesInteractions
-
-In matlab.graphics.interaction.interactioncontainers.BaseAxesInteractionContainer/setupInteractions
-
-In matlab.graphics.interaction.internal.UnifiedAxesInteractions.createDefaultInteractionsOnAxes
-
-In matlab.graphics.interaction.interactioncontainers.BaseAxesInteractionContainer/updateInteractions
-
-In matlab.graphics.interaction.internal.UnifiedAxesInteractions.processQueuedDefaultInteractionInitialization
-
-In matlab.graphics.controls.internal.PostUpdatePlugin.doProcessInteractions
-
-In matlab.graphics.controls.internal.PostUpdatePlugin>@()matlab.graphics.controls.internal.PostUpdatePlugin.doProcessInteractions(canvasParent)
 } 
