@@ -10,13 +10,16 @@
 %   Estimation error  eps = dm - dmhat  (same units and sign as dm in b: the mass offset
 %   of the grey-box, dm = 1/G_dm(m) - 1/G_nom, identified-mass units; dmhat must be given
 %   to the compensator with that same convention).
-%   eps is the new uncertain parameter, eps in [-eps_max, eps_max], with
-%       eps_max = eps_frac * dm_bound      (eps_frac: estimate accuracy as a fraction of the
-%                                           half-range of identified masses dm_bound)
-%   Normalisation: lftdata returns eps normalised, delta_eps = eps/eps_max in [-1, 1].
-%   In the c scripts (which build the IQC on GLFT) eta is therefore a fraction of eps_max:
-%       eta = 1  <=>  |dm - dmhat| <= eps_max ;  certified estimate error = eta*eps_max.
-%   (saved as dm_bound = eps_max, so the c printouts "dm = eta*dm_bound" read as eps.)
+%   eps is the new uncertain parameter. It is declared over the same range as dm in b,
+%   eps in [-dm_bound, dm_bound], so that after the normalisation of lftdata
+%       delta_eps = eps/dm_bound   (the mass channel of GLFT)
+%   and eta in the c scripts IS the estimation error as a fraction of the half-range of
+%   identified masses:
+%       eta = |dm - dmhat|/dm_bound      (eta = 0.2: estimate within 20 % of the half-range;
+%                                          eta = 1: error as large as the whole mass spread)
+%   Set eta0_list in the c script to the accuracy you expect from the estimator (e.g. 0.2);
+%   the certified eta is the largest estimation error (as that fraction) the controller
+%   tolerates. In mass units: eps = eta*dm_bound (dm_bound saved unchanged).
 %
 %   dmhat_mode
 %     "fixed" : dmhat = dmhat_design (a number), LFT in (Delta_W2, eps) -> same structure as
@@ -32,17 +35,16 @@
 %   (eps_test = 0: perfect estimate), GFRF = GFRF_raw (1 + dmhat_i G_nom).
 %
 %   Input : Data/<lftname>.mat from b_LFT2ndorderID
-%   Output: Data/<lftname>_est<mode>_eps<eps_frac>.mat (GLFT_delta, GLFT, Delta, dm_bound,
+%   Output: Data/<lftname>_est<mode>.mat (GLFT_delta, GLFT, Delta, dm_bound,
 %           GFRF, ... ) -> idname of the c scripts.
 %
 clear; close all; clc
 
 %% Config
 lftname      = 'LFT_GFRF_GdmGLTIW2opt_1110gc_etfe_80hz_fmin10_hyb';
-eps_frac     = 0.2;        % estimate accuracy: |dm - dmhat| <= eps_frac*dm_bound
 dmhat_mode   = "fixed";    % "fixed" | "range"
 dmhat_design = 0;          % dmhat of the "fixed" LFT (identified-mass units)
-eps_test     = 0;          % estimate error used to compensate the measured FRFs (x eps_max)
+eps_test     = 0;          % estimate error used to compensate the measured FRFs (fraction of dm_bound)
 
 %% Load b
 L = load(fullfile('Data', [lftname, '.mat']));
@@ -66,9 +68,8 @@ for i = 1:nOP
 end
 fprintf('dm_bound = %.4g, mass offsets of the operating points dm_i = %s\n', dm_bound, mat2str(dm_i, 3));
 
-%% Compensated LFT in the estimation error eps
-eps_max = eps_frac*dm_bound;
-epsu    = ureal('eps', 0, 'PlusMinus', eps_max);
+%% Compensated LFT in the estimation error eps (declared over +/- dm_bound: eta = |eps|/dm_bound)
+epsu    = ureal('eps', 0, 'PlusMinus', dm_bound);
 switch dmhat_mode
     case "fixed"
         dmh = dmhat_design;
@@ -82,7 +83,7 @@ GLFT_delta = GLTIwW2*Gcomp;
 [GLFT, Delta, BlkStruct] = lftdata(GLFT_delta);
 disp(GLFT_delta)
 fprintf('lftdata blocks: %s\n', strjoin(string({BlkStruct.Name}) + "(" + string([BlkStruct.Occurrences]) + ")", ', '));
-fprintf('eps_max = %.4g (= %.2f x dm_bound); the mass channel of GLFT is eps/eps_max in [-1, 1]\n', eps_max, eps_frac);
+fprintf('mass channel of GLFT = eps/dm_bound: eta in the c scripts = |dm - dmhat|/dm_bound (dm_bound = %.4g)\n', dm_bound);
 
 %% Compensated measured FRFs (each with its own estimate)
 GFRF_raw = L.GFRF;
@@ -90,7 +91,7 @@ GFRF     = GFRF_raw;
 wF       = GFRF_raw.Frequency;
 Gn_F     = squeeze(interp(Gn, wF).ResponseData);     % G_nom on the FRF grid (linear interp.)
 for i = 1:nOP
-    dmhat_i = dm_i(i) + eps_test*eps_max;
+    dmhat_i = dm_i(i) + eps_test*dm_bound;
     GFRF.ResponseData(1, i, :) = squeeze(GFRF_raw.ResponseData(1, i, :)).*(1 + dmhat_i*Gn_F);
 end
 
@@ -104,11 +105,9 @@ title(sprintf('Measured FRFs (grey) and with the estimate compensation (eps\\_te
 
 %% Save (names expected by the c scripts)
 realmass = L.realmass;   m0 = L.m0;   m = L.m;   W2frd = L.W2frd;   GLTI = L.GLTI;   GLTImean = L.GLTImean;
-dm_bound_mass = dm_bound;
-dm_bound = eps_max;      % c scripts: eta*dm_bound = certified estimation error
-outname = sprintf('%s_%s_eps%g', lftname, tag, eps_frac);
-save(fullfile('Data', [outname, '.mat']), 'GLFT_delta', 'GLFT', 'Delta', 'dm_bound', 'eps_max', 'eps_frac', ...
-    'dm_bound_mass', 'dmhat_mode', 'dmhat_design', 'dm_i', 'eps_test', 'GFRF', 'GFRF_raw', 'realmass', ...
+outname = sprintf('%s_%s', lftname, tag);
+save(fullfile('Data', [outname, '.mat']), 'GLFT_delta', 'GLFT', 'Delta', 'dm_bound', ...
+    'dmhat_mode', 'dmhat_design', 'dm_i', 'eps_test', 'GFRF', 'GFRF_raw', 'realmass', ...
     'm0', 'm', 'W2frd', 'GLTI', 'GLTImean', 'Gn')
 fprintf('saved Data/%s.mat  (c scripts: idname = ''%s'')\n', outname, outname);
 if dmhat_mode == "range"
