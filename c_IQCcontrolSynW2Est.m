@@ -41,7 +41,7 @@ cl_check      = true;        % accept a controller only if K is OL stable AND L 
 % Performance weight W1 = floor_gain + peak_extra * band-pass at omega_d
 omega_d       = 80*2*pi;   % disturbance frequency (rad/s)
 floor_gain    = 0.5;
-peak_extra_list    = [ 1500 ];
+peak_extra_list    = [ 500 ];
 zeta_d        = 0.001;
 zeta_n        = 0.0001;
 

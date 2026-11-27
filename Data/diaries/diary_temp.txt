@@ -1,5 +1,5 @@
 
-===== Controller order 18, peak_extra 1500, eta0 0.2 =====
+===== Controller order 18, peak_extra 500, eta0 0.2 =====
 Initial controller: ||K0||_inf = 0, max |pole| = 0.978
 Iter   1 | Stage 1
 Pi scaler: 1.000e+00 used
@@ -13,7 +13,7 @@ min:   -1.5000
 
 max:     0
 
-  obj = 0.000000 | eta = 0.2 | K OL stable | N_enc [0  0  0  0] -> stage 1 FEASIBLE | time = 2.55 s
+  obj = 0.000000 | eta = 0.2 | K OL stable | N_enc [0  0  0  0] -> stage 1 FEASIBLE | time = 2.59 s
 
 Iter   2 | Stage 1
 Pi scaler: 1.000e+00 used
@@ -27,7 +27,7 @@ min:   -1.5000
 
 max:     0
 
-  obj = 0.000000 | eta = 0.2 | K OL stable | N_enc [0  0  0  0] -> stage 1 FEASIBLE | time = 2.04 s
+  obj = 0.000000 | eta = 0.2 | K OL stable | N_enc [0  0  0  0] -> stage 1 FEASIBLE | time = 1.98 s
 
   --> Saved K_stage{1}
   --> Advancing to Stage 2
@@ -43,7 +43,7 @@ min:   -1.5000
 
 max:     0
 
-  obj = 1.218505 | eta = 0.2 | K OL unstable | N_enc [0  0  0  0] -> REJECTED | time = 4.35 s
+  obj = 0.461247 | eta = 0.2 | K OL unstable | N_enc [0  0  0  0] -> REJECTED | time = 4.57 s
 
 Iter   4 | Stage 2
 Pi scaler: 1.000e+00 used
@@ -57,9 +57,37 @@ min:   -1.5000
 
 max:     0
 
-  obj = 1.017787 | eta = 0.2 | K OL unstable | N_enc [0  0  0  0] -> REJECTED | time = 4.43 s
+  obj = 0.371365 | eta = 0.2 | K OL unstable | N_enc [0  0  0  0] -> REJECTED | time = 4.52 s
 
 Iter   5 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 0.353358 | eta = 0.2 | K OL unstable | N_enc [0  0  0  0] -> REJECTED | time = 3.83 s
+
+Iter   6 | Stage 2
+Pi scaler: 1.000e+00 used
+range of Pi plus
+min:     0
+
+max:     1
+
+range of Pi minus
+min:   -1.5000
+
+max:     0
+
+  obj = 0.352220 | eta = 0.2 | K OL unstable | N_enc [0  0  0  0] -> REJECTED | time = 3.77 s
+
+Iter   7 | Stage 2
 Pi scaler: 1.000e+00 used
 range of Pi plus
 min:     0
@@ -74,67 +102,37 @@ max:     0
   !! Solver failed (code 4: Numerical problems (<a href="yalmip.github.io/inside/debuggingnumerics">learn to debug</a>) (MOSEK-SDP))
   --> no accepted controller (OL stable, no encirclement) in stage 2: back to the stage-1 controller
   --> Advancing to Stage 3
-Iter   6 | Stage 3
+Iter   8 | Stage 3
 D warm-start:
      1
 
 E warm-start:
      0
 
-  [etaLower] eta = 0.01 -> true (slack = 0)
-    D = 1.474
-    E = 2.346e-15+5.586e-09i
-D warm-start:
-    1.4736
-
-E warm-start:
-   2.3458e-15 + 5.5856e-09i
-
-  [expand] eta = 0.2 -> true (slack = 0)
-    D = 2.171
-    E = 1.075e-13+1.742e-06i
-D warm-start:
-    2.1709
-
-E warm-start:
-   1.0751e-13 + 1.7422e-06i
-
-  [expand] eta = 0.4 -> true (slack = 0)
-    D = 2.307
-    E = -4.494e-14+2.875e-06i
-D warm-start:
-    2.3065
-
-E warm-start:
-  -4.4939e-14 + 2.8749e-06i
-
-  [expand] eta = 0.8 -> true (slack = 0)
-    D = 1.971
-    E = -1.097e-14-2.263e-05i
-D warm-start:
-    1.9709
-
-E warm-start:
-  -1.0966e-14 - 2.2625e-05i
-
-  [expand] eta = 1.6 -> true (slack = 0)
-    D = 0.5598
-    E = 4.118e-15-0.0003973i
-{Operation terminated by user during <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('appendYALMIPvariables', '/Users/pierre/Documents/MATLAB/tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/appendYALMIPvariables.m', 38)" style="font-weight:bold">appendYALMIPvariables</a> (<a href="matlab: opentoline('/Users/pierre/Documents/MATLAB/tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/appendYALMIPvariables.m',38,0)">line 38</a>)
+{Operation terminated by user during <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('call_mosek_dual>doCall', '/Users/pierre/Documents/MATLAB/tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/solvers/call_mosek_dual.m', 136)" style="font-weight:bold">call_mosek_dual>doCall</a> (<a href="matlab: opentoline('/Users/pierre/Documents/MATLAB/tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/solvers/call_mosek_dual.m',136,0)">line 136</a>)
 
 
-In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('sdpvar', '/Users/pierre/Documents/MATLAB/tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/sdpvar.m', 699)" style="font-weight:bold">sdpvar</a> (<a href="matlab: opentoline('/Users/pierre/Documents/MATLAB/tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/sdpvar.m',699,0)">line 699</a>)
-appendYALMIPvariables(lmi_variables,mt,variabletype,hashed_monoms,current_hash);
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('datadriven.Objective.IQC_reduced_combinedPI_par_fix', '/Users/pierre/GitHub_local/LFT-ID-and-IQC-Control/+datadriven/+Objective/IQC_reduced_combinedPI_par_fix.m', 200)" style="font-weight:bold">datadriven.Objective.IQC_reduced_combinedPI_par_fix</a> (<a href="matlab: opentoline('/Users/pierre/GitHub_local/LFT-ID-and-IQC-Control/+datadriven/+Objective/IQC_reduced_combinedPI_par_fix.m',200,0)">line 200</a>)
-        E{i} = sdpvar(nm, nm, 'full', 'complex');
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('datadriven.Objective.IQC_reduced_combinedPI_par_fix_eta_bisection/check_feasibility', '/Users/pierre/GitHub_local/LFT-ID-and-IQC-Control/+datadriven/+Objective/IQC_reduced_combinedPI_par_fix_eta_bisection.m', 109)" style="font-weight:bold">datadriven.Objective.IQC_reduced_combinedPI_par_fix_eta_bisection/check_feasibility</a> (<a href="matlab: opentoline('/Users/pierre/GitHub_local/LFT-ID-and-IQC-Control/+datadriven/+Objective/IQC_reduced_combinedPI_par_fix_eta_bisection.m',109,0)">line 109</a>)
-            [LMIs, slack, D_var, E_var, PI_var] = datadriven.Objective.IQC_reduced_combinedPI_par_fix( ...
-                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('datadriven.Objective.IQC_reduced_combinedPI_par_fix_eta_bisection', '/Users/pierre/GitHub_local/LFT-ID-and-IQC-Control/+datadriven/+Objective/IQC_reduced_combinedPI_par_fix_eta_bisection.m', 175)" style="font-weight:bold">datadriven.Objective.IQC_reduced_combinedPI_par_fix_eta_bisection</a> (<a href="matlab: opentoline('/Users/pierre/GitHub_local/LFT-ID-and-IQC-Control/+datadriven/+Objective/IQC_reduced_combinedPI_par_fix_eta_bisection.m',175,0)">line 175</a>)
-        [feasibleUpper, D_at_upper, E_at_upper, slackUpper, PI_at_upper] = check_feasibility(etaUpper, D_best, E_best);
-                                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('call_mosek_dual', '/Users/pierre/Documents/MATLAB/tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/solvers/call_mosek_dual.m', 78)" style="font-weight:bold">call_mosek_dual</a> (<a href="matlab: opentoline('/Users/pierre/Documents/MATLAB/tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/solvers/call_mosek_dual.m',78,0)">line 78</a>)
+[r,res,solvertime] = doCall(prob,param,model.options);
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('callmosek>call_mosek_lpqpsocpsdp', '/Users/pierre/Documents/MATLAB/tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/solvers/callmosek.m', 116)" style="font-weight:bold">callmosek>call_mosek_lpqpsocpsdp</a> (<a href="matlab: opentoline('/Users/pierre/Documents/MATLAB/tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/solvers/callmosek.m',116,0)">line 116</a>)
+        [x,D_struc,problem,r,res,solvertime,prob] = call_mosek_dual(model);
+                                                    ^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('callmosek', '/Users/pierre/Documents/MATLAB/tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/solvers/callmosek.m', 51)" style="font-weight:bold">callmosek</a> (<a href="matlab: opentoline('/Users/pierre/Documents/MATLAB/tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/solvers/callmosek.m',51,0)">line 51</a>)
+    [x,D_struc,problem,r,res,solvertime,prob] = call_mosek_lpqpsocpsdp(model);
+                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('solvesdp', '/Users/pierre/Documents/MATLAB/tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/solvesdp.m', 423)" style="font-weight:bold">solvesdp</a> (<a href="matlab: opentoline('/Users/pierre/Documents/MATLAB/tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/solvesdp.m',423,0)">line 423</a>)
+        eval(['output = ' solver.call '(interfacedata);']);
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('optimize', '/Users/pierre/Documents/MATLAB/tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/optimize.m', 31)" style="font-weight:bold">optimize</a> (<a href="matlab: opentoline('/Users/pierre/Documents/MATLAB/tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/optimize.m',31,0)">line 31</a>)
+[varargout{1:nargout}] = solvesdp(varargin{:});
+                         ^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('datadriven.Objective.IQC_reduced_combinedPI_par_fix_eta_bisection/check_feasibility', '/Users/pierre/GitHub_local/LFT-ID-and-IQC-Control/+datadriven/+Objective/IQC_reduced_combinedPI_par_fix_eta_bisection.m', 123)" style="font-weight:bold">datadriven.Objective.IQC_reduced_combinedPI_par_fix_eta_bisection/check_feasibility</a> (<a href="matlab: opentoline('/Users/pierre/GitHub_local/LFT-ID-and-IQC-Control/+datadriven/+Objective/IQC_reduced_combinedPI_par_fix_eta_bisection.m',123,0)">line 123</a>)
+            sol = optimize(LMIs, [], solverOpts);
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('datadriven.Objective.IQC_reduced_combinedPI_par_fix_eta_bisection', '/Users/pierre/GitHub_local/LFT-ID-and-IQC-Control/+datadriven/+Objective/IQC_reduced_combinedPI_par_fix_eta_bisection.m', 133)" style="font-weight:bold">datadriven.Objective.IQC_reduced_combinedPI_par_fix_eta_bisection</a> (<a href="matlab: opentoline('/Users/pierre/GitHub_local/LFT-ID-and-IQC-Control/+datadriven/+Objective/IQC_reduced_combinedPI_par_fix_eta_bisection.m',133,0)">line 133</a>)
+    [feasible0, D_best, E_best, slack0, PI_best] = check_feasibility(opts.etaLower, D0, E0);
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('c_IQCcontrolSynW2Est>multiplier_bisection', '/Users/pierre/GitHub_local/LFT-ID-and-IQC-Control/c_IQCcontrolSynW2Est.m', 588)" style="font-weight:bold">c_IQCcontrolSynW2Est>multiplier_bisection</a> (<a href="matlab: opentoline('/Users/pierre/GitHub_local/LFT-ID-and-IQC-Control/c_IQCcontrolSynW2Est.m',588,0)">line 588</a>)
         datadriven.Objective.IQC_reduced_combinedPI_par_fix_eta_bisection( ...
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
