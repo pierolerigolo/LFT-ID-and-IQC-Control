@@ -59,7 +59,7 @@ multiplier_type = "frequency";   % "frequency" or "constant" D, E
 
 % Optimisation
 solver          = 'mosek';
-mosek_near_rel  = 1e3;       % controller steps only (MOSEK default 1e3); the eta
+mosek_near_rel  = 1e6;       % controller steps only (MOSEK default 1e3); the eta
                              % bisection always runs at the MOSEK defaults
 max_iter        = 30;
 max_iter_stage2 = 20;        % stage 2 ends after this many iterations even if the
@@ -80,6 +80,7 @@ addpath(genpath("C:\Users\admin\Documents\MATLAB\tbxmanager"))
 
 %% Load the LFT plant
 load(fullfile('Data', sprintf('%s.mat', idname)), 'GLFT', 'Delta', 'dm_bound', 'GFRF', 'GFRF_raw')
+eta_cap             = 2;           % largest eta searched by the bisection (2 = error twice the mass half-range)
 eta0_list           = 0.2;         % initial bound on the estimation error, eta = |dm - dmhat|/dm_bound
                                    % (0.2: estimate within 20 % of the mass half-range)
 W_lft = GLFT.Frequency;
@@ -202,7 +203,7 @@ for orderK = orderK_list
                         % (a) multiplier for the current (frozen) controller,
                         %     warm-started from the previous D(w), E(w)
                         [eta, D_val, E_val, PI_matrix] = multiplier_bisection(G_robustness, PILTI, K, eta, D_val, E_val, ...
-                            alpha_PI, beta_PI, W_lft, dm_bound, multiplier_type, D0);
+                            alpha_PI, beta_PI, W_lft, dm_bound, multiplier_type, D0, eta_cap);
                         PI = frd(PI_matrix, W_lft, Ts);
                         % (b) controller step with that multiplier
                         LMIs_rob = datadriven.Objective.IQC_reduced( ...
@@ -243,6 +244,12 @@ for orderK = orderK_list
                     end
                     K_good_state = K.getstate();
                     if STAGE == 3, break, end
+                    if ~ok
+                        % no accepted stage-2 controller: stage 3 from the robust-stability-only
+                        % controller is pointless (its eta just grows towards the cap)
+                        fprintf('  --> no accepted stage-2 controller: stopping (lower peak_extra or raise mosek_near_rel)\n');
+                        break
+                    end
                     K_stage{2}       = ss(K);   % stage 2: end the stage, go on with stage 3
                     K_stage_state{2} = K.getstate();
                     STAGE      = 3;
@@ -345,7 +352,7 @@ for orderK = orderK_list
             if STAGE >= 2
                 try
                     [eta, D_val, E_val] = multiplier_bisection(G_robustness, PILTI, K, eta, D_val, E_val, ...
-                        alpha_PI, beta_PI, W_lft, dm_bound, multiplier_type, D0);
+                        alpha_PI, beta_PI, W_lft, dm_bound, multiplier_type, D0, eta_cap);
                 catch ME
                     warning('Final eta bisection failed (%s): eta kept at %.4g.', ME.message, eta);
                 end
@@ -579,7 +586,7 @@ function s = ifelse_str(c, a, b)
 end
 
 function [eta, D_val, E_val, PI_matrix] = multiplier_bisection(G_robustness, PILTI, K, eta, D_val, E_val, ...
-        alpha_PI, beta_PI, W_lft, dm_bound, multiplier_type, D0)
+        alpha_PI, beta_PI, W_lft, dm_bound, multiplier_type, D0, eta_cap)
 %MULTIPLIER_BISECTION Largest eta (and D(w), E(w)) certified for the frozen controller K,
 %   warm-started from the previous D(w), E(w) when available.
     warm = {};
@@ -587,7 +594,7 @@ function [eta, D_val, E_val, PI_matrix] = multiplier_bisection(G_robustness, PIL
     [eta, D_val, E_val, PI_matrix] = ...
         datadriven.Objective.IQC_reduced_combinedPI_par_fix_eta_bisection( ...
         G_robustness, PILTI, datadriven.Controller.Fixed(K), alpha_PI, beta_PI, W_lft, ...
-        "etaUpperInit", eta, "etaLower", 1e-2, "etaHardCap", 100, ...
+        "etaUpperInit", eta, "etaLower", 1e-2, "etaHardCap", eta_cap, ...
         "multiplier", multiplier_type, "epsD", 1e-2*D0, warm{:});   % D >= epsD scaled with D0
 end
 
